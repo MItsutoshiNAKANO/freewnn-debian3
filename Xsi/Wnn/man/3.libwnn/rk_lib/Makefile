@@ -1,0 +1,86 @@
+# Generated automatically from Makefile.in by configure.
+#
+#   $Id: ./Makefile.in $
+#
+
+#
+# FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+# This file is part of FreeWnn.
+# 
+# Copyright Kyoto University Research Institute for Mathematical Sciences
+#                 1987, 1988, 1989, 1990, 1991, 1992
+# Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+# Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+# Copyright FreeWnn Project 1999, 2000
+# 
+# Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+include ../../../../makerule.mk
+
+INSTALL         = $/usr/bin/install -c
+
+MANDIR = $(LIBMANDIR)
+MANSUFFIX = $(LIBMANSUFFIX)
+
+install.man:: rk_clear.man
+	@if [ -d $(DESTDIR)$(MANDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(MANDIR)); fi
+	$(RM) $(DESTDIR)$(MANDIR)/romkan_clear.$(MANSUFFIX)*
+	$(INSTALL) -c $(INSTMANFLAGS) rk_clear.man \
+ $(DESTDIR)$(MANDIR)/romkan_clear.$(MANSUFFIX)
+	-$(COMPRESSMANCMD) $(DESTDIR)$(MANDIR)/romkan_clear.$(MANSUFFIX)
+
+install.man:: rk_dspmd.man
+	@if [ -d $(DESTDIR)$(MANDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(MANDIR)); fi
+	$(RM) $(DESTDIR)$(MANDIR)/romkan_dispmode.$(MANSUFFIX)*
+	$(INSTALL) -c $(INSTMANFLAGS) rk_dspmd.man \
+ $(DESTDIR)$(MANDIR)/romkan_dispmode.$(MANSUFFIX)
+	-$(COMPRESSMANCMD) $(DESTDIR)$(MANDIR)/romkan_dispmode.$(MANSUFFIX)
+
+install.man:: rk_getc.man
+	@if [ -d $(DESTDIR)$(MANDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(MANDIR)); fi
+	$(RM) $(DESTDIR)$(MANDIR)/romkan_getc.$(MANSUFFIX)*
+	$(INSTALL) -c $(INSTMANFLAGS) rk_getc.man \
+ $(DESTDIR)$(MANDIR)/romkan_getc.$(MANSUFFIX)
+	-$(COMPRESSMANCMD) $(DESTDIR)$(MANDIR)/romkan_getc.$(MANSUFFIX)
+
+install.man:: rk_init.man
+	@if [ -d $(DESTDIR)$(MANDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(MANDIR)); fi
+	$(RM) $(DESTDIR)$(MANDIR)/romkan_init.$(MANSUFFIX)*
+	$(INSTALL) -c $(INSTMANFLAGS) rk_init.man \
+ $(DESTDIR)$(MANDIR)/romkan_init.$(MANSUFFIX)
+	-$(COMPRESSMANCMD) $(DESTDIR)$(MANDIR)/romkan_init.$(MANSUFFIX)
+
+install.man:: rk_next.man
+	@if [ -d $(DESTDIR)$(MANDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(MANDIR)); fi
+	$(RM) $(DESTDIR)$(MANDIR)/romkan_next.$(MANSUFFIX)*
+	$(INSTALL) -c $(INSTMANFLAGS) rk_next.man \
+ $(DESTDIR)$(MANDIR)/romkan_next.$(MANSUFFIX)
+	-$(COMPRESSMANCMD) $(DESTDIR)$(MANDIR)/romkan_next.$(MANSUFFIX)
+
+install.man:: rk_ungetc.man
+	@if [ -d $(DESTDIR)$(MANDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(MANDIR)); fi
+	$(RM) $(DESTDIR)$(MANDIR)/romkan_ungetc.$(MANSUFFIX)*
+	$(INSTALL) -c $(INSTMANFLAGS) rk_ungetc.man \
+ $(DESTDIR)$(MANDIR)/romkan_ungetc.$(MANSUFFIX)
+	-$(COMPRESSMANCMD) $(DESTDIR)$(MANDIR)/romkan_ungetc.$(MANSUFFIX)

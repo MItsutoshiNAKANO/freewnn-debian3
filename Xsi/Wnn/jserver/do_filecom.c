@@ -33,6 +33,8 @@
  *      Do Global File command
  */
 
+#include <config.h>
+
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <stdio.h>
@@ -63,10 +65,10 @@ file_init ()
 
 /*      mkdir   */
 
-#define MODE (0000000 | 0000777)
-#if defined(BSD42) || defined(uniosu) || defined(UX386) || defined(DGUX)
+/* #define MODE (0000000 | 0000777) */
 /* #define      MODE (0040000 | 0000731) */
 /* #define      MODE (0000000 | 0000733) */
+#define MODE (0000000 | 0000755)
 
 void
 js_mkdir ()
@@ -75,7 +77,7 @@ js_mkdir ()
   int x;
   int err = 0;
   err = envhandle ();
-  get_file_name (path);
+  get_file_name (path, FILENAME);
 
   if (err == -1)
     {
@@ -94,42 +96,6 @@ js_mkdir ()
   put4_cur (0);
   putc_purge ();
 }
-#endif
-
-#if defined(SYSVR2) && !defined(uniosu) && !defined(UX386) && !defined(DGUX)
-void
-js_mkdir ()
-{
-  char path[FILENAME];
-  char buf[1024];
-  int fd;
-  int eid;
-
-  eid = envhandle ();
-  get_file_name (path);
-  if (eid == -1)
-    {
-      error_ret ();
-      return;
-    }
-
-  if ((fd = open (path, O_RDONLY)) >= 0)
-    {
-      close (fd);
-      wnn_errorno = WNN_MKDIR_FAIL;
-      error_ret ();
-      return;
-    }
-  strcpy (buf, "/bin/mkdir ");
-  strcat (buf, path);
-  if (system (buf) != 0)
-    {
-    }
-  chmod (path, MODE);
-  put4_cur (0);
-  putc_purge ();
-}
-#endif
 
 /*      access  */
 void
@@ -139,7 +105,7 @@ js_access ()
   int amode;
   envhandle ();
   amode = get4_cur ();
-  get_file_name (path);
+  get_file_name (path, FILENAME);
 
 #ifdef WRITE_CHECK
   check_backup (path);
@@ -232,7 +198,7 @@ js_file_stat ()
   char n[FILENAME];
 
   get4_cur ();                  /* env_id */
-  get_file_name (n);
+  get_file_name (n, FILENAME);
 
   put4_cur (file_stat (n));
   putc_purge ();
@@ -381,9 +347,9 @@ js_hindo_file_create ()
 
   env_id = get4_cur ();         /* env_id */
   fid = get4_cur ();
-  get_file_name (fn);
-  getws_cur (com);
-  gets_cur (hpasswd);
+  get_file_name (fn, FILE_NAME_L);
+  getws_cur (com, 1024);
+  gets_cur (hpasswd, WNN_PASSWD_LEN);
   if (find_fid_in_env (env_id, fid) == -1)
     {                           /* valid */
       wnn_errorno = WNN_FID_ERROR;
@@ -460,10 +426,10 @@ js_dic_file_create ()
   w_char com[1024];
   char passwd[WNN_PASSWD_LEN], hpasswd[WNN_PASSWD_LEN];
   get4_cur ();                  /* env_id */
-  get_file_name (fn);
-  getws_cur (com);
-  gets_cur (passwd);
-  gets_cur (hpasswd);
+  get_file_name (fn, FILE_NAME_L);
+  getws_cur (com, 1024);
+  gets_cur (passwd, WNN_PASSWD_LEN);
+  gets_cur (hpasswd, WNN_PASSWD_LEN);
   type = get4_cur ();
 
   if (type != WNN_REV_DICT &&
@@ -502,7 +468,7 @@ js_file_comment_set ()
 
   envi = get4_cur ();           /* env_id */
   fid = get4_cur ();
-  getws_cur (comment);
+  getws_cur (comment, WNN_COMMENT_LEN);
 
   if (find_fid_in_env (envi, fid) == -1)
     {                           /* valid */
@@ -612,7 +578,7 @@ js_file_loaded ()
   int x;
 
 /*  get4_cur(); env_id */
-  get_file_name (n);
+  get_file_name (n, FILE_NAME_L);
 
   if ((x = file_loaded (n)) < 0)
     put4_cur (-1);
@@ -741,7 +707,7 @@ js_file_send ()
   put4_cur (1);
   putc_purge ();
 
-  gets_cur (n);
+  gets_cur (n, FILE_NAME_L);
 
   /*     read file       */
   files[fid].localf = REMOTE;
@@ -768,7 +734,7 @@ js_file_read ()
   int env_id, fid;
 
   env_id = get4_cur ();         /* env_id */
-  get_file_name (n);
+  get_file_name (n, FILE_NAME_L);
 
   fid = file_loaded (n);
   if (fid == -1)
@@ -850,7 +816,7 @@ js_file_write ()
   char n[FILE_NAME_L];
   env_id = get4_cur ();         /* env_id */
   fid = get4_cur ();
-  get_file_name (n);
+  get_file_name (n, FILE_NAME_L);
 
   if (find_fid_in_env (env_id, fid) == -1)
     {                           /* valid */
@@ -1051,8 +1017,8 @@ js_file_remove ()
   char passwd[WNN_PASSWD_LEN];
   int x;
 
-  get_file_name (n);
-  gets_cur (passwd);
+  get_file_name (n, FILE_NAME_L);
+  gets_cur (passwd, WNN_PASSWD_LEN);
 
   x = file_remove (n, passwd);
   if (x == -1)
@@ -1123,8 +1089,8 @@ js_file_password_set ()
   envi = get4_cur ();           /* env_id */
   fid = get4_cur ();
   which = get4_cur ();
-  gets_cur (old);
-  gets_cur (new);
+  gets_cur (old, WNN_PASSWD_LEN);
+  gets_cur (new, WNN_PASSWD_LEN);
 
   if (find_fid_in_env (envi, fid) == -1)
     {

@@ -29,8 +29,15 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <config.h>
+
 #include <stdio.h>
 #include <ctype.h>
+
+#if defined(HAVE_SYS_TYPES_H)
+#include <sys/types.h>
+#endif
+
 #include "commonhd.h"
 #include "de_header.h"
 #include "wnn_malloc.h"
@@ -240,7 +247,7 @@ read_default_files ()
       num = sscanf (data, "%s %s", code, file);
       if (strcmp (code, "readfile") == 0 && num == 2)
         {
-          read_default_file (file);
+          read_default_file (file, 256);
         }
     }
   fclose (fp);
@@ -262,16 +269,23 @@ dummy_env()
 */
 
 static int
-read_default_file (n)
-     char *n;
+read_default_file (buffer, buffer_size)
+     char *buffer;
+     size_t buffer_size;
 {
   int fid;
 
-  expand_file_name (n);
-  fid = file_loaded (n);
+  buffer = expand_file_name (buffer, buffer_size);
+  if (!buffer)
+    {
+      printf ("filename too long. %s\n", buffer);
+      return (-1);
+    }
+
+  fid = file_loaded (buffer);
   if (fid == -1)
     {                           /* Not correct file */
-      printf ("Error reading %s\n", n);
+      printf ("Error reading %s\n", buffer);
       return (-1);
     }
   if (FILE_NOT_READ != fid)
@@ -280,16 +294,16 @@ read_default_file (n)
     }
   if ((fid = get_new_fid ()) == -1)
     {                           /* no more file */
-      printf ("Error reading %s\n", n);
+      printf ("Error reading %s\n", buffer);
       return (-1);
     }
 
   files[fid].localf = LOCAL;
-  strcpy (files[fid].name, n);
-  printf ("Reading %s\t Fid = %d\n", n, fid);
+  strcpy (files[fid].name, buffer);
+  printf ("Reading %s\t Fid = %d\n", buffer, fid);
   if (read_file (&files[fid]) == -1)
     {
-      printf ("Error reading %s\n", n);
+      printf ("Error reading %s\n", buffer);
       files[fid].ref_count = -1;        /* fail */
       return (-1);
     }
@@ -306,7 +320,7 @@ change_ascii_to_int (st, dp)
 
   total = 0;
   flag = 0;
-  while (*st != NULL)
+  while (*st != '\0')
     {
       if (isdigit (*st))
         {

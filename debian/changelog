@@ -1,0 +1,125 @@
+freewnn (1.1.0+1.1.1-a016-1.potato.3) stable; urgency=high
+
+  * Non Maintainer Upload
+  * fix maintainer script bugs for potato
+    closes: Bug#109314
+
+ -- Fumitoshi UKAI <ukai@debian.or.jp>  Mon, 20 Aug 2001 21:28:13 +0900
+
+freewnn (1.1.0+1.1.1-a016-1.potato.2) stable; urgency=high
+
+  * Non Maintainer Upload
+  * previous security fix has some bug in postinst
+    potato's adduser doesn't have --disabled-login, so installation/upgrade
+    would be failed on potato system (reported on debian-users@debian.or.jp)
+  * symlink failed because potato version of freewnn doesn't have
+    /usr/share/wnn directory. Fix it
+  * potato doesn't have deluser, use userdel instead in postrm
+
+ -- Fumitoshi UKAI <ukai@debian.or.jp>  Mon, 20 Aug 2001 16:28:19 +0900
+
+freewnn (1.1.0+1.1.1-a016-1.potato.1) stable; urgency=high
+
+  * Non Maintainer Upload
+    acknowledged by maintainer maeraha@debian.org
+  * [security fix] backport from freewnn 1.1.0+1.1.1-a017-6.4
+    - adduser wnn, kwnn, cwnn for jserver,kserver,cserver respectively
+      instead of running as root user
+    - restrict upload/create path under jserver_dir
+
+ -- Fumitoshi UKAI <ukai@debian.or.jp>  Fri, 17 Aug 2001 01:10:18 +0900
+
+freewnn (1.1.0+1.1.1-a016-1) frozen unstable; urgency=low
+
+  * Maintainer release (closes: Bug#59450).
+  * New upstream release with security-related fixes.
+    - fixes for msg_open() bug ([freewnn:00350]).
+    - freewnn-size_limit.diff ([freewnn:00361]).
+    - freewnn-mkdir.diff ([freewnn:00359]).
+
+ -- Keita Maehara <maehara@debian.org>  Mon, 20 Mar 2000 21:46:52 +0900
+
+freewnn (1.1.0+1.1.1-a013-3.1) frozen unstable; urgency=low
+
+  * NMU
+  * Set suid install perms to 4755 in makerules.mk.in to comply with
+    debian policy
+  * Change WNNOWNER to root in makerules.mk. This thing has been setup
+    without suid perms for a long time without bug reports, so I assum
+    (and I don't see any reason why it needs it anyway) it is ok top run
+    this way).
+
+ -- Ben Collins <bcollins@debian.org>  Fri, 17 Mar 2000 11:01:36 -0700
+
+freewnn (1.1.0+1.1.1-a013-3) frozen unstable; urgency=low
+
+  * Moved user dictionary directory under
+    /var/lib/wnn/<lang>_<territory>/dic/usr rather than
+    /usr/lib/wnn/<lang>_<territory>/dic/usr.
+
+ -- Keita Maehara <maehara@debian.org>  Tue, 18 Jan 2000 00:11:19 +0900
+
+freewnn (1.1.0+1.1.1-a013-2) unstable; urgency=low
+
+  * Updated to Standards-Version 3.0.1.
+  * Added "Provides: wnn" to freewnn-{jserver,cserver,kserver}.
+  * Truncated too long description synopsis.
+
+ -- Keita Maehara <maehara@debian.org>  Mon, 25 Oct 1999 00:11:45 +0900
+
+freewnn (1.1.0+1.1.1-a013-1) unstable; urgency=low
+
+  * New upstream release, based on FreeWnn-1.1.1-a013.tar.gz.
+
+ -- Keita Maehara <maehara@debian.org>  Wed, 20 Oct 1999 22:56:29 +0900
+
+freewnn (1.1.0+1.1.1-a012-1) unstable; urgency=low
+
+  * New upstream release, based on FreeWnn-1.1.1-a012.tar.gz.
+
+ -- Keita Maehara <maehara@debian.org>  Thu, 30 Sep 1999 02:00:43 +0900
+
+freewnn (1.1.0+1.1.1-a011-1) unstable; urgency=low
+
+  * New upstream release, based on FreeWnn-1.1.1-a011.tar.gz.
+
+ -- Keita Maehara <maehara@debian.org>  Sat, 25 Sep 1999 02:30:31 +0900
+
+freewnn (1.1.0+1.1.1-a009-1) unstable; urgency=low
+
+  * New upstream release, based on FreeWnn-1.1.1-a009.tar.gz.
+  * Applied patch for "Xsi/PubdicPlus/pod.c:54: initializer element is
+    not constant" problem (a008-pod.c.diff from [freewnn:00129]).
+  * Added null target install.man to Xsi/PubdicPlus/Makefile.in.
+
+ -- Keita Maehara <maehara@debian.org>  Wed, 22 Sep 1999 21:45:35 +0900
+
+freewnn (1.1.0+1.1.1-a007-1) unstable; urgency=low
+
+  * New upstream release, based on FreeWnn-1.1.1-a007.tar.gz (Now
+    non-Debian-specific part of the Debian patch for 1.1.1-a005 are
+    incorperated into the upstream).
+  * Removed --pidfile option from start-stop-daemon in
+    /etc/init.d/freewnn-{jserver,cserver,kserver}.
+
+ -- Keita Maehara <maehara@debian.org>  Thu, 16 Sep 1999 22:59:25 +0900
+
+freewnn (1.1.0+1.1.1-a005-1) unstable; urgency=low
+
+  * Initial Release.
+  * Based on FreeWnn-1.1.1-a005.tar.gz, which is a bugfix release for
+    FreeWnn 1.1.0 as well as a prerelease of FreeWnn 1.1.1. Note that
+    the upstream version for Debian is 1.1.0+1.1.1-a005 (due to the
+    version comparison issue).
+  * Modified the way to make a symlink in Xsi/Wnn/include/Makefile.in
+    so that we can successfully do "make install" in the
+    non-privileged environment.
+  * Workaround for manpages:
+    - Modified MANPATH from /usr/X11R6/man to @mandir@.
+    - Added the target install.man in makerule.mk.in.
+    - Added missing target install.man for cwnntouch.man in
+      Xsi/cWnn/man/6.jutil/Makefile.in.
+
+ -- Keita Maehara <maehara@debian.org>  Mon, 13 Sep 1999 14:41:41 +0900
+
+

@@ -1,0 +1,224 @@
+# Generated automatically from Makefile.in by configure.
+#
+#   $Id: ./Makefile.in $
+#
+
+#
+# FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+# This file is part of FreeWnn.
+# 
+# Copyright Kyoto University Research Institute for Mathematical Sciences
+#                 1987, 1988, 1989, 1990, 1991, 1992
+# Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+# Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+# Copyright FreeWnn Project 1999, 2000
+# 
+# Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+include ../../makerule.mk
+
+         CC = gcc
+  CCOPTIONS = -Dlinux -D_POSIX_SOURCE -D_BSD_SOURCE
+CDEBUGFLAGS = -O2 -fno-strength-reduce
+
+LIB_MT_DEFINES = LibraryMTDefines
+
+LINKS = getopt.c jl.c js.c kankana.c wnnerrmsg.c
+    JLIBDEFINES = -DWRITE_CHECK
+       INCLUDES = -I$(CWNNINCLUDESRC) -I$(TOP)
+        DEFINES = $(CWNNDEFINES) $(CWNNLANGDEF) $(JLIBDEFINES)
+       LINTLIBS =
+
+INSTALL      = $/usr/bin/install -c
+INSTALLFLAGS = $(INSTBINFLAGS)
+
+SRC1= js.c 	wnnerrmsg.c 	jl.c
+
+OBJ1= js.o 	wnnerrmsg.o 	jl.o
+
+SRC2= getopt.c
+OBJ2= getopt.o
+SRC3= $(CWNNETCSRC)/msg.c
+OBJ3= msg.o
+SRC4= $(CWNNETCSRC)/yincoding.c
+OBJ4= yincoding.o
+SRC5= $(CWNNETCSRC)/py_table.c
+OBJ5= py_table.o
+SRC6= $(CWNNETCSRC)/zy_table.c
+OBJ6= zy_table.o
+SRC7= $(CWNNETCSRC)/strings.c
+OBJ7= strings.o
+SRC8= $(CWNNETCSRC)/bcopy.c
+OBJ8= bcopy.o
+SRC9= $(CWNNETCSRC)/mkdir.c
+OBJ9= mkdir.o
+
+LOCAL_RKSRCS= $(CWNNROMKANSRC)/rk_bltinfn.c 	$(CWNNROMKANSRC)/rk_main.c 	$(CWNNROMKANSRC)/rk_modread.c 	$(CWNNROMKANSRC)/rk_read.c 	$(CWNNROMKANSRC)/rk_vars.c
+
+LOCAL_RKOBJS= $(CWNNROMKANSRC)/rk_bltinfn.o 	$(CWNNROMKANSRC)/rk_main.o 	$(CWNNROMKANSRC)/rk_modread.o 	$(CWNNROMKANSRC)/rk_read.o 	$(CWNNROMKANSRC)/rk_vars.o
+
+LOCAL_ETCSRCS = $(SRC4) $(SRC5) $(SRC6) $(SRC7) $(SRC8) $(SRC9)
+LOCAL_ETCOBJS = $(OBJ4) $(OBJ5) $(OBJ6) $(OBJ7) $(OBJ8) $(OBJ9)
+SRCS= $(SRC1) $(SRC3) $(LOCAL_ETCSRCS)
+OBJS= $(OBJ1) $(OBJ3) $(LOCAL_ETCOBJS) $(LOCAL_RKOBJS)
+
+all::
+
+includes::
+
+.c.o:
+	$(RM) $@
+	$(CC) -c $(CFLAGS) $(_NOOP_) $*.c
+
+clean::
+
+all:: $(LINKS) $(OBJS) libcwnn.a
+
+includes:: $(LINKS)
+
+getopt.c:  $(WNNJLIBSRC)/getopt.c
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: getopt.c
+
+depend:: getopt.c
+
+clean::
+	$(RM) getopt.c
+
+jl.c:  $(WNNJLIBSRC)/jl.c
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: jl.c
+
+depend:: jl.c
+
+clean::
+	$(RM) jl.c
+
+js.c:  $(WNNJLIBSRC)/js.c
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: js.c
+
+depend:: js.c
+
+clean::
+	$(RM) js.c
+
+kankana.c:  $(WNNJLIBSRC)/kankana.c
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: kankana.c
+
+depend:: kankana.c
+
+clean::
+	$(RM) kankana.c
+
+wnnerrmsg.c:  $(WNNJLIBSRC)/wnnerrmsg.c
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: wnnerrmsg.c
+
+depend:: wnnerrmsg.c
+
+clean::
+	$(RM) wnnerrmsg.c
+
+all:: libgetopt.a
+
+libgetopt.a: $(OBJ2) $(EXTRALIBRARYDEPS)
+	$(RM) $@
+	$(AR) $@ $(OBJ2)
+	$(RANLIB) $@
+
+lintlib:: llib-lgetopt.ln
+
+llib-lgetopt.ln: $(SRC2) $(EXTRALIBRARYDEPS)
+	$(RM) $@
+	$(LINT) $(LINTLIBFLAG)getopt $(LINTFLAGS) $(SRC2)
+
+js.o : js.c 	$(CWNNETCSRC)/bdic.c 	$(CWNNETCSRC)/pwd.c 	$(CWNNETCSRC)/gethinsi.c
+
+lint:
+	$(LINT) $(LINTFLAGS) $(SRC2) $(LINTLIBS)
+lint1:
+	$(LINT) $(LINTFLAGS) $(FILE) $(LINTLIBS)
+
+kankana: kankana.o
+	$(RM) $@
+	$(CCLINK) -o $@ $(LDOPTIONS) kankana.o $(CWNNJLIB)
+
+clean::
+	$(RM) kankana
+
+all:: libcwnn.a
+
+libcwnn.a: $(OBJS) $(EXTRALIBRARYDEPS)
+	$(RM) $@
+	$(AR) $@ $(OBJS)
+	$(RANLIB) $@
+
+lintlib:: llib-lcwnn.ln
+
+llib-lcwnn.ln: $(SRCS) $(EXTRALIBRARYDEPS)
+	$(RM) $@
+	$(LINT) $(LINTLIBFLAG)cwnn $(LINTFLAGS) $(SRCS)
+
+instlib:: install
+
+install:: libcwnn.a
+	@if [ -d $(DESTDIR)$(WNNLIBDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(WNNLIBDIR)); fi
+	$(INSTALL) $(INSTALLFLAGS) $(INSTLIBFLAGS) libcwnn.a $(DESTDIR)$(WNNLIBDIR)
+	$(RANLIB) $(RANLIBINSTFLAGS) $(DESTDIR)$(WNNLIBDIR)/libcwnn.a
+
+$(OBJ3) : $(SRC3)
+	$(CC) -c $(CFLAGS)  $(CWNNETCSRC)/`basename $@ .o`.c
+
+$(OBJ4) : $(SRC4)
+	$(CC) -c $(CFLAGS)  $(CWNNETCSRC)/`basename $@ .o`.c
+
+$(OBJ5) : $(SRC5)
+	$(CC) -c $(CFLAGS)  $(CWNNETCSRC)/`basename $@ .o`.c
+
+$(OBJ6) : $(SRC6)
+	$(CC) -c $(CFLAGS)  $(CWNNETCSRC)/`basename $@ .o`.c
+
+$(OBJ7) : $(SRC7)
+	$(CC) -c $(CFLAGS)  $(CWNNETCSRC)/`basename $@ .o`.c
+
+$(OBJ8) : $(SRC8)
+	$(CC) -c $(CFLAGS)  $(CWNNETCSRC)/`basename $@ .o`.c
+
+$(OBJ9) : $(SRC9)
+	$(CC) -c $(CFLAGS)  $(CWNNETCSRC)/`basename $@ .o`.c
+
+$(LOCAL_RKOBJS) : $(LOCAL_RKSRCS)
+	@case '${MFLAGS}' in *[ik]*) set +e;; esac; 	cd $(CWNNROMKANSRC); echo "making all in $(CWNNROMKANSRC)"; 	$(MAKE) 'CDEBUGFLAGS=$(CDEBUGFLAGS)' $(MFLAGS)
+
+depend:: .depend
+
+clean::
+	$(RM) $(LINKS)

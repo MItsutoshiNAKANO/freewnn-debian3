@@ -234,7 +234,7 @@ dnl
 AC_PATH_X
 AC_HEADER_STDC
 AC_HEADER_SYS_WAIT
-AC_CHECK_HEADERS(fcntl.h limits.h malloc.h sgtty.h strings.h sys/file.h sys/ioctl.h sys/time.h termio.h unistd.h)
+AC_CHECK_HEADERS(fcntl.h limits.h malloc.h sgtty.h strings.h sys/file.h sys/ioctl.h sys/time.h termio.h unistd.h sys/types.h)
 
 dnl
 dnl Checks for typedefs, structures, and compiler characteristics.

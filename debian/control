@@ -1,0 +1,81 @@
+Source: freewnn
+Section: utils
+Priority: optional
+Maintainer: Keita Maehara <maehara@debian.org>
+Standards-Version: 3.0.1
+
+Package: freewnn-common
+Architecture: all
+Conflicts: wnn-common
+Replaces: wnn-common
+Description: Files shared among freewnn packages
+ This package contains files that is needed by three freewnn packages
+ (freewnn-jserver, freewnn-cserver and freewnn-kserver).
+
+Package: freewnn-jserver
+Architecture: any
+Depends: freewnn-common, ${shlibs:Depends}
+Conflicts: wnn
+Replaces: wnn
+Provides: wnn
+Description: Japanese input system
+ Wnn is a network-extensible Kana-to-Kanji conversion system and was
+ jointly developed and released by the Software Research Group of
+ Kyoto University Research Institute for Mathematical Science, OMRON
+ Corporation and Astec, Inc.
+
+Package: freewnn-cserver
+Architecture: any
+Depends: freewnn-common, ${shlibs:Depends}
+Conflicts: cwnn
+Replaces: cwnn
+Provides: wnn
+Description: Chinese input system
+ cWnn is an integrated Chinese input system running on Unix
+ workstation. It supports a wide range of input methods, satisfying
+ the needs of the Chinese users from all over the world, including
+ P.R.China and Taiwan. cWnn is capable of carrying out Hanzi
+ conversion from an arbitrary Pinyin or Zhuyin sequence, hence
+ improving the speed of Pinyin/Zhuyin input.
+
+Package: freewnn-kserver
+Architecture: any
+Depends: freewnn-common, ${shlibs:Depends}
+Conflicts: kwnn
+Replaces: kwnn
+Provides: wnn
+Description: Korean input system
+ kWnn is an integrated Korean input system running on Unix
+ workstation. It supports a wide range of input methods, satisfying
+ the needs of the Korean users from all over the world.
+
+Package: freewnn-jserver-dev
+Section: devel
+Architecture: any
+Conflicts: wnn6-dev, wnn-dev
+Replaces: wnn-dev
+Description: Header files and static libraries for Wnn
+ This package contains the header files and static libraries for
+ Wnn. Install this package if you wish to develop your own Wnn client
+ programs.
+
+Package: freewnn-cserver-dev
+Section: devel
+Architecture: any
+Conflicts: cwnn-dev
+Replaces: cwnn-dev
+Description: Header files and static library for cWnn
+ This package contains the header files and static library for
+ cWnn. Install this package if you wish to develop your own cWnn
+ client programs.
+
+Package: freewnn-kserver-dev
+Section: devel
+Architecture: any
+Conflicts: kwnn-dev
+Replaces: kwnn-dev
+Description: Header files and static library for kWnn
+ This package contains the header files and static library for
+ kWnn. Install this package if you wish to develop your own kWnn
+ client programs.
+

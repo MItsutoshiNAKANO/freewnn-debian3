@@ -75,10 +75,12 @@ SRC13= $(KWNNETCSRC)/msg.c
 OBJ13= msg.o
 SRC14= $(KWNNETCSRC)/xutoj.c
 OBJ14= xutoj.o
+SRC15= $(KWNNETCSRC)/mkdir.c
+OBJ15= mkdir.o
 
-SRCS= $(SRC0) $(SRC1) $(SRC2) $(SRC3) $(SRC4) $(SRC5) $(SRC6) $(SRC7)       $(SRCGETHINSI) $(SRC9) $(SRC10) $(SRC11) $(SRC12) $(SRC13) $(SRCS14)
+SRCS= $(SRC0) $(SRC1) $(SRC2) $(SRC3) $(SRC4) $(SRC5) $(SRC6) $(SRC7)       $(SRCGETHINSI) $(SRC9) $(SRC10) $(SRC11) $(SRC12) $(SRC13) $(SRCS14) $(SRC15)
 
-OBJS= $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4) $(OBJ5) $(OBJ6) $(OBJ7)       $(OBJGETHINSI) $(OBJ9) $(OBJ10) $(OBJ11) $(OBJ12) $(OBJ13) $(OBJ14)
+OBJS= $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4) $(OBJ5) $(OBJ6) $(OBJ7)       $(OBJGETHINSI) $(OBJ9) $(OBJ10) $(OBJ11) $(OBJ12) $(OBJ13) $(OBJ14) $(OBJ15)
 
 all:: $(HDRS) $(SRC0) $(SRC1) kserver
 
@@ -589,6 +591,9 @@ $(OBJ13) : $(SRC13)
 	$(CC) -c $(CFLAGS)  $(KWNNETCSRC)/`basename $@ .o`.c
 
 $(OBJ14) : $(SRC14)
+	$(CC) -c $(CFLAGS)  $(KWNNETCSRC)/`basename $@ .o`.c
+
+$(OBJ15) : $(SRC15)
 	$(CC) -c $(CFLAGS)  $(KWNNETCSRC)/`basename $@ .o`.c
 
 depend:: .depend

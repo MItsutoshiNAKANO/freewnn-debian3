@@ -1,0 +1,142 @@
+# Generated automatically from Makefile.in by configure.
+#
+#   $Id: ./Makefile.in $
+#
+
+#
+# FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+# This file is part of FreeWnn.
+# 
+# Copyright Kyoto University Research Institute for Mathematical Sciences
+#                 1987, 1988, 1989, 1990, 1991, 1992
+# Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+# Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+# Copyright FreeWnn Project 1999, 2000
+# 
+# Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+include ../../../../makerule.mk
+
+INSTALL         = $/usr/bin/install -c
+
+MANSUFFIX = 4
+
+install.man:: 2a_ctrl.man
+	@if [ -d $(DESTDIR)$(MANDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(MANDIR)); fi
+	$(RM) $(DESTDIR)$(MANDIR)/2a_ctrl.$(MANSUFFIX)*
+	$(INSTALL) -c $(INSTMANFLAGS) 2a_ctrl.man \
+ $(DESTDIR)$(MANDIR)/2a_ctrl.$(MANSUFFIX)
+	-$(COMPRESSMANCMD) $(DESTDIR)$(MANDIR)/2a_ctrl.$(MANSUFFIX)
+
+install.man:: fzk.data.man
+	@if [ -d $(DESTDIR)$(MANDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(MANDIR)); fi
+	$(RM) $(DESTDIR)$(MANDIR)/fzk.data.$(MANSUFFIX)*
+	$(INSTALL) -c $(INSTMANFLAGS) fzk.data.man \
+ $(DESTDIR)$(MANDIR)/fzk.data.$(MANSUFFIX)
+	-$(COMPRESSMANCMD) $(DESTDIR)$(MANDIR)/fzk.data.$(MANSUFFIX)
+
+install.man:: fzk.u.man
+	@if [ -d $(DESTDIR)$(MANDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(MANDIR)); fi
+	$(RM) $(DESTDIR)$(MANDIR)/fzk.u.$(MANSUFFIX)*
+	$(INSTALL) -c $(INSTMANFLAGS) fzk.u.man \
+ $(DESTDIR)$(MANDIR)/fzk.u.$(MANSUFFIX)
+	-$(COMPRESSMANCMD) $(DESTDIR)$(MANDIR)/fzk.u.$(MANSUFFIX)
+
+install.man:: jserverrc.man
+	@if [ -d $(DESTDIR)$(MANDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(MANDIR)); fi
+	$(RM) $(DESTDIR)$(MANDIR)/jserverrc.$(MANSUFFIX)*
+	$(INSTALL) -c $(INSTMANFLAGS) jserverrc.man \
+ $(DESTDIR)$(MANDIR)/jserverrc.$(MANSUFFIX)
+	-$(COMPRESSMANCMD) $(DESTDIR)$(MANDIR)/jserverrc.$(MANSUFFIX)
+
+install.man:: mode.man
+	@if [ -d $(DESTDIR)$(MANDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(MANDIR)); fi
+	$(RM) $(DESTDIR)$(MANDIR)/mode.$(MANSUFFIX)*
+	$(INSTALL) -c $(INSTMANFLAGS) mode.man \
+ $(DESTDIR)$(MANDIR)/mode.$(MANSUFFIX)
+	-$(COMPRESSMANCMD) $(DESTDIR)$(MANDIR)/mode.$(MANSUFFIX)
+
+install.man:: uumkey.man
+	@if [ -d $(DESTDIR)$(MANDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(MANDIR)); fi
+	$(RM) $(DESTDIR)$(MANDIR)/uumkey.$(MANSUFFIX)*
+	$(INSTALL) -c $(INSTMANFLAGS) uumkey.man \
+ $(DESTDIR)$(MANDIR)/uumkey.$(MANSUFFIX)
+	-$(COMPRESSMANCMD) $(DESTDIR)$(MANDIR)/uumkey.$(MANSUFFIX)
+
+install.man:: uumrc.man
+	@if [ -d $(DESTDIR)$(MANDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(MANDIR)); fi
+	$(RM) $(DESTDIR)$(MANDIR)/uumrc.$(MANSUFFIX)*
+	$(INSTALL) -c $(INSTMANFLAGS) uumrc.man \
+ $(DESTDIR)$(MANDIR)/uumrc.$(MANSUFFIX)
+	-$(COMPRESSMANCMD) $(DESTDIR)$(MANDIR)/uumrc.$(MANSUFFIX)
+
+install.man:: wnnenvrc.man
+	@if [ -d $(DESTDIR)$(MANDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(MANDIR)); fi
+	$(RM) $(DESTDIR)$(MANDIR)/wnnenvrc.$(MANSUFFIX)*
+	$(INSTALL) -c $(INSTMANFLAGS) wnnenvrc.man \
+ $(DESTDIR)$(MANDIR)/wnnenvrc.$(MANSUFFIX)
+	-$(COMPRESSMANCMD) $(DESTDIR)$(MANDIR)/wnnenvrc.$(MANSUFFIX)
+
+install.man:: ujis_dic.man
+	@if [ -d $(DESTDIR)$(MANDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(MANDIR)); fi
+	$(RM) $(DESTDIR)$(MANDIR)/ujis_dic.$(MANSUFFIX)*
+	$(INSTALL) -c $(INSTMANFLAGS) ujis_dic.man \
+ $(DESTDIR)$(MANDIR)/ujis_dic.$(MANSUFFIX)
+	-$(COMPRESSMANCMD) $(DESTDIR)$(MANDIR)/ujis_dic.$(MANSUFFIX)
+
+install.man:: 2b_romkan.man
+	@if [ -d $(DESTDIR)$(MANDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(MANDIR)); fi
+	$(RM) $(DESTDIR)$(MANDIR)/2b_romkana.$(MANSUFFIX)*
+	$(INSTALL) -c $(INSTMANFLAGS) 2b_romkan.man \
+ $(DESTDIR)$(MANDIR)/2b_romkana.$(MANSUFFIX)
+	-$(COMPRESSMANCMD) $(DESTDIR)$(MANDIR)/2b_romkana.$(MANSUFFIX)
+
+install.man:: cvt_key.man
+	@if [ -d $(DESTDIR)$(MANDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(MANDIR)); fi
+	$(RM) $(DESTDIR)$(MANDIR)/cvt_key_tbl.$(MANSUFFIX)*
+	$(INSTALL) -c $(INSTMANFLAGS) cvt_key.man \
+ $(DESTDIR)$(MANDIR)/cvt_key_tbl.$(MANSUFFIX)
+	-$(COMPRESSMANCMD) $(DESTDIR)$(MANDIR)/cvt_key_tbl.$(MANSUFFIX)
+
+install.man:: hinsi_dat.man
+	@if [ -d $(DESTDIR)$(MANDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(MANDIR)); fi
+	$(RM) $(DESTDIR)$(MANDIR)/hinsi_data.$(MANSUFFIX)*
+	$(INSTALL) -c $(INSTMANFLAGS) hinsi_dat.man \
+ $(DESTDIR)$(MANDIR)/hinsi_data.$(MANSUFFIX)
+	-$(COMPRESSMANCMD) $(DESTDIR)$(MANDIR)/hinsi_data.$(MANSUFFIX)
+
+install.man:: serverdef.man
+	@if [ -d $(DESTDIR)$(MANDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(MANDIR)); fi
+	$(RM) $(DESTDIR)$(MANDIR)/serverdefs.$(MANSUFFIX)*
+	$(INSTALL) -c $(INSTMANFLAGS) serverdef.man \
+ $(DESTDIR)$(MANDIR)/serverdefs.$(MANSUFFIX)
+	-$(COMPRESSMANCMD) $(DESTDIR)$(MANDIR)/serverdefs.$(MANSUFFIX)
+

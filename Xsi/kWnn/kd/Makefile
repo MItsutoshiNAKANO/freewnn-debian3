@@ -1,0 +1,200 @@
+# Generated automatically from Makefile.in by configure.
+#
+#   $Id: ./Makefile.in $
+#
+
+#
+# FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+# This file is part of FreeWnn.
+# 
+# Copyright Kyoto University Research Institute for Mathematical Sciences
+#                 1987, 1988, 1989, 1990, 1991, 1992
+# Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+# Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+# Copyright FreeWnn Project 1999, 2000
+# 
+# Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+include ../../makerule.mk
+
+INSTALL      = $/usr/bin/install -c
+INSTALLFLAGS = $(INSTINCFLAGS)
+
+SUBDIRS = rk
+
+SERVERKDS = kserverrc hinsi.data
+
+CLIENTKDS = uum.msg 	uumkey 	uumrc 	wnnstat.msg
+
+CLIENTKDS2 = cvt_key_empty 	cvt_key_tbl 	cvt_key_tbl.ST 	cvt_key_tbl.gm 	cvt_key_tbl.kt 	cvt_key_tbl.mv 	cvt_key_tbl.vt
+
+LIBKDS1 = hinsi.data 	libwnn.msg 	wnnenvrc 	wnnenvrc_R
+
+LIBKDS2 = serverdefs
+
+LINKS = $(CLIENTSKDS2) $(LIBKDS2)
+
+all:: $(LINKS)
+
+includes:: $(LINKS)
+
+cvt_key_empty:  $(WNNCNVFILEDIR)/cvt_key_empty
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: cvt_key_empty
+
+depend:: cvt_key_empty
+
+clean::
+	$(RM) cvt_key_empty
+
+cvt_key_tbl:  $(WNNCNVFILEDIR)/cvt_key_tbl
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: cvt_key_tbl
+
+depend:: cvt_key_tbl
+
+clean::
+	$(RM) cvt_key_tbl
+
+cvt_key_tbl.ST:  $(WNNCNVFILEDIR)/cvt_key_tbl.ST
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: cvt_key_tbl.ST
+
+depend:: cvt_key_tbl.ST
+
+clean::
+	$(RM) cvt_key_tbl.ST
+
+cvt_key_tbl.gm:  $(WNNCNVFILEDIR)/cvt_key_tbl.gm
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: cvt_key_tbl.gm
+
+depend:: cvt_key_tbl.gm
+
+clean::
+	$(RM) cvt_key_tbl.gm
+
+cvt_key_tbl.kt:  $(WNNCNVFILEDIR)/cvt_key_tbl.kt
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: cvt_key_tbl.kt
+
+depend:: cvt_key_tbl.kt
+
+clean::
+	$(RM) cvt_key_tbl.kt
+
+cvt_key_tbl.mv:  $(WNNCNVFILEDIR)/cvt_key_tbl.mv
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: cvt_key_tbl.mv
+
+depend:: cvt_key_tbl.mv
+
+clean::
+	$(RM) cvt_key_tbl.mv
+
+cvt_key_tbl.vt:  $(WNNCNVFILEDIR)/cvt_key_tbl.vt
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: cvt_key_tbl.vt
+
+depend:: cvt_key_tbl.vt
+
+clean::
+	$(RM) cvt_key_tbl.vt
+
+serverdefs:  $(WNNJDSRC)/serverdefs
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: serverdefs
+
+depend:: serverdefs
+
+clean::
+	$(RM) serverdefs
+
+install::
+	@for flag in ${MAKEFLAGS} ''; do \
+	case "$$flag" in *=*) ;; *[i]*) set +e;; esac; done; \
+	for i in $(KWNNWNNDIR); do if [ -d $(DESTDIR)$$i ]; then \
+	set +x; else (set -x; $(MKDIRHIER) $(DESTDIR)$$i); fi; \
+	done
+
+install::  $(SERVERKDS)
+	@if [ -d $(DESTDIR)$(KWNNWNNDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(KWNNWNNDIR)); fi
+	@for flag in ${MAKEFLAGS} ''; do \
+	case "$$flag" in *=*) ;; *[i]*) set +e;; esac; done; \
+	for i in  $(SERVERKDS); do \
+	(set -x; $(INSTALL) $(INSTALLFLAGS) $(INSTDATFLAGS) $$i $(DESTDIR)$(KWNNWNNDIR)); \
+	done
+
+install::  $(CLIENTKDS)
+	@if [ -d $(DESTDIR)$(KWNNWNNDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(KWNNWNNDIR)); fi
+	@for flag in ${MAKEFLAGS} ''; do \
+	case "$$flag" in *=*) ;; *[i]*) set +e;; esac; done; \
+	for i in  $(CLIENTKDS); do \
+	(set -x; $(INSTALL) $(INSTALLFLAGS) $(INSTDATFLAGS) $$i $(DESTDIR)$(KWNNWNNDIR)); \
+	done
+
+install::  $(CLIENTKDS2)
+	@if [ -d $(DESTDIR)$(WNNWNNDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(WNNWNNDIR)); fi
+	@for flag in ${MAKEFLAGS} ''; do \
+	case "$$flag" in *=*) ;; *[i]*) set +e;; esac; done; \
+	for i in  $(CLIENTKDS2); do \
+	(set -x; $(INSTALL) $(INSTALLFLAGS) $(INSTDATFLAGS) $$i $(DESTDIR)$(WNNWNNDIR)); \
+	done
+
+install::  $(LIBKDS1)
+	@if [ -d $(DESTDIR)$(KWNNWNNDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(KWNNWNNDIR)); fi
+	@for flag in ${MAKEFLAGS} ''; do \
+	case "$$flag" in *=*) ;; *[i]*) set +e;; esac; done; \
+	for i in  $(LIBKDS1); do \
+	(set -x; $(INSTALL) $(INSTALLFLAGS) $(INSTDATFLAGS) $$i $(DESTDIR)$(KWNNWNNDIR)); \
+	done
+
+install::  $(LIBKDS2)
+	@if [ -d $(DESTDIR)$(WNNWNNDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(WNNWNNDIR)); fi
+	@for flag in ${MAKEFLAGS} ''; do \
+	case "$$flag" in *=*) ;; *[i]*) set +e;; esac; done; \
+	for i in  $(LIBKDS2); do \
+	(set -x; $(INSTALL) $(INSTALLFLAGS) $(INSTDATFLAGS) $$i $(DESTDIR)$(WNNWNNDIR)); \
+	done
+
+depend::
+
+clean::
+	$(RM) $(LINKS)
+

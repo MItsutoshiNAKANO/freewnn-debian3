@@ -40,9 +40,9 @@ LIB_MT_DEFINES = LibraryMTDefines
        INCLUDES = -I$(CWNNINCLUDESRC) -I$(TOP)
         DEFINES = $(CWNNDEFINES) $(CWNNLANGDEF)
 
-SRCS= strings.c 	sstrings.c 	bdic.c 	hindo.c 	gethinsi.c 	revdic.c 	pwd.c 	bcopy.c 	xutoj.c 	dic_atojis.c 	msg.c 	yincoding.c 	py_table.c 	zy_table.c 	server_env.c
+SRCS= strings.c 	sstrings.c 	bdic.c 	hindo.c 	gethinsi.c 	revdic.c 	pwd.c 	bcopy.c 	xutoj.c 	dic_atojis.c 	msg.c 	yincoding.c 	py_table.c 	zy_table.c 	server_env.c mkdir.c
 
-OBJS= strings.o 	sstrings.o 	bdic.o 	hindo.o 	gethinsi.o 	revdic.o 	pwd.o 	bcopy.o 	xutoj.o 	dic_atojis.o 	msg.o 	yincoding.o 	py_table.o 	zy_table.o 	server_env.o
+OBJS= strings.o 	sstrings.o 	bdic.o 	hindo.o 	gethinsi.o 	revdic.o 	pwd.o 	bcopy.o 	xutoj.o 	dic_atojis.o 	msg.o 	yincoding.o 	py_table.o 	zy_table.o 	server_env.o mkdir.o
 
 all::
 
@@ -222,6 +222,17 @@ depend:: server_env.c
 
 clean::
 	$(RM) server_env.c
+
+mkdir.c:  $(WNNETCSRC)/mkdir.c
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: mkdir.c
+
+depend:: mkdir.c
+
+clean::
+	$(RM) mkdir.c
 
 depend:: .depend
 

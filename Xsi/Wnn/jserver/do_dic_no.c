@@ -132,9 +132,9 @@ js_word_add ()
   w_char yomi[LENGTHYOMI], kanji[LENGTHKANJI], comment[LENGTHKANJI];
   envi = get4_cur ();           /* env_id */
   dic_no = get4_cur ();
-  getws_cur (yomi);
-  getws_cur (kanji);
-  getws_cur (comment);
+  getws_cur (yomi, LENGTHYOMI);
+  getws_cur (kanji, LENGTHKANJI);
+  getws_cur (comment, LENGTHKANJI);
   hinsi = get4_cur ();
   hindo = get4_cur ();
   ret = word_add (envi, dic_no, yomi, kanji, hinsi, hindo, comment);
@@ -177,7 +177,7 @@ js_word_search_by_env ()
   int n;
 
   c_env = env[get4_cur ()];
-  getws_cur (yomi);
+  getws_cur (yomi, LENGTHYOMI);
 #ifdef  CONVERT_from_TOP
   Strcpy (ryomi, yomi);
 #else
@@ -210,7 +210,7 @@ js_word_search ()
 
   get4_cur ();                  /* env_id */
   dic_no = get4_cur ();
-  getws_cur (yomi);
+  getws_cur (yomi, LENGTHYOMI);
 #ifdef  CONVERT_from_TOP
   Strcpy (ryomi, yomi);
 #else
@@ -243,7 +243,7 @@ js_word_comment_set ()
   envi = get4_cur ();           /* env_id */
   dic_no = get4_cur ();
   entry = get4_cur ();
-  getws_cur (comment);
+  getws_cur (comment, LENGTHKANJI);
 
   ret = word_comment_set (envi, dic_no, entry, comment);
   if (ret == -1)
@@ -401,7 +401,7 @@ js_hinsi_number ()
   w_char name[WNN_HINSI_NAME_LEN];
   int no;
 
-  getws_cur (name);
+  getws_cur (name, WNN_HINSI_NAME_LEN);
 
   if ((no = wnn_hinsi_number (name)) == -1)
     {
@@ -427,7 +427,7 @@ js_hinsi_list ()
 
   envi = get4_cur ();
   dic_no = get4_cur ();
-  getws_cur (name);
+  getws_cur (name, WNN_HINSI_NAME_LEN);
 
   if (dic_no == -1)
     {
@@ -564,7 +564,7 @@ js_hinsi_table_set ()
 
   envi = get4_cur ();
   dic_no = get4_cur ();
-  getws_cur (table);
+  getws_cur (table, HEAP_LEN);
 
 
   if (!dic_in_envp (dic_no, envi))

@@ -1,0 +1,136 @@
+# Generated automatically from Makefile.in by configure.
+#
+# $Id: Makefile,v 1.1.2.2 1999/02/08 02:06:52 yamasita Exp $
+#
+
+
+include ../makerule.mk
+
+#
+#   Do simply 'make' for normal cases.
+#   Do 'make project', if your site participates in the PUBDIC project.
+#
+
+### ATOD=atod
+### ATOF=atof
+### HINSI=hinsi.data
+### FZK_SRC=fzk.master fzk.attr fzk.jirattr fzk.fzkattr fzk.jircon fzk.con fzk.shuutan
+### FZK_FLAG=
+### 
+### dic=\
+### 	kihon.dic \
+### 	setsuji.dic \
+### 	jinmei.dic \
+### 	chimei.dic \
+### 	koyuu.dic \
+### 	special.dic \
+### 	computer.dic \
+### 	bio.dic \
+### 	symbol.dic \
+### 	tankan.dic
+### 
+### more=\
+### 	kihon.more \
+### 	setsuji.more \
+### 	jinmei.more \
+### 	chimei.more \
+### 	koyuu.more \
+### 	special.more \
+### 	computer.more \
+### 	bio.more \
+### 	symbol.more \
+### 	tankan.more
+### 
+### all: full.fzk kougo.fzk std.fzk $(dic)
+### 
+### project: all $(more)
+### 
+### clean::
+### 	rm -f *.fzk *.dic *.more
+### 
+### std.fzk: $(FZK_SRC)
+### 	/lib/cpp $(FZK_FLAG) fzk.master | egrep -v '^(# |$$)' | $(ATOF) $@
+### 
+### full.fzk: $(FZK_SRC)
+### 	make FZK_FLAG=-DKANSAI std.fzk
+### 	mv std.fzk $@
+### 
+### kougo.fzk: $(FZK_SRC)
+### 	make FZK_FLAG=-DKOUGO std.fzk
+### 	mv std.fzk $@
+### 
+### .SUFFIXES: .hd .u .dic .more
+### 
+### .u.dic:
+### 	cat $*.hd $< | $(ATOD) -p Version -P Version $@
+### 
+### .hd.more:
+### 	$(ATOD) $@ < $<
+### 
+### $(dic): $(HINSI)
+
+# ---------------------------------------------------------------------------
+#    ここからは Pubdic+ 由来のもの
+#
+# ---------------------------------------------------------------------------
+
+TARGETS = pod ctopd wtopd
+PUBDICS = pubdic.p special.p
+WNNDICS = bio.u chimei.u computer.u jinmei.u kihon.u koyuu.u setsuji.u symbol.u tankan.u
+
+all::   $(TARGETS) wnn
+canna: iroha.t
+wnn:   $(WNNDICS)
+sj3:   visual.dic
+
+
+pod: pod.o
+	$(CC) $(CFLAGS) -o $@ pod.o
+
+ctopd: ctopd.o
+	$(CC) $(CFLAGS) -o $@ ctopd.o
+
+wtopd: wtopd.o
+	$(CC) $(CFLAGS) -o $@ wtopd.o
+
+
+
+iroha.t: $(PUBDICS) pod
+	cat $(PUBDICS) | ./pod - -p -i -2 > iroha.spl
+	mergeword < iroha.spl > iroha.t
+	$(RM) iroha.spl
+
+visual.dic: pubdic.p pod
+	./pod pubdic.p -p -v -3 > $@
+
+bio.u: pod pubdic.p
+	./pod pubdic.p -w -1 -k bio > $@
+
+chimei.u: pod pubdic.p
+	./pod pubdic.p -w -1 -k chimei > $@
+
+computer.u: pod pubdic.p
+	./pod pubdic.p -w -1 -k computer > $@
+
+jinmei.u: pod pubdic.p
+	./pod pubdic.p -w -1 -k jinmei > $@
+
+kihon.u: pod pubdic.p
+	./pod pubdic.p -w -1 -k kihon > $@
+
+koyuu.u: pod pubdic.p
+	./pod pubdic.p -w -1 -k koyuu > $@
+
+setsuji.u: pod pubdic.p
+	./pod pubdic.p -w -1 -k setsuji > $@
+
+symbol.u: pod pubdic.p
+	./pod pubdic.p -w -1 -k symbol > $@
+
+tankan.u: pod pubdic.p
+	./pod pubdic.p -w -1 -k tankan > $@
+
+clean::
+	$(RM) $(WNNDICS) iroha.t visual.dic
+	$(RM) $(TARGETS)
+	$(RM) pod.o ctopd.o wtopd.o

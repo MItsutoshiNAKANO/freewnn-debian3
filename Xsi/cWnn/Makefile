@@ -1,0 +1,62 @@
+# Generated automatically from Makefile.in by configure.
+#
+#   $Id: ./Makefile.in $
+#
+
+#
+# FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+# This file is part of FreeWnn.
+# 
+# Copyright Kyoto University Research Institute for Mathematical Sciences
+#                 1987, 1988, 1989, 1990, 1991, 1992
+# Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+# Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+# Copyright FreeWnn Project 1999, 2000
+# 
+# Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+include ../makerule.mk
+
+WNNOWNER = wnn
+
+JSERVERDIR = jserver
+
+WNNJUTILDIR = jutil
+
+WNNCLIENTSDIR = conv
+
+JLIBDIR = include etc romkan jlib
+
+CDICDIR = cdic
+
+TDICDIR = tdic
+
+CDDIR = cd
+
+TDDIR = td
+
+WNNMANDIR = man
+
+SUBDIRS = $(JLIBDIR) $(CDDIR) $(JSERVERDIR) $(WNNCLIENTSDIR) 	$(WNNJUTILDIR) $(CDICDIR) $(TDICDIR) $(WNNMANDIR) $(TDDIR)
+
+install::
+	@for flag in ${MAKEFLAGS} ''; do \
+	case "$$flag" in *=*) ;; *[i]*) set +e;; esac; done; \
+	for i in $(WNNWNNDIR); do if [ -d $(DESTDIR)$$i ]; then \
+	set +x; else (set -x; $(MKDIRHIER) $(DESTDIR)$$i); fi; \
+	done

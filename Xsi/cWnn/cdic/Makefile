@@ -1,0 +1,92 @@
+# Generated automatically from Makefile.in by configure.
+# FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+# This file is part of FreeWnn.
+#
+# Copyright Kyoto University Research Institute for Mathematical Sciences
+#                 1987, 1988, 1989, 1990, 1991, 1992
+# Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+# Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+#
+# Author: OMRON SOFTWARE Co., Ltd. <freewnn@rd.kyoto.omronsoft.co.jp>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with GNU Emacs; see the file COPYING.  If not, write to the
+# Free Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+include ../../makerule.mk
+
+INSTALL      = $/usr/bin/install -c
+INSTALLFLAGS = $(INSTLIBFLAGS) -o $(WNNOWNER)
+
+        ATOD = $(CWNNJUTILSRC)/catod
+        ATOF = $(CWNNJUTILSRC)/catof
+    WNNTOUCH = $(CWNNJUTILSRC)/cwnntouch
+       HINSI = $(CWNNCDSRC)/cixing.data
+#       HINSI = ./cixing.data
+    FZK_FLAG =
+
+   INSTALLFLAGS = -m 644 -o $(WNNOWNER)
+
+FULL = full.con
+FULLR = full.conR
+
+HINSI_SRC = cixing.data
+
+FZK_SRCS = con.attr con.jirattr con.jircon con.master con.shuutan 	   con.masterR con.shuutanR
+
+DIC_SRCS = basic.u 	level_1.u 	level_2.u 	computer.u 	cwnn.u	WuBi.u 	QianMa.u
+
+DICS = basic.dic 	level_1.dic 	level_2.dic 	computer.dic 	cwnn.dic	WuBi.dic 	QianMa.dic
+
+ALLTGT = $(FULL) $(FULLR) $(DICS)
+
+all:: $(ALLTGT)
+
+.SUFFIXES: .dic .u
+
+.u.dic:
+	$(ATOD) -h $(HINSI) $@ < $<
+
+$(DICS): $(HINSI)
+
+$(FULL):: $(FZK_SRCS)
+	$(CPP) $(FZK_FLAG) con.master | egrep -v '^(# |#line |$$)' | $(ATOF) -h $(HINSI) $@
+
+$(FULLR):: $(FZK_SRCS)
+	$(CPP) $(FZK_FLAG) con.masterR | egrep -v '^(# |#line |$$)' | $(ATOF) -h $(HINSI) $@
+
+instserver:: install
+
+install::
+	@case '${MFLAGS}' in *[i]*) set +e;; esac;
+	@for i in $(CWNNDICDIR); do if [ -d $(DESTDIR)$$i ]; then \
+	set +x; else (set -x; $(MKDIRHIER) $(DESTDIR)$$i; \
+	chown $(WNNOWNER) $(DESTDIR)$$i); fi \
+	done
+
+install:: $(ALLTGT)
+	@if [ -d $(DESTDIR)$(CWNNSYSDICDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(CWNNSYSDICDIR)); fi
+	@case '${MFLAGS}' in *[i]*) set +e;; esac;
+	@for i in $(ALLTGT); do if [ -f $(DESTDIR)$(CWNNSYSDICDIR)/$$i ]; then \
+	set +x; \
+	else (set -x; \
+	$(INSTALL) -c $(INSTALLFLAGS) $$i $(DESTDIR)$(CWNNSYSDICDIR); \
+	$(WNNTOUCH) $(DESTDIR)$(CWNNSYSDICDIR)/$$i); fi \
+	done
+
+depend::
+	@echo "skipping make in my dir"
+
+clean::
+	$(RM) $(FULL) $(FULLR) $(DICS)

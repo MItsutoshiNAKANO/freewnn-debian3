@@ -78,7 +78,7 @@ all::
 
      INSTPGMFLAGS = -s
      INSTBINFLAGS = -m 0755
-     INSTUIDFLAGS = -m 4711
+     INSTUIDFLAGS = -m 4755
      INSTLIBFLAGS = -m 0644
      INSTINCFLAGS = -m 0444
      INSTMANFLAGS = -m 0444
@@ -103,7 +103,7 @@ LDOPTIONS = $(CDEBUGFLAGS) $(CCOPTIONS)
 # OMRON INPUT MATHOD MAKE ENV
 #
 
-       WNNOWNER = wnn
+       WNNOWNER = root
 
           IMTOP = $(TOP)
 

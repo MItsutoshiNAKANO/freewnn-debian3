@@ -33,7 +33,14 @@
   (Updatable, Stable) dictionary read routine.
 */
 
+#include <config.h>
+
 #include <stdio.h>
+
+#if defined(HAVE_SYS_TYPES_H)
+#include <sys/types.h>
+#endif
+
 #include "commonhd.h"
 #include "de_header.h"
 #include "jdata.h"

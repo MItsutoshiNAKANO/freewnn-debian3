@@ -48,6 +48,10 @@ extern int errno;               /* Pure BSD */
 
 #include <sys/ioctl.h>
 
+#if defined(HAVE_SYS_TYPES_H)
+#include <sys/types.h>
+#endif
+
 #if (defined(__unix__) || defined(unix)) && !defined(USG)
 #include <sys/param.h>
 #endif
@@ -599,19 +603,55 @@ demon_fin ()
 /*------*/
 
 /**     **/
-void
-gets_cur (cp)
-     register char *cp;
+char *
+gets_cur (buffer, buffer_size)
+     char *buffer;
+     size_t buffer_size;
 {
-  while ((*cp++ = getc_cur ()) != '\0');
+  char *b;
+
+  if (!buffer || !buffer_size)
+    return NULL;
+
+  b = buffer;
+
+  while (--buffer_size && (*b = getc_cur ()) != '\0')
+    b++;
+
+  if (*b != '\0')
+    {
+      *b = '\0';
+      while (getc_cur () != '\0')
+	;
+    }
+
+  return buffer;
 }
 
 /**     **/
-void
-getws_cur (cp)
-     register w_char *cp;
+w_char *
+getws_cur (buffer, buffer_size)
+     w_char *buffer;
+     size_t buffer_size;
 {
-  while ((*cp++ = get2_cur ()) != 0);
+  w_char *b;
+
+  if (!buffer || !buffer_size)
+    return NULL;
+
+  b = buffer;
+
+  while (--buffer_size && (*b = get2_cur ()) != 0)
+    b++;
+  
+  if (*b != 0)
+    {
+      *b = 0;
+      while (getc_cur () != 0)
+	;
+    }
+
+  return buffer;
 }
 
 /**     カレント・クライアントから2バイト取る   **/

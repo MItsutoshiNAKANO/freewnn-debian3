@@ -33,15 +33,19 @@
  *      Command Dispatch routine
  */
 
+#include <config.h>
+
 #include <stdio.h>
+
+#if defined(HAVE_SYS_TYPES_H)
+#include "sys/types.h"
+#endif
 
 #include "commonhd.h"
 #include "demcom.h"
 #include "de_header.h"
 
 extern int cur_clp;
-
-void expand_file_name ();
 
 void
 do_command ()
@@ -236,34 +240,87 @@ do_command ()
         communication routine
  */
 
-void
-get_file_name (p)
-     register char *p;
+char *
+get_file_name (buffer, buffer_size)
+     char *buffer;
+     size_t buffer_size;
 {
-  gets_cur (p);
-  if (p[0] == 0)
-    {
-      return;
-    }
-  expand_file_name (p);
+  buffer = gets_cur (buffer, buffer_size);
+
+  if (!buffer || *buffer == '\0')
+    return NULL;
+
+  return expand_file_name (buffer, buffer_size);
 }
 
-void
-expand_file_name (p)
-     register char *p;
+char *
+expand_file_name (buffer, buffer_size)
+     char *buffer;
+     size_t buffer_size;
 {
-  char path[FILENAME];
-  register char *q;
-  if (*p != '/')
+  char *q;
+
+#ifdef WNN_ALLOW_UNSAFE_PATH
+  if (*buffer != '/')
+#else
+    /* XXX: path under jserver_dir only */
+  if (*buffer != '/' 
+      || strncmp(buffer, jserver_dir, strlen(jserver_dir)) != 0)
+#endif
     {
+      char *path;
+      size_t path_len;
+
+      path_len = strlen (jserver_dir) + strlen (buffer) + 2;
+      if (path_len > buffer_size)
+	return NULL;
+      
+      path = malloc (path_len);
+      if (!path)
+	return NULL;
+
       strcpy (path, jserver_dir);
 /*      strcat(path,c_c->user_name);   */
+#ifndef WNN_ALLOW_UNSAFE_PATH
+      if (path[strlen(path)-1] != '/' && *buffer != '/')
+#endif
       strcat (path, "/");
-      strcat (path, p);
-      strcpy (p, path);
+      strcat (path, buffer);
+      strcpy (buffer, path);
+
+      free (path);
     }
-  for (q = p; *q++;);
+
+#ifndef WNN_ALLOW_UNSAFE_PATH
+ {
+   char *p, *pp, *p0;
+   p = pp = p0 = malloc(strlen(buffer)+1);
+   for  (q = buffer; *q; p++, q++) {
+     if (*q == '/') {
+       while (*(q+1) == '/')
+	 q++;
+       if (strncmp(q, "/..", 3) == 0 && (*(q+3) == '/' || (*(q+3) == '\0'))) {
+	 q += 2;
+	 p = pp-1;
+	 continue;
+       }
+       pp = p;
+     }
+     *p = *q;
+   }
+   *p = '\0';
+   strcpy(buffer, p0);
+   free(p0);
+ }
+ if (strncmp(buffer, jserver_dir, strlen(jserver_dir)) != 0) {
+   /* unsafe path */
+   return NULL; /* XXX */
+ }
+#endif
+  for (q = buffer; *q++; )
+    ;
   q -= 2;
+
   for (;;)
     {
       if (*q != '/')
@@ -273,6 +330,8 @@ expand_file_name (p)
 /*
 fprintf(stderr,"file_name=%s\n",p);
 */
+
+  return buffer;
 }
 
 void

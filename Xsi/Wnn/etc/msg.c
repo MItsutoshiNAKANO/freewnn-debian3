@@ -352,7 +352,7 @@ msg_open (name, nlspath, lang)
         break;
       if (*data == '#')
         continue;               /* comment */
-      for (dp = data; *dp && *dp != '\t'; dp++);       /* msg_id:message\n */
+      for (dp = data; *dp && *dp != '\t'; dp++);        /* msg_id:message\n */
       if (*dp == '\0')
         continue;
       dp++;
@@ -377,7 +377,7 @@ msg_open (name, nlspath, lang)
         break;
       if (*data == '#')
         continue;               /* comment */
-      for (dp = data; *dp && *dp != '\t'; dp++);       /* msg_id:message\n */
+      for (dp = data; *dp && *dp != '\t'; dp++);        /* msg_id:message\n */
       if (*dp == '\0')
         continue;
       *dp = 0;

@@ -273,11 +273,11 @@ expand_file_name (buffer, buffer_size)
 
       path_len = strlen (jserver_dir) + strlen (buffer) + 2;
       if (path_len > buffer_size)
-	return NULL;
-      
+        return NULL;
+
       path = malloc (path_len);
       if (!path)
-	return NULL;
+        return NULL;
 
       strcpy (path, jserver_dir);
 /*      strcat(path,c_c->user_name);   */
@@ -317,7 +317,7 @@ expand_file_name (buffer, buffer_size)
    return NULL; /* XXX */
  }
 #endif
-  for (q = buffer; *q++; )
+  for (q = buffer; *q++;)
     ;
   q -= 2;
 

@@ -225,7 +225,7 @@ extern int cmp_hyouka ();
 extern void del_client ();
 extern void demon_fin ();
 extern char *gets_cur __P ((char *buffer, size_t buffer_size));
-extern w_char *getws_cur __P ((w_char *buffer, size_t buffer_size));
+extern w_char *getws_cur __P ((w_char * buffer, size_t buffer_size));
 extern int get2_cur ();
 extern int get4_cur ();
 extern int getc_cur ();
@@ -241,8 +241,8 @@ extern void js_who ();
 extern void js_kill ();
 /* dispatch.c */
 extern void do_command ();
-extern char *get_file_name ();
-extern char *expand_file_name __P ((char *p, size_t buffer_size));
+extern char *get_file_name __P ((char *buffer, size_t buffer_size));
+extern char *expand_file_name __P ((char *buffer, size_t buffer_size));
 extern void error_ret ();
 /* do_dic_env.c */
 extern void js_dic_add ();

@@ -276,6 +276,9 @@ AC_FUNC_WAIT3
 AC_CHECK_FUNCS(gethostname mkdir select socket strtol)
 AC_CHECK_FUNCS(drand48)
 AC_CHECK_FUNCS(perror)
+AC_CHECK_FUNCS(closesocket setsockopt send recv)
+AC_CHECK_FUNC(setpgrp)
+AC_FUNC_SETPGRP
 
 
 dnl

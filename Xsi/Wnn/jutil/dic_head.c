@@ -52,7 +52,7 @@ int
 input_header (ifpter, jtp, fhp)
      FILE *ifpter;
      struct JT *jtp;
-     struct file_head *fhp;
+     struct wnn_file_head *fhp;
 {
 
   if (input_file_header (ifpter, fhp) == -1 || input_header_jt (ifpter, jtp) == -1)

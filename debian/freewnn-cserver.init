@@ -63,11 +63,11 @@ case "$1" in
 #	start-stop-daemon --start --quiet --pidfile \
 #		/var/run/$NAME.pid --exec $DAEMON
 	rm -f /tmp/cd_sockV4
-	start-stop-daemon --start --quiet -chuid cwnn --exec $DAEMON
+	start-stop-daemon --start --quiet --chuid cwnn --exec $DAEMON
 	echo "$NAME."
 	;;
   *)
-	N=/etc/init.d/$NAME
+	N=/etc/init.d/freewnn-$NAME
 	# echo "Usage: $N {start|stop|restart|reload|force-reload}" >&2
 	echo "Usage: $N {start|stop|restart|force-reload}" >&2
 	exit 1

@@ -68,7 +68,7 @@ file_init ()
 /* #define MODE (0000000 | 0000777) */
 /* #define      MODE (0040000 | 0000731) */
 /* #define      MODE (0000000 | 0000733) */
-#define MODE (0000000 | 0000755)
+#define      MODE (0000000 | 0000755)
 
 void
 js_mkdir ()

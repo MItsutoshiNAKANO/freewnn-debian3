@@ -19,8 +19,7 @@ set -e
 case "$1" in
    purge)
    	rm -rf /var/lib/wnn/ko_KR/dic || true
-	#deluser --remove-home kwnn
-	userdel -r kwnn || true
+	deluser --remove-home kwnn
 	;;
 
    remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)

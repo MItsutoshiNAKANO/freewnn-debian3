@@ -20,8 +20,7 @@ case "$1" in
    purge)
    	rm -rf /var/lib/wnn/zh_CN/dic || true
 	rm -rf /var/lib/wnn/zh_TW/dic || true
-	#deluser --remove-home cwnn
-	userdel -r cwnn || true
+	deluser --remove-home cwnn
        ;;
 
    remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)

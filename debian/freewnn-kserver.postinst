@@ -24,11 +24,9 @@ set -e
 
 case "$1" in
     configure)
-        adduser --system --home /var/lib/wnn/ko_KR --gecos "FreeWnn kserver" --disabled-password  kwnn || true
-        #ln -sf ../../../../var/lib/wnn/ko_KR/dic /usr/share/wnn/ko_KR
-	mkdir -p /var/lib/wnn/ko_KR/dic/usr || true
+        adduser --system --home /var/lib/wnn/ko_KR --gecos "FreeWnn kserver" --disabled-password --disabled-login kwnn
+        ln -sf ../../../../var/lib/wnn/ko_KR/dic /usr/share/wnn/ko_KR
 	chown -R kwnn /var/lib/wnn/ko_KR/dic
-	chown -R kwnn /usr/lib/wnn/ko_KR/dic
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)

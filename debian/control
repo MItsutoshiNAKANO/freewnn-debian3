@@ -2,11 +2,12 @@ Source: freewnn
 Section: utils
 Priority: optional
 Maintainer: Keita Maehara <maehara@debian.org>
-Standards-Version: 3.0.1
+Standards-Version: 3.5.1
+Build-Depends: debhelper, libncurses5-dev
 
 Package: freewnn-common
 Architecture: all
-Conflicts: wnn-common
+Conflicts: wnn-common, freewnn-jserver (<< 1.1.0+1.1.1-a017-4)
 Replaces: wnn-common
 Description: Files shared among freewnn packages
  This package contains files that is needed by three freewnn packages
@@ -14,10 +15,9 @@ Description: Files shared among freewnn packages
 
 Package: freewnn-jserver
 Architecture: any
-Depends: freewnn-common, ${shlibs:Depends}
+Depends: freewnn-common, adduser (>= 3.34), ${shlibs:Depends}
 Conflicts: wnn
 Replaces: wnn
-Provides: wnn
 Description: Japanese input system
  Wnn is a network-extensible Kana-to-Kanji conversion system and was
  jointly developed and released by the Software Research Group of
@@ -26,10 +26,9 @@ Description: Japanese input system
 
 Package: freewnn-cserver
 Architecture: any
-Depends: freewnn-common, ${shlibs:Depends}
+Depends: freewnn-common, adduser (>= 3.34), ${shlibs:Depends}
 Conflicts: cwnn
 Replaces: cwnn
-Provides: wnn
 Description: Chinese input system
  cWnn is an integrated Chinese input system running on Unix
  workstation. It supports a wide range of input methods, satisfying
@@ -40,10 +39,9 @@ Description: Chinese input system
 
 Package: freewnn-kserver
 Architecture: any
-Depends: freewnn-common, ${shlibs:Depends}
+Depends: freewnn-common, adduser (>= 3.34), ${shlibs:Depends}
 Conflicts: kwnn
 Replaces: kwnn
-Provides: wnn
 Description: Korean input system
  kWnn is an integrated Korean input system running on Unix
  workstation. It supports a wide range of input methods, satisfying

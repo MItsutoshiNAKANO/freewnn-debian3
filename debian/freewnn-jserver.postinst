@@ -24,12 +24,10 @@ set -e
 
 case "$1" in
     configure)
-        adduser --system --home /var/lib/wnn/ja_JP --gecos "FreeWnn jserver" --disabled-password  wnn || true
-        #ln -sf ../../../../var/lib/wnn/ja_JP/dic /usr/share/wnn/ja_JP
-	mkdir -p /var/lib/wnn/ja_JP/dic/usr || true
+        adduser --system --home /var/lib/wnn/ja_JP --gecos "FreeWnn jserver" --disabled-password --disabled-login wnn
+        ln -sf ../../../../var/lib/wnn/ja_JP/dic /usr/share/wnn/ja_JP
 	chown -R wnn /var/lib/wnn/ja_JP/dic
-	chown -R wnn /usr/lib/wnn/ja_JP/dic
-	;;
+    ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
 

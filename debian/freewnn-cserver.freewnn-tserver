@@ -12,9 +12,9 @@
 # This file was automatically customized by dh-make on Thu, 15 Jul 1999 23:10:35 +0900
 
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-DAEMON=/usr/bin/Wnn4/jserver
-NAME=jserver
-DESC="FreeWnn Japanese server"
+DAEMON=/usr/bin/cWnn4/tserver
+NAME=tserver
+DESC="FreeWnn Taiwanese server"
 
 test -f $DAEMON || exit 0
 
@@ -25,8 +25,8 @@ case "$1" in
 	echo -n "Starting $DESC: "
 #	start-stop-daemon --start --quiet --pidfile /var/run/$NAME.pid \
 #		--exec $DAEMON
-	rm -f /tmp/jd_sockV4
-	start-stop-daemon --start --quiet --chuid wnn --exec $DAEMON
+	rm -f /tmp/td_sockV4
+	start-stop-daemon --start --quiet chuid cwnn --exec $DAEMON
 	echo "$NAME."
 	;;
   stop)
@@ -34,7 +34,7 @@ case "$1" in
 #	start-stop-daemon --stop --quiet --pidfile /var/run/$NAME.pid \
 #		--exec $DAEMON
 	start-stop-daemon --stop --quiet --exec $DAEMON
-	rm -f /tmp/jd_sockV4
+	rm -f /tmp/td_sockV4
 	echo "$NAME."
 	;;
   #reload)
@@ -60,10 +60,10 @@ case "$1" in
 #		/var/run/$NAME.pid --exec $DAEMON
 	start-stop-daemon --stop --quiet --exec $DAEMON
 	sleep 1
-	rm -f /tmp/jd_sockV4
+	rm -f /tmp/td_sockV4
 #	start-stop-daemon --start --quiet --pidfile \
 #		/var/run/$NAME.pid --exec $DAEMON
-	start-stop-daemon --start --quiet --chuid wnn --exec $DAEMON
+	start-stop-daemon --start --quiet --chuid cwnn --exec $DAEMON
 	echo "$NAME."
 	;;
   *)

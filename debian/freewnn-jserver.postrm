@@ -19,8 +19,7 @@ set -e
 case "$1" in
    purge)
        rm -rf /var/lib/wnn/ja_JP/dic || true
-       #deluser --remove-home wnn
-	userdel -r wnn || true
+       deluser --remove-home wnn
        ;;
 
    remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)

@@ -1,5 +1,5 @@
 /*
- *  $Id: copyright.h $
+ *  $Id: mkdir.c $
  */
 
 /*
@@ -65,12 +65,12 @@ mkdir (path, mode)
   args[0] = "/bin/mkdir";
   args[1] = path;
   args[2] = NULL;
-  
+
   if (!fork ())
     execv (args[0], args);
-  else 
+  else
     wait (&status);
-  
+
   return !(WIFEXITED (status));
 }
 #endif

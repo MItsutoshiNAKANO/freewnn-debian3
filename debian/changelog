@@ -1,33 +1,81 @@
-freewnn (1.1.0+1.1.1-a016-1.potato.3) stable; urgency=high
+freewnn (1.1.0+1.1.1-a017-7) unstable; urgency=low
+
+  * Maintainer release (closes: Bug#109314).
+  * Now server packages depend on adduser (>= 3.34) (closes:
+    Bug#121806).
+  * Fixed location of Japanese manpages in freewnn-jserver-dev (closes:
+    Bug#119957).
+
+ -- Keita Maehara <maehara@debian.org>  Fri, 14 Dec 2001 23:31:23 +0900
+
+freewnn (1.1.0+1.1.1-a017-6.4) unstable; urgency=high
 
   * Non Maintainer Upload
-  * fix maintainer script bugs for potato
-    closes: Bug#109314
-
- -- Fumitoshi UKAI <ukai@debian.or.jp>  Mon, 20 Aug 2001 21:28:13 +0900
-
-freewnn (1.1.0+1.1.1-a016-1.potato.2) stable; urgency=high
-
-  * Non Maintainer Upload
-  * previous security fix has some bug in postinst
-    potato's adduser doesn't have --disabled-login, so installation/upgrade
-    would be failed on potato system (reported on debian-users@debian.or.jp)
-  * symlink failed because potato version of freewnn doesn't have
-    /usr/share/wnn directory. Fix it
-  * potato doesn't have deluser, use userdel instead in postrm
-
- -- Fumitoshi UKAI <ukai@debian.or.jp>  Mon, 20 Aug 2001 16:28:19 +0900
-
-freewnn (1.1.0+1.1.1-a016-1.potato.1) stable; urgency=high
-
-  * Non Maintainer Upload
-    acknowledged by maintainer maeraha@debian.org
-  * [security fix] backport from freewnn 1.1.0+1.1.1-a017-6.4
+    acknowledged by maintainer Keita Maehara
+  * [security fix]
     - adduser wnn, kwnn, cwnn for jserver,kserver,cserver respectively
       instead of running as root user
     - restrict upload/create path under jserver_dir
 
- -- Fumitoshi UKAI <ukai@debian.or.jp>  Fri, 17 Aug 2001 01:10:18 +0900
+ -- Fumitoshi UKAI <ukai@debian.or.jp>  Fri, 17 Aug 2001 00:27:02 +0900
+
+freewnn (1.1.0+1.1.1-a017-6.3) unstable; urgency=low
+
+  * use different home dir for freewnn-{jserver,kserver,cserver}
+
+ -- Fumitoshi UKAI <ukai@debian.or.jp>  Thu, 16 Aug 2001 00:31:30 +0900
+
+freewnn (1.1.0+1.1.1-a017-6.2) unstable; urgency=low
+
+  * [security fix]
+    - missing check jserver_dir
+
+ -- Fumitoshi UKAI <ukai@debian.or.jp>  Wed, 15 Aug 2001 23:29:03 +0900
+
+freewnn (1.1.0+1.1.1-a017-6.1) unstable; urgency=high
+
+  * [security fix]
+    - adduser wnn, kwnn, cwnn for jserver,kserver,cserver respectively
+    - restrict path under jserver_dir
+
+ -- Fumitoshi UKAI <ukai@debian.or.jp>  Wed, 15 Aug 2001 15:58:17 +0900
+
+freewnn (1.1.0+1.1.1-a017-6) unstable; urgency=low
+
+  * Added init script for tserver.
+
+ -- Keita Maehara <maehara@debian.org>  Tue, 22 May 2001 22:17:11 +0900
+
+freewnn (1.1.0+1.1.1-a017-5) unstable; urgency=low
+
+  * Added build-time dependency on libncurses5-dev (closes: Bug#93637).
+
+ -- Keita Maehara <maehara@debian.org>  Wed, 11 Apr 2001 20:52:02 +0900
+
+freewnn (1.1.0+1.1.1-a017-4) unstable; urgency=low
+
+  * Reorganized file location.
+
+ -- Keita Maehara <maehara@debian.org>  Mon,  2 Apr 2001 01:18:50 +0900
+
+freewnn (1.1.0+1.1.1-a017-3) unstable; urgency=low
+
+  * Packages freewnn-[cjk]server don't provide "wnn" anymore (closes:
+    Bug#86615).
+
+ -- Keita Maehara <maehara@debian.org>  Mon, 19 Feb 2001 22:05:36 +0900
+
+freewnn (1.1.0+1.1.1-a017-2) unstable; urgency=low
+
+  * Fixed location of manpages (closes: Bug#69871).
+
+ -- Keita Maehara <maehara@debian.org>  Fri, 25 Aug 2000 21:00:19 +0900
+
+freewnn (1.1.0+1.1.1-a017-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Keita Maehara <maehara@debian.org>  Thu, 29 Jun 2000 23:30:57 +0900
 
 freewnn (1.1.0+1.1.1-a016-1) frozen unstable; urgency=low
 

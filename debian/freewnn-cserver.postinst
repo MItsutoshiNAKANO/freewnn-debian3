@@ -24,13 +24,10 @@ set -e
 
 case "$1" in
     configure)
-	adduser --system --home /var/lib/wnn/zh_CN --gecos "FreeWnn cserver" --disabled-password  cwnn || true
-	#ln -sf ../../../../var/lib/wnn/zh_CN/dic /usr/share/wnn/zh_CN
-        #ln -sf ../../../../var/lib/wnn/zh_TW/dic /usr/share/wnn/zh_TW
-	#chown -R cwnn /var/lib/wnn/zh_CN/dic /var/lib/wnn/zh_TW/dic
-	mkdir -p /var/lib/wnn/zh_CN/dic/usr /var/lib/wnn/zh_TW/dic/usr || true
+	adduser --system --home /var/lib/wnn/zh_CN --gecos "FreeWnn cserver" --disabled-password --disabled-login cwnn
+        ln -sf ../../../../var/lib/wnn/zh_CN/dic /usr/share/wnn/zh_CN
+        ln -sf ../../../../var/lib/wnn/zh_TW/dic /usr/share/wnn/zh_TW
 	chown -R cwnn /var/lib/wnn/zh_CN/dic /var/lib/wnn/zh_TW/dic
-	chown -R cwnn /usr/lib/wnn/zh_CN/dic /usr/lib/wnn/zh_TW/dic
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)

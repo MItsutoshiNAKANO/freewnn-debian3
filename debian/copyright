@@ -1,10 +1,17 @@
 This package was debianized by Keita Maehara <maehara@debian.org> on
 Thu, 15 Jul 1999 23:10:35 +0900.
 
-It was downloaded from ftp://ftp.freewnn.org/pub/FreeWnn/alpha/FreeWnn-1.1.1-a013.tar.gz
+It was downloaded from ftp://ftp.freewnn.org/pub/FreeWnn/alpha/FreeWnn-1.1.1-a019.tar.gz
 
-Upstream Author(s): OMRON SOFTWARE Co., Ltd. <freewnn@rd.kyoto.omronsoft.co.jp>
+Upstream Authors:
+
+Copyright Kyoto University Research Institute for Mathematical Sciences 
+1987, 1988, 1989, 1990, 1991, 1992
+Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+Copyright FreeWnn Project <freewnn@tomo.gr.jp> 1999, 2000, 2001
 
 Copyright:
 
-GPL
+GPL (/usr/share/common-licenses/GPL)
+

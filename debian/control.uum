@@ -142,3 +142,13 @@ Description: Header files and static library for kWnn (FreeWnn kserver)
  kWnn. Install this package if you wish to develop your own kWnn
  client programs.
 
+Package: uum
+Section: utils
+Architecture: any
+Depends: ${shlibs:Depends}
+Conflicts: freewnn-jserver (<< 1.1.0+1.1.1-a019-1)
+Description: Kana-To-Kanji conversion front-end processor for FreeWnn jserver
+ Uum is a command line utility which provides Japanese input/output
+ environment on the terminal. Uum is able to connect with FreeWnn
+ jserver of other machine via the internet.
+

@@ -1,9 +1,0 @@
-
-Files in this directory are all text files, in which the PZY-char set is  
-defined to shows alpha-beta of Pinyin and Zhuyin with SiSheng.  This code-set 
-is defined as a subset of EUC codes set for Chinese.  We call this as UGB.
-
-	ASCII		 	  0xxxxxxx
-	Hanzi		1xxxxxxx  1xxxxxxx	(in GB code used in mainland)
-	PZY-char 	  SS2	  1xxxxxxx	(NOTE, SS2 == 0x8e)
-

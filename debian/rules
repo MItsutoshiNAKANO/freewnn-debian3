@@ -12,52 +12,65 @@
 # This is the debhelper compatability version to use.
 export DH_COMPAT=3
 
-configure: configure-stamp
-configure-stamp:
+package         := freewnn
+PWD             := $(shell pwd)
+CFLAGS          := -O2 -Wall
+INSTALL = install
+INSTALL_DATA    := $(INSTALL) -m644
+INSTALL_DIR     := $(INSTALL) -p -d -o root -g root  -m  755
+INSTALL_FILE    := $(INSTALL) -p    -o root -g root  -m  644
+INSTALL_PROGRAM := $(INSTALL) -m755
+INSTALL_SCRIPT  := $(INSTALL) -p    -o root -g root  -m  755
+SCRIPT_DIR     = /usr/share/dbs
+
+TAR_DIR := FreeWnn-1.10-pl020
+include $(SCRIPT_DIR)/dbs-build.mk
+
+ifeq (,$(DEB_BUILD_GNU_TYPE))
+  include $(SCRIPT_DIR)/dpkg-arch.mk
+endif
+
+DEBIAN_ROOT := $(PWD)/debian/$(package)
+
+configure: $(STAMP_DIR)/stamp-configure
+$(STAMP_DIR)/stamp-configure: $(patched)
 	dh_testdir
-	# Add here commands to configure the package.
-	cd Xsi && ./configure --prefix=/usr --mandir=/usr/share/man
 
-	touch configure-stamp
+	cd $(BUILD_TREE) && ./configure --prefix=/usr --mandir=/usr/share/man --enable-client=yes
 
-build: configure-stamp build-stamp
-build-stamp:
+	touch $(STAMP_DIR)/stamp-configure
+
+build: $(STAMP_DIR)/stamp-build
+$(STAMP_DIR)/stamp-build: $(patched) $(STAMP_DIR)/stamp-configure
 	dh_testdir
+	cd $(BUILD_TREE) && $(MAKE)
 
-	# Add here commands to compile the package.
-	cd Xsi && $(MAKE)
-
-	touch build-stamp
+	touch $(STAMP_DIR)/stamp-build
 
 clean:
 	dh_testdir
-	dh_testroot
-	rm -f build-stamp configure-stamp
-
-	# Add here commands to clean up after the build process.
-	-cd Xsi && $(MAKE) clean
-
+	rm -rf $(STAMP_DIR) $(SOURCE_DIR)
+	perl $(SCRIPT_DIR)/dbs_split clean
 	dh_clean
 
-install: DH_OPTIONS=
-install: build
+install:
 	dh_testdir
 	dh_testroot
 	dh_clean -k
 	dh_installdirs
 
-	# Add here commands to install the package into debian/tmp.
-	cd Xsi && $(MAKE) install DESTDIR=$(CURDIR)/debian/tmp
-	cd Xsi && $(MAKE) install.man DESTDIR=$(CURDIR)/debian/tmp
+	cd $(BUILD_TREE) && \
+	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp && \
+	$(MAKE) install.man DESTDIR=$(CURDIR)/debian/tmp
 
 	dh_movefiles
 
 	mkdir -p $(CURDIR)/debian/freewnn-common/usr/share/man/ja
 	mkdir -p $(CURDIR)/debian/freewnn-jserver/usr/share/man/ja
-	mkdir -p $(CURDIR)/debian/freewnn-jserver-dev/usr/share/man/ja
+	mkdir -p $(CURDIR)/debian/libwnn-dev/usr/share/man/ja
 	mv $(CURDIR)/debian/freewnn-common/usr/share/man/man? $(CURDIR)/debian/freewnn-common/usr/share/man/ja
 	mv $(CURDIR)/debian/freewnn-jserver/usr/share/man/man? $(CURDIR)/debian/freewnn-jserver/usr/share/man/ja
-	mv $(CURDIR)/debian/freewnn-jserver-dev/usr/share/man/man? $(CURDIR)/debian/freewnn-jserver-dev/usr/share/man/ja
+	mv $(CURDIR)/debian/libwnn-dev/usr/share/man/man? $(CURDIR)/debian/libwnn-dev/usr/share/man/ja
 
 # Build architecture-independent files here.
 # Pass -i to all debhelper commands in this target to reduce clutter.
@@ -65,7 +78,7 @@ binary-indep: build install
 	dh_testdir -i
 	dh_testroot -i
 #	dh_installdebconf -i
-	dh_installdocs -i
+	dh_installdocs -i $(BUILD_TREE)/ChangeLog $(BUILD_TREE)/ChangeLog.old $(BUILD_TREE)/CONTRIBUTORS $(BUILD_TREE)/COPYRIGHT $(BUILD_TREE)/COPYRIGHT-j
 	dh_installexamples -i
 	dh_installmenu -i
 #	dh_installlogrotate -i
@@ -77,7 +90,7 @@ binary-indep: build install
 #	dh_installman -i
 	dh_installinfo -i
 #	dh_undocumented -i
-	dh_installchangelogs  -i
+	dh_installchangelogs -i $(BUILD_TREE)/ChangeLog.en
 	dh_link -i
 	dh_compress -i
 	dh_fixperms -i
@@ -105,12 +118,12 @@ binary-arch: build install
 #	dh_installman -a
 	dh_installinfo -a
 	dh_undocumented -a
-	dh_installchangelogs  -a
+	dh_installchangelogs -a $(BUILD_TREE)/ChangeLog.en
 	dh_strip -a
 	dh_link -a
 	dh_compress -a
 	dh_fixperms -a
-#	dh_makeshlibs -a
+	dh_makeshlibs -a
 	dh_installdeb -a
 #	dh_perl -a
 	dh_shlibdeps -a

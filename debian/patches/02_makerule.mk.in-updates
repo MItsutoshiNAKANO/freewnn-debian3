@@ -1,0 +1,63 @@
+diff -urN FreeWnn-1.10-pl020.orig/makerule.mk.in FreeWnn-1.10-pl020/makerule.mk.in
+--- FreeWnn-1.10-pl020.orig/makerule.mk.in	2001-09-16 20:38:35.000000000 +0900
++++ FreeWnn-1.10-pl020/makerule.mk.in	2004-01-01 23:02:47.000000000 +0900
+@@ -107,15 +107,16 @@
+ # OMRON INPUT METHOD MAKE ENV
+ #
+ 
+-       WNNOWNER = wnn
++       WNNOWNER = root
+ 
+           IMTOP = $(TOP)
+ 
+          prefix = @prefix@
+     exec_prefix = @exec_prefix@
+          PREFIX = @prefix@
+-      WNNWNNDIR = ${PREFIX}/lib/wnn
++      WNNWNNDIR = ${PREFIX}/share/wnn
+       WNNBINDIR = ${PREFIX}/bin
++      WNNVARDIR = /var/lib/wnn
+       WNNINCDIR = @includedir@
+       WNNLIBDIR = @libdir@
+     WNNTERM_LIB = -ltermcap
+@@ -127,8 +128,9 @@
+        JWNNLANG = ja_JP
+      JWNNWNNDIR = $(WNNWNNDIR)/$(JWNNLANG)
+      JWNNBINDIR = $(WNNBINDIR)/Wnn4
++     JWNNVARDIR = $(WNNVARDIR)/$(JWNNLANG)
+      JWNNINCDIR = $(WNNINCDIR)/wnn
+-     JWNNDICDIR = $(JWNNWNNDIR)/dic
++     JWNNDICDIR = $(JWNNVARDIR)/dic
+   JWNNPUBDICDIR = $(JWNNDICDIR)/pubdic
+ JWNNWNNCONSDICDIR = $(JWNNDICDIR)/wnncons
+   JWNNFZKSRCDIR = $(JWNNDICDIR)/src
+@@ -158,7 +160,8 @@
+      CWNNWNNDIR = $(WNNWNNDIR)/$(CWNNLANG)
+      CWNNINCDIR = $(WNNINCDIR)/cwnn
+      CWNNBINDIR = $(WNNBINDIR)/cWnn4
+-     CWNNDICDIR = $(CWNNWNNDIR)/dic
++     CWNNVARDIR = $(WNNVARDIR)/$(CWNNLANG)
++     CWNNDICDIR = $(CWNNVARDIR)/dic
+   CWNNSYSDICDIR = $(CWNNDICDIR)/sys
+       CWNNCDSRC = $(CWNNTOP)/cd
+     CWNNCDICSRC = $(CWNNTOP)/cdic
+@@ -182,7 +185,8 @@
+      KWNNWNNDIR = $(WNNWNNDIR)/$(KWNNLANG)
+      KWNNINCDIR = $(WNNINCDIR)/kwnn
+      KWNNBINDIR = $(WNNBINDIR)/kWnn4
+-     KWNNDICDIR = $(KWNNWNNDIR)/dic
++     KWNNVARDIR = $(WNNVARDIR)/$(KWNNLANG)
++     KWNNDICDIR = $(KWNNVARDIR)/dic
+   KWNNSYSDICDIR = $(KWNNDICDIR)/sys
+       KWNNKDSRC = $(KWNNTOP)/kd
+     KWNNKDICSRC = $(KWNNTOP)/kdic
+@@ -203,7 +207,8 @@
+ 
+        TWNNLANG = zh_TW
+      TWNNWNNDIR = $(WNNWNNDIR)/$(TWNNLANG)
+-     TWNNDICDIR = $(TWNNWNNDIR)/dic
++     TWNNVARDIR = $(WNNVARDIR)/$(TWNNLANG)
++     TWNNDICDIR = $(TWNNVARDIR)/dic
+   TWNNSYSDICDIR = $(TWNNDICDIR)/sys
+       TWNNTDSRC = $(CWNNTOP)/td
+     TWNNTDICSRC = $(CWNNTOP)/tdic

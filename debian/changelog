@@ -1,3 +1,11 @@
+freewnn (1.1.0+1.1.1-a021-1) unstable; urgency=low
+
+  * New upstream release (closes: Bug#376893).
+  * Removed 01_makerule.mk.in-updates (incorporated upstream).
+  * Fixed typo (closes: Bug#360830).
+
+ -- Keita Maehara <maehara@debian.org>  Sat, 26 Aug 2006 09:02:38 +0900
+
 freewnn (1.1.0+1.1.1-a020-1) unstable; urgency=low
 
   * New upstream release.

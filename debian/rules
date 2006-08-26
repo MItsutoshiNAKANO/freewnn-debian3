@@ -23,7 +23,7 @@ INSTALL_PROGRAM := $(INSTALL) -m755
 INSTALL_SCRIPT  := $(INSTALL) -p    -o root -g root  -m  755
 SCRIPT_DIR     = /usr/share/dbs
 
-TAR_DIR := FreeWnn-1.10-pl020
+TAR_DIR := FreeWnn-1.1.1-a021
 include $(SCRIPT_DIR)/dbs-build.mk
 
 ifeq (,$(DEB_BUILD_GNU_TYPE))

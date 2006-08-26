@@ -10,7 +10,7 @@ Architecture: all
 Conflicts: wnn-common, freewnn-jserver (<< 1.1.0+1.1.1-a017-4)
 Replaces: wnn-common
 Description: Files shared among the FreeWnn packages
- FreeWnn is a network-extensible Japanese/Chinece/Korean input
+ FreeWnn is a network-extensible Japanese/Chinese/Korean input
  system.  It was jointly developed and released by the Software
  Research Group of Kyoto University Research Institute for
  Mathematical Science, OMRON Corporation and Astec, Inc. and now

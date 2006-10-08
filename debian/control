@@ -2,8 +2,8 @@ Source: freewnn
 Section: utils
 Priority: optional
 Maintainer: Keita Maehara <maehara@debian.org>
-Build-Depends: dbs, debhelper (>> 3.0.0), libncurses5-dev
-Standards-Version: 3.5.8
+Build-Depends: dbs, debhelper (>> 4.0.0), libncurses5-dev
+Standards-Version: 3.7.2
 
 Package: freewnn-common
 Architecture: all

@@ -1,3 +1,12 @@
+freewnn (1.1.0+1.1.1-a021-1.2) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * postrm no longer calls deluser if not installed when purging.
+  * postrm no longer uses --remove-home if not available when purging.
+  (Closes: #431514, #431515)
+
+ -- Arnaud Hocevar <arnaud@hocevar.net>  Sat, 29 Sep 2007 17:25:51 +0000
+
 freewnn (1.1.0+1.1.1-a021-1.1) unstable; urgency=low
 
   * Non-maintainer upload.

@@ -13,7 +13,6 @@
 export DH_COMPAT=4
 
 package         := freewnn
-PWD             := $(shell pwd)
 CFLAGS          := -O2 -Wall
 INSTALL = install
 INSTALL_DATA    := $(INSTALL) -m644
@@ -30,7 +29,7 @@ ifeq (,$(DEB_BUILD_GNU_TYPE))
   include $(SCRIPT_DIR)/dpkg-arch.mk
 endif
 
-DEBIAN_ROOT := $(PWD)/debian/$(package)
+DEBIAN_ROOT := $(CURDIR)/debian/$(package)
 
 configure: $(STAMP_DIR)/stamp-configure
 $(STAMP_DIR)/stamp-configure: $(patched)

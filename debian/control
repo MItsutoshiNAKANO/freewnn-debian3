@@ -93,7 +93,7 @@ Description: FreeWnn library for kWnn (FreeWnn kserver)
  This package contains the dynamic libraries for kWnn.
 
 Package: libwnn-dev
-Section: devel
+Section: libdevel
 Architecture: any
 Depends: ${shlibs:Depends}
 Conflicts: wnn6-dev, wnn-dev, freewnn-jserver-dev
@@ -110,7 +110,7 @@ Description: Header files and static libraries for Wnn (FreeWnn jserver)
  programs.
 
 Package: libcwnn-dev
-Section: devel
+Section: libdevel
 Architecture: any
 Depends: ${shlibs:Depends}
 Conflicts: cwnn-dev, freewnn-cserver-dev
@@ -128,7 +128,7 @@ Description: Header files and static library for cWnn (FreeWnn cserver)
  client programs.
 
 Package: libkwnn-dev
-Section: devel
+Section: libdevel
 Architecture: any
 Depends: ${shlibs:Depends}
 Conflicts: kwnn-dev, freewnn-kserver-dev

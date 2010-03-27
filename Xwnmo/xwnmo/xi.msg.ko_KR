@@ -1,0 +1,88 @@
+#
+# $Id: xi.msg.ko_KR,v 1.1.2.1 1999/02/08 08:09:01 yamasita Exp $
+
+# FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+# This file is part of FreeWnn.
+# 
+# Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+# Copyright 1991 by Massachusetts Institute of Technology
+#
+# Author: OMRON SOFTWARE Co., Ltd. <freewnn@rd.kyoto.omronsoft.co.jp>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with GNU Emacs; see the file COPYING.  If not, write to the
+# Free Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+# Commentary:
+#
+# Change log:
+#
+# Last modified date: 8,Feb.1999
+#
+###
+###	ko_KR message file for xim
+###
+0	사전 빈도와 유저 사전을 저장 했읍니다.
+1	다음 후보 선택 (소문절)
+2	다음 후보 선택 (대문절)
+3	후보가 너무 많아서 다음 후보를 불러올 수 없읍니다.
+4	빈도
+5	평가치
+6	전단 벡터
+7	대문절 평가치
+8	한글
+9	을 소거 하겠습니까?
+10	고정형식 사전의 엔트리는 소거할 수 없읍니다.
+11	읽기전용 사전의 엔트리는 소거할 수 없읍니다.
+12	[
+13	] 을 소거하겠습니다.
+14	읽기전용 빈도는 변경 할수 없읍니다.
+15	] 의 사용을 중지 합니다.
+16	취소
+17	KSC코드 입력
+18	KSC코드를 입력 하십시오.
+19	실행
+20	사전 유틸리티
+21	기본 uumkey 화일을 열 수 없읍니다.
+22	을 전개할 수 없읍니다.
+23	키가 이중으로 정의되어 있읍니다.
+24	구점 입력
+25	구점을 입력하십시오.
+26	구
+27	kserver와 접촉이 끊어 졌읍니다.
+28	기본 uumrc 화일을 열 수 없읍니다.
+29	접촉
+30	호스트 이름을 입력하십시오.
+31	접촉이 안됩니다.
+32	접촉에 실패했읍니다.
+33	접촉이 되었읍니다.
+34	조사
+35	소거
+36	사용/사용않음
+37	다음
+38	전
+39	마우스 선택
+40	키 선택
+41	다음 페이지
+42	전 페이지
+43	사전 추가
+44	사전 일람
+45	등록
+46	검색
+47	패러미터 경신
+48	빈도 저장
+49	사전 정보
+50	부속어 변경
+51	예
+52	아니오
+53	OK ?

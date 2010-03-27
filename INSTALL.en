@@ -1,0 +1,121 @@
+#
+#   $Id: INSTALL.en,v 1.6 2007/06/23 16:34:16 aonoto Exp $
+#
+
+#
+# FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+# This file is part of FreeWnn.
+# 
+# Copyright Kyoto University Research Institute for Mathematical Sciences
+#                 1987, 1988, 1989, 1990, 1991, 1992
+# Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+# Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+# Copyright FreeWnn Project 1999, 2000, 2002, 2006, 2007
+# 
+# Maintainer:  FreeWnn Project
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+        How to install FreeWnn
+
+
+[Basic Method of Installation]
+
+1. expand FreeWnn tarball.
+
+        $ gzcat FreeWnn-*.tar.gz | tar xvf -
+
+        *1: You should use appropriate filename depending the FreeWnn version.
+
+2. change directory to FreeWnn-*/
+
+        $ cd FreeWnn-*
+
+3. run configure
+
+        $ ./configure
+
+	*2: For configure options, see below or type `./configure --help'.
+
+4. run make
+
+        $ make
+
+5. To install commands, libraries, dictionaries and so on,
+   run make install as a superuser(*3).
+
+        $ su
+        # make install
+
+	*3: Currently, install target does not work well for other user.
+
+6. To install manuals, you should do the following as a superuser
+
+        # make install.man
+
+   *4: You can ommit this if you do not want manuals installed.
+
+[Configure options]
+
+Typing
+
+        $ ./configure --help
+
+will give you list of options that configure accepts.
+For example, changing install directory from the default /usr/local to
+/opt/freewnn, use --prefix option:
+
+	$ ./configure --prefix=/opt/freewnn
+
+Below are the main configure option of FreeWnn.
+
+  enabled by default:
+  --enable-libraries    compile and install FreeWnn libraries.
+  --enable-server       compile and install FreeWnn servers.
+  --enable-Wnn          compile and install Wnn (Japanese).
+  --enable-cWnn         compile and install cWnn (Chinese).
+  --enable-kWnn         compile and install kWnn (Korean).
+
+  disabled by default:
+  --enable-ipv6         enable IPv6 feature.
+  --enable-unsafe-path  allow creating files in jserver_dir (*5).
+  --enable-client	compile and install uum.
+
+  auto determine by default:
+  --with-libwrap	use libwrap (in TCP wrapper) for jserver
+			to enable connection-based access control (*6).
+  --enable-client-utmp  (if --enable-client specified,) uum register
+			pseudo tty information to utmp. (Except some systems,
+			it is enabled by default.)
+  --enable-client-setuid[=user]
+			(if --enable-client specified,) install uum as set-uid
+			program with specified user (root by default).
+			If this option (itself) is not specified,
+			configure determine if set-uid install is needed.
+  --enable-client-setgid=group
+			(if --enable-client specified,) install uum as set-gid
+			program with specified group (you must specify group).
+			If this option (itself) is not specified,
+			configure determine if set-gid install is needed.
+
+*5: If the option --enable-unsafe-path is enabled, the [cjkt]server
+  daemons accept creation of an FreeWnn dictionary file in an arbitrary
+  path, and they accept request from client of any hosts.
+  This feature may be a security hole.
+  Unless you used to place FreeWnn dictionary files in a path other than
+  jserver_dir (lib/wnn/$LANG/dic/usr), you should not enable this feature.
+
+*6: If you specify --enable-ipv6, libwrap need to support IPv6 also.

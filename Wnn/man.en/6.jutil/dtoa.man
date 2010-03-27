@@ -1,0 +1,91 @@
+.\"
+.\"   $Id: dtoa.man,v 1.1 2001/06/18 09:09:49 ura Exp $
+.\"
+.\"
+.\" FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+.\" This file is part of FreeWnn.
+.\" 
+.\" Copyright Kyoto University Research Institute for Mathematical Sciences
+.\"                 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+.\" Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright FreeWnn Project 1999, 2000, 2001
+.\" 
+.\" Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+.\" 
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\" 
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\" 
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software
+.\" Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+.\"
+.TH DTOA \  "30 April 2001" 
+.SH NAME
+.sv 1
+.nf
+.ta 0.1i 2i
+dtoa	Binary Dictionary to EUC Text Converter
+.fi
+.SH SYNOPSIS
+.sv 1
+.nf
+.ta 0.1i 3i 
+.B dtoa [-n] [-s] [-e|-E] [-h \fIPOS data_file\fR] 
+	<\fIbinary_dictionary\fR> [<\fIfrequency_data\fR> ...]
+.fi
+.SH DESCRIPTION
+.HP 0
+.IP
+dtoa converts the specified wnn binary dictionary to a euc-encoded file,
+and sends it to stdout.   The default EUC encoding is UJIS.  To
+output to other euc encodings, you must set the environment variable
+CSWIDTH, as described in atod(1).
+
+The basic output format is:
+
+Pronunciation	Kanji	POS	Frequency
+
+
+One or more frequency files can also be given as inputs, and they will
+be used to calculate the frequency.
+
+.TP
+\fB\-n\fR
+Sort the EUC encoded dictionary by pronunciation (long vowel marker
+comes first), then hiragana order, then ASCII order.
+.TP
+\fB\-s\fR
+Add serial numbers to each entry.
+.TP 
+\fB\-e\fR
+Expand special expressions (default).   With this option, spaces, tabs
+and so on will be expanded into 8-bit expressions.
+.TP 
+\fB\-E\fR
+Don't expand special expressions.   With this option, spaces, tabs
+and so on will not be expanded into 8-bit expressions.
+.TP 
+\fB\-h\fR
+Specify the POS data file.  The default is
+\fI/usr/local/lib/wnn/ja_JP/hinsi.data\fR.
+.SH FILES
+.HP 0
+.IP
+dtoa is not normally installed into /usr/local/bin or /usr/bin.
+Instead it can be found at:
+.br
+.PD 0
+.B	/usr/local/bin/Wnn4/dtoa (default)
+.PD
+.SH "SEE ALSO"
+.sv 1
+.nf
+atod(1), dtoa(1), wnntouch(1)

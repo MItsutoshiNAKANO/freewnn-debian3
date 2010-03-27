@@ -18,9 +18,9 @@
 #
 # This file was automatically customized by dh-make on Thu, 15 Jul 1999 23:10:35 +0900
 
-PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-DAEMON=/usr/bin/Wnn4/jserver
-NAME=jserver
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON=/usr/sbin/jserver
+NAME=freewnn-jserver
 DESC="FreeWnn Japanese server"
 
 test -f $DAEMON || exit 0

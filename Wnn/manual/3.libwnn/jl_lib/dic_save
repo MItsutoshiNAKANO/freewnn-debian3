@@ -1,0 +1,132 @@
+
+
+
+JL_DIC_SAVE( )      UNIX Programmer's Manual       JL_DIC_SAVE( )
+
+
+
+名称
+
+     jl_dic_save()            指定された辞書をセーブする。
+     jl_dic_save_e()          指定された辞書をセーブする。
+
+     jl_dic_save_all()        全ての辞書をセーブする。
+     jl_dic_save_all_e()      全ての辞書をセーブする。
+
+形式
+
+     #include "jllib.h"
+
+     int
+     jl_dic_save(buf,dic_no)
+     struct wnn_buf *buf;          /* バッファ */
+     int     dic_no;               /* 辞書番号 */
+
+     int
+     jl_dic_save_e(env,dic_no)
+     struct wnn_env *env;          /* 環境 */
+     int     dic_no;               /* 辞書番号 */
+
+     int
+     jl_dic_save_all(buf)
+     struct wnn_buf *buf;          /* バッファ */
+
+     int
+     jl_dic_save_all_e(env)
+     struct wnn_env *env;          /* 環境 */
+
+     jl_dic_save_all は、バッファ buf 内のすべての辞書、及び付随する頻度ファ
+     イルをセーブする。
+     jl_dic_save_all_e は、環境 env 内のすべての辞書、及び付随する頻度ファイ
+     ルをセーブする。
+
+     辞書がサーバ・サイトのファイルの場合はサーバ側へセーブする。
+     クライアント・サイトの場合はクライアント側へファイルをダウン
+     ロードする。
+
+     頻度ファイルがあれば、サーバ・サイトのファイルの場合はサーバ側
+     へセーブする。クライアント・サイトのファイルの場合はクライアン
+     ト側へファイルをダウンロードする。
+
+リターンバリュー
+
+     正常終了時には、0を返す。
+     異常終了時には、-1 を返す。
+
+使用上の注意
+
+     他のクライアントがクライアント・サイトから読み込んだ辞書や頻
+     度ファイルについては、セーブができないことがある。
+
+
+
+Printed 1/22/92          2 October 1991                         1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

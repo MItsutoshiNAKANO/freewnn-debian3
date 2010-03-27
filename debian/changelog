@@ -1,3 +1,36 @@
+freewnn (1.1.1~a021+cvs20100325-1) unstable; urgency=low
+
+  * New upstream snapshot release from CVS 
+    - now we can use ~ for version numbering.
+    - it introduce updated config.{sub,guess} (Closes: #534811)
+    - also fixes dependent library (Closes: #558858)
+  * switch to source format 3.0 (quilt) and don't include upstream tarball
+    without expansion
+  * debian/patches
+    - applied newlayout patch. see archive at freewnn-users@lists.sourceforge.jp
+    - add man patch to eliminate lintian "manpage-section-mismatch" warning and
+      adjust sections.
+  * also switch to debhelper7 style, rewrite debian/rules and add files.
+  * don't include COPYRIGHT and COPYRIGHT-j files, it is covered by 
+    debian/copyright file
+  * remove deprecated debian/*.undocumented files
+  * debian/control
+    - "Build-Depends: debhelper (>= 7.0.50~)", remove dbs since we use quilt
+    - Bump up "Standards-Version: 3.8.4"
+    - add "Homepage:"
+    - merge control.uum and comment it out.
+    - add myself to Uploaders and set "DM-Upload-Allowed: yes"
+  * move /usr/bin/{Wnn4,kWnn4,cWnn4}/* files to /usr/sbin and /usr/bin.
+    (Closes: #226067, #552766, #552767, #552768)
+  * really remove debian/patches/01_makerule.mk.in-updates
+  * update debian/freewnn-{cserver,jserver,kserver}.postinst
+    (Closes: #366887, #391980)
+  * including cuum (Closes: #137298)
+  * debian/freewnn-{c,j,k}server.init
+    - remove /usr/local from PATH.
+
+ -- Hideki Yamane (Debian-JP) <henrich@debian.or.jp>  Sat, 27 Mar 2010 16:11:44 +0900
+
 freewnn (1.1.0+1.1.1-a021-1.3) unstable; urgency=low
 
   * Non-maintainer upload.

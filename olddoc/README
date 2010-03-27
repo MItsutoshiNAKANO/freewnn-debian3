@@ -1,0 +1,64 @@
+/*
+ * $Id: README,v 1.5.2.1 1999/02/08 02:09:57 yamasita Exp $
+ */
+
+/*
+ * FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+ * This file is part of FreeWnn.
+ * 
+ * Copyright Kyoto University Research Institute for Mathematical Sciences
+ *                 1987, 1988, 1989, 1990, 1991, 1992
+ * Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+ * Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+ *
+ * Author: OMRON SOFTWARE Co., Ltd. <freewnn@rd.kyoto.omronsoft.co.jp>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with GNU Emacs; see the file COPYING.  If not, write to the
+ * Free Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ * Commentary:
+ *
+ * Change log:
+ *
+ * Last modified date: 8,Feb.1999
+ *
+ */
+
+		Internationalized Wnn
+
+In case of X11R6, to build i18n-Wnn you should put Xsi as
+"contrib/programs/Xsi" and you should use the following commands:
+
+	% cd contrib/programs/Xsi
+	% make World -f Makefile.ini
+
+If you have only a installed X11R6, please put Xsi on
+any directory and you should use the following commands:
+
+	% make World -f Makefile.inst
+
+Or in case of X11R5, to build i18n-Wnn you should put Xsi as
+"contrib/im/Xsi" and you should use the following commands:
+
+	% cd contrib/im/Xsi
+	% make World -f Makefile.R5ini
+
+After building, It can be installed in your local bin using:
+
+	% make install
+
+	See Wnn/READ.ME for more detail.
+
+Seiji Kuwari		kuwa@nff.ncl.omron.co.jp
+Omron Corporation

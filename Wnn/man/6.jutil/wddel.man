@@ -1,0 +1,74 @@
+.\"
+.\"   $Id: wddel.man,v 1.4 2002/03/02 10:30:23 hiroo Exp $
+.\"
+.\"
+.\" FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+.\" This file is part of FreeWnn.
+.\" 
+.\" Copyright Kyoto University Research Institute for Mathematical Sciences
+.\"                 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+.\" Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright FreeWnn Project 1999, 2000
+.\" 
+.\" Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+.\" 
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\" 
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\" 
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software
+.\" Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+.\"
+.TH WDDEL \  "28 January 1992" 
+.SH 名称
+.sv 1
+.nf
+.ta 0.1i 2i
+wddel	単語削除/コメント/品詞セットをバッチ的に行なう。
+.fi
+.SH 形式
+.sv 1
+.nf
+.ta 0.1i 3i 
+/usr/local/bin/Wnn4/wddel [-D ホスト名] [-n 環境名] [-d 辞書番号]
+        [-H|C|E] [-L] [ファイル名] < テキスト
+.fi
+.SH 機能
+.HP 0
+.IP
+指定された jserver の環境の辞書から、text の中の番号の単語を
+バッチ的に削除する。text は、各行の先頭に、削除したい単語の
+serial no が書かれているファイルであること。
+
+以下のオプションによって、動作を指定する。
+.TP 8
+-D ホスト名
+サーバのホスト名を指定する。指定されない場合、環境変数JSERVERが参照される。
+これもない場合は、UNIX_domainが使われる。
+.TP 8
+-n 環境名
+環境名を指定する。デフォルトは "wddel"である。
+.TP 8
+-d 辞書番号
+辞書のシリアル番号を指定する。ファイル名と、このオプションは
+同時には指定できない。ファイル名かこのオプション、どちらかを指定する。
+.TP 8
+-C
+コメントをセットする。
+.TP 8
+-H
+品詞をセットする。
+.TP 8
+-E
+単語を削除する。(デフォルト)
+.TP 8
+-L
+クライアント側の辞書が参照される。

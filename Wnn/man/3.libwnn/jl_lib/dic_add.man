@@ -1,0 +1,132 @@
+.\"
+.\"   $Id: dic_add.man,v 1.3 2001/06/14 18:08:32 ura Exp $
+.\"
+.\"
+.\" FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+.\" This file is part of FreeWnn.
+.\" 
+.\" Copyright Kyoto University Research Institute for Mathematical Sciences
+.\"                 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+.\" Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright FreeWnn Project 1999, 2000
+.\" 
+.\" Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+.\" 
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\" 
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\" 
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software
+.\" Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+.\"
+.TH JL_DIC_ADD \  "2 October 1991"
+.SH 名称
+.sv 1
+.nf
+.ta 0.1i 2i
+jl_dic_add()	バッファに辞書を追加する。
+jl_dic_add_e()	環境に辞書を追加する。
+.fi
+.SH 形式
+.sv 1
+.nf
+.ta 0.1i 3i
+#include "jllib.h"
+
+int
+jl_dic_add(buf,dic_name,hindo_name, rev, prio,rw, hrw, pwd_dic, 
+				pwd_hindo, error_handler, message_handler)  
+struct wnn_buf *buf;		/* バッファ */
+char *dic_name;			/* 辞書名 */
+char *hindo_name;		/* 頻度ファイル名 */
+int rev;			/* 逆変換かどうか(未使用) */
+int prio;			/* 優先度 */
+int rw;				/* 辞書のR/W */
+int hrw;			/* 頻度ファイルのR/W */
+char *pwd_dic;			/* 辞書のパスワードファイル名 */
+char *pwd_hindo;		/* 頻度ファイルのパスワードファイル名 */
+int (*error_handler)();		/* エラー・ハンドラ */
+int (*message_handler)();	/* メッセージ・ハンドラ */
+
+int
+jl_dic_add_e(env,dic_name,hindo_name, rev, prio,rw, hrw,pwd_dic, 
+				pwd_hindo, error_handler, message_handler)  
+struct wnn_env *env;		/* 環境 */
+char *dic_name;			/* 辞書名 */
+char *hindo_name;		/* 頻度ファイル名 */
+int rev;			/* 逆変換かどうか(未使用) */
+int prio;			/* 優先度 */
+int rw;				/* 辞書のR/W */
+int hrw;			/* 頻度ファイルのR/W */
+char *pwd_dic;			/* 辞書のパスワードファイル名 */
+char *pwd_hindo;		/* 頻度ファイルのパスワードファイル名 */
+int (*error_handler)();		/* エラー・ハンドラ */
+int (*message_handler)();	/* メッセージ・ハンドラ */
+.fi
+.SH 機能
+.HP 0
+.IP
+jl_dic_add は、バッファ buf 内の環境に、jl_dic_add_e は、環境 env に
+dic_name, hindo_name の辞書、頻度ファイルを追加する。
+クライアント・サイトの辞書、頻度ファイルは、ファイル名の先頭
+に ! をつけた名前をdic_name, hindo_name に指定する。
+
+prio で、辞書の優先度を指定する。
+rw, hrw で、辞書、頻度ファイルが読み取り専用か否かを指定する。
+.nf
+.ta 0.3i 2.5i
+	    WNN_DIC_RDONLY	読み取り専用
+	    WNN_DIC_RW		読み取り/書き込み可能
+.fi
+固形式辞書、および、読み取り専用辞書には、単語登録/削除ができない。
+
+rev  で、逆変換を行なうかどうか、指定する。
+.nf
+.ta 0.3i 2.5i
+	    WNN_DIC_ADD_REV	逆変換
+	    WNN_DIC_ADD_NOR	通常の変換
+.fi
+逆変換形式辞書に対してしか、逆変換は行なうことができない。
+
+pwd_dic, pwd_hindo で、辞書及び頻度ファイルのパスワードの入っているファ
+イル名を指定する。
+辞書及び頻度ファイルにパスワードが掛かっていない場合は、NULL を指定する。
+
+エラー・ハンドラ error_handler で、辞書及び頻度ファイルが存在しない時に
+作成するか否かを指定する。
+.nf
+.ta 0.3i 2.5i
+	    WNN_NO_CREAT	辞書は作らずその行はスキップする。
+	    WNN_CREATE		辞書は登録可能形式辞書として作成し読み込む。
+	                	頻度ファイルはその辞書に対する頻度ファイルと
+	                	して作成し読み込む。
+	    その他       	(*error_handler)()を、メッセージとなる文字列
+	                	を引数として、辞書などを作成するか否かを返す
+	                	関数と見なしその関数を呼ぶ。
+	                	関数の返値が 1 なら作成し、0 なら作成しない。
+.fi
+
+メッセージ・ハンドラ message_handler が NULL でなければ、文字列を表示す
+る関数と見なし、辞書などを作成したというメッセージの表示を行なう。
+
+これらのハンドラが必要なのは、jl_open の中で、バッチ的に辞書の
+読み込みを行なうためである。
+	
+辞書ファイルを作成する時には、逆引き形式で作成する。
+.SH リターンバリュー
+.sv 1
+.nf
+正常終了時には辞書番号を返す。
+異常終了時には -1 を返す。
+.fi
+
+
+

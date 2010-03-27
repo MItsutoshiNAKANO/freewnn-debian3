@@ -1,0 +1,75 @@
+.\"
+.\" $Id: xjutil.man,v 1.1.1.1 2000/01/16 05:07:53 ura Exp $
+.\"
+
+.\" FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+.\" This file is part of FreeWnn.
+.\" 
+.\" Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+.\" Copyright 1991 by Massachusetts Institute of Technology
+.\"
+.\" Author: OMRON SOFTWARE Co., Ltd. <freewnn@rd.kyoto.omronsoft.co.jp>
+.\"
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2, or (at your option)
+.\" any later version.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with GNU Emacs; see the file COPYING.  If not, write to the
+.\" Free Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+.\"
+.\" Commentary:
+.\"
+.\" Change log:
+.\"
+.\" Last modified date: 8,Feb.1999
+.\"
+
+.TH XJUTIL 4 "Release 5" "X Version 11"
+.SH 名称
+xjutil \- 辞書ユーティリティ・マネージャ
+.SH 形式
+.B /usr/bin/xjutil \fIディスプレイ名 アトム名 カウンタ\fP
+.SH 解説
+\fIXjutil\fP は、\fIWnn\fP の辞書を操作するための辞書ユーティリティ
+・マネージャです。これは、\fIxwnmo\fP より自動的に起動されます。
+.SH 操作
+\fIXjutil\fP は、\fIWnn\fP の辞書に対して、以下の操作を行ないます。
+.TP 8
+.B 辞書追加:
+現在の環境に新しい辞書を追加します。
+.TP 8
+.B 辞書一覧:
+現在使用している辞書の一覧を表示します。
+.TP 8
+.B 登録:
+個人辞書に対して登録を行ないます。
+.TP 8
+.B 検索:
+読みによる検索を行ないます。また、表示されたエントリでボタンを押すことにより、
+そのエントリに対して、操作が行なえます。(削除/使用不可/使用可/コメント)
+.TP 8
+.B パラメータ変更:
+現在の変換環境のパラメータを変更します。
+.TP 8
+.B 辞書情報:
+現在使用している辞書の詳しい情報を表示します。また、表示された
+エントリでボタンを押すことにより、そのエントリに対して、
+操作が行なえます。(削除/使用不可/使用可/コメント)
+.TP 8
+.B 附属語変更:
+附属語ファイルを変更します。
+.SH 関連項目
+xwnmo(1X)
+.SH COPYRIGHT
+Copyright 1991 by OMRON Corporation
+.br
+Copyright 1991 by Massachusetts Institute of Technology
+.SH AUTHOR
+Seiji Kuwari (OMRON Corporation)

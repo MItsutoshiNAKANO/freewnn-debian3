@@ -5,16 +5,6 @@
 
 set -e
 
-# summary of how this script can be called:
-#        * <postinst> `configure' <most-recently-configured-version>
-#        * <old-postinst> `abort-upgrade' <new version>
-#        * <conflictor's-postinst> `abort-remove' `in-favour' <package>
-#          <new-version>
-#        * <deconfigured's-postinst> `abort-deconfigure' `in-favour'
-#          <failed-install-package> <version> `removing'
-#          <conflicting-package> <version>
-# for details, see /usr/share/doc/packaging-manual/
-#
 # quoting from the policy:
 #     Any necessary prompting should almost always be confined to the
 #     post-installation script, and should be protected with a conditional
@@ -24,9 +14,13 @@ set -e
 
 case "$1" in
     configure)
-        adduser --system --home /var/lib/wnn/ja_JP --gecos "FreeWnn jserver" --disabled-password --disabled-login wnn
-        ln -sf ../../../../var/lib/wnn/ja_JP/dic /usr/share/wnn/ja_JP
-	chown -R wnn /var/lib/wnn/ja_JP/dic
+        if ! getent passwd wnn>/dev/null; then
+          adduser --system --home /var/lib/wnn/ja_JP --gecos "FreeWnn jserver" \
+                  --no-create-home \
+                  --disabled-password --disabled-login wnn --quiet
+	  chown -R wnn /var/lib/wnn/ja_JP/dic
+        fi
+        ln -sf ../../../../var/lib/wnn/ja_JP/dic /usr/share/wnn/ja_JP/
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)

@@ -1,0 +1,57 @@
+ *
+ * $Id: README,v 1.1.2.2 1999/02/08 01:44:36 yamasita Exp $
+ *
+
+ * FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+ * This file is part of FreeWnn.
+ * 
+ * Copyright Wnn Consortium. 1993
+ *
+ * Author: OMRON SOFTWARE Co., Ltd. <freewnn@rd.kyoto.omronsoft.co.jp>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with GNU Emacs; see the file COPYING.  If not, write to the
+ * Free Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ * Commentary:
+ *
+ * Change log:
+ *
+ * Last modified date: 8,Feb.1999
+ *
+
+人名辞書(gerodic) について
+
+						Jun. 26th '93
+						Wnn Consortium
+						Technical Committee
+
+
+大変おまたせしました。
+
+gerodic プロジェクト第 1 回(人名)の結果をお送りします。
+応募数のべ ??? 人、語彙数 23345 語の人名辞書ができました。
+
+皆様の身の回りの人の名前、fj で活躍している方の名前、歴史上の人物の名
+前(天皇、武将他)や、ジャズマン、香港俳優、アイドル、沖縄の人名など、種々
+雑多に集まりました。
+
+この辞書は、「gerodic プロジェクト」の成果であり、このプロジェクトに参
+加して頂いた皆様に感謝します。
+
+ご協力いただいた方を始め、gerodic の配布を待っておられた方々に、配布が
+大幅に遅れてしまったことを、深くお詫び致します。
+
+
+以上
+

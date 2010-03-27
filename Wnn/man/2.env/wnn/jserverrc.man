@@ -1,0 +1,145 @@
+.\"
+.\"   $Id: jserverrc.man,v 1.3 2001/06/14 18:08:32 ura Exp $
+.\"
+.\"
+.\" FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+.\" This file is part of FreeWnn.
+.\" 
+.\" Copyright Kyoto University Research Institute for Mathematical Sciences
+.\"                 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+.\" Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright FreeWnn Project 1999, 2000
+.\" 
+.\" Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+.\" 
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\" 
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\" 
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software
+.\" Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+.\"
+.TH JSERVERRC \  "28 January 1992" 
+.SH 名称
+.sv 1
+.nf
+.ta 0.1i 2i
+jserverrc	日本語マルチクライアントサーバ (jserver) の初期化ファイル
+.fi
+.SH 形式
+.sv 1
+.nf
+.ta 0.1i 3i 
+/usr/local/lib/wnn/ja_JP/jserverrc
+.fi
+.SH 機能
+.HP 0
+.IP
+この jserverrc は、日本語マルチクライアントサーバを使用する時の環境を設定
+するもので、jserverの立ち上がり時に読み込まれる。
+設定できるものは、以下のとおり。
+
+1. 立ち上がり時に読み込む辞書
+
+  readfile <辞書ファイル名>
+
+サーバが、立ち上がり時に読み込む辞書ファイル名を指定する。
+ここで、指定された辞書は、サーバの立ち上がり時に読み込まれ、サーバプロセ
+スが死ぬまでサーバーが持ち続ける。これは、クライアントプロセスが、立ち上
+がる時に、辞書を読み込む時間を節約するために使用される。
+
+
+2. クライアントの最大数
+
+  max_client <クライアントの最大数>
+
+接続できるクライアントの最大数を指定する。
+デフォルトは、32 である。
+
+3. スティッキーな環境の最大数
+
+  max_sticky_env <スティッキーな環境の最大数>
+
+スティッキーな環境の最大数を指定する。
+スティッキーな環境とは、環境を消滅させても、保存される環境である。
+これは、次にその環境を使用する時に、立上りが早くなる。
+デフォルトは、10 である。
+
+4. サーバが辞書を管理するディレクトリ
+
+  jserver_dir <文字列>
+
+サーバが、辞書を管理するディレクトリ・パスを指定する。
+ユーザの頻度ファイルとユーザ辞書が、このディレクトリの下で管理される。
+デフォルトは、/usr/local/lib/dic/ である。
+@LIBDIR, @LANG の記法が使用できる。
+
+  @LIBDIR   デフォルトの uum 環境ファイルのディレクトリパス
+            名(/usr/local/lib/wnn)。
+  @LANG     jserverの作成時に決定される言語名。jserverの場合は、"ja_JP"
+            である。cserverの場合は、"zh_CN、tserverの場合は、"zh_TW"
+            である。
+
+5. かな漢字変換のパラメータ値
+
+  def_param <数字0> <数字1> <数字2> <数字3>
+            <数字4> <数字5> <数字6> <数字7>
+            <数字8> <数字9> <数字10> <数字11>
+            <数字12> <数字13> <数字16> <数字15>
+            <数字16>
+
+かな漢字変換のパラメータ、および、疑似品詞の頻度を指定する。
+
+  <数字0>  : Ｎ(大)文節解析のＮ
+  <数字1>  : 大文節中の小文節の最大数
+  <数字2>  : 幹語の頻度のパラメータ
+  <数字3>  : 小文節長のパラメータ
+  <数字4>  : 幹語長のパラメータ
+  <数字5>  : 今使ったよビットのパラメータ
+  <数字6>  : 辞書のパラメータ
+  <数字7>  : 小文節の評価値のパラメータ
+  <数字8>  : 大文節長のパラメータ
+  <数字9>  : 小文節数のパラメータ
+
+  <数字10> : 疑似品詞 数字の頻度
+  <数字11> : 疑似品詞 カナの頻度
+  <数字12> : 疑似品詞 英数の頻度
+  <数字13> : 疑似品詞 記号の頻度
+  <数字14> : 疑似品詞 閉括弧の頻度
+  <数字15> : 疑似品詞 付属語の頻度
+  <数字16> : 疑似品詞 開括弧の頻度
+
+上記のパラメータは、整数をとる。
+
+デフォルトの値は、<2> <5> <10> <3> <50> <1> <128> <5> <1> <50> <10> <1>
+である。
+
+4. 疑似品詞の「英数」の文字コードの指定
+
+指定した文字コードのものが、英数字に加えて疑似品詞「英数」と
+して、疑似文節の変換に使用される。
+
+  set_giji_eisuu 文字コード 文字コード 文字コード ・・・
+
+文字コードには、16進、10進、8進、等の書き方ができる。
+
+  CTRL A     --->  ^A
+  ' '(SPACE) --->  0x20 \\x20 32 040 \\o40
+  ' '        --->  ' '
+  '―'       --->  '―'
+
+などの書き方ができる。
+.SH 関連項目
+.sv 1
+.nf
+jserver(1)
+
+

@@ -1,0 +1,1600 @@
+ 	         ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+		  ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+		  ┃  Ｃｈａｐｔｅｒ ５  ＥＮＶＩＲＯＮＭＥＮＴ  ＳＥＴＵＰ   ┃
+		  ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+	         ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+
+┏━━━━━━━━┓
+┃ 5.1  OVERVIEW  ┃
+┗━━━━━━━━┛ 
+
+	All the user input environments and operation environments in cWnn are defined in 
+the system  environment files.  The  system supports  various input methods.  Through the
+environment setup, users are able to set their own environments. 
+The setup of an environment includes the following :
+
+ 1. cserverrc 		    ─  The initialization file for the server.
+ 2. uumrc 		    ─	The initialization file for the front-end processor "cuum". 
+ 3. wnnenvrc  		    ─  The environment setup file for forward conversions.
+ 4. wnnenvrc_R  	    ─  The environment setup file for reverse conversions.
+ 5. uumkey   		    ─  The keyboard definition file for the front-end processor.
+ 6. cvt_key_tbl       	    ─  The conversion file for keyboard input code
+
+
+	We will now explain how an environment may be set, and how its parameter values 
+may be updated manually.
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					- 5-1 -
+┏━━━━━━━━━━━━━━━━━━━┓
+┃ 5.2 ENVIRONMENT OPERATION FUNCTIONS  ┃
+┗━━━━━━━━━━━━━━━━━━━┛
+
+	The cserver manages  several resources such  as dictionaries and grammar files.  
+Besides, it creates individual environments for every  user (client).  A user  may have 
+more  than  one  environment.  In  each  input  mode, the  environment  defines its own
+dictionaries, the corresponding usage frequency files and the grammar files.
+
+	When a user starts up cuum (front-end processor), cserver will set the specified
+dictionaries for the user while creating the environment.  After setup, the user is able 
+to obtain the usage status of the dictionaries in his environment from the system at any
+time.
+
+	The followings are the operation functions available in every environment.  The
+user may  update his environment by using these functions.  For example, he may need to
+add another dictionary, or need to change the values for certain conversion parameter.
+
+
+1. Environment Operation
+━━━━━━━━━━━━
+When function key PF6 (OR  前面キ- together with  呼出し key) is pressed, the following 
+menu will be  displayed.  Move the cursor to the particular option and press the return 
+key.  The corresponding function will then be carried out.   
+
+	┌────────────────────────────────┐
+	│ 0.词典追加 1.词典一览 2.登录 3.检索 4.参数变更 5.频度保存  ....│
+	└────────────────────────────────┘
+
+ 0.词典追加 (Add dictionary)	: To add a dictionary to the current environment
+ 1.词典一览 (View dictionary)	: To  view  all the  dictionaries in the current 
+	  			  environment, as well as their current states.
+ 2.登录 (Word/Character add)	: To add a word into a dynamic dictionary.
+ 3.检索 (Word/Character search)	: To  check if a word/character exists in the 
+				  dictionary under the current environment. If it 
+				  exists, the system will show the information of 
+				  the word/character.
+ 4.参数变更 (Parameter update)	: To enquire or  change the  parameters  for  the 
+				  Pinyin-Hanzi  conversion  under  the  current  
+				  environment.  Different environments will  have  
+				  different  parameters.  (Refer to (4). below) 
+ 5.频度保存 			: Save all  the  usage frequency  files under the 
+   (Save usage frequency)	  current environment.
+ 6.词典情报 			: To inquire the information of the  dictionaries 
+   (Dictionary information)	  under the current environment.  For  example the 
+				  dictionary name, type and priority etc.
+ 7.文法变更 (Grammar change)	: To change the grammar file used in the environment.
+ 8.结束 (Exit)			: To exit the environment operation function.
+
+					- 5-2 -
+NOTE:  	
+	- PF6 is the default  keyboard definition in cWnn, it may be redefined.
+	- Another way to activate this menu is by pressing the  <前面キ->  together 
+	  with the <呼出し> key.
+	- These keys follow the keyboard layout given in Section 3.4.
+
+
+2. How to Use the Environment Operations
+━━━━━━━━━━━━━━━━━━━━
+We  will now  explain how  to use  each of the  above  environment  operations.  Every
+instruction will be given in steps.  
+
+NOTE:  
+     - Press the return key after each step.
+     - To quit, press 前面キ- together with the ↓arrow key.
+	
+
+(0).词典追加 (Add dictionary)
+	This enables user to add a dictionary after the front-end processor has been 
+	started. 
+	(a). First, select the option  0.词典追加,  after which,  enter the dictionary 
+	     name.  If the name of the dictionary is in ASCII, simply change the input 
+	     mode to "半角". 
+	(b). A message  "新的词典 >"  will be  displayed.  Enter the  dictionary name.
+	(c). Another message "频度文件名 >" is displayed.  This is the usage frequency 
+	     file that is automatically created.  If you do not want the given default 
+	     name, you may change it.
+	(d). A message "请指定词典的优先度的数字。> 5 " will be displayed next. "5" is 
+	     the default priority value given to the dictionary.  You may also change 
+	     this value.
+ 	(e). The next message displayed is  "使用词典更新模式吗? (Y or Newline / N)".  
+	     This is to determine  whether the  dictionary  may or may not be updated.
+	(f). If the dictionary to be  added can be updated, answer with a  "Y" to the 
+	     above question  and the dictionary  will be created.  Follows  this is a 
+	     message:  "字典文件  "dict_name"  没有。创建?(Y/N)".  You may now answer 
+	     the questions respectively.
+	(g). If you have answered with a "N" to the message in (e), and the specified 
+	     dictionary does not exist, a message will be displayed:
+	     "文件不存在。 (怎么办)".
+
+
+
+
+
+
+
+
+
+
+					- 5-3 -
+(1).词典一览 (View dictionary)
+	This enables  user to  browse through the current dictionaries that are being 
+	used.
+	(a). First, select the option  1.词典一览,  after which,  use the up and down 
+	     arrow keys to view the dictionaries.
+
+	     NOTE:  You  may delete the usage of a dictionary by using  ^D, or remove
+		    the dictionary temporary by using ^U.
+		    For example, to delete a dictionary "level_2.dic".
+		    - select option 1.词典一览, and the dictionary information will be
+		      given as "sys/level_2.dic(usr/aty/level_2.h) 使用中 1/4".
+		    - You may press  ^D to remove it.  This dictionary will be removed.
+		      However, when the user terminate  "cuum" and re-start again, the
+		      dictionary will be restored.
+		    - If you need to reuse the dictionary without terminating  "cuum",
+		      you may use ^U  to remove the dictionary temporarily.  In this
+		      case, a message "字典「sys/level_2.dic」的使用中止。(Y/N)" will
+		      be displayed.  Answer "Y".  
+		      To restore the dictionary, select 1.词典一览 again, and you will 
+		      see the information of the dictionary as:
+		      "sys/level_2.dic(usr/aty/level_2.h) 中断中 2/4".  Now, press ^U
+		      again to restore, and a message will be displayed:
+		      "字典「sys/level_2.dic」重新使用。(Y/N)".   Answer "Y".
+		    
+		    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					- 5-4 -
+(2).登录 (Word/Character add)
+	This enables user to register a word into a dictionary.  This dictionary must 
+	be dynamic (can be updated).
+	(a). First, select the option 2.登录.
+	(b). A message "登录开始:" will be displayed.  Enter the word that you want to 
+	     register.
+	(c). Bring the cursor  to the beginning of the word.  Press the return key.
+	(d). A message "登录结束:" will be displayed.  Bring the cursor to the end of 
+	     the word, press the return key.
+	(e). Another message  "读法:"  will be displayed.  You may now enter the 
+	     pronunciation of the word.  It may be  input using different input modes.  
+	     For example, if you want it to be in Pinyin, change the input mode to 全拼, 
+	     and input the Pinyin.  If you  want it to be in ASCII, simply change the 
+	     mode to 半角.
+	(f). You will now see a list of grammatical attributes (词性) which may describe
+	     the word.  They include: 名词, 动词, 形容词, 数词, .... etc.  Choose the 
+	     most appropriate attirbute.
+	(g). Another list of attirbutes is displayed, such as 普通名词, 抽象名, 时间名, 
+	     处所名 ..etc.  Again, choose the most appropriate one.
+	(h). Following this is another list.  Choose the most appropriate attribute.
+	(i). You  will now  see a list of dictionary.   You may choose to register the
+	     word in any  dictionary.   These are the dictionaries that may be updated.
+	(j). A message "注释:" is displayed.  You may enter any comments if you wish.
+	(k). If the pronunciation entered is empty, a message "读音的长度是0。(怎么办)" 
+	     is displayed.  You may re-enter the pronunciation of the word.
+
+	NOTE:
+	       - Another way to activate 登录 is to press 前面キ- together with the
+	 	 消去 key.
+
+(3). 检索 (Word/Character search)
+	This enables user to check whether a word is registered in the dictionary. If 
+	this word exists, all the information of this word will be shown.
+	(a). First, select the option  3.检索.
+	(b). A message  "读取:"  is displayed.  Enter the pronunciation  of the  word.  
+	     It may be input via Pinyin, ASCII etc by using the different input modes.
+	(c). The information of the word is shown.  For example, the word 好.
+	    	好 (sys/level_1.dic:1195)  0    ( 305) 普通形容  1/23
+		
+	     "sys/level_1.dic" 	─ the dictionary name 
+	     "1195" 		─ the serial number of this word in the dictionary
+	     "0" 		─ the user usage frequency value 
+	     "305" 		─ the system usage frequency value
+	     "普通形容" 	─ the grammatical attribute
+	     "1/23" 		─ there are 23 words that have the same 
+				   pronunciation  as what has been input.  This is 
+	   			   the first candidate.
+
+
+					- 5-5 -
+	NOTE:
+		Another way to view the information of a word or character is to use
+		the ^V  command.  For example,
+		- input a character 好 using Pinyin.
+		- press ^V  now, and the information of this character will be shown.
+
+
+(4). 参数变更 (Parameter Update)
+	This allows  user to change the values of the parameters.  In Section 4.4, the 
+	default parameter  values are given.  These values may be updated by using the 
+	function provided.
+	(a). Select the option 4.参数变更, a menu will be displayed as shown:
+	    ┌────────────────────────────────┐
+	    │ 0.解析词组个数[n] 1.词组中词的最大个数[n] 2.频度权值[n]  . . . │
+	    └────────────────────────────────┘
+	     These are the assessment parameters for multi-phrase conversion mentioned 
+	     in Section 4.4.  The number in the  square bracket  indicates the current 
+	     parameter  value.  To change the  value, simply  move  the cursor to  the 
+	     parameter and press return, then enter the new parameter value.
+
+	(b). To change the value of the parameter, move the cursor to the parameter by
+	     using the arrow keys, and press the return key.
+	(c). The current value will be given.  You may now enter the new value.
+
+	As mentioned, input at the input line is not only restricted to Pinyin.  Other 
+	characters are also allowed.  For example, numbers, alphabets, symbols and 
+	parentheses.  These characters will undergo conversion together with the Pinyin 
+	input.  Just like Pinyin, these characters have parameters which can be defined 
+	externally.  The parameters are classified into the following categories.
+	
+	       * Usage frequency for numerals
+    		    This includes  0,1,2,3,4,5,6,7,8,9.  Besides, the system  has the 
+		    facility to change the numbers into other format.  For example, 
+		    "1234567" can be changed to 1,234,567, 一百二十三万四千五百六十七 
+		    and １２３４５６７ etc.
+	       * Usage frequency for alphabets
+	       * Usage frequency for punctuations
+	       * Usage frequency for open parentheses
+	       * Usage frequency for close parentheses
+
+	The default values for these parameters are given in Section 4.4.
+
+
+(5). 频度保存 (Save usage frequency)
+	This allows  user to save  all the  user usage frequency under the current
+	environment.
+	(a). Select the option  5.频度保存.
+	(b). A message "现在、字典的频度和用户字典正在保存。" will be displayed to
+	     indicate that the frequency is saved.
+					- 5-6 -
+(6). 词典情报 (Dictionary information)
+	This allows user to view the information of the current dictionaries.
+	(a). Select the option 6.词典情报.  Information about the dictionary will
+	     be shown.  For example,
+		5   拼音  sys/basic.dic  usr/aty/basic.h  10004   7   No  Yes   使用中   1/8
+	
+	     "5"		─  the dictionary number
+	     "拼音"		─  the dictionary type
+	     " "		─  the comments (omitted here)
+	     "sys/basic.dic"	─  the dictionary filename
+	     "usr/aty/basic.h"	─  the usage frequency file name 
+	     "10004"		─  the number of tuples (词条) in the dictionary
+	     "7"		─  the dictionary priority
+	     "No"		─  to indicate whether the dictionary is dynamic 
+	     "Yes"		─  to indicate whether the usage frequency may be
+				    updated
+	     "使用中"		─  to show if the dictionary is used currently
+	     "  "		─  the password during registration (omitted)
+	     "  "		─  the password during usage frequency update (omitted)
+	     "1/8"		─  the current total number of dictionaries
+	(b). Use the arrow keys to view.
+
+
+(7). 文法变更 (Grammar change)	
+	This enables user to change the grammar file used in the environment.
+	(a). First, select the option  7.文法变更, after which, enter the grammar file 
+	     name.  If the name of the file is in  ASCII, simply change the input mode 
+	     to "半角". 
+	(b). A message "文法文件名 >" will be displayed.  Enter the grammar file name.
+	     If the file  does not exist, a message  "文件不存在。 (怎么办)" will  be
+	     displayed.
+
+
+(8). 文字消除 (Word/Character delete)	
+	This enables user to delete a word or character from the dictionary.  However
+	word/character can only be deleted from dynamic dictionaries. 
+	(a). First, select the option  3.检索,  after which, search for the character
+	     as in (3).  For example the character 好.
+	(b). After the word  is found, press  ^D  to delete the word  permanently, or
+	     press ^U to delete it temporarily.
+	(c). If ^D is used, a message "「好」消除。(Y/N)" is displayed.  Enter "Y" to 
+	     confirm or "N" to cancel.
+	     If the word is found in a static dictionary, it cannot be deleted, hence
+	     a message "只读的词典的条目不能消除。(怎么办)"  will be displayed.
+	(d). If  ^U is used, a message "「好」的使用中止。(Y/N)" is displayed.  Enter
+	     "Y" to confirm or "N" to cancel.
+	     To  re-use the character, repeat (a) and press  ^U again.  Now a message
+	     "「好」重新使用。(Y/N)" is displayed.  Confirm as before.
+
+					- 5-7 -
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ 5.3  INITIALIZATION FILE FOR SERVER  -  cserverrc  ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━┛ 
+   
+ * Description 
+	cserverrc  -  The cserver initialization file
+
+ * Default Path 
+	/usr/local/lib/wnn/zh_CN/cserverrc
+
+ * Function 
+	During the startup of cserver (ie. during execution of "cserver" command),  the file 
+	"cserverrc" is read.  According to the definitions in "cserverrc", the corresponding 
+	initializations are made.
+
+ * Content 
+	In "cserverrc", several settings are made.  They include the followings:
+
+  	1. Files that are read during the startup of cserver
+	     There are three categories of file, including the dictionaries, grammar file,
+	     and the usage frequency files.  Refer to Chapter 8.
+
+  	   - Format
+	    	 readfile  <cwnn_file> 
+	     <cwnn_file>  is the name of the file which is read in during  cserver startup, 
+	     and this file is maintained until the termination of cserver.
+
+  	2. Maximum client allowed
+  	   - Format
+	    	 max_client  <n>
+	     <n> is the maximum number of front-end processors (client) that are allowed 
+	     to be connected at any one time.  Default value of <n> is 32.
+
+  	3. Maximum environment
+  	   - Format
+	    	max_sticky_env  <n>
+	     <n> is the  maximum number of permanent environments allowed.  A permanent 
+	     environment remains in the server even after the termination of the front-
+	     end processor.  This helps in  reducing the startup time of each front-end
+	     processor.  Default value of <n> is 10.
+
+  	4. Path of dictionaries that are maintained by the server.
+  	   - Format
+	     	jserver_dir  <path>
+	     <path> defines the path of the system dictionaries maintained by the server.
+	     Usage frequency files and dictionaries of the user are also maintained here. 
+	     If  <path> is not given, the default path  "/usr/local/lib/wnn/zh_CN/" will 
+	     be taken.
+
+					- 5-8 -
+  	5. The default parameters values for Pinyin-Hanzi conversions. 
+  	   - Format 
+	      	def_param  <parameter 0>   <parameter 1>   <parameter 2>  
+			   <parameter 3>   <parameter 4>   <parameter 5>  
+			   <parameter 6>   <parameter 7>   <parameter 8> 
+	  		   <parameter 9>   <parameter 10>  <parameter 11>  
+	     		   <parameter 12>  <parameter 13>  <parameter 14>  
+			   <parameter 15>  <parameter 16> 
+
+	     <parameter x> are values of parameters.  All parameter values are integers. 
+	     During  conversion, server will perform the conversion  evaluation based on 
+	     these parameter values.  Refer to Section 4.4 for detailed explanations for 
+	     each parameter.
+
+		   <parameter 0>  : number of phrase "n" to be assessed
+		   <parameter 1>  : number of words "m" in phrase
+		   <parameter 2>  : usage frequency weight
+		   <parameter 3>  : word length weight 
+		   <parameter 4>  : tone correctness weight
+		   <parameter 5>  : last used weight
+		   <parameter 6>  : dictionary priority weight
+		   <parameter 7>  : average word assessment value weight
+		   <parameter 8>  : phrase length weight
+		   <parameter 9>  : number of words in phrase weight
+		   <parameter 10> : weight of numerals
+		   <parameter 11> : weight of alphabets
+		   <parameter 12> : weight of symbols
+		   <parameter 13> : weight of open parentheses
+		   <parameter 14> : weight of close parentheses
+		   <parameter 15> : maximum number of candidates allowed during conversion
+		   <parameter 16> : not used
+
+	     The following are the default values : 
+	     1  5  2  750  10  80  10  5  1000  50  0  -200  0  0  0  16  0
+
+	6. Definition of Xuni (quasi) grammatical category (虚拟词性) for alphabets 
+	   - Format
+	     	set_giji_ascii   <char> <char> ...
+	     All words and characters have their own grammatical attributes (词性).
+	     Alphabets, numerals and some defined characters can be classified as Xuni 
+	     (虚拟) type in the  Pinyin-Hanzi conversion and Hanzi-Pinyin conversion.
+
+	     <char> can be  represented  in hexadecimal,  decimal, octal  as  well  as 
+	     enclosed between single quotation marks.
+
+
+
+
+
+					- 5-9 -
+ * Example 
+	jserver_dir     /usr/local/lib/wnn/zh_CN/dic
+	readfile        sys/basic.dic
+	readfile        sys/level_1.dic
+	readfile        sys/level_2.dic
+	;readfile       sys/computer.dic
+	readfile        sys/WuBi.dic
+	readfile        sys/QianMa.dic
+
+	readfile        sys/full.con
+
+	max_client      32
+	max_sticky_env  10
+
+	def_param  1  5  2   750  10  80  10  5  1000  50  0  -200  0   0   0   16  0
+	;          N  M  频  长   四  刚  优  值  组   个  数  英   记  开  闭  最  备
+
+	;       N:  解析词组个数                        变换规模参数
+	;       M:  词组中词的最大个数
+
+	;       频:  频度权值                           词评价参数
+	;       长:  词长度权值
+	;       四:  四声正确度权值
+	;       刚:  刚才用过权值
+	;       优:  字典优先级权值
+
+	;       值:  词评价均值权值                     词组评价参数
+	;       组:  词组长权值
+	;       个:  词组中词个数权值
+
+	;       数:  数字的频度                         其他参数
+	;       英:  英文字母的频度
+	;       记:  记号的频度
+	;       开:  开括弧的频度
+	;       闭:  闭括弧的频度
+	;       最:  最大候补个数
+	;       备:  备用
+
+
+ * Note
+	A semicolon ";" at the beginning of the line means that the whole statement
+	is treated as comment.
+
+
+
+
+
+
+
+					- 5-10 -
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ 5.4  INITIALIZATION FILE FOR FRONT-END PROCESSOR  -  uumrc   ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛ 
+  
+ * Description 
+	uumrc   -  The front-end processor (cuum) initialization file 
+
+ * Default Paths
+	/usr/local/lib/wnn/zh_CN/uumrc  
+
+ * Function 
+	This is the initialization file for the startup of the front-end processor.  
+	It is read in during the execution of  "cuum" command.  The initialization 
+	includes:
+  	  - Specify the path for each of the environment setup files, the keyboard 
+	    definition file etc.
+  	  - Specify the initial state of the front-end processor after startup.
+  	  - Specify the different conversion parameters.
+
+ * Content 
+	In "uumrc", several settings are made.  They include the followings:
+
+  	1. include
+  	   - Format
+	     	include  <path> 
+	     This is to read in all other initialization files defined in <path>. 
+	     This will be used only when additional user definitions are needed. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					- 5-11 -
+  	2. setenv
+  	   - Format
+	     	setenv  <env_type>   <path>   [sticky]
+	     	setenv  <env_type>   <host>   <path>   [sticky]
+	     This is to set the forward conversion environment, based on the contents in 
+	     the environment definition files indicated by <path>. 
+	     <host> is the  machines hostname.  If  <host>  is given, the server will be 
+	     that of  the specified  hostname, and the environment  will be  created  by 
+	     this server.  
+
+	     [sticky] is a flag that implies a permanent environment.  If [sticky] is 
+	     specified, every time a front-end processor is connected to the cserver, it
+	     will increase  by one.  The environment  created will remain in the cserver 
+	     even though  the front-end processor has terminated.  This environment will 
+	     be used during the next startup of front-end processor, hence improving the
+	     speed of startup time.  The [ ] means that it  may be omitted.  If [sticky]
+	     is  not specified, the environment created will be deleted from the cserver
+	     after the front-end processor has exited.
+	     
+	     <env_type> indicates the environment type.  This includes Pinyin/Zhuyin 
+	     input and the encoded input environment.
+	     Pinyin/Zhuyin input environment is represented by  "PZ".  The encoded input 
+	     environment  corresponds to  first alphabet of the respective  input method 
+	     name.  For example, Wubi input environment is represented by "W" and Qianma 
+	     input environment is "Q".
+
+  	   - Default Path
+	     	/usr/local/lib/wnn/zh_CN/
+
+  	3. setenv_R 
+  	   - Format
+	     	setenv_R   <env_type>   <path>   [sticky]
+	     	setenv_R   <env_type>   <host>   <path>   [sticky]
+	     Similar to "2. setenv" above. The only difference is that "setenv_R"
+	     is meant for reverse conversion.  
+	     For example, Pinyin-Hanzi conversion is a forward conversion, while the 
+	     reverse conversion is Hanzi-Pinyin conversion.  The reverse conversion of
+	     Bianma-Hanzi conversion is Hanzi-Bianma conversion. 
+
+  	   - Default Path
+	     	/usr/local/lib/wnn/zh_CN/
+
+
+
+
+
+
+
+
+					- 5-12 -
+  	4. setuumkey
+  	   - Format
+	     	setuumkey  <path> 
+	     To specify the path for keyboard definition file of the front-end processor.
+	     <path> is the path of the keyboard  definition file "uumkey".  For details
+	     on uumkey, refer to Section 5.7
+
+  	   - Default Path
+	     	/usr/local/lib/wnn/zh_CN/uumkey
+
+
+  	5. setrkfile
+  	   - Format
+	     	setrkfile  <path> 
+	     To specify the input mode definition files.  
+	     <path>  is the directory of the input mode definition files.   All input
+	     modes  under this  directory will be read.   Input  mode includes Pinyin
+	     input mode, Zhuyin input mode, Wubi input mode etc.
+
+  	   - Default Path
+	     	/usr/local/lib/wnn/zh_CN/rk/mode    ─ combination of Pinyin/Zhuyin
+						       input environment
+	     	/usr/local/lib/wnn/zh_CN/rk_p/mode  ─ Pinyin centred input environment
+	     	/usr/local/lib/wnn/zh_CN/rk_z/mode  ─ Zhuyin centred input environment
+
+  	6. setconvkey
+  	   - Format
+	     	setconvkey  [<tty>]  <path> 
+	     To specify a keyboard to cWnn's default keyboard definition. 
+	     The terminal name [<tty>] must correspond to that defined in the environment 
+	     variable TERM, else the definitions will be invalid. 
+	     The wildcard character "*" may be used in the terminal name.
+	     <path> is the path of this keyboard definition file, which shows the different
+	     key bind between terminals. 
+
+  	   - Default Path
+	     	/usr/local/lib/wnn/zh_CN/cvt_key_tbl/
+
+  	7. setdicpath
+  	   - Format 
+	     	setdicpath  <path> 
+	     To specify the path of the dictionary added  dynamically to the system.  By
+	     having set this path, any dictionary added during the environment operation 
+	     function  "Dictionary Add"  will be added to this directory.
+
+
+
+
+
+					- 5-13 -
+  	8. setfrepath
+  	   - Format
+	     	setfreqpath  <path> 
+	     To specify the path of the usage frequency files when a dictionary is added
+	     dynamically to the system.  By having  set this path, any  dictionary added
+	     during the  environment operation function  "Dictionary Add"  will have its 
+	     usage frequency files added in this directory.
+
+  	9. setgrammarpath
+  	   - Format
+	     	setgrammarpath  <path> 
+	     To specify the path of the grammar files when a dictionary is added
+	     dynamically to the system.  By having  set this path, any  dictionary added
+	     during the  environment operation function  "Dictionary Add"  will have its 
+	     grammar files added in this directory.
+
+       10. not_send_ascii_char 
+	     When the  input line is  empty, and the  input is  ASCII characters,  these
+	     ASCII characters will  NOT be sent to the cursor position, but will be sent 
+	     to the conversion buffer. (Default)
+
+       11. send_ascii_char 
+	     When the  input line is  empty, and the  input is  ASCII characters,  these
+	     ASCII characters  will be  sent directly  to the cursor position, bypassing 
+	     the conversion buffer.
+
+       12. waking_up_in_convert_mode 
+	     To  set the  conversion  mode to  ON  after the  startup of  the  front-end
+	     processor.
+
+       13. waking_up_no_convert_mode 
+	     To  set the  conversion  mode to  OFF  after  the startup  of the front-end
+	     processor. (Default)
+
+       14. setmaxchg  <number> 
+	     Indicates the  maximum number  of characters  allowed for conversion at one 
+	     time.  Default value for <number> is 80.
+
+       15. setmaxbunsetsu   <number> 
+	     Indicates the  maximum  number of words allowed for conversion at one time.  
+	     The maximum value is 400 and default value of <number> is 80.
+
+       16. setmaxichirankosu   <number> 
+	     Indicates the number of candidates to be  displayed at one time.  This will 
+	     depend on the width of the screen.  Default <number> value is 36.
+
+
+
+
+					- 5-14 -
+       17. setmaxhistory  <number> 
+	     Indicates the  maximum  number of  entries for the  conversion history.  
+	     Default <number> value is 10.
+
+       18. simple_delete
+	     Once the  user  input string is  mapped to  its corresponding  standard 
+	     Pinyin, the standard Pinyin will be deleted as a single unit instead of 
+	     character by character.
+
+       19. flow_control_on 
+	     To set the flow control of tty to ON. (Default)
+
+       20. flow_control_off 
+	     To set the flow control of tty to OFF.
+ 
+       21. convkey_not_always_on 
+	     When the input mode is set to OFF, all related conversion function keys 
+	     are invalid. (Default)
+
+       22. convkey_always_on 
+	     When the input  mode is set to ON, all related conversion function keys 
+	     are still valid.
+
+       23. remove_cs 
+	     To remove cs from termcap.
+
+       24. not_remove_cs 
+	     Do not remove cs from termcap.
+
+       25. touroku_comment 
+	     During the addition of a new word, comments are allowed to be input.
+
+       26. touroku_no_comment 
+	     During the addition of a new word, comments are not allowed to be input.
+
+
+ * During path setting, the following abbreviations can be used :
+  	(1) ~ 		The value of environment variable HOME.
+  	(2) ~usrname 	The  home directory  of the  user registered in the password 
+			file.
+  	(3) @HOME 	The value of environment variable HOME.
+  	(4) @LIBDIR 	The path "/usr/local/lib/wnn/zh_CN".
+	(5) @USR	The current value of environment variable LOGNAME.
+
+
+
+
+
+
+					- 5-15 -
+ * Example 
+	setenv          PZ      /usr/local/lib/wnn/@LANG/wnnenvrc
+	setenv_R        PZ      /usr/local/lib/wnn/@LANG/wnnenvrc_R 
+
+	setenv          W       /usr/local/lib/wnn/@LANG/wnnenvrc_Wu
+	setenv_R        W       /usr/local/lib/wnn/@LANG/wnnenvrc_WuR
+	setenv          Q       /usr/local/lib/wnn/@LANG/wnnenvrc_Qi
+	setenv_R        Q       /usr/local/lib/wnn/@LANG/wnnenvrc_QiR 
+
+	setuumkey       /usr/local/lib/wnn/@LANG/uumkey
+	setrkfile       /usr/local/lib/wnn/@LANG/rk
+
+	setconvkey		/usr/local/lib/wnn/cvt_key_tbl
+	setconvkey      ST*     /usr/local/lib/wnn/cvt_key_tbl.ST
+	setconvkey      gmw*    /usr/local/lib/wnn/cvt_key_tbl.gmw
+	setconvkey      kterm*  /usr/local/lib/wnn/cvt_key_tbl.kt
+	setconvkey      PIC*    /usr/local/lib/wnn/cvt_key_tbl.ST
+	setconvkey      om*     /usr/local/lib/wnn/cvt_key_tbl.ST
+
+	setmaxhistory   20
+
+	waking_up_no_henkan_mode
+	flow_control_on
+	touroku_comment
+	not_send_ascii_char
+	simple_delete
+
+
+ * Note
+      -	A semicolon ";" at the beginning of the line means that the whole statement
+	is treated as comment.
+      -	During the  startup of the front-end processor, files  such as dictionaries, 
+	grammar files and usage frequency files that are specified in  "uumrc" will
+	be read in  by the  server if  they have  not been  read in  during cserver 
+	startup.  
+      - During the front-end processor startup, if the usage frequency files do not 
+	exist, the server will create a new frequency file.
+
+
+
+
+
+
+
+
+
+
+
+
+					- 5-16 -
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ 5.5  INITIALIZATION FILE FOR FORWARD CONVERSION ENVIRONMENT  -  wnnenvrc   ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛ 
+
+ * Description 
+	wnnenvrc   -  The initialization file for forward conversion environment
+
+ * Default Path 
+	(1) The corresponding file defined in uumrc
+	(2) /usr/local/lib/wnn/zh_CN/wnnenvrc
+
+ * Function 
+	Defines the forward conversion environment for the user.  This file is specified
+	in "uumrc".  If the file is re-specified, the latest version is valid.
+
+ * Content 
+	The settings in "wnnenvrc" include the followings:
+
+  	1. include 
+	   - Format
+		include  <wnnenvrc_filename> 
+	     To read in other wnnenvrc files.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					- 5-17 -
+  	2. setdic  
+           - Format
+		setdic  <p1>  <p2>  <p3>  <p4>  <p5>  <p6>  <p7>  <p8> 
+	     To set a dictionary in the current environment.
+	     "setdic" command  can be used to specify several dictionaries in  the same 
+	     environment.
+	     <p1>  ─  Specify the dictionary filename.
+	     <p2>  ─  Specify the usage frequency filename of the specified dictionary.
+		        * <p2> may be represented by "-" as default.
+			  By default, the usage frequency filename of the specified 
+		 	  dictionary will be used.
+		        * When specifying the usage frequency file <p2>,  <p2> must 
+			  correspond to the usage frequency filename of <p1>.
+	     <p3>  ─  Specify the access priority of the dictionary.
+		        * It is represented in decimal
+	     <p4>  ─  Specify whether the dictionary is static or dynamic.
+		        * 1: dictionary is read only 
+		        * 0: dictionary can be updated
+	     <p5>  ─  Specify whether the usage frequency file is static or dynamic.
+		        * 1: usage frequency file is read only 
+			* 0: usage frequency file can be updated
+	     <p6>  ─  Specify the password filename of the specified dictionary.
+		        * <p6> may be represented by "-" as default.	
+	     <p7>  ─  Specify the password filename of the usage frequency file.
+			* <p7> may be represented by "-" as default.
+	     <p8>  ─  Specify whether it is a forward of reverse dictionary 
+			* 1: Forward
+			* 0: Reverse 
+
+           - Example 
+		setdic basic.dic   -  5 0 0  - - 0
+
+  	3. setgrammar 
+	   - Format
+		setgrammar  <file_name>   
+	     Specify the grammar file.
+
+
+
+
+
+
+
+
+
+
+
+
+
+					- 5-18 -
+  	4. setparam  
+	   - Format
+		setparam  <c0>  <c1>   <c2>   <c3>   <c4>   <c5>   <c6>   <c7>  <c8>  
+		    	  <c9>  <c10>  <c11>  <c12>  <c13>  <c14>  <c15>  <c16>  
+
+	     To set the parameter values for  Pinyin-Hanzi conversion.  The paramters
+	     are explained in Section  5.3.  If these  are not set, the  system  will 
+	     follow the parameter values set via  "def_param" during cserver startup.
+	     The parameters should be integers.  During  conversion, the server  uses 
+	     these parameter values to determine the conversion result. 
+
+  	5. confirm
+	     When the usage frequency files, or the user dictionaries set via "setdic" 
+	     do not exist, the system  confirms with the user on  whether he wants to 
+	     create his new individual files.
+
+  	6. confirm1
+	     When the usage frequency files, or the user dictionaries set via "setdic" 
+	     do not exist, the system confirm only  ONCE  with the user on whether he 
+	     wants to create  ALL the new files at one time.
+
+	7. create_without_confirm 
+	     When the usage frequency files of the dictionary, or the user dictionaries 
+	     set via "setdic" do not exist, new files will be created automatically.
+
+  	8. no_create 
+	     When the usage frequency files of the dictionary, or the user dictionaries
+	     set via "setdic" do not exist, new files will NOT be created automatically.
+	     In this case, the startup of the front-end processor "cuum" will fail.
+
+ * Example 
+	confirm1
+	setdic  sys/level_1.dic         usr/@USR/level_1.h      4 1 0 - - 0
+	setdic  sys/level_2.dic         usr/@USR/level_2.h      1 1 0 - - 0
+	setdic  sys/basic.dic           usr/@USR/basic.h        7 1 0 - - 0
+	setdic  sys/basic.dic           usr/@USR/basic.h        7 1 0 - - 0
+	setdic  usr/@USR/ud             -                       5 0 0 - - 0
+
+	setfuzokugo     sys/full.con
+
+	setparam  1  5  2   750 10  80  10  5   1000   50  0  -200  0  0  0  16  0
+	;         N  M  频  长  四  刚  优  值   组    个  数  英   记 开 闭 最  备 
+
+
+
+
+
+
+
+					- 5-19 -
+ * Note
+	- The environment setup files for  Wubi(五笔) and  Qianma(钱码) have the same
+	  format as Pinyin(拼音).  
+	  Environment setup file  for Wubi is  "wnnenvrc_Wu",  and that for Qianma is
+	  "wnnenvrc_Qi".
+
+	- During path specification, the following abbreviations may be used.
+	  (1) ~		The current value of environment variable HOME.
+	  (2) ~username	The home directory of the username registered in the password
+			file.
+	  (3) @HOME	The value of environment variable HOME.
+	  (4) @LIBDIR	The default path "/usr/local/lib/wnn/zh_CN/" of cWnn's 
+		   	environment file.
+	  (5) @USR	The current value of environment variable LOGNAME.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					- 5-20 -
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ 5.6  INITIALIZATION FILE FOR REVERSE CONVERSION ENVIRONMENT  -  wnnenvrc_R   ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛ 
+
+ * Description 
+	wnnenvrc_R  -  The initialization file for reverse conversion environment.
+
+ * Default Path 
+	(1) The corresponding file defined in uumrc
+	(2) /usr/local/lib/wnn/zh_CN/wnnenvrc_R
+
+ * Function 
+	Defines the reverse conversion environment for the user.  This file is specified 
+	in "uumrc".  If the file is re-specified, the latest version is valid.
+
+ * Content 
+	The settings in  "wnnenvrc_R" is  similar to  "wnnenvrc".  For details, refer to
+	Section 5.5.
+
+ * Example 
+	confirm1
+	setdic  sys/level_1.dic         usr/@USR/level_1.h      4 1 0 - - 1
+	setdic  sys/level_2.dic         usr/@USR/level_2.h      1 1 0 - - 1
+	setdic  sys/basic.dic           usr/@USR/basic.h        7 1 0 - - 1
+	;setdic sys/computer.dic        usr/@USR/computer.h     4 1 0 - - 1
+
+	setdic  usr/@USR/ud             -                       5 0 0 - - 1
+
+	setfuzokugo     sys/full.conR
+
+	setparam  1  5  2   750 10  80  10  5   1000   50  0  -200  0  0  0  16  0
+	;         N  M  频  长  四  刚  优  值   组    个  数  英   记 开 闭 最  备
+
+
+ * Note
+        - The value of the 8th parameter is "1".  This implies that the dictionary is used 
+	  for reverse conversion.
+
+	- The environment setup files for Wubi(五笔) and Qianma(钱码) have the same format 
+	  as Pinyin(拼音).  
+	  Environment setup file for Wubi is "wnnenvrc_WuR", and that for Qianman is
+	  "wnnenvrc_QiR".
+
+
+
+
+
+
+
+					- 5-21 -
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ 5.7  KEYBOARD DEFINITION FILE FOR FRONT-END PROCESSOR  -  uumkey   ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛ 
+
+ * Description 
+	uumkey  -  The keyboard definition file for the front-end processor
+
+ * Default Path 
+	/usr/local/lib/wnn/zh_CN/uumkey
+
+ * Function 
+	In Chinese input, commands for conversion, selection and other user operations 
+	are implemented via the keyboard input.
+	"uumkey" is the keyboard definition file.  The relation between the code of an 
+	input key and  its command is  defined in the  "uumkey" file.  User can define 
+	the function of a particular key according to his needs.  
+
+ * Content 
+	The settings in "uumkey" include the followings:
+
+  	1. include  
+	   - Format
+		include <uumkey filename> 
+	     To read in other keyboard definition files.
+
+ 	2. <command> 
+	   - Format 
+		<command>  <key>  [ <key>  ....]
+	     This is to define the function of each key.
+
+	     Several <command> are allowed in "uumkey", refer to "Command List" below.
+	     <key> can be represented in decimal, hexadecimal, octal or character 
+	     enclosed between single quotes.  
+
+	     There are 11 states  for the front-end processor. Refer to  "State Table".
+	     A function key can serve different functions in different states.  Hence a
+	     function key may be used in different states for different purposes.
+
+  	3. unset 
+	   - Format 
+		unset <command> 
+	     To remove all the function key definitions which correspond to <command>.
+
+
+
+
+
+
+
+					- 5-22 -
+ * State Table
+   ┌───────┬───────────────────────────────┐
+   │ State Number │                     Description                              │
+   ├───────┼───────────────────────────────┤
+   │ 	0     	   │ This is the state after conversion. The state when correction│
+   │              │ on the conversion result is being carried out.		   │
+   │ 	1     	   │ This is the state before conversion, ie. the input state.    │
+   │ 	2     	   │ This is the state when manual segmentation is performed on   │
+   │		   │ the words and phrases after conversion.			   │
+   │ 	3     	   │ This is the initial state when the input buffer is empty.    │
+   │ 	4     	   │ This is the state of cursor movement during the selection of │
+   │		   │ candidates for a Chinese character.			   │
+   │        	   │ (including the state during selection of phrase candidates,  │
+   │		   │  process of operations, and the state of grammatical         │
+   │		   │  attribute and dictionary selection during addition.) 	   │
+   │ 	5     	   │ This is the state when the range of a word is specified      │
+   │		   │ during the process of word add. 				   │ 
+   │ 	6     	   │ This is the state of Pinyin input during the process of word │
+   │		   │ or dictionary add.  					   │
+   │ 	7     	   │ This is the state during word search/delete or dictionary    │
+   │		   │ search/delete.						   │
+   │ 	8     	   │ This is the state during word search or information retrieval│
+   │		   │ of a word.  			   			   │
+   │ 	9     	   │ This is the state during dictionary search.                  │
+   │ 	A     	   │ This is the inspect mode.                                    │
+   └───────┴───────────────────────────────┘  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					- 5-23 -
+ * Command List
+    ┌─────────────────┬───────────────────┐
+    │	 henkan_on 			│   sainyuuryoku			│
+    │	 quote_keyin			│   sainyuuryoku_e			│
+    │	 send_string			│ 					│
+    │	 kakutei 			│   redraw_line			│
+    │  				│   redraw_line_e			│
+    │	 forward_char			│ 					│
+    │	 backward_char			│   previous_history 			│
+    │  				│   previous_history_e			│
+    │	 goto_top_of_line		│					│
+    │	 goto_end_of_line		│   next_history			│
+    │   				│   next_history_e 			│
+    │	 delete_char_at_cursor		│					│
+    │	 kaijo  			│   touroku_mark_set			│
+    │	 henkan 			│   touroku_return			│
+    │					│   quit				│
+    │	 tan_henkan    			│ 					│
+    │	 tan_henkan_dai    		│   touroku_jump_forward		│
+    │					│   touroku_jump_backward		│
+    │	 nobi_henkan     		│ 					│
+    │	 nobi_henkan_dai     		│   change_to_insert_mode		│
+    │   				│ 					│
+    │	 jikouho    			│   quote				│
+    │	 jikouho_dai    		│   quote_e				│
+    │   				│ 					│
+    │	 zenkouho  			│   forward_select			│
+    │	 zenkouho_dai  			│   backward_select			│
+    │  				│ 					│
+    │	 select_jikouho    		│   next_select			│
+    │	 select_jikouho_dai    		│   previous_select			│
+    │					│ 					│
+    │	 kana_henkan			│   linestart_select			│
+    │	 kill				│   lineend_select			│
+    │   				│ 					│
+    │	 yank				│   select_select			│
+    │	 yank_e				│ 					│
+    │   				│   send_ascii_char			│
+    │	 bunsetu_nobasi 		│   not_send_ascii_char		│
+    │	 bunsetu_chijime		│   pop_send_ascii_char		│
+    │   				│   toggle_send_ascii_char		│
+    │	 jisho_utility			│   quote_send_ascii_char		│
+    │	 jisho_utility_e		│ 					│
+    │    				│   reconnect_jserver			│
+    │	 touroku			│   inspect 				│
+    │	 touroku_e			│ 					│
+    │					│   del_entry				│
+    │	 sakujo_kouho 			│   use_entry			 	│
+    └─────────────────┴───────────────────┘  
+					- 5-24 -
+	The following shows  the states in  which  some of the commands can be used, and 
+	their respective functions:
+ 
+	- henkan_on    0123456789
+	     To toggle the conversion state to ON or OFF.
+
+  	- quote_keyin   0123456789
+	     To  quote the next input character so that function keys  used for  toggling
+	     the conversion state  can also be used as input.  This function is  used for 
+	     special cases  when the input of  "henkan_on " function  key code is  needed.
+
+  	- send_string  012
+	     To  confirm the user input characters without passing through the conversion 
+	     buffer.
+
+  	- kakutei    012
+	     (Confirm) To send the input character string to the cursor position.
+
+  	- forward_char   01256
+	     156: To move the cursor one character position to the right
+	     0  : To move the cursor one word to the right
+	     2  : To remain character at the cursor position as ASCII, and perform multi-
+		  phrase conversion  on the character  after the cursor, and followed by
+		  moving the cursor one word to the right.
+
+  	- backward_char   01256
+	     1  : To move the cursor one character position to the left.  
+	          If after a conversion, we  re-convert certain  portion of the converted 
+		  result (eg. from middle till end of string) back to user input, leaving
+		  the front portion of the string untouched, then multi-phrase conversion  
+		  will be performed when  we move the cursor to the left.  This will only 
+		  be valid when the cursor is at the leftmost position of the unconverted  
+		  portion.  After this  multi-phrase conversion, the cursor will move one 
+		  word to the left. 
+	     56 : To move the cursor one character to the left. 
+	     0  : To move the cursor one word to the left.
+	     2  : The  highlighted  portion will remain as ASCII, the portion  beyond the 
+	          highlighted  part will undergo  multi-phrase conversion, and the cursor 
+	          will move one word to the left.
+
+    	- goto_top_of_line   01256
+	     1256: To move the cursor to the first character of the line.
+	     0   : To move the cursor to the first word of the line.
+
+  	- goto_end_of_line   01256
+	     1256: To move the cursor to the last character of the line.
+	     0   : To move the cursor to the last word of the line.
+
+
+					- 5-25 -
+  	- delete_char_at_cursor   156
+	     To delete the character at the current position of the cursor.
+
+  	- kaijo   02
+	     To change the converted character string after the current cursor position 
+	     back to the state before conversion.
+
+  	- henkan    1
+	     To perform multi-phrase conversion.
+
+  	- tan_henkan   1
+	     To treat a word as a single unit and perform word conversion.
+
+  	- tan_henkan_dai   1
+	     To treat a phrase as a single unit and perform a single phrase conversion.
+
+	- nobi_henkan    2
+	     During word elongation, the highlighted portion will be treated as a word 
+	     and undergo  word conversion,  while the remaining  portion  will undergo 
+	     multi-phrase conversion.
+
+  	- nobi_henkan_dai    2
+	     During compulsory  word  segmentation, the  portion at the cursor will be
+	     treated  as a phrase  and undergo a  single phrase conversion,  while the 
+	     portion after the cursor will undergo a multi-phrase conversion.
+
+  	- jikouho   0
+	     To extract the next word candidate.
+
+  	- jikouho_dai   0
+	     To extract the next phrase candidate.
+
+  	- zenkouho     0
+	     To extract the previous word candidate.
+
+  	- zenkouho_dai    0
+	     To extract the previous phrase candidate.
+
+  	- select_jikouho     0
+	     To extract the next group of word candidates.
+
+  	- select_jikouho_dai    0
+     	     To extract the next group of phrase cnadidates.
+
+  	- kana_henkan     1
+	     To perform Hanzi-Pinyin (or Hanzi-Bianma) conversion, ie. reverse conversion.
+
+
+
+					- 5-26 -
+  	- kill   156
+	     To delete the characters from the current cursor position to the end, and 
+	     store them in the "kill" buffer.
+
+  	- yank   156
+
+  	- yank_e   1356
+	     To insert the content from the "kill" buffer into the current cursor 
+	     position.
+
+  	- bunsetu_nobasi    02
+	     To increase the length of a word by one character. 
+
+  	- bunsetu_chijime   02
+	     To decrease the length of a word by one character. 
+
+  	- jisho_utility   012
+
+  	- jisho_utility_e   0123
+	     To enter the state of dictionary operation.
+
+  	- touroku   012
+
+  	- touroku_e    0123
+	     To enter the state of word add process.
+
+  	- sainyuuryoku   1
+
+  	- sainyuuryoku_e    13
+	     To re-input the previously input character strings.
+
+  	- redraw_line   012456789
+
+  	- redraw_line   0123456789
+	     To re-display the input line.
+
+  	- previous_history   1
+
+  	- previous_history_e   13
+	     To extract the previous character string stored in the "history" buffer.
+
+	- next_history	1
+
+	- next_history_e    13
+	     To extract the next character string stored in the "history" buffer.
+
+
+
+
+					- 5-27 -
+  	- touroku_mark_set   5
+	     To specify the beginning and ending position of the input string during a 
+	     word add process.  When the  beginning and ending  position are the same, 
+	     (ie. word length is 0), return to the initial state.
+
+  	- touroku_return   6
+	     To indicate the end of the Pinyin (or radical) input string during a word 
+	     add process. 
+
+  	- quit   4567 
+	     When in a state other than the conversion state or input state (eg. viewing 
+	     of candidates for a Chinese character, word add etc, state number 4,5,6,7), 
+	     exit this state.
+
+  	- touroku_jump_forward   5
+	     During the word add process, move the cursor to the front by one word.
+
+  	- touroku_jump_backward   5
+	     During the word add process, move the cursor to the rear by one word. 
+
+  	- change_to_insert_mode   0
+	     To change the  converted input string  back to  edit mode, and thereafter,
+	     the converted Hanzi  will not change back to its Pinyin (or radical) form. 
+
+  	- quote   1
+
+  	- quote_e   13
+	     To quote the next input character (except "henkan_on") and omit passing it 
+	     to the input automaton conversion.  Instead, pass it directly to the input 
+	     line.
+
+  	- forward_select   4789
+	     4   : During the state of candidate selection, the highlighted portion will 
+		   move to the right.
+	     789 : During  dictionary  search, if a line is not selected, it will scroll 
+	   	   forward.
+
+  	- backward_select   4789
+	     4   : During the state of candidate selection, the highlighted portion will 
+	 	   move to the left.
+	     789 : During dictionary search, if a line is  not selected, it  will scroll 
+		   backward.
+		
+
+
+
+
+
+
+					- 5-28 -
+  	- next_select   4789
+	     4   : During the state of candidate selection, move to the next screen.
+	     789 : During dictionary search, move to the next line. 
+
+  	- previous_select   4789
+	     4   : During the  state of  candidate selection, move to the previous screen. 
+	     789 : During dictionary search, move to the previous line. 
+
+  	- linestart_select   4789
+	     4   : During the state of candidate selection, move to the top of the screen. 
+	     789 : During dictionary search, if a line is not selected, move to the 
+	   	   first screen.
+
+  	- lineend_select   4789
+	     4   : During the state of candidate selection, move to the end of the screen. 
+	     789 : During dictionary search, if a line is not selected, move to the 
+	   	   last screen.
+
+  	- select_select   4789
+	     4   : During the state of candidate selection, select one candidate and exit 
+	 	   from this state. 
+	     789 : During dictionary search, select a candidate and exit from this state.
+
+  	- send_ascii_char   0123456789    
+	     After this command, if the  input buffer is empty, the ASCII character input 
+	     will NOT be sent to the buffer.
+
+  	- not_send_ascii_char   0123456789  
+	     After this command, if the  input buffer is empty, the ASCII character input 
+	     will be sent to the buffer.
+
+  	- pop_send_ascii_char   0123456789
+	     After this command, if the input buffer is empty, the operation of the ASCII 
+	     character input will be changed back to its previous state.
+
+  	- toggle_send_ascii_char   0123456789
+	     After this command, if the input buffer is empty, the operation of the ASCII 
+	     character input will be reversed (ie. if the current operation is 
+	     "send_ascii_char", it will be set to "not_send_ascii_char" and vice versa).
+
+  	- quote_send_ascii_char   
+	     During the  "send_ascii_char"  state, if the buffer is empty, the next ASCII 
+	     character  will  enter the buffer.  However,  subsequent characters will not
+	     enter the buffer even if it is empty.
+
+  	- reconnect_jserver   012456789
+	     To reconnect with the cserver
+
+
+					- 5-29 -
+  	- inspect   0
+	     To check the dictionary.
+
+  	- sakujo_kouho    0
+	     To delete a candidate. 
+
+  	- del_entry    89
+	     To delete dictionary as well as the words in the dictionary.
+ 
+  	- use_entry    89
+	     To temporary stop  and subsequently re-use the dictionary and the words 
+	     in the dictionary.
+
+
+ * Example  
+	;Commands          		Codes
+	forward_char            	^F 0x90
+	backward_char           	^B 0x91
+	goto_top_of_line        	^A 0x9
+	goto_end_of_line                ^E 0x9B
+
+
+ * Note
+	- Lines that begin with ";" are treated as comments.
+	- When the conversion state is OFF, the front-end processor will be temporarily.
+	  disconnected.  At the same time, the  input automaton  also stops functioning.
+	  Hence, not all codes can be entered from the keyboard.  (A key code refers to 
+	  a code between  0 and 255.)
+          To input a code that cannot be entered directly via the keyboard, you may use 
+	  the  key code conversion (Refer to Section 5.8) or  input automaton (Refer to 
+	  Chapter 7).  
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					- 5-30 -
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ 5.8  CONVERSION FILE FOR KEYBOARD INPUT CODE  -  cvt_key_tbl ┃ 
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛ 
+
+ * Description 
+	cvt_key_tbl  -  The conversion file for the keyboard input code.
+			It shows the different key bind between terminals.
+
+ * Default Path 
+	/usr/local/lib/wnn/cvt_key_tbl 
+
+ * Function 
+	Definitions that convert the character sequences defined in terminfo/
+	termcap into single character codes.
+
+ * Content
+	The terminfo or termcap entries and the input codes are specified here.
+ 	- Format 
+		<terminfo_entry>  <code>  	(for Unios-U)
+		<termcap_entry>   <code>  	(for Unios-B, Mach)
+
+ 	  For  terminfo entries  and  termcap entries,  refer to  Unix manuals for the 
+	  respective informations.
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					- 5-31 -
+ 	- Code expression 
+  		(1) Except for space, \ and ^ , all characters will be represented as 
+	    	    they are.  Example: A, 1.
+
+	 	(2) ^<character>   
+		    <character>  can be @, A(a), B(b), C(c), D(d), E(e), F(f), ...Z(z), 
+		    [, \ ,], ^, _
+
+		   ^@ is Ctrl + space (0x00)
+		   ^A is Ctrl + A (0x01)
+			:
+			:
+		   ^_ is Ctrl + _ (0x1f)
+
+ 	 	(3) \<octal number>, \o<octal number>, \d<decimal number>,
+		    \x<hexadecimal number> character codes can be represented directly.
+		    Example: \x81
+
+ 	 	(4) \n, \t, \b, \r, \f, \e, \E represent NEWLINE, TAB, BACKSPACE, CR, 
+		    FORMFEED, ESC, ESC respectively.
+
+ 	 	(5) \<character>
+		    <character>  can be any character except  0,1,2,3,4,5,6,7, o,d,x,n,
+		    t,b,r,f,e,E 
+	    	    \\ means \ itself.
+
+ * Example 
+	kl      \x81
+	ku      \x82
+	kr      \x83
+	kd      \x84
+
+
+ * Note 
+	Input codes in this conversion file will be evaluated when they are being
+	processed in the followings: 
+	    (a) input mode control table (2A_CTRL) of input automaton
+	    (b) uumkey 
+
+ * Reference 
+	uumkey(5.7)
+
+
+
+
+
+
+
+
+					- 5-32 -

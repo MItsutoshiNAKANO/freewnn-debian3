@@ -1,0 +1,200 @@
+		   ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+		    ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+		    ┃  Ｃｈａｐｔｅｒ ２   ＧＥＴＴＩＮＧ  ＳＴＡＲＴＥＤ      ┃
+		    ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+		   ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+┏━━━━━━━━━━━━━━━━━━┓
+┃ 2.1  CWNN STARTUP AND TERMINATION  ┃
+┗━━━━━━━━━━━━━━━━━━┛
+
+	First of all, the user needs to start up the cserver before  he can use the
+system.  cserver runs as a background process.  Hence once the cserver is up, it can be
+shared by several client modules, ie the front-end processors.
+ 
+
+1. Startup of cserver
+━━━━━━━━━━━
+To start the server, type the following command at the C Shell prompt :
+	┌──────────────────────────────┐
+        │ %  cserver  <CR>                                           │
+        └──────────────────────────────┘
+
+The default path of cserver is  "/usr/local/bin/cWnn4/ ".  If the user has not set this 
+path, he can either  set it and type the command directly, or type the full pathname of 
+cserver while executing this command.
+
+cserver will only be started up once.  You may confirm the existence of cserver by using 
+the "cwnnstat" command (refer to 6.4).  If  cserver is being  executed after its initial
+startup, the following error message will be displayed:
+	┌──────────────────────────────┐
+        │ Jserver: can't bind inet-socket                            │
+        └──────────────────────────────┘
+
+The cserver  will read in  all default files in  the system.  These include the grammar
+files, dictionaries and the  usage frequency files.  
+After reading, a message  "Finished Reading Files"  will be  displayed, and the C Shell 
+prompt will be ready to receive commands again.
+
+
+
+
+
+
+
+
+
+
+
+
+					- 2-1 -
+2. Startup of client module, cuum
+━━━━━━━━━━━━━━━━━
+Basically, there are three client modules as shown below, each supports different input 
+environment:  	(1)  supports both Pinyin and Zhuyin input environment
+		(2)  supports mainly Pinyin centred input enivronment
+		(3)  supports mainly Zhuyin centred input environment
+Users may activate either of them to input Chinese characters depending on their needs.
+
+"cuum" will start up environment (1) above. To start "cuum", type the following command 
+at the C Shell prompt of a Chinese window:
+	┌──────────────────────────────┐
+        │ %  cuum  <CR>                                              │
+        └──────────────────────────────┘
+
+To  activate the  other two environments,  you may use the "-r"  option of the  "cuum" 
+command  together with  the default path of the environment.  For example, to activate 
+environment (2), do the following:
+	┌──────────────────────────────┐
+        │ %  cuum  -r    /usr/local/lib/wnn/zh_CN/rk_p     <CR>      │
+        └──────────────────────────────┘
+For detailed information, refer to Section 3.2 and Section 6.3.
+
+
+The default path for "cuum" is  "/usr/local/bin/cWnn4/".  Many cuum's  may be started at
+the same time on different windows.  Each of them will be registered as a client at the 
+cserver. 
+
+During the execution of the cuum command, the following message will appear.
+	 ┌──────────────────────────────┐
+         │%  cuum  <CR>                                               │
+         │                                                            │
+         │                                                            │
+         │              ·····你好·····                      │
+         │              ·欢迎使用汉语处理系统·                      │
+         │              ·  祝您今天好运气　　·                      │
+         │              ····ｃｗｎｎ····                      │
+         │ %                                                          │ 
+         │ [---]                                                      │ 
+         └──────────────────────────────┘
+
+The client module, cuum, is now ready to be used.  To enter the input mode, press ^\.  
+To leave the input mode, press ^\ again.  To confirm the existence of cuum, you may
+also use ^\.
+
+
+
+
+
+
+					- 2-2 -
+If the user does not start up "cserver" before he executes "cuum", then the following
+message will appear:
+	┌──────────────────────────────┐
+        │ 不能和server连接。					      │
+        └──────────────────────────────┘
+
+
+If the user happens to activate "cuum" again after it is already activated, an error
+message is shown as follows:
+	┌──────────────────────────────┐
+        │ 在ｃｕｕｍ上不能起动ｃｕｕｍ。			      │
+        └──────────────────────────────┘
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					- 2-3 -
+3. Termination of cuum 
+━━━━━━━━━━━
+In order to terminate a client process, type the following:
+	 ┌──────────────────────────────┐
+         │ %  ^d                          			       │ 
+         └──────────────────────────────┘
+
+The cserver will save all the usage frequency files and dictionaries of the particular
+client and terminate the connection between itself and that client.
+
+The following message will appear:
+	 ┌──────────────────────────────┐
+         │ ｃｕｕｍ结束。  					       │ 
+         │ %  							       │ 
+         └──────────────────────────────┘
+
+ 
+
+4. Termination of cserver 
+━━━━━━━━━━━━━
+To terminate the cserver, type the following command:
+	 ┌──────────────────────────────┐
+         │ % cwnnkill  <CR>                                           │ 
+         │ CSERVER Terminated                                         │ 
+         │ %                                                          │ 
+         └──────────────────────────────┘ 
+
+If some other clients still exist, the following message will be displayed:
+	 ┌──────────────────────────────┐
+         │ % cwnnkill  <CR>                                           │ 
+         │ 1 User Exists.					       │ 
+         │ CSERVER Not Killed.					       │ 
+         │ %                                                          │ 
+         │ [---]                                                      │ 
+         └──────────────────────────────┘ 
+
+For more details on the commands, refer to Chapter 6.
+
+
+
+
+
+
+
+
+
+
+
+
+					- 2-4 -

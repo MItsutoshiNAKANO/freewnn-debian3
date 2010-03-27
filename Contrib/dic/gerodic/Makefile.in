@@ -1,0 +1,78 @@
+#
+# $Id: Makefile.in,v 1.6 2006/05/28 16:37:02 aonoto Exp $
+#
+
+# FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+# This file is part of FreeWnn.
+#
+# Copyright Wnn Consortium. 1993
+# Copyright FreeWnn Project 2001, 2006
+#
+# Author: OMRON SOFTWARE Co., Ltd. <freewnn@rd.kyoto.omronsoft.co.jp>
+# Maintainer:  FreeWnn Project
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with GNU Emacs; see the file COPYING.  If not, write to the
+# Free Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+# Commentary:
+#
+# Change log:
+#	'99/04/19	TAOKA Satoshi - 田岡 智志<taoka@infonets.hiroshima-u.ac.jp>
+#		インストールディレクトリを変更可能にする
+#
+#		More changes are described in ChangeLog file or CVS commit log.
+#
+
+include @top_builddir@/makerule.mk
+  top_srcdir = @top_srcdir@
+      srcdir = @srcdir@
+top_builddir = @top_builddir@
+ WNNJUTILOBJ = $(top_builddir)/Wnn/jutil
+
+# Makefile for gerodic 1.00
+#
+#	Jun. 26th '93 Wnn Consortium
+
+
+INSTALL         = @INSTALL@ $(INSTALLFLAGS)
+LOCAL_INSTFLAGS = -o ${WNNOWNER}
+
+#ATOD=${JWNNBINDIR}/atod
+ATOD=${WNNJUTILOBJ}/atod
+
+#WNNTOUCH=${WNNBINDIR}/wnntouch
+WNNTOUCH=${WNNJUTILOBJ}/wnntouch
+
+#HINSI=${JWNNWNNDIR}/hinsi.data
+HINSI=${PUBDICPLUSSRC}/hinsi.data
+
+GERODIR=${JWNNDICDIR}/gerodic
+
+SRC=$(srcdir)/g-jinmei.u
+OBJ=g-jinmei.dic
+
+all:: ${OBJ}
+
+$(OBJ): $(SRC)
+	${ATOD} -h ${HINSI} ${OBJ} < ${SRC}
+
+install:: ${OBJ}
+	@if [ -d $(DESTDIR)$(GERODIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(GERODIR)); fi
+	chown ${WNNOWNER} $(DESTDIR)$(GERODIR)
+	$(INSTALL) $(INSTDATFLAGS) $(LOCAL_INSTFLAGS) ${OBJ} $(DESTDIR)$(GERODIR)
+	${WNNTOUCH} $(DESTDIR)$(GERODIR)/${OBJ}
+
+clean::
+	$(RM) ${OBJ}

@@ -1,0 +1,65 @@
+.\"
+.\"   $Id: inspect.man,v 1.3 2001/06/14 18:08:32 ura Exp $
+.\"
+.\"
+.\" FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+.\" This file is part of FreeWnn.
+.\" 
+.\" Copyright Kyoto University Research Institute for Mathematical Sciences
+.\"                 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+.\" Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright FreeWnn Project 1999, 2000
+.\" 
+.\" Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+.\" 
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\" 
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\" 
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software
+.\" Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+.\"
+.TH JL_INSPECT \  "20 September 1991"
+.SH 名称
+.sv 1
+.nf
+.ta 0.1i 2i
+jl_inspect()		文節の情報を取り出し。
+.fi
+.SH 形式
+.sv 1
+.nf
+.ta 0.1i 3i
+#include "jllib.h"
+
+struct wnn_jdata *
+jl_inspect(buf, bun_no)
+struct wnn_buf *buf;		/* バッファ */
+int bun_no;			/* 文節番号 */
+.fi
+.SH 機能
+.HP 0
+.IP
+文節番号 bun_no で指定された文節の情報を取り出す。
+
+当面の所は、語幹部分についてのみ行なっている。
+.SH リターンバリュー
+.sv 1
+.nf
+正常終了時には、wnn_jdata構造体に辞書引きした結果を入れて返す。
+異常終了時には、 NULL を返す。
+.SH 使用上の注意事項
+.HP 0
+.IP
+返値として返される領域は、次に jl 関数を呼んだ時に破壊される。
+
+
+

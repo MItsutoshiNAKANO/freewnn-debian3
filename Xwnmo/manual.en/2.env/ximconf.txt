@@ -1,0 +1,198 @@
+
+
+
+XIMCONF(4)          UNIX Programmer's Manual           XIMCONF(4)
+
+
+
+NNAAMMEE
+     ximconf - Configuration file of Input Manager of the X Win-
+     dow System Version 11 (xwnmo(1X))
+
+SSYYNNOOPPSSIISS
+     //uussrr//llooccaall//lliibb//wwnnnn//xxiimmccoonnff
+
+DDEESSCCRRIIPPTTIIOONN
+     In the _x_i_m_c_o_n_f file, configurations of _x_w_n_m_o are wrote.  As
+     configurations; environments of each supported languages(the
+     relation between internal locale and external locale,
+     CSWIDTH(code set width), whether use conversion server or
+     not and etc.), default locale and locale for world environ-
+     ment.
+
+     Lines that start with a semicolon (;) are comments.
+
+     CCooddiinngg ffoorrmmaatt::
+
+          {ext_locale}[|{ext_locale}|...] {lang}
+          {internal_locale} {cswidth} {using_server} {code_trans}
+          or
+          setdefaultlocale    {def_locale}
+          or
+          setworldlocale      {world_locale}
+
+
+     eexxtt__llooccaallee
+               Specifies a locale name which is used by client.
+               If a client requests _x_w_n_m_o to use the ext_locale,
+               _x_w_n_m_o will refer the client to lang,
+               internal_locale and etc. in same line. Plural
+               ext_locale can be specified with separator '|'.
+
+     llaanngg      Specifies a lang name which is referred as LANG
+               name on Wnn environment.  Please refer manuals for
+               serverdefs or uumrc of Wnn.
+
+     iinntteerrnnaall__llooccaallee
+               Specifies a locale name which is used as internal
+               locale by _x_w_n_m_o.  The Wnn library can process only
+               EUC encoding. Therefore _x_w_n_m_o must use locales are
+               subset of EUC. Must specify locales are subset of
+               EUC in internal_locale.
+
+     ccsswwiiddtthh   Specifies CSWIDTH(code set width) of
+               internal_locale.  Code format of CSWIDTH follows.
+               CSWIDTH=b1[:c1][,b2[:c2][,b3[:c3]]]
+               "b1-b3" is byte length of each code set(except SS2
+               or SS3).
+               "c1-c3" is column length of each code set.
+               "b1" and "c1" is for code set 1.
+               "b2" and "c2" is for code set 2.
+               "b3" and "c3" is for code set 3.
+
+     uussiinngg__sseerrvveerr
+               Specifies whether this language environment uses
+               its conversion server or not. If ``True'' or
+               ``TRUE'' is specified, the conversion server will
+               be used.  Otherwise it will not be used. For exam-
+               ple; in case of Latin languages, input of those
+               languages will be realized with automaton conver-
+               sion.
+
+     ccooddee__ttrraannss
+               In case of peculiar languages(e.g. Chinese), it is
+               necessary to translate internal code to code for
+               drawing (e.g. Yincoding of Chinese). In those
+               language, code_trans specifies the translation
+               method as string.  Otherwise ``Normal'' must be
+               specified in code_trans.  Currently, only ``Yin-
+               coding'' is support. It is for Yincoding of
+               Chinese.
+
+     ddeeff__llooccaallee
+               Specifies default locale name. If locale for
+               Root-mode is empty or "C" locale, this default
+               locale will be used. If def_locale is not speci-
+               fied, DEFAULT_LANG will be used as default locale.
+               DEFAULT_LANG depends on environment of compiling.
+               If you want to know DEFAULT_LANG, set the resource
+               langName as NULL, set the environment variable
+               LANG as "C" and execute _x_w_n_m_o. Then _x_w_n_m_o will
+               print the message "I try to set locale to default
+               ???.". This ??? is DEFAULT_LANG.
+
+     wwoorrlldd__llooccaallee
+               Specifies locale for world environment. If a
+               client requests _x_w_n_m_o to use this world locale,
+               _x_w_n_m_o will create multi-language environment for
+               the client. If world_locale is not specified,
+               "wr_WR.ct" will be used as default.
+
+SSEEEE AALLSSOO
+     xwnmo(1X)
+
+CCOOPPYYRRIIGGHHTT
+     Copyright 1992 by OMRON Corporation
+     Copyright 1992 by Massachusetts Institute of Technology
+
+AAUUTTHHOORR
+     Seiji Kuwari (OMRON Corporation)
+
+
+
+Printed 12/1/92             Release 5                           2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

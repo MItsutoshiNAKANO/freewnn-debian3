@@ -1,0 +1,126 @@
+#
+#  $Id: INSTALL,v 1.8 2007/06/23 16:34:16 aonoto Exp $
+#
+
+#
+# FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+# This file is part of FreeWnn.
+# 
+# Copyright Kyoto University Research Institute for Mathematical Sciences
+#                 1987, 1988, 1989, 1990, 1991, 1992
+# Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+# Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+# Copyright FreeWnn Project 1999, 2000, 2002, 2006, 2007
+# 
+# Maintainer:  FreeWnn Project
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+        FreeWnn インストールのしかた
+
+
+【基本的なインストールの手順】
+
+1. ファイルを展開します
+
+        $ gzcat FreeWnn-*.tar.gz | tar xvf -
+
+        注1: * の部分はバージョンによって変わります。
+
+2. FreeWnn-*/ に移ります
+
+        $ cd FreeWnn-*
+
+3. configure を実行します
+
+        $ ./configure
+
+	注2: configure のオプションについては、下記または
+	     ./configure --help を参照して下さい。
+
+4. make します
+
+        $ make
+
+5. スーパーユーザーになって make install します
+
+        $ su
+        # make install
+
+	注3: 現在のところ、スーパーユーザー以外でのインストールはうまく行
+	     きません。
+
+6. マニュアルをインストールします
+
+        # make install.man
+
+        注4: マニュアルが不要であれば省略して構いません。
+
+
+【configure のオプション】
+
+ 	$ ./configure --help
+
+で、configure が受け付けるオプションの一覧が表示されます。
+例えば、デフォルトでは /usr/local 以下にインストールされますが、これを
+/opt/FreeWnn に変更する場合、--prefix オプションを指定します。
+
+        $ ./configure --prefix=/opt/freewnn
+
+FreeWnn 独自の configure option のうち、主なものは以下の通りです。
+
+  default で有効なもの:
+  --enable-libraries    FreeWnn のライブラリを作成及びインストールします。
+  --enable-server       FreeWnn サーバーを作成及びインストールします。
+  --enable-Wnn          Wnn (日本語) を作成及びインストールします。
+  --enable-cWnn         cWnn (中国語) を作成及びインストールします。
+  --enable-kWnn         kWnn (韓国語) を作成及びインストールします。
+
+  default で無効なもの:
+  --enable-ipv6         IPv6 を有効にします。
+  --enable-unsafe-path  jserverdir 以外のディレクトリに jserver がファイル
+                        を作成するのを許可します。(注5)
+  --enable-client	uum を作成及びインストールします。
+
+  configure中で必要性・ライブラリの存在を確認するもの:
+  --with-libwrap	TCP wrapperのlibwrapを使用し、jserverの接続時点での
+			アクセス制限を可能にします。(注6)
+  --enable-client-utmp	(uumを作成する場合)uumが確保した擬似端末情報を
+			utmpに登録し、whoコマンドなどで参照できるように
+			します。(一部のシステムを除き有効になります)
+  --enable-client-setuid[=user]
+			(uumを作成する場合)指定したuser(未指定の場合は
+			root)でset-uidしてuumをインストールします。
+			このオプション自体を指定しない場合は、判別結果に
+			より必要な場合はset-uidします。
+  --enable-client-setgid=group
+			(uumを作成する場合)指定したgroupでset-gidして
+			uumをインストールします。前述のオプションと異なり、
+			groupは必ず指定する必要があります。
+			このオプション自体を指定しない場合は、判別結果に
+			より必要な場合はset-gidします。
+
+注5: [cjkt]server は、任意の host からの要求を受け付けてしまいます。
+  --enable-unsafe-path を有効にすると、任意の host から jserver 実行ユーザー
+  の権限で、任意の path に Wnn の辞書ファイルを作成することができてしまい
+  ます。従来、home directory など、lib/wnn/$LANG/dic/usr 以外に辞書ファイ
+  ルをおいて運用しており、それを改められない場合以外は、このオプションを指
+  定しないことをお勧めします。
+  ただし、このオプションの有効無効に関わりなく、悪意あるユーザーが jserverdir
+  (通常は /usr/local/lib/wnn/$LANG/dic) 以下に辞書ファイルを作成することは
+  防げません。
+
+注6: --enable-ipv6と同時に指定する場合、libwrapもIPv6対応である必要があります。

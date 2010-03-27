@@ -1,0 +1,69 @@
+.\"
+.\"   $Id: atof.man,v 1.1 2001/06/18 09:09:49 ura Exp $
+.\"
+.\"
+.\" FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+.\" This file is part of FreeWnn.
+.\" 
+.\" Copyright Kyoto University Research Institute for Mathematical Sciences
+.\"                 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+.\" Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright FreeWnn Project 1999, 2000, 2001
+.\" 
+.\" Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+.\" 
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\" 
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\" 
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software
+.\" Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+.\"
+.TH ATOF \  "30 April 2001" 
+.SH NAME
+.sv 1
+.nf 
+.ta 0.1i 2i
+atof	Convert Function Word Information to Special Format
+.fi
+.SH SYNOPSIS
+.sv 1
+.nf
+.ta 0.1i 3i 
+atof <\fIfzk.data_filename\fR> 
+.fi
+.SH DESCRIPTION
+.HP 0
+.IP
+atof takes UJIS style EUC encoded information about function words
+(fuzokugo: fzk(4)) from standard input and outputs it in a special
+format (fzk.data(4)).
+
+If the input contains information about separate entries with the same
+pronunciation and part of speech, atof combines them into a single
+function word and outputs a message to stderr.   The adjacency
+information of the new function word will be the disjunction of the
+information of the separate entries.    (For example, when the stem and
+inflecting part of an inflecting word are defined separately.) 
+
+.SH FILES
+.HP 0
+.IP
+atof is not normally installed into /usr/local/bin or /usr/bin.
+Instead it can be found at:
+.br
+.PD 0
+.B	/usr/local/bin/Wnn4/atof (default)
+.PD
+.SH "SEE ALSO"
+.sv 1
+.nf
+fzk.u(4), fzk.data(4)

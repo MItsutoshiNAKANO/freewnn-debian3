@@ -1,0 +1,1444 @@
+/*
+  Some entries (from CVS ChangeLog) are not yet translated to
+  Japanese...
+ */
+
+Wed, 30 Nov 2005 02:25:00  Tomoki AONO <aonoto at users.sourceforge.jp>
+	Update ChangeLog and added 1.1.1-a021 tag.
+
+Wed, 30 Nov 2005 02:00:02  Tomoki AONO <aonoto at users.sourceforge.jp>
+	* PubdicPlus/pod.c:
+	  Changed searchdesc() spec because 2nd / 3rd parameter is not
+	  used currently. (I found this on RedHat Bugzilla #110750.)
+	  Also added prototype for other functions. Currently it can
+	  compile on traditional (K&R) environment.
+
+Mon, 28 Nov 2005 02:30:23  Tomoki AONO <aonoto at users.sourceforge.jp>
+	* config.h.in, configure, configure.in:
+	  - Added -D_GNU_SOURCE to CCOPTIONS if linux. Merged from
+	    Gentoo portage, but discussion began in wnn-users ML
+	    ([wnn-users 1035]).  Thanks to MATSUU Takuto.
+	    (Some (ancient?) Linux users may get some problems on
+	    building. Please report us if it occurs.)
+	  - Changed library searching method of crypt() (to
+	    AC_SEARCH_LIBS). Maybe useful for systems that have
+	    crypt() on both libc and libcrypt (i.e. Solaris).
+	  - Use $(top_builddir) to *WNNJLIB / HINSI_DATA (instead of
+	    *WNNJLIBSRC / WNNJDSRC) by default. Useful if builddir !=
+	    srcdir, but it doesn't break normal configurations.
+	  - Some cosmetic change. (Also stripped old mail address.)
+
+Mon, 21 Nov 2005 01:10:28  Tomoki AONO <aonoto at users.sourceforge.jp>
+	* Wnn/uum/Makefile.in, cWnn/uum/Makefile.in, kWnn/uum/Makefile.in:
+	  Describe each library in *uum dependency line instead of
+	  $LOCAL_LIBRARIES (to avoid searching libraries in @LIBS@).
+
+Sun, 20 Nov 2005 03:25:52  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* ChangeLog, ChangeLog.en:
+	  Update ChangeLog to 29 Aug 2005. (Japanese translation is
+	  not available...)
+
+Mon, 29 Aug 2005 02:17:35  Tomoki AONO <aonoto at users.sourceforge.jp>
+	* Wnn/uum/Makefile.in:
+	  - Fix libtool issue (Added --mode, remove .libs/ directory
+	    in make clean).
+	- Stripped (not valid?) mail address of the project.
+	- Changed some line to build correctly in case
+	  builddir != srcdir. (I think this don't break normal build.)
+	* [kc]Wnn/uum/Makefile.in:
+	  ditto, but I'm not sure we can build kuum / cuum correctly.
+
+Mon, 29 Aug 2005 01:44:21  Tomoki AONO <aonoto at users.sourceforge.jp>
+	* Wnn/uum/jhlp.c:
+	  Strip #include <err.h> because we don't need it and it's
+	  specific to BSD. And stripped (not valid?) mail address of
+	  the project.
+
+Mon, 13 Jun 2005 02:14:22  Tomoki AONO <aonoto at users.sourceforge.jp>
+	* Wnn/etc/bdic.c, Wnn/include/wnn_os.h, Wnn/jutil/dtoa.c:
+	  Moved get_n_EU_str / get_short from Wnn/etc/bdic.c to
+	  Wnn/jutil/dtoa.c .  It may be bad idea, but fix compile
+	  error on strict compilers (ex. gcc4).
+
+Mon, 11 Apr 2005 00:26:36  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* CONTRIBUTORS, Wnn/etc/bcopy.c, Wnn/etc/mkdir.c, Wnn/etc/msg.c,
+	  Wnn/etc/py_table.c, Wnn/etc/strings.c, Wnn/etc/yincoding.c,
+	  Wnn/etc/zy_table.c, Wnn/include/commonhd.h, Wnn/include/demcom.h,
+	  Wnn/include/hinsi.h, Wnn/include/hinsi_file.h,
+	  Wnn/include/jd_sock.h, Wnn/include/jdata.h, Wnn/include/jh.h,
+	  Wnn/include/jllib.h, Wnn/include/jslib.h, Wnn/include/msg.h,
+	  Wnn/include/rk_spclval.h, Wnn/include/wnn_config.h,
+	  Wnn/include/wnn_os.h, Wnn/include/wnn_string.h,
+	  Wnn/include/wnnerror.h, Wnn/jlib/jl.c, Wnn/jlib/js.c,
+	  Wnn/jlib/kankana.c, Wnn/jlib/wnnerrmsg.c,
+	  Wnn/romkan/rk_bltinfn.c, Wnn/romkan/rk_extvars.h,
+	  Wnn/romkan/rk_fundecl.h, Wnn/romkan/rk_header.h,
+	  Wnn/romkan/rk_macros.h, Wnn/romkan/rk_main.c,
+	  Wnn/romkan/rk_modread.c, Wnn/romkan/rk_read.c,
+	  Wnn/romkan/rk_spclval.h, Wnn/romkan/rk_vars.c:
+
+	Changed license of libwnn-related files to LGPL-2.0.
+	Thanks to the original Wnn authors and FreeWnn contributors.
+
+	And thanks to Yukihiro Nakai (and tyoshida) for coordination
+	of this relicensing.
+
+Mon, 31 Jan 2005 02:14:20  Tomoki AONO <aonoto at users.sourceforge.jp>
+	* Wnn/jutil/wnnkill.c:
+	  I forgot to add prototype for usage() ... (^^;
+
+Mon, 31 Jan 2005 02:03:50  Tomoki AONO <aonoto at users.sourceforge.jp>
+	* Wnn/jutil/wnnkill.c:
+
+	- Use vsnprintf() within out() and use vsprintf() for systems
+	  doesn't have snprintf() (avoid build error). We should
+	  implement (or import) alternate snprintf() for these systems ...
+	- Added prototype of out() for strict C compilers (ex. gcc-4.0).
+	- Show simple usage if unsupported parameter is given.
+
+Thu, 30 Dec 2004 02:45:32  Tomoki AONO <aonoto at users.sourceforge.jp>
+	* Wnn/jserver/de_header.h:
+	  Fix prototype declaration of output_file_uniq() to match
+	  recent change of bdic.c .
+
+Sun, 21 Nov 2004 04:17:19  Tomoki AONO <aonoto at users.sourceforge.jp>
+	* COPYING.LIB:
+	  My first commit to sourceforge.jp :
+	  Added LGPL-2.0 COPYING file to repository. (LGPL patch by
+	  Nakai switch license of libwnn-related files to GNU Lesser
+	  General Public License 2, so this is not the version he (or
+	  she) intends to.)
+
+Mon, 13 Sep 2004 01:56:55  Tomoki AONO <aono at cc.osaka-kyoiku.ac.jp>
+	* Wnn/jlib/Makefile.in, cWnn/jlib/Makefile.in,
+	  kWnn/jlib/Makefile.in:
+
+	- Added libtool --mode options by introducing LT_CC / LT_INSTALL.
+	  (This change is mainly for [ck]Wnn, but also changed Wnn to
+	  match style).
+	- Cosmetic change to match style between Wnn and [ck]Wnn.
+	- My usual work to build correctly if builddir != srcdir .
+	  (Probably it cannot harm normal build.)
+
+Sun, 15 Aug 2004 18:38:22  Tomoki AONO <aono at cc.osaka-kyoiku.ac.jp>
+	* Wnn/jutil/Makefile.in, cWnn/jutil/Makefile.in,
+	  kWnn/jutil/Makefile.in:
+
+	  - Added libtool --mode=XXX option. (by (experimentally)
+	    introducing LT_LD / LT_INSTALL variable. Is this idea
+	    reasonable?)
+	  - Also added my change to support building in case
+	    builddir != srcdir .
+
+Thu, 12 Aug 2004 18:03:19  Tomoki AONO <aono at cc.osaka-kyoiku.ac.jp>
+	* Wnn/jutil/atod.c:
+	  Converted strlcpy() -> strncpy(). (Portability issue)
+
+Tue, 20 Jul 2004 03:24:26  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* Wnn/jutil/: atod.c, atorev.c, dic_head.c, oldatonewa.c, sort.c,
+	  utilbdic.c, wnnkill.c, wnntouch.c:
+
+	  Conform to ISO C.
+	  Bad thing with this commit is that it is not tested (even
+	  not compiled). However I thought it better to commit than
+	  forget, as I cannot take enough time.
+
+Tue, 13 Jul 2004 02:53:02  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* Wnn/etc/bdic.c, Wnn/etc/pwd.c:
+	  ANSIfy, and make #ifdef thing a little bit simple.
+	  Added function prototypes, which are to be moved to some
+	  header file.
+
+Wed, 30 Jun 2004 00:11:55  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* ChangeLog, ChangeLog.en:
+	  update to 20 June 2003.
+
+Tue, 29 Jun 2004 01:25:58  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* ChangeLog, ChangeLog.en:
+	  update to 4 June 2003.
+	  Remove a comment about setenv(). It may have come from my
+	  misunderstandig.
+
+Tue, 29 Jun 2004 01:24:35  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* Wnn/jlib/Makefile.in:
+	  add libtool option.
+
+Mon, 28 Jun 2004 00:39:11  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* Contrib/dic/gerodic/g-jinmei.u:
+	  gerodic: Fix あじゃこんぐ & りえ entry.
+		They might be deleted, but for the instant just fix
+		them.
+
+Sat, 19 Jun 2004 01:32:41  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* Wnn/jserver/de.c:
+	  Mistakenly removed "break" in rev.1.29. Revert them.
+	  pointy hat to: hiroo
+
+Sat, 22 May 2004 01:39:31  Tomoki AONO <aono at cc.osaka-kyoiku.ac.jp>
+	* INSTALL, INSTALL.en, config.h.in, configure, configure.in,
+	  Wnn/etc/revdic.c, Wnn/jserver/Makefile.in, Wnn/jserver/do_env.c,
+	  cWnn/jserver/Makefile.in, kWnn/jserver/Makefile.in:
+
+	Commit from my work area part 2. (Bit large ...)
+
+	Rewrote configure part of libwrap support:
+
+	- By default, configure finds if libwrap is installed.
+	- Do AC_TRY_LINK() on both $withval=yes and $withval=PATH case.
+	  (AC_CHECK_LIB() fails against original TCP wrapper ...)
+	- HAVE_LIBWRAP are defined in config.h.in, so remove "-DHAVE_LIBWRAP"
+	    from CFLAGS.
+	- Changed WRAPLIBS -> WRAPLIB .
+	- Add WRAPLIB on [kc]Wnn . Also add --mode=XXX to LIBTOOL lines.
+
+	Other changes:
+
+	- (configure) Running generated script by autoconf-2.53 (that
+	  we are using) fails on some Bourne shell family (lack of
+	  LINENO support.  ex. FreeBSD). Add code to clear default
+	  --with-tag (Libtool issue?).
+	- (configure) Add -no-cpp-precomp on Darwin only if you are using gcc.
+	  (But I don't know other compilers running on Darwin.)
+	- (configure) Use $ac_install_sh to mkdir Contrib/dic/gerodic .
+	- (do_env.c) Convert non-printable character for logging on
+	  JS_OPEN / JS_CONNECT. Partial fix of Bugtraq id 7918
+	  ([freewnn:01002]).
+	  Please don't install jserver as setuid *root* ... (^^;)
+	- (revdic.c) Fix compiler warnings.
+	- (some Makefiles) Some lines changed to build correctly if
+	  builddir != srcdir. (I think this don't break normal build.)
+
+Fri, 21 May 2004 22:55:53  Tomoki AONO <aono at cc.osaka-kyoiku.ac.jp>
+	* configure.in:
+	  Commit from my work area: Change indention of help string in
+	  configure.  (Cosmetic issue only.)
+
+Sun, 25 Apr 2004 03:56:40  Tomoki AONO <aono at cc.osaka-kyoiku.ac.jp>
+	* Wnn/pubdicplus/Makefile.in, cWnn/cdic/Makefile.in,
+	  cWnn/tdic/Makefile.in, kWnn/kdic/Makefile.in:
+
+	  Some CPP (ex. cpp bundled with Mac OS X 10.3 Developers CD)
+	  adds "#pragma" line, so strip these lines before processing
+	  atof.  Inspired by Makoto Fujiwara's Web diary (2004/Mar/01).
+
+	  This change includes part of my modification (in case
+	  builddir != srcdir), but it doesn't affect to normal build ...
+
+Thu, 20 Nov 2003 19:31:59  Tomoki AONO <aono at cc.osaka-kyoiku.ac.jp>
+	* Wnn/jserver/de.c:
+	  Don't use is_internet_socket if --without-libwrap (quick &
+	  dirty fix). Spotted by Makoto Fujiwara (in his Web diary).
+
+Sat,  8 Nov 2003 15:26:06  Tomoki AONO <aono at cc.osaka-kyoiku.ac.jp>
+	* Wnn/jlib/js.c:
+	If we use s[0..6] (in get_serv_defs()), we should declare s[7].
+	Found in RawHide package (1.11-39) (and probably in Fedora / Red Hat
+	Enterprise Linux package). Spotted to (at least) Red Hat
+	by d.binderman at virgin.net .
+
+Tue, 16 Sep 2003 20:42:13  Tomoki AONO <aono at cc.osaka-kyoiku.ac.jp>
+	* Contrib/dic/gerodic/g-jinmei.u:
+	  Fix translation of 'morisu' -> 'Morris' (not '*N*orris').
+	  Spotted by Fe2+ ([freewnn:01006]).
+Fri, 20 Jun 2003 16:10:24 Tomoki Aono <aono at cc.osaka-kyoiku.ac.jp>
+	* Wnn/jserver/de.c:
+	  libwrap 対応を修正して、許可されていない host からの接続のみ拒否
+	するようにした。以前のコードでは、libwrap 対応が有効だと全ての client
+	が拒否されていたと思われる。
+          ユーザーを recv() するコードを追加した。
+	  TIME_WITH_SYS_TIME の誤植を修正した。
+
+Wed, 18 Jun 2003 11:10:46 Tomoki Aono <aono at cc.osaka-kyoiku.ac.jp>
+	* Wnn/jserver/de.c:
+	  libwrap 対応部分に socketclose() を追加した。
+	  ログの問題対応: イベント種別を正しく記録するため、c_c=NULL を
+	追加した。
+
+Tue, 10 Jun 2003 10:39:09 Tomoki Aono <aono at cc.osaka-kyoiku.ac.jp>
+	* configure.in:
+	  socklen_t のチェックにおける AC_CHECK_TYPES の使い方を修正した。
+	  *BSD とその他一部のシステムに特化した部分を削除した。
+	  --disable-debug が指定されていても、CDEBUGFLAGS を使うようにした。
+
+Sun,  8 Jun 2003 03:09:52 Hiroo Ono <hiroo at oikumene.gcd.org>
+	* configure.in:
+	  utmpx.h をチェックするようにした。
+	  time_t チェックがうまく動いていないので外した。
+	  uum のために、 getgpid, getgprp をチェックするようにした。
+	  libwrap 対応追加 ([freewnn:0032] 元木氏による)。
+	* Wnn/include/wnn_os.h:
+	  FD_SET 関連のマクロをこのファイルに移動した。
+	* Wnn/jserver/de.c:
+	  autoconf の TIME_WITH_SYS_TIME マクロを使うようにした。
+	  FD_SET 関連のマクロを wnn_os.h に移動した。
+	  libwrap 対応追加 ([freewnn:0032] 元木氏による)。
+	* Wnn/jserver/error.c:
+	  autoconf の TIME_WITH_SYS_TIME マクロを使うようにした。
+
+Sat,  7 Jun 2003 13:04:33 Hiroo Ono <hiroo at oikumene.gcd.org>
+	* configure.in:  utmp.h をチェックするようにした。 
+	* Wnn/include/wnn_os.h:
+	  Wnn/etc 以下にある関数の一部のプロトタイプを追加した。
+	* Wnn/jserver/de.c:
+	  file_init() が malloc の結果を返すように変更した。
+	* Wnn/jserver/de_header.h, get_kaiarea.c, jbiki.c:
+	  スタイル修正。
+	* Wnn/jserver/readfile.c, b_index.c, do_filecom.c, jishoop.c, rd_jishoop.c:     
+	  *_realloc の偏執狂的なチェックを行なう変更に伴って修正。
+
+Wed,  4 Jun 2003 14:12:13 Hiroo Ono <hiroo at oikumene.gcd.org>
+	* Wnn/jserver/get_kaiaria.c:
+	  グローバル変数の定義を kai_area.c からこちらに移した。
+	* Wnn/jserver/kai_area.c: 削除。
+	* {Wnn,cWnn,kWnn}/jserver/Makefile.in: kai_area.{c,o} を削除。
+
+Wed,  4 Jun 2003 14:05:23 Hiroo Ono <hiroo at oikumene.gcd.org>
+	* configure.in:
+	  AC_CHECK_TYPES, AC_DEFINE の新しい形式を使うようにした。
+	* acconfig.h:
+	  AC_DEFINE を新しい形式に合わせて不要になったので削除。
+
+Wed,  4 Jun 2003 08:35:03 Tomoki Aono <aono at cc.osaka-kyoiku.ac.jp>
+	* config.guess, config.sub, ltmain.sh, aclocal.m4:
+	  Libtool を 1.5 に更新した。これにより、Darwin/MacOS X 上で共有
+	  ライブラリが作成出来るようになるはずである。[freewnn:00978] で
+	  提出したものをもとにしている。
+	  現時点では、--mode=MODE オプションがない部分が多く、警告がでる。
+	  修正の必要あり。
+
+Fri, 30 May 2003 16:18:00 Hiroo Ono <hiroo at oikumene.gcd.org>
+	* Wnn/include/commonhd.h:
+	  SERVER_VERSION を 1 つ増やした。
+
+Sun, 18 May 2003 14:34:02 Hiroaki Abe <h-abe at pc.highway.ne.jp>
+	* Wnn/jserver/de_header.h, do_filecom.c:
+	  変数 struct wnn_file files を動的に確保する。
+
+Sun, 11 May 2003 19:01:10 Hiroo Ono <hiroo at oikumene.gcd.org>
+	* Makefile.in, configure.in, makerule.mk.in:
+	  CFLAGS と CDEBUGFLAGS の使い方見直し。
+	* configure: 再生成。
+	* Wnn/etc/bdic.c,  Wnn/include/jd_sock.h, Wnn/jlib/js.c,
+	  Wnn/romkan/rk_modread.c, Wnn/uum/jhlp.c, Wnn/romkan/rk_read.c:
+	  マクロ UX386 を削除。
+	* Wnn/jlib/jl.c, Wnn/jlib/kankana.c, Wnn/jserver/do_env.c,
+	  Wnn/jserver/do_filecom.c, Wnn/uum/uif.c:
+	  スタイル修正。
+	* Wnn/jserver/ddefine.h, Wnn/jserver/fzk.h, fzk.c, Wnn/uum/sheader.h:
+	  2003年の copyright 表示を追加。
+	* Wnn/conv/Makefile.in:  不要な変数を削除。
+	* Wnn/jlib/Makefile.in, Wnn/jlib.V3/Makefile.in,
+	  cWnn/jlib/Makefile.in, kWnn/jlib/Makefile.in:
+	  不要な変数、getopt.c を削除して、スタイルを修正。
+	* Wnn/jlib/getopt.c: libc または GNU getopt を利用する為削除。
+	* cWnn/etc/Makefile.in, kWnn/etc/Makefile.in:
+	  不要な変数を削除。
+	  GNU の getopt.c, getopt1.c を加えた (long option 利用の為)。
+	  スタイル修正。
+	* cWnn/include/Makefile.in, kWnn/include/Makefile.in:
+	  GNU の getopt.h を加えた (long option 利用の為)。
+	* Wnn/jserver/Makefile.in, cWnn/jserver/Makefile.in,
+	  kWnn/jserver/Makefile.in:
+	  de_vars.c, jserver_id.c を削除。
+	  getopt を GNU 由来のものに変更したため対処。
+	  FORKDEF 削除 (de.c の変更参照)。
+	* Wnn/jserver/de_vars.c:
+	  global 変数は de_header.c と de.c で扱うため、削除。
+	* Wnn/jserver/de_header.h:
+	  global 変数の対処変更。マクロ OPT_* を追加。スタイル変更。
+	* Wnn/jserver/kai_area.c:
+	* Wnn/jserver/kaiseki.h:
+	  グローバル変数を kaiseki.h で定義するように変更。
+	* Wnn/jserver/jserver_id.c: 使われていないため削除。
+	* Wnn/jserver/bnsetu_kai.c:
+	  jmt_set() を値を返さない関数に変更。
+	  もともと -1 (エラー) を返すことがないので、変更による影響はなし。
+	* Wnn/jserver/de.c:
+	  グローバル変数は de_header.h 及び de.c で扱う。
+	  マクロ UX386 削除。
+	  GNU の getopt を使うように変更し、いくつか long option を追加した。
+	  -D オプション (tty を切り離さない) を追加した。
+	  オプションの設定を OPT_* マクロを使用して行なうようにした。
+	* Wnn/etc/getopt.c, Wnn/etc/getopt1.c, Wnn/include/getopt.h:
+	  GNU getopt (getopt_long) を追加。
+	* Wnn/jserver/jmt0.c:
+	  不要なコードを削除した結果、init_jmt() を引数なし、返り値なしの
+	  関数に変更した。また、変数 initjmt も不要になった。
+	* Wnn/jserver/do_dic_no.c, do_henkan1.c:
+	  init_jmt() は引数なし、返り値なしに変更された。
+	* Wnn/jserver/get_kaiarea.c:
+	  get_kaiseki_area() の返り値を変更: 成功=1 (非0), 失敗=NULL
+	  (malloc を意識した)。その他スタイル修正。
+	* Wnn/jserver/initjserv.c, snd_rcv.c, w_string.c:
+	  コメントアウトされていたコードを削除。
+	  
+
+Fri, 9 Apr 2003 Hiroo Ono <hiroo at oikumene.gcd.org>
+	* freewnn-1-1-1-a020 の tag をつけた。
+
+Sun, 6 Apr 2003 06:30:49  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* Wnn/uum/jhlp.c: err() を uum_err() に変更し、libc の err() と重なら
+	  ないようにする。
+	* Wnn/uum/sheader.h: 同上。
+	* Wnn/jserver/bnsetu_kai.c:
+	  struct kangovect を typedef した word_vertor に置き換え。
+	* Wnn/jserver/ddefine.h:
+	  コメントアウトされていた部分と、kangovect の定義を削除。
+	* Wnn/jserver/fzk.c:
+	  struct kangovect を typedef した word_vertor に置き換え。
+	  関数プロトタイプ及び定義を ISO C 形式に変更。
+	  register 修飾子の削除。
+	  error1() を log_err() に置き換え。
+	  コメントアウトされていたコードを削除。
+	  malloc した領域を零クリアするように変更 (bzero または calloc を使用)。
+	  これは、起動後 jserver がまともに動いていなかったバグの修正である。
+	* Wnn/jserver/fzk.h: word_vector 及び fzkvect を typedef する。
+	   ddefine.h の読み込み。
+
+Mon, 30 Dec 2002 00:03:24  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* PubdicPlus/pubdic.p
+	  誤字修正 「とらわれる: 因われる→囚われる」。
+	  (藤井宏憲さん <fujii at chi.its.hiroshima-cu.ac.jp> の指摘による)
+
+Fri,  8 Nov 2002 09:15:07  Katsuomi Hamajima <hamajima at nagoya.ydc.co.jp>
+	* Wnn/jserver/de_header.h:
+	  UCHAR が未定義だったのを修正。
+
+Tue, 12 Nov 2002 10:25:02  Tomoki Aono <aono at cc.osaka-kyoiku.ac.jp>
+	* Wnn/etc/revdic.c:
+	  Little endian の場合に atod が逆変換辞書の作成に失敗するバグを修正。
+          ([freewnn:00903] 亀井さん <zic-fw at ontime.venus.to> の指摘による)
+	* Wnn/jutil/atod.c:
+	  usage に -U を追加。
+
+Sat Sep 07 11:33:53 UTC 2002  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* Contrib/dic/gerodic/g-jinmei.u:
+	  PubdicPlus/pubdic.p: 「常陸(ひたち)」「常磐(じょうばん)」の間違いを修正。
+
+Sun Sep 01 17:48:26 UTC 2002  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* configure.in: FD_SET() チェック及び AC_HEADER_TIME を追加。
+	* configure:
+	  config.h.in:	再生成。
+	* Wnn/jserver/initjserv.c:
+	  small style fix.
+	* Wnn/jserver/de.c:
+	  プロトタイプを C89 式に変更し、エラーメッセージを一部変更。
+	  select(2) 周りで fd_set 型と FD_* を使用。
+	* Wnn/jserver/de_header.h:
+	  プロトタイプを C89 式に変更。
+	  struct wnn_file->area の型を void* に変更。
+	* Wnn/jserver/renbn_kai.c:
+	  プロトタイプを C89 式に変更。
+	  error1 を log_err/log_debug に変更。
+	* Wnn/jserver/readfile.c:
+	  プロトタイプを C89 式に変更。
+	  error1 を log_err/log_debug に変更。
+
+Mon Aug 26 09:27:23 UTC 2002  Tomoki Aono <aono at cc.osaka-kyoiku.ac.jp>
+	* Wnn/uum/jhlp.c:
+	  <sys/errno.h> ではなく、<errno.h> を読み込み。
+
+Sat Aug 24 18:11:53 UTC 2002  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* Wnn/jserver/de.c:
+	  プロトタイプを C89 形式に変更。
+	  コメントアウトされた関数を削除。
+
+Fri Aug 16 17:30:29 UTC 2002  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* Wnn/jserver/b_index.c:
+	  プロトタイプを C89 のものに修正。
+          error1 を log_err/debug に変更。
+
+Thu Aug 15 10:31:04 UTC 2002  Tomoki Aono <aono at cc.osaka-kyoiku.ac.jp>
+	* Wnn/jserver/de.c:
+	  struct client の user_name, host_name を初期化して、
+	  log_debug()/log_error() で正しく出力されるようにする。
+          Possible typo fix for IBM compilers (CLINET -> CLIENT).
+
+Mon Aug 12 16:25:48 UTC 2002  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* jserver/de_header.h:
+	  二重読み込みを許可。
+          option_flag 変数を追加。
+	* jserver/ddefine.h:
+	  jserver/fzk.h:
+	  jserver/kaiseki.h:
+	   二重読み込みを許可。
+	* jserver/de.c:
+	  <sys/time.h> を include.
+	  DOFORK macro を option_flag 変数で置き換え。
+	  error1() を log_debug() に置き換え。
+	* jserver/de_vars.c:
+	  option_flag 追加。
+	* jserver/do_filecom.c:
+	  fopen() のプロトタイプを削除。
+	* jserver/error.c:
+	  c_c->user_name にごみが入っている場合に出力を抑制する。
+	* jserver/initjserv.c:
+	  プロトタイプ宣言修正。
+	  read_default() を strtok() を使って少し変更し、デバッグ出力を追加。
+	  read_default_files() のバッファサイズを EXPAND_PATH_LENGTH+1 に修正。
+	  コメントアウトされた関数を削除。
+
+Sun Jul 14 04:19:54 UTC 2002  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* PubdicPlus/fzk.con:
+	  PubdicPlus/fzk.fzkattr:
+	  PubdicPlus/fzk.shuutan:
+	  #endif に続く識別子をコメントアウト。
+	* Wnn/jserver/de_header.h:
+	  initjserv.c の関数を C89 スタイルに変更。
+	* Wnn/jserver/initjserv.c:
+	  change_ascii_to_int() を atoi() で置き換え。
+	  get_bcksla(): atoi() の引数を修正。
+	* Wnn/jutil/atod.c:
+	  Wnn/jutil/atof.c:
+	  Wnn/jutil/oldatonewa.c:
+	  Wnn/jutil/ujisf.c:
+	  Wnn/jutil/wnntouch.c:
+	  Wnn/jserver/do_filecom.c:
+	  Wnn/jserver/error.c:
+	  Wnn/jserver/sisheng.c:
+	  Wnn/jlib.V3/jlv3.c:
+	  Wnn/etc/dic_atojis.c:
+	  Wnn/etc/msg.c:
+	  Wnn/etc/sstrings.c:
+	  PubdicPlus/pod.c:	Include string(s).h.
+
+Sat Jun 22 17:58:58 UTC 2002  Tomoki Aono <aono at cc.osaka-kyoiku.ac.jp>
+	* Wnn/manual/4.cmd/jserver:
+	  Wnn/man/4.cmd/jserver.man:
+	  jserver の -v オプションを追加。
+
+Sat Jun 22 13:26:22 UTC 2002  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* CONTRIBUTORS:
+	  pubdic+ の拡張 patch を提供した方々をリストアップ。
+	  いしださんを追加 (Wnn/jserver/de.c [freewnn:00383]).
+	* acconfig.h:
+	  無駄な HAVE_RAND_MAX を削除。
+	* configure.in:
+	  無駄な HAVE_RAND_MAX を削除。
+	  ramdom() のチェックを追加。
+	* configure, config.h.in: Regenerate.
+	* Wnn/jserver/de.c:
+	  バッファオーバーフロー修正。 (いしださん [freewnn:00383])
+	  wnn_os.h で定義した SDRAND を使用。
+	* Wnn/jserver/do_henkan1.c:
+	  NULL macro の定義は不要なので削除。
+	* Wnn/jserver/do_hindo_s.c:
+	  RAND macro の変わりに、wnn_os.h で定義した SDRAND を使用。
+	* Wnn/jserver/error.c:
+	  errono の出力部分をコメントアウト。
+	* Wnn/etc/bdic.c:
+	  index を strchr におきかえ。(OS 依存性は wnn_os.h で吸収している)
+	* Wnn/include/wnn_os.h:
+	  strchr/strrchr/bcopy がみつからない場合は、置き換える。
+	  疑似乱数発生関数の選択を変更。標準の rand() 関数は推奨されない。
+	  また、BSD 由来の random() 関数も存在する。
+	* Wnn/jlib/jl.c:
+	  wnn_os.h で定義した RAND を使用。
+	* Wnn/jlib.V3/jlv3.c:
+	  bzero macro を削除。wnn_os.h で定義されている為。
+	* Xwnmo/xjutil/jutil.c:
+	  適切なシステムヘッダを include する。
+	* Wnn/uum/Makefile.in:
+	  使われていない SIGNAL_DEFINES macro を削除。
+	* Wnn/uum/jhlp.c:
+	  strchr/index の OS による使い分けを削除。(wnn_os.h に移動)
+	* Wnn/uum/screen.c:
+	  strchr/index の OS による使い分けを削除。(wnn_os.h に移動)
+	* Wnn/uum/setutmp.c:
+	  strrchr/rindex の OS による使い分けを削除。(wnn_os.h に移動)
+	  sdefine.h, sheader.h を include してプロトタイプを削除。
+	* Wnn/uum/sheader.h:
+	  ttyfdslot.c の ttyfdslot() のプロトタイプを追加。
+	* Wnn/uum/ttyfdslot.c:
+	  適切なシステムヘッダを include して、プロトタイプを削除。
+	* Wnn/uum/uif.c:
+	  strchr/index の OS による使い分けを削除。(wnn_os.h に移動)
+	* Wnn/uum/wnnrc_op.c:
+	  システムライブラリにある関数のプロトタイプを削除。
+
+Fri Jun 21 19:39:47 UTC 2002  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* Wnn/include/wnn_malloc.h: 削除。
+
+Mon Jun 17 17:28:54 UTC 2002  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* configure.in:
+	  Autoconf 2.13 で処理可能なように修正。(cf.[freewnn:00872])
+          getopt() のチェックを追加。
+	* config.h.in:
+	  configure: GNU Autoconf 2.53 により再生成。
+	* Wnn/include/wnn_os.h:
+	  rev.1.10 で忘れた #endif を追加。 (cf.[freewnn:00874])
+	* Wnn/jlib/getopt.c:                                              
+	  System に getopt() がない場合のみ自前の getopt() を使用。
+	  (cf.[freewnn:00874])
+
+Sat Jun 15 13:11:45 UTC 2002  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* acconfig.h:
+	  EB Library <URI:http://www.sra.co.jp/people/m-kasahr/eb/>.
+	  を参考に、RETSIGTYPE_VOID hack を追加。
+	* configure.in:
+	  *BSD 用の CCOPTIONS から -DCSRG_BASED を削除。
+	  configure のサイズ縮小の為、AC_CHECK_HEADERS 及び AC_CHECK_FUNCS
+	  をまとめた。
+	  AC_CHECK_TYPES の使いかたの体裁変更。
+	  EB Library を参考に、RETSIGTYPE_VOID hack を追加。
+	  各言語について、無効時は Makefile の生成をしない。
+	  getdtablesize() チェック追加。
+	* config.h.in, configure: 再生成 (GNU Autoconf 2.53)
+	* Wnn/include/wnn_os.h:
+	  bzero/memset, strchr/index strrchr/rindex glue.
+	  SIGNALRETURNSINT を RETSIGTYPE 及び RETSIGTYPE_VOID で置き換え。
+	  WNN_NFD マクロを暫定的な file descriptor 数チェックに使用。
+	* Wnn/jlib/getopt.c, jl.c, js.c,
+	  Wnn/jserver/initjserv.c,
+	  Wnn/romkan/rk_header.h:
+	  config.h または wnn_os.h を include して BSD42 macro を削除。
+	* Wnn/jserver/de.c:
+	  WNN_NFD マクロを暫定的な file descriptor 数チェックに使用。
+	* Wnn/jserver/de_header.h, error.c,
+	  Wnn/uum/jhlp.c:
+	  RETSIGTYPE and RETSIGTYPE_VOID を使用するように変更。
+	  WNN_NFD マクロを暫定的な file descriptor 数チェックに使用。
+	* Wnn/uum/sheader.h:
+	  コメントの変更。
+	* Wnn/uum/wnnrc_op.c:
+	  BSD42 macro 削除。
+
+Fri Jun 14 19:39:30 UTC 2002  Hiroo Ono <hiroo at oikumene.gcd.org> 
+	* Makefile.in: 削除コマンドとして $(RM) の使用を徹底。
+
+Thu Jun 13 21:27:51 UTC 2002  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* FreeWnn/Wnn/uum/jhlp.c, termio.c:
+	  独自に持っている setenv() の定義を変更
+	  - エラーメッセージの出力を行なわない。
+	  - setenv() を持っているシステムとの互換性の為、ダミーの引数を追加。
+	* FreeWnn/Wnn/uum/termcap.c: curses ヘッダの取り込み。
+	* FreeWnn/Wnn/uum/sheader.h: 体裁の変更。
+
+Mon Jun 10 22:15:23 UTC 2002  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* PubdicPlus/pod.c: config.h の include.
+
+Sun Jun 09 11:08:41 UTC 2002  Hiroaki Abe <h-abe at pc.highway.ne.jp> 
+	* FreeWnn/configure.in:
+	  BeOS R5.1 用に、libbind.so のチェックを追加。
+
+Mon May 27 16:33:52 UTC 2002  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* Wnn/pubdicplus/Makefile.in:
+	  <config.h> が include されるように、$(TOP) を include path に追加。
+
+Sat May 25 11:24:47 UTC 2002  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* FreeWnn/PubdicPlus/ fzk.con, fzk.attr, fzk.jircon:
+	  五段可能動詞追加 ([wnn-users 973],[wnn-users 975] 片山さん)。
+	  接頭語の拡張 ([wnn-users 978] Fe2+さん)。
+
+Sat May 25 05:57:43 UTC 2002  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* Wnn/jserver/ MALLOC.c, malloc.c: malloc() wrapper の削除。
+
+Sun May 12 22:51:18 UTC 2002  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* Wnn/conv/cvt_key.c: register 修飾子削除。
+	* Wnn/uum/setutmp.c:
+	  setenv() の引数修正 及び、必要なシステムヘッダの include。
+	* kWnn/jserver/Makefile.in, kWnn/include/Makefile.in,
+	  cWnn/jserver/Makefile.in, cWnn/include/Makefile.in,
+	  Wnn/jserver/Makefile.in:
+	  wnn_malloc.h 及び malloc.c を削除。
+	* Wnn/etc/ msg.c, vasprintf.c,
+	  Wnn/jlib/ jl.c, js.c, kankana.c,
+	  Wnn/jlib.V3/jlv3.c,
+	  Wnn/jserver/ b_index.c, daibun_kai.c, de.c, dispatch.c,
+		  do_env.c, error.c, fzk.c, get_kaiarea.c,
+		  hinsi_list.c,initjserv.c, jikouho.c, jikouho_d.c,
+		  mknode0.c, mknode1.c, mknode2.c, readfile.c,
+	  Wnn/jutil/ atod.c, atorev.c, dtoa.c, ujisf.c, wddel.c,
+		  wdreg.c, wnnstat.c,
+	  Wnn/uum/ basic_op.c, history.c, prologue.c, screen.c,
+		  termcap.c, uif.c, wnnrc_op.c:
+	  malloc() 等の為に stdlib.h (または malloc.h) を include する。
+	  独自で malloc() のプロトタイプを書いてある場合は削除。
+	  必要に応じて、その他システムヘッダを include。
+	* Wnn/uum/sheader.h: 不要なプロトタイプを削除。
+	* Makefile.in: distclean target に、autoconf 2.53 で作られる
+		ファイルの削除を追加。
+
+Sun May 12 01:01:47 UTC 2002  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* CONTRIBUTEORS: 更新
+	* configure.in, configure, config.h.in:
+	  bcopy/bzero/bcmp をチェックする。
+	* Wnn/etc/bcopy.c:
+	  bcopy/bzero/bcmp をチェックする。
+	  register 修飾子を削除。
+
+Sat May 11 13:03:37 UTC 2002  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* INSTALL INSTALL.en: Update.
+
+Tue May 07 22:26:30 UTC 2002  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* Wnn/etc/msg.c:
+	  _search() 修正。 ([freewnn:00847] 和田さん)
+
+Sun May 05 05:13:10 UTC 2002  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* Wnn/include/commonhd.h:
+	  _SERVER_VERSION を pl20 に上げた。
+	  unistd.h の include を削除した。
+
+Sat May 04 17:15:24 UTC 2002  Tomoki AONO <aono at cc.osaka-kyoiku.ac.jp>
+	* Wnn/manual/4.cmd/jserver man/4.cmd/jserver.man:
+	  Update.
+
+Thu May 02 15:18:55  UTC 2002  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* Wnn/jserver/do_hindo_s.c:
+	  stdlib.h の include の仕方を修正。
+
+Wed May 01 21:05:10  UTC 2002  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* configure.in config.h.in configure:
+	  C89, POSIX 1,2 にない関数の存在確認を追加した。
+	  syslog() と syslog.h 及び、setenv().
+	* */jserver/Makefile.in:
+	  JS_SUPPORTLIB の削除。(BeOS では syslog()/libbe を利用しない)。
+	* Wnn/jserver/error.c:
+	  syslog() が存在しない場合は、その処理をとばすように変更した。
+	* Wnn/uum/jhlp.c sheader.h:
+	  システムの setenv() 関数を利用するように変更。
+	  setenv() は C89, POSIX 1,2 にない為、見つからない場合はもとの
+	  setenv() の定義を利用する。ただし、一般的な仕様と異なるので変更
+	  が必要である。
+	  
+Tue Apr 02 04:16:21 UTC 2002  Tomoki AONO <aono at cc.osaka-kyoiku.ac.jp>
+	* Wnn/jserver/de.c: include fcntl.h.
+	* Wnn/conv/cvt_read.c: cvt_head.h の include 位置修正。
+
+Sun Mar 31 11:30:23 UTC 2002  Hiroaki Abe <h-abe at pc.highway.ne.jp>
+	* Wnn/include/commonhd.h:
+	  BeOS が unistd.h をここで include しないようにした。
+	* */jserver/Makefile.in configure.in configure:
+	  BeOS は、libbe.so に syslog 関数を持っているため、JS_SUPPORTLIBS
+	  を追加して libbe.so を link するようにした。
+
+Sun Mar 31 06:26:54 UTC 2002  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* Wnn/jserver/de.c de_header.h:
+	  cmd_name[] の値を argv[0] から [cjkt]server 決め打ちに変更。
+	  スタイル、エラーメッセージ等修正。
+
+Sat Mar 30 13:44:22 UTC 2002  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* Wnn/romkan/rk_modread.c:
+	  stdlib.h を include した。
+
+Sat Mar 30 09:34:48 UTC 2002  Tomoki AONO <aono at cc.osaka-kyoiku.ac.jp>
+	* (Wnn/cWnn/kWnn)/romkan/Makefile.in:
+	  INCLUDES に -I$(TOP) を追加。
+	  LIB_MT_DEFINES は使用されていないため削除。
+	  builddir != srcdir で build 出来るようにするための予備的な修正。
+
+Sat Mar 30 02:35:22 UTC 2002  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* Wnn/etc/yincoding.c: スタイル修正。
+	* Wnn/ 以下:
+	  STDC_HEADERS HAVE_*_H を見て、string.h/strings.h unistd.h 等の
+	  ヘッダの include を追加した。
+	  必要に応じて config.h の include も追加した。
+	* configure.in config.h.in configure:
+	  limits.h の確認を省略 (STDC_HEADERS に含まれると期待されるため)。
+	  memory.h の確認を追加 (将来の bcopy/index → memmove/strchr 移行のため)。
+
+Sat Mar 23 21:18:32 UTC 2002  Hiroo Ono <hiroo at oikumene.gcd.org>
+	Wnn 以下:
+	* STDC_HEADERS を見て stdlib.h と string.h を include するように変更。
+	* STDC_HEADERS がない場合に strings.h の有無を調べて include。
+	  BSD42 マクロは削除。
+	* 必要に応じて config.h を include するようにした。
+
+Thu Mar 21 06:59:22 UTC 2002  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* configure.in: 不要なコメントを削除した。
+	* cvt_head.h: コメントアウトされた部分を削除した。
+	* cvt_read.c, bdic.c, yincoding.c:
+	   BSD42 および SYSVR2 マクロを削除し、configure による判別を行な
+	   うように変更した。
+	* config.h.in, configure.in, configure:
+	   fchmod() の存在チェックを追加。
+
+Sun Mar 10 10:43:47 UTC 2002  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* pubdic.p: 誤記訂正 ([freewnn:00812] Fe2+ さん)。
+
+Sat Mar  9 16:50:34 UTC 2002  Tomoki AONO <aono at cc.osaka-kyoiku.ac.jp>
+	* Makefile.in config.h.in configure configure.in
+	  Wnn/etc/gethinsi.c Wnn/jserver/Makefile.in
+	  cWnn/jserver/Makefile.in cWnn/include/Makefile.in
+	  kWnn/jserver/Makefile.in kWnn/include/Makefile.in
+	 + Wnn/etc/vasprintf.c Wnn/etc/mkdir.c が対応する関数がないプラッ
+	  トフォームでのみコンパイルされるように変更した。
+	  (AC_REPLACE_FUNCSマクロを自前でエミュレートしている)。
+	 + configure --disable-cWnn 時に cWnn/ ディレクトリ下の Makefile
+	  を生成しないように変更した。
+	  (experimental: cWnn以外も同じ処理をする必要がある)。
+
+	* Wnn/jserver/  de_header.h dispatch.c error.c :
+	    error.c 関連修正. (cf. [freewnn:00772])
+	 + error1()を廃止し、新たに可変引数関数 log_err() / log_debug()
+	  を新設した。
+	   error1() は log_debug() として扱うようにした。
+	 + jserver の -s オプション未指定時 (noisy == 0) にsyslogに出力
+	   するように変更した。
+	 + log{err,debug}() から呼ばれる vwrite_log()では従来1エントリ
+	   当たり3行に渡っていたログを1行に圧縮している。
+
+Fri Mar  8 20:07:13 UTC 2002  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* 使用している関数 prototype 宣言を含む標準ヘッダを include する。
+	* Wnn/etc 以下で定義される関数の一部を wnn_os.h で pototype 宣言した。
+	* Wnn/etc/msg.c: bsearch() の実装を削除。
+
+Fri Mar  8 08:36:04 UTC 2002  Tomoki AONO <aono at cc.osaka-kyoiku.ac.jp>
+	* Wnn/jserver/de.c
+	  log ファイルを append モードで open する。
+	  daemon_init() で行なわれている、余分なシグナルハンドラの設定を削除。
+
+Tue Mar  5 09:23:50 UTC 2002  Tomoki AONO <aono at cc.osaka-kyoiku.ac.jp>
+        * vasprintf.c と ansidecl.h を libiberty (gcc-3.0.4 に同梱) から
+	  import した。(error.c 書き替えの為)。 
+	  修正に際して変更した点は下記のみ:
+            vasprintf.c: #include <libiberty.h> を削除。
+
+Mon Mar  4 04:01:55 UTC 2002  Tomoki AONO <aono at cc.osaka-kyoiku.ac.jp>
+        * Wnn/man/4.cmd/jserver/man
+	  オプション記述部分のフォーマット修正。 [freewnn:00759]
+
+Sun Mar  3 14:06:32 UTC 2002  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* Wnn/include/wnn_os.h et al.
+	  ISO C と K&R C の prototype を共存させるためのマクロを削除。
+
+Sun Mar  3 12:53:58 UTC 2002  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* configure.in: [freewnn:00764] (青野さん) の指摘を修正。
+
+Sat Mar  2 11:19:21 UTC 2002  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* wddel のマニュアルの typo を修正 ([freewnn:00797] Matui さん).
+
+Mon Sep 24 08:25:28 UTC 2001  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* Fix for configure.in and Makefile.in ([freewnn:00753] 青野さん).
+
+Sun Sep 16 11:10:20 UTC 2001  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* configure に --enable-debug option を追加した。
+	  gcc の場合に、CDEBUGFLAGS に -g2 を追加し、
+	  INSTPGMFLAGS から -s を省いて strip されないようにする。
+	  gcc 以外の場合の configure.in の記述を募集中。
+
+Sat Sep 15 17:29:15 UTC 2001  Hiroo Ono <hiroo at oikumene.gcd.org>
+	* jserver を動かしている user の権限で remote から任意のファイルを
+	  作成されてしまう問題への対策。
+	  jserver_dir 以外へのファイル作成を禁止する。
+	  ([freewnn:00699] うかい@debian さん via いしかわ@debian さん)
+	  運用によっては、問題がある場合が考えられるので、configure で
+	  OFF にできるようにした (その場合は、せめて ipfilter 等で想定して
+	  いない host からの接続を禁止すべきであろう)。
+	  将来的には、tcp_wrappers 対応、なんらかの認証機構等、もっとまし
+	  な security を実現すべきだが、この問題は KKTP そのものの設計の
+	  問題なので、よく考えて設計しなおすべきであろう。
+	  Manpower を言い訳にして、とりあえず課題として挙げるに留める。
+	* ISO C 対応を視野にいれ、P_ マクロ (in wnn_os.h) を定義した。
+	  (本当はもう少し前にいれてあったが)。
+	  徐々に、これを使って prototype 宣言を行なうように変更して行く予定。
+	  (議論の余地があるので、消す可能性あり)。
+	* uum patch ([freewnn:00676] いいじまさん)
+	  cuum, kuum, tuum については同様の変更を追加予定だが、今回は
+	  uum のみ。
+	* IPv6 patch 修正。
+	  Unix domain socket の permission を 0777 に設定。
+	  cmd_name を argv[0] に設定。
+	  ([freewnn:00716],[freewnn:00732] 濱嶋さん)
+	  jserver.man も修正した。
+	* Wnn/jserver/error.c の error1() で、"cmd_name:" を上書きしないよ
+	  うにする。([freewnn:00730] 青野さん)
+	* INSTALL ファイル修正。
+
+Tue Aug 14 11:12:34 UTC 2001 Hiroo Ono <hiroo at oikumene.gcd.org>
+	* CPP + IPv6 patch ([freewnn:00673] 濱嶋さん)
+	* configure.in の BeOS 部分の修正。 ([freewnn:00677] 阿部さん)
+	* libtool-1.4 で libtoolize & aclocal やり直し
+
+Sun Jun 17 15:00:08 UTC 2001
+	* 英語 manpage を追加。([freewnn:00542] Francis Bond さん)
+	  atod.man, atof.man, dtoa.man
+	  ただし、現在はインストールされない。
+	* jserver -v option 追加。([freewnn:00581] 矢吹洋一さん)
+	* jserver usage を修正 ([freewnn:00606] Francis Bond)
+
+Sat Jun  2 00:27:56 JST 2001 Hiroo Ono <hiroo at oikumene.gcd.org>
+	* config.h.in, configure.in, */*/Makefile.in,
+	  他、*.h, *.c ファイルいくつか:
+	  sys/param.h 検査追加。
+	  その為、config.h 読み込み追加。
+	  その為、Makefile.in の INCLUDES 行変更。
+	  NOFILE マクロ関連の #if を一部修正。要再検討。
+	* Wnn/man/6.jutil/atod.man: アルファベットの文字を ASCII に変更。
+	* emacs (NEmacs?) 用コメント一部削除
+
+Wed May 30 00:09:15 JST 2001 Hiroo Ono <hiroo at oikumene.gcd.org>
+	* Wnn/manual/3.libwnn/*,
+	  Wnn/manual/7.Protocol/KKTP:
+	  ドキュメント typo 修正 ([[freewnn:00581] 矢吹洋一さん)
+	  英文にも反映する必要があるが、行なっていない。
+	
+Sun May 27 12:55:45 JST 2001 Hiroo Ono <hiroo at oikumene.gcd.org>
+	* Makefile.in: distclean で libtool も削除。
+	* Wnn/include/wnn_os.h: HAVE_WAIT3 を削除 (configure.in と重複)。
+	* configure.in: cc が gcc な時の暫定 CPP 対策。([freewnn:00578] 阿部さん)
+	  BePC, FreeBSD, Linux で、暫定的に
+	    CPP=`$CC -print-prog-name=cpp`
+	  とした。
+
+Sun May 20 18:09:02 JST 2001 Hiroo Ono <hiroo at oikumene.gcd.org>
+
+	* makerule.mk.in: $(CC) に -DHAVE_CONFIG_H が追加されるようにする。
+	* PubdicPlus/fzk.con への patch 修正 ([freewnn:00576] 砂川さん)
+	* Wnn/include/msg.h の前に <sys/param.h> を読み込む。
+	* Wnn/jd/wnnenvrc_R.omr: gerodic 追加。([freewnn:00346] 植松さん)
+	* Wnn/jlib/js.c: include config.h ([freewnn:00392] 阿部さん)
+
+Sat May 19 18:20:25 JST 2001 Hiroo Ono <hiroo at oikumene.gcd.org>
+
+	* PubdicPlus/fzk.con への patch ([freewnn:00547] 砂川さん)
+	* PubdicPlus/pubdic.p 修正 ([freewnn:00424] 塚本さん)
+
+	* Makefile.in に distclean target 追加 ([freewnn:00380] 引地さん)
+
+ 	* Wnn/include/msg.h: fix the constraint for path name length.
+ 	* Wnn/etc/msg.c: likewise.
+ 	* Wnn/jlib/js.c: add the include of sys/param.h for removing path
+ 	name length.
+	  ([freewnn:00380] 引地さん)
+
+ 	* config.h.in を autoheader で生成するように変更
+          acconfig.h を追加。
+ 	  ([freewnn:00290] 元木さん)
+
+	* config.h を HAVE_CONFIG_H が define されていた場合に読み込むよう
+	  に変更。
+
+Sat May 19 14:16:00 JST 2001 Hiroo Ono <hiroo at oikumene.gcd.org>
+
+	* 分割及び shared library 化 (libtool 使用)
+	  ([freewnn:00443] 田岡さんの patch)
+	* libtool-1.3.5 より、
+	    libltdl/aclocal.m4
+            ltconfig
+            ltmain.sh
+	  autoconf-2.13 より、
+	    config.guess
+	    config.sub
+	  をインポート ([freewnn:00444] 田岡さん より)
+	* Xsi/configure を CVS から削除。
+	  autoconf から作成されるため、release 時に、
+	  release engineer が、生成すべき。
+	
+Tue Mar 21 02:34:45 2000  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* 開発版 1.1.1-a017 として内部リリース
+
+Tue Mar 21 01:12:29 2000  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* Wnn/jserver/de_header.h: get_file_name、expand_file_name のプロ
+	トタイプ宣言の修正。([freewnn:00369] 飯島さんのパッチ)
+
+Tue Mar 21 01:04:22 2000  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* mkdir() が無いと判定された場合に system() で /bin/mkdir を呼び出
+	しているのを修正。(新規作成: Wnn/etc/mkdir.c)
+	注意: mkdir() を持っていても以下の条件に当てはまらない場合は 
+	mkdir() を持っていないと判定される。
+	defined(BSD42) || defined(uniosu) || defined(UX386) || defined(DGUX)
+	([freewnn:00358] 元木さんのパッチ)
+	
+Fri Mar 17 01:56:30 2000  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* gets_cur と getws_cur で受け側の領域のサイズ以上に書き込まないよ
+	うに修正。(buffer overflow 対策) ([freewnn:00361] 元木さんのパッチ)
+
+Fri Mar  3 01:04:09 2000  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* ソケット関連およびプロセスグループ関連を configure 化。これによ
+	り #ifdef BEOS が激減した。([freewnn:00347] 阿部さんのパッチ)
+
+Fri Mar  3 00:23:43 2000  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* Wnn/jutil/dic_head.c (input_header): 引数が間違っていた。
+	(未使用だったので実害なし) ([freewnn:00319] 小野さんのパッチ)
+
+Mon Feb 28 22:32:17 2000  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* Wnn/etc/msg.c (msg_open): msg_open() において libwnn.msg に 
+        空行や不正な形式の行が存在していた場合に '\0' を無視してアク
+        セスしてしまうバグを修正。([freewnn:00324]元木さんのパッチ、
+        [freewnn:00350]高田さんのパッチ)
+
+Mon Feb 28 22:17:43 2000  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* .msg ファイルに空行があると、msg_open で死ぬ。FreeWnnでまた 
+	enbug (T_T)。空行を削った。([freewnn:00328])
+
+Fri Feb 25 01:17:04 2000  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* 開発版 1.1.1-a016 として内部リリース
+
+Thu Feb 24 02:24:05 2000  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* 何度 indent コマンドを実行しても同じ結果が出るようにソースを修正。
+	(問題の箇所を /* *INDENT-OFF* */、/* *INDENT-ON* */ で囲っている。)
+	
+Wed Feb 23 00:35:09 2000  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* Wnn/jutil/wnnkill.c: indent が美しくなるように ifdef の関係を調
+	整
+	* Wnn/jutil/wnnstat.c: (同上)
+	* Wnn/jutil/dtoa.c: (同上)
+	
+Wed Feb 23 00:32:19 2000  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* Wnn/etc/xutoj.c: 文法エラーの修正(普段は指定されない ifdef のた
+	めわからなかった。indent を書ける際に発覚) 
+	([freewnn:00336] 元木さんのパッチ)
+
+Mon Feb 14 02:23:38 2000  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* 開発版 1.1.1-a015 として内部リリース
+
+Sun Feb 13 18:56:32 2000  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* configure.in: socklen_t がうまく検出できない場合があるので変更。
+	([freewnn:00238] 元木さんのパッチ)
+	
+Sun Feb 13 18:41:43 2000  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* Wnn/jserver/do_env.c: new_env 内で sticky と jishomax を明示的に
+	初期化していないので明示的に初期化するようにした。
+ 	([freewnn:00229] 元木さんのパッチ)
+
+	* Wnn/jserver/do_dic_env.c: del_all_dic_in_env 内ですべての辞書を 
+	env[eid] 内から外しているのに jishomax はそのままなので 0 を入れた。
+  	(でも、この関数を呼んだ後に jishomax を使う箇所は無いはずなのでい
+	らないかも。)
+ 	([freewnn:00229] 元木さんのパッチ)
+
+Sun Feb 13 18:28:02 2000  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* Wnn/jserver/de.c: Solaris2.4+gcc-2.95.1で出力されるwarningの一部
+	を取った。([freewnn:00206] 鵜川さんのパッチ + [freewnn:00209])
+
+Sun Feb 13 18:16:54 2000  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* makerule.mk.in: ar のコマンドを "clq" から "cq" に変更。SunOS
+ 	2.4 では l コマンドがエラーになるため。ar の l コマンドはHP-UX で
+	は作業ディレクトリの変更、GNUld では No Operation なので省略可能と
+	判断した。 ([freewnn:00207],[freewnn:00208],[freewnn:00210])
+
+Sun Feb 13 18:05:09 2000  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* gerodic をデフォルトで読み込むように rc ファイルを変更
+  	([freewnn:00214] kaz / 大森保英さんのパッチ)
+
+Sun Feb 13 17:54:13 2000  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* *.man の誤字および roff の文法エラーの修正
+	([freewnn:00216] 永江さん作成のパッチ)
+
+Sun Feb 13 16:36:01 2000  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* Wnn/jserver/de.c: jserver の usage メッセージに -N を追加。
+	([freewnn:00273] 片山さん作成のパッチ)
+
+	* Wnn/jserver/de.c: jserver に -p オプションを追加(ポート番号の指
+	定)
+	([freewnn:00277] 元木さん作成のパッチ)
+
+	* Wnn/man/4.cmd/jserver.man: -p オプション、-N オプションの記述を
+	追加。(英語の方は手抜き。ごめん)
+	
+Thu Feb 10 02:17:38 2000  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* man で冒頭に大量の空白行が作成されるのを直した。
+	([freewnn:00203] 植松 文徳 <uematsu at kgz.com>さんのパッチ)
+
+Mon Feb  7 02:32:22 2000  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* 開発版 1.1.1-a014 として内部リリース
+
+Sun Feb  6 17:22:32 2000  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* COPYRIGHT, COPYRIGHT-j を添付。これは GPL そのものと、その日本語
+	訳である。
+
+Sun Feb  6 17:17:57 2000  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* ChangeLog.old を作成。これは、以前の著作権表記ヘッダに記録された
+	いた変更情報をまとめたもの。
+
+	* CONTRIBUTORS に、FreeWnn 1.0/1.1 時代の情報を追加。
+	
+Sun Feb  6 17:15:44 2000  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* 著作権表記を変更。但し、以下のディレクトリに含まれるファイルは著
+	作権表記を変更しなかった。
+
+	1. 辞書関連 → FreeWnn Project で全くいじっていないから
+
+	    cWnn/tdic, cWnn/cdic, kWnn/kdic, Contrib/dic/gerodic,
+	    Wnn-consortium/dic
+
+	2. マニュアル関連 →FreeWnn Project で全くいじっていないから
+
+	    Wnn/manual, Wnn/manual.en, cWnn/manual, cWnn/manual.en
+
+	3. Xwnmo → FreeWnn Project で全くいじっていないから
+
+	    Xwnmo
+
+	4. PubdicPlus は FreeWnn に合わせるための作業が発生しているが、
+	   Public Domain とする。これは Pubdic 本来の思想にあわせるため。
+
+	    PubdicPlus
+
+Tue Oct 19 01:07:40 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* 開発版 1.1.1-a013 として内部リリース
+
+Tue Oct 19 00:09:48 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* Wnn/jserver/de.c: jserver がエラーで終了する時、perror() を呼ん
+	で「何が原因で異常終了したのか」を表示するようにした。
+	が出るため。([freewnn:00199])
+	
+Mon Oct 18 23:11:20 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* Wnn/jserver/do_hindo_s.c: drand48() のプロトタイプ宣言を追加
+	(stdlib.h をインクルードする)。FreeBSD で jserver が死ぬのはこれが
+	原因だった。([freewnn:00195] 片山さんのパッチ)
+	
+	* Wnn/jserver/do_hindo_s.c: 1U → (unsigned)1 に変更。K&R でエラー
+	が出るため。([freewnn:00195] 片山さんのパッチ)
+	
+Sat Oct 16 00:47:38 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* Wnn/jserver/de.c: accept の引数のキャストを行ない、warning をな
+	くした。
+	([freewnn:00140]: にしくさんのパッチ)
+
+Wed Sep 29 03:19:17 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* 開発版 1.1.1-a012 として内部リリース
+
+Wed Sep 29 02:13:56 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* gerodic の Makefile.in が古いままだった。
+	([freewnn:00143]: kaz / 大森保英さんの指摘)
+
+	* gerodic が make および make install の対象になるようにした。
+
+Wed Sep 29 00:46:31 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* Wnn/jserver/de_header.h: wnn_get_hinsi_name() のプロトタイプ宣言
+	が間違っていたので修正(関数の型が int(誤) -> char*(正))。
+
+Wed Sep 29 00:01:03 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* Makefile.in:    ".c.i" のルールを削除。使ってないので。
+	* makerule.mk.in: ".c.i" のルールを削除。使ってないので。
+
+Tue Sep 28 23:25:42 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* Wnn/jlib/js.c: BSD系のOSで SUN_LEN を正しく定義
+	([freewnn:00144]: 坂本さん報告のパッチ)
+
+Tue Sep 28 23:03:26 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* Wnn/etc/strings.c: 使いもしないのに NULL が定義されていたので
+	削除
+
+Tue Sep 28 02:04:44 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* HAVE_DRAND48 および HAVE_RAND_MAX を導入。SRAND48 は削除。
+
+	* Wnn/jserver/do_hindo_s.c (RAND): (1<<31) が int を越えていたので 
+	1U に変更。
+	([freewnn:00136]: 永江さんのパッチ)
+
+Tue Sep 28 01:04:36 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* Wnn/jserver/de.c: socklen_t 型を導入
+	* Wnn/jserver/error.c: time_t 型を導入
+
+	([freewnn:00140]: にしくさんのパッチ、[freewnn:00135]: 元木さんの
+	アドバイス)
+	
+Tue Sep 28 00:25:12 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* Wnn/jserver/de.c: typo の修正(恥ずかしい…)
+	([freewnn:00136] 永江さん、[freewnn:00139] 冨樫さんのパッチ)
+
+Fri Sep 24 03:05:11 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* 開発版 1.1.1-a011 として内部リリース
+
+Fri Sep 24 02:59:28 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* Wnn/jserver/de.c: NOFILE の再定義の不具合を修正。
+	([freewnn:00131]: にしくさんの指摘による)
+
+	* time((long*)0) を time(NULL) に修正。
+	([freewnn:00131]: にしくさんの指摘による)
+
+Fri Sep 24 02:55:57 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* PubdicPlus/pod.c: 「static 変数の初期値が定数でない」ところがあっ
+	たので修正。
+	([freewnn:00129]: 阿部宏明さん提供のパッチ)
+
+Thu Sep 23 01:32:04 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* 開発版 1.1.1-a010 として内部リリース
+
+Thu Sep 23 00:17:25 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* PubdicPlus/Makefile.in: コンパイラが gcc 決めうちだったのを修正
+	
+Wed Sep 22 01:53:51 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* 開発版 1.1.1-a009 として内部リリース
+	
+Wed Sep 22 01:48:16 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* configure.in: Intel 版の Solaris に対応(伊藤健二さん提供のパッチ)
+
+	* Wnn/etc/bdic.c: 内部関数 getnstr() の定義が ncurses ライブラリの
+	同名関数のプロトタイプ宣言と干渉を起こすため、名前を getnstring() 
+	に変更。(伊藤健二さん提供のパッチ)
+
+Wed Sep 22 01:38:33 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* configure.in: AC_CHECK_LIB のチェック関数が main になっていたの
+	を各々ふさわしいものに変更。
+	([freewnn:00127] 元木さんのパッチ)
+
+Wed Sep 22 01:15:58 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* 開発版 1.1.1-a008 として内部リリース
+
+Wed Sep 22 00:30:33 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* configure を autoconf-1.13 ベースに変更。(今までは 1.12 ベー
+	ス)
+
+Wed Sep 22 00:26:07 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* 辞書を Pubdic から Pubdic+ に変更。
+ 
+Sun Sep 19 00:24:33 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* 開発版 1.1.1-a007 として内部リリース
+
+Sat Sep 18 20:09:23 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* crypt ライブラリがリンクされないようになっていたため NetBSD でコ
+	ンパイルできなくなっていたのを修正。
+	([freewnn:00124] のパッチ。[freewnn:00123] にて永江さんが指摘)
+
+Thu Sep 16 03:40:33 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* 開発版 1.1.1-a006 として内部リリース
+
+Thu Sep 16 02:05:58 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* makerule.mk.in: いらない変数を削った。
+
+        * 〜/Makefile.in: 不要なライブラリを多数リンクしていたので、そ
+	れを止めさせた。
+
+Thu Sep 16 01:56:04 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* Wnn/include/Makefile.in: config.h -> wnn_config.h のシンボリック
+	リンクで $DESTDIR を考慮するように修正([freewnn:00121] 前原さ
+	んのパッチ)。上書きインストールする際にあらかじめシンボリック
+	リンクを rm する必要があったので修正。
+
+	* cWnn/man/6.jutil/Makefile.in: wnntouch.man のターゲットがなかっ
+	たので追加。([freewnn:00121] 前原さんのパッチ)
+
+	* make install.man でマニュアルがインストールされるようにした。
+	([freewnn:00121] 前原さんのパッチ)
+
+	* makerule.mk.in: MANPATH が /usr/X11R6/man に決めうちになっている
+	のを修正(→ @mandir@ にした)。([freewnn:00121] 前原さんのパッチ)
+
+	* makerule.mk.in: 定数 COMPRESSMANCMD が未定義のためマニュアルの
+	インストールの際にエラーが出る。とりあえず ':' に定義しておいた。
+	
+
+Thu Sep 16 01:48:36 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* 時々付属語ファイル関連でエラーが出ることがある([freewnn:00077] 
+	元木さんからの報告)のを修正。
+	[freewnn:00100] 片山さんのパッチ
+
+Mon Sep 13 03:37:15 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* パッチ patch-1.1.1-a005 として内部リリース
+
+Mon Sep 13 03:35:56 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+        * ファイル CONTRIBUTORS を作成
+
+Mon Sep 13 02:04:34 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* Wnn/include/Makefile.in: config.h を wnn_config.h に改名したが、
+	FreeWnn 以外のクライアントは依然として config.h をインクルードしよ
+	うとするはずなので、インストール時に "ln -s wnn_config.h config.h" 
+	を実行するようにした。
+	([freewnn:00115] 元木さんの指摘による)
+
+Mon Sep 13 01:56:19 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* configure.in: CPP や CCOPTIONS などの値の決定に OS の判定をして
+	いるところがあるが、知らない OS でもとりあえず configure を続ける
+	ようにした。(いままでは途中で止まっていた)
+
+Sun Sep 12 23:29:59 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* AIX 対応(configure, configure.in)
+	([freewnn:00112] Tomoyuki Niijima 氏提供のパッチ)
+
+	* cpp の出力に行番号情報(#line 1 "" というような感じ)が出る場合
+	(AIX の cpp ではこれが起こる)でも正しく扱えるように以下の 
+	Makefile.in を変更。
+ 	([freewnn:00112] Tomoyuki Niijima 氏提供のパッチ)
+	    Xsi/Wnn/pubdic/Makefile.in
+	    Xsi/cWnn/cdic/Makefile.in
+	    Xsi/kWnn/kdic/Makefile.in
+	    Xsi/cWnn/tdic/Makefile.in
+
+	* Xsi/makerule.mk.in: SUBDIR が未定義の場合にエラーになるのを回避	
+ 	([freewnn:00112] Tomoyuki Niijima 氏提供のパッチ)
+
+Fri Aug 20 03:21:52 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* パッチ patch-1.1.1-a004 として内部リリース
+
+Fri Aug 20 02:12:23 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* HP-UX 11.0 対応
+	([freewnn:00079] 濱嶋さん、[freewnn:00081] 矢吹さん提供のパッチ)
+
+Fri Aug 20 01:35:17 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* (元からあった) config.h を wnn_config.h に改名し、configure で
+	config.h を作成するようにした(ただし中身は空)。
+	([freewnn:00050] 元木さん提供のパッチ)
+
+Thu Aug 19 02:22:33 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* Makefile.in から共通定義部分を括り出して makerule.mk というファ
+	イルにまとめた
+
+	* コンパイルでエラーが出た時、その時点で make が止まるようにした
+          (いままでそうなっていなかったのがどうかしている!)
+
+	* makerule.mk: WNNINCDIR と WNNLIBDIR を configure の定義に合わせ
+	た(今までは /usr/X11R6 以下に入るようになっていた)
+
+	* install-sh を autoconf パッケージから持ってきた。これで install 
+	コマンドがないマシンでも FreeWnn のインストールが可能になった
+	
+Sat Aug 14 02:49:58 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* Intel版BeOS 対応
+	([freewnn:00061] 阿部さん提供のパッチ)
+
+
+Wed Aug 11 01:42:28 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* パッチ patch-1.1.1-a003 として内部リリース
+
+Wed Aug 11 01:00:59 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* OpenBSD/i386, HP-UX 9.X 対応
+	([freewnn:00045] 濱嶋さん提供のパッチ)
+
+Wed Aug 11 00:43:11 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* --prefix=dir を有効にする。(今までは /usr/local で決めうちだった)
+	([freewnn:00036] 永江さん提供のパッチ)
+
+	* configure, configure.in: NetBSD 対応
+	([freewnn:00036] 永江さん提供のパッチ)
+	
+Mon Jul 28 22:27:44 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* パッチ patch-1.1.1-a002 として内部リリース
+	
+Wed Jul 28 22:12:25 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* configure, configure.in: BSD/OS 対応 (冨樫さん提供のパッチ)
+
+Wed Jul 28 22:07:32 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* Wnn/jutil/wddel.c:main() にて gets() を使っていたので fgets() に
+	変更 ([freewnn:00024] 矢吹＠SRAさんの指摘による)
+
+	* Wnn/etc/msg.c:msg_get() にてローカル変数のアドレスを返している部
+	分があったので修正([freewnn:00024] 矢吹＠SRAさんの指摘による)
+
+
+Tue Jul 27 01:41:14 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	main() 関数の戻り値型が int になっていないのを修正
+	([freewnn:00024] 矢吹＠SRAさんの指摘による)
+	Wnn/jserver/de.c
+	Wnn/jutil/wnnstat.c
+	Wnn/jutil/wnnkill.c
+	Wnn/jutil/wddel.c
+	Wnn/jutil/wdreg.c
+	Wnn/jutil/oldatonewa.c
+	Wnn/jutil/dtoa.c
+	Wnn/jutil/atod.c
+	Wnn/jutil/atof.c
+	Wnn/jutil/wnntouch.c
+
+	Makefile.in で定義されている _NULLCMD_ を全て削除した
+	([freewnn:00024] 矢吹＠SRAさんの指摘による)。OS によっては、
+	(_NULLCMD_ が定義している) echo -n で -n が表示されてしまうため。_
+ 	NULLCMD_ そのものは Makefile.in の自動生成時にできる副作用的なマク
+	ロと推測され、それ自体には意味はない(と思う ^^;)。
+
+
+Mon Jul 19 04:44:37 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* パッチ patch-1.1.1-a001 として内部リリース
+	
+Mon Jul 19 04:02:14 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* CHANGES: 古川竜雄
+
+	Pubdic/Makefile.in を作成。
+	([freewnn:00013] 前原＠DebianProjectさんの指摘による)
+
+Mon Jul 19 03:13:38 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* CHANGES: (片山＠ＰＦＵさん & 川幡＠ＮＴＴさん)
+
+	SunOS4.* でのコンパイルのために configure と configure.in を修正
+
+	Makefile.in にて @LN_S@ に余計な -s がついていた。(ln -s -s と展開
+	されるため SunOS 4 でエラーとなる)。→ -s をとった。
+
+	Wnn/jserver/ddefine.h で ctype.h をインクルードするように変更(もと
+	もとコメントで先に ctype.h をインクルードせよって書いてあった)。
+	Solaris 2.6 では、"wnn_os.h" がインクルードしているファイルが 
+	<ctype.h> をインクルードしているために、<ctype.h> のインクルードが
+	後になることがあり、これによって、isspace() マクロの二重定義が生じ
+	る。通常は warning で済むが、egcs ではエラーになってしまう。
+	(Wnn/jserver/de_vars.c などで起こる)。
+
+	"char *strchr();”の宣言を削除。ANSI C では、<string.h> での宣言と
+	マッチしないため。
+
+	
+Mon Jul 19 02:58:12 1999  Tatsuo Furukawa  <frkwtto at osk3.3web.ne.jp>
+
+	* CHANGES: [freewnn:00013] (前原＠DebianProjectさん)
+
+	strchr() のプロトタイプの修正
+

@@ -18,9 +18,9 @@
 #
 # This file was automatically customized by dh-make on Thu, 15 Jul 1999 23:10:35 +0900
 
-PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-DAEMON=/usr/bin/kWnn4/kserver
-NAME=kserver
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON=/usr/sbin/kserver
+NAME=freewnn-kserver
 DESC="FreeWnn Korean server"
 
 test -f $DAEMON || exit 0

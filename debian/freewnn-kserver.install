@@ -1,0 +1,13 @@
+usr/bin/kWnn4/kserver	usr/sbin/
+usr/bin/kWnn4/kwnnkill	usr/sbin/
+usr/bin/kWnn4/kwnnstat	usr/sbin/
+usr/bin/kWnn4/katod	usr/bin/
+usr/bin/kWnn4/katof	usr/bin/
+usr/bin/kWnn4/kdtoa	usr/bin/
+usr/bin/kWnn4/kuum	usr/bin/
+usr/bin/kWnn4/kwddel	usr/bin/
+usr/bin/kWnn4/kwdreg	usr/bin/
+usr/bin/kWnn4/kwnntouch	usr/bin/
+usr/share/wnn/ko_KR	usr/share/wnn/
+var/lib/wnn/ko_KR	var/lib/wnn/
+

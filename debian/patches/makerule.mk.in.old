@@ -1,0 +1,70 @@
+Index: freewnn-1.1.1~a021+cvs20100325/makerule.mk.in
+===================================================================
+--- freewnn-1.1.1~a021+cvs20100325.orig/makerule.mk.in	2010-03-25 15:03:03.444717749 +0900
++++ freewnn-1.1.1~a021+cvs20100325/makerule.mk.in	2010-03-25 15:03:27.782710859 +0900
+@@ -113,7 +113,7 @@
+ # OMRON INPUT METHOD MAKE ENV
+ #
+ 
+-       WNNOWNER = wnn
++       WNNOWNER = root
+        UUMOWNER = @UUMOWNER@
+        UUMGROUP = @UUMGROUP@
+ 
+@@ -122,7 +122,8 @@
+          prefix = @prefix@
+     exec_prefix = @exec_prefix@
+          PREFIX = @prefix@
+-      WNNWNNDIR = ${PREFIX}/lib/wnn
++      WNNWNNDIR = ${PREFIX}/share/wnn
++      WNNVARDIR = /var/lib/wnn
+       WNNBINDIR = ${PREFIX}/bin
+       WNNINCDIR = @includedir@
+       WNNLIBDIR = @libdir@
+@@ -133,9 +134,10 @@
+          WNNTOP = $(IMTOP)/Wnn
+        JWNNLANG = ja_JP
+      JWNNWNNDIR = $(WNNWNNDIR)/$(JWNNLANG)
+-     JWNNBINDIR = $(WNNBINDIR)/Wnn4
++     JWNNBINDIR = $(WNNBINDIR)/
++     JWNNVARDIR = $(WNNVARDIR)/$(JWNNLANG)
+      JWNNINCDIR = $(WNNINCDIR)/wnn
+-     JWNNDICDIR = $(JWNNWNNDIR)/dic
++     JWNNDICDIR = $(JWNNVARDIR)/dic
+   JWNNPUBDICDIR = $(JWNNDICDIR)/pubdic
+ JWNNWNNCONSDICDIR = $(JWNNDICDIR)/wnncons
+   JWNNFZKSRCDIR = $(JWNNDICDIR)/src
+@@ -164,8 +166,9 @@
+        CWNNLANG = zh_CN
+      CWNNWNNDIR = $(WNNWNNDIR)/$(CWNNLANG)
+      CWNNINCDIR = $(WNNINCDIR)/cwnn
+-     CWNNBINDIR = $(WNNBINDIR)/cWnn4
+-     CWNNDICDIR = $(CWNNWNNDIR)/dic
++     CWNNBINDIR = $(WNNBINDIR)/
++     CWNNVARDIR = $(WNNVARDIR)/$(CWNNLANG)
++     CWNNDICDIR = $(CWNNVARDIR)/dic
+   CWNNSYSDICDIR = $(CWNNDICDIR)/sys
+       CWNNCDSRC = $(CWNNTOP)/cd
+     CWNNCDICSRC = $(CWNNTOP)/cdic
+@@ -187,8 +190,9 @@
+        KWNNLANG = ko_KR
+      KWNNWNNDIR = $(WNNWNNDIR)/$(KWNNLANG)
+      KWNNINCDIR = $(WNNINCDIR)/kwnn
+-     KWNNBINDIR = $(WNNBINDIR)/kWnn4
+-     KWNNDICDIR = $(KWNNWNNDIR)/dic
++     KWNNBINDIR = $(WNNBINDIR)/
++     KWNNVARDIR = $(WNNVARDIR)/$(KWNNLANG)
++     KWNNDICDIR = $(KWNNVARDIR)/dic
+   KWNNSYSDICDIR = $(KWNNDICDIR)/sys
+       KWNNKDSRC = $(KWNNTOP)/kd
+     KWNNKDICSRC = $(KWNNTOP)/kdic
+@@ -208,7 +212,8 @@
+ 
+        TWNNLANG = zh_TW
+      TWNNWNNDIR = $(WNNWNNDIR)/$(TWNNLANG)
+-     TWNNDICDIR = $(TWNNWNNDIR)/dic
++     TWNNVARDIR = $(WNNVARDIR)/$(TWNNLANG)
++     TWNNDICDIR = $(TWNNVARDIR)/dic
+   TWNNSYSDICDIR = $(TWNNDICDIR)/sys
+       TWNNTDSRC = $(CWNNTOP)/td
+     TWNNTDICSRC = $(CWNNTOP)/tdic

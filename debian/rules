@@ -1,134 +1,31 @@
 #!/usr/bin/make -f
-# Sample debian/rules that uses debhelper. 
-# GNU copyright 1997 by Joey Hess.
-#
-# This version is for a hypothetical package that builds an
-# architecture-dependant package, as well as an architecture-independent
-# package.
-
 # Uncomment this to turn on verbose mode. 
 #export DH_VERBOSE=1
 
-# This is the debhelper compatability version to use.
-export DH_COMPAT=4
+config_option= --prefix=/usr --mandir=/usr/share/man --enable-client=yes \
+               --disable-traditional-layout 
+install_dir= DESTDIR=$(CURDIR)/debian/tmp
 
-package         := freewnn
-CFLAGS          := -O2 -Wall
-INSTALL = install
-INSTALL_DATA    := $(INSTALL) -m644
-INSTALL_DIR     := $(INSTALL) -p -d -o root -g root  -m  755
-INSTALL_FILE    := $(INSTALL) -p    -o root -g root  -m  644
-INSTALL_PROGRAM := $(INSTALL) -m755
-INSTALL_SCRIPT  := $(INSTALL) -p    -o root -g root  -m  755
-SCRIPT_DIR     = /usr/share/dbs
+%:
+	dh $@
 
-TAR_DIR := FreeWnn-1.1.1-a021
-include $(SCRIPT_DIR)/dbs-build.mk
 
-ifeq (,$(DEB_BUILD_GNU_TYPE))
-  include $(SCRIPT_DIR)/dpkg-arch.mk
-endif
+override_dh_auto_configure:
+	dh_auto_configure -- $(config_option)
 
-DEBIAN_ROOT := $(CURDIR)/debian/$(package)
+override_dh_auto_install:
+	dh_auto_install -- $(install_dir)
+	$(MAKE) $(install_dir) install.man
 
-configure: $(STAMP_DIR)/stamp-configure
-$(STAMP_DIR)/stamp-configure: $(patched)
-	dh_testdir
+override_dh_installman:
+	# install manpages
+	for man in freewnn-jserver freewnn-common libwnn-dev ;\
+        do dh_installman -p$$man --language ja; done
+	dh_installman -pfreewnn-cserver
 
-	cd $(BUILD_TREE) && ./configure --prefix=/usr --mandir=/usr/share/man --enable-client=yes
+override_dh_installinit:
+	dh_installinit
+	dh_installinit -pfreewnn-tserver --init-script=freewnn-cserver
 
-	touch $(STAMP_DIR)/stamp-configure
-
-build: $(STAMP_DIR)/stamp-build
-$(STAMP_DIR)/stamp-build: $(patched) $(STAMP_DIR)/stamp-configure
-	dh_testdir
-	cd $(BUILD_TREE) && $(MAKE)
-
-	touch $(STAMP_DIR)/stamp-build
-
-clean:
-	dh_testdir
-	rm -rf $(STAMP_DIR) $(SOURCE_DIR)
-	perl $(SCRIPT_DIR)/dbs_split clean
-	dh_clean
-
-install:
-	dh_testdir
-	dh_testroot
-	dh_clean -k
-	dh_installdirs
-
-	cd $(BUILD_TREE) && \
-	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp && \
-	$(MAKE) install.man DESTDIR=$(CURDIR)/debian/tmp
-
-	dh_movefiles
-
-	mkdir -p $(CURDIR)/debian/freewnn-common/usr/share/man/ja
-	mkdir -p $(CURDIR)/debian/freewnn-jserver/usr/share/man/ja
-	mkdir -p $(CURDIR)/debian/libwnn-dev/usr/share/man/ja
-	mv $(CURDIR)/debian/freewnn-common/usr/share/man/man? $(CURDIR)/debian/freewnn-common/usr/share/man/ja
-	mv $(CURDIR)/debian/freewnn-jserver/usr/share/man/man? $(CURDIR)/debian/freewnn-jserver/usr/share/man/ja
-	mv $(CURDIR)/debian/libwnn-dev/usr/share/man/man? $(CURDIR)/debian/libwnn-dev/usr/share/man/ja
-
-# Build architecture-independent files here.
-# Pass -i to all debhelper commands in this target to reduce clutter.
-binary-indep: build install
-	dh_testdir -i
-	dh_testroot -i
-#	dh_installdebconf -i
-	dh_installdocs -i $(BUILD_TREE)/ChangeLog $(BUILD_TREE)/ChangeLog.old $(BUILD_TREE)/CONTRIBUTORS $(BUILD_TREE)/COPYRIGHT $(BUILD_TREE)/COPYRIGHT-j
-	dh_installexamples -i
-	dh_installmenu -i
-#	dh_installlogrotate -i
-#	dh_installemacsen -i
-#	dh_installpam -i
-#	dh_installmime -i
-#	dh_installinit -i
-	dh_installcron -i
-#	dh_installman -i
-	dh_installinfo -i
-#	dh_undocumented -i
-	dh_installchangelogs -i $(BUILD_TREE)/ChangeLog.en
-	dh_link -i
-	dh_compress -i
-	dh_fixperms -i
-	dh_installdeb -i
-#	dh_perl -i
-	dh_gencontrol -i
-	dh_md5sums -i
-	dh_builddeb -i
-
-# Build architecture-dependent files here.
-binary-arch: build install
-	dh_testdir -a
-	dh_testroot -a
-#	dh_installdebconf -a
-	dh_installdocs -a
-	dh_installexamples -a
-	dh_installmenu -a
-#	dh_installlogrotate -a
-#	dh_installemacsen -a
-#	dh_installpam -a
-#	dh_installmime -a
-	dh_installinit -a
-	dh_installinit -pfreewnn-cserver --init-script=freewnn-tserver
-	dh_installcron -a
-#	dh_installman -a
-	dh_installinfo -a
-	dh_undocumented -a
-	dh_installchangelogs -a $(BUILD_TREE)/ChangeLog.en
-	dh_strip -a
-	dh_link -a
-	dh_compress -a
-	dh_fixperms -a
-	dh_makeshlibs -a
-	dh_installdeb -a
-#	dh_perl -a
-	dh_shlibdeps -a
-	dh_gencontrol -a
-	dh_md5sums -a
-	dh_builddeb -a
-
-binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary install configure
+override_dh_installchangelos:
+	dh_installchangelogs $(CURDIR)/ChangeLog.en

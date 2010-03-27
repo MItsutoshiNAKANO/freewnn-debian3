@@ -1,0 +1,132 @@
+
+
+
+JS_DIC_CREAT( )     UNIX Programmer's Manual      JS_DIC_CREAT( )
+
+
+
+名称
+
+     js_dic_file_create()     辞書ファイルの作成を行う。
+
+形式
+
+     #include "jslib.h"
+
+     int
+     js_dic_file_create(env,fn,type,comment,passwd, hpasswd)
+     struct wnn_env *env;          /* 環境 */
+     char *fn;                     /* 辞書ファイル */
+     int type;                     /* 辞書の種類  */
+     w_char *comment;              /* コメント */
+     char *passwd;                 /* 辞書のパスワード */
+     char *hpasswd;                /* 頻度ファイルのパスワード */
+
+機能
+
+     fn で 指定した辞書ファイルを作成をする。辞書ファイル名の最大
+     文字数は、 100 文字である。コメント comment の最大文字数は、
+     512 文字である。辞書のパスワード passwd と頻度ファイル
+     hpasswd のパスワードの最大文字数は、 16 文字である。辞書の種
+     類は、登録可能形式、または、逆引き形式でなくてはならない。
+
+リターンバリュー
+
+     正常終了時には、0 を返す。
+     異常終了時には、-1 を返す。
+
+
+
+
+Printed 1/22/92          11 October 1991                        1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

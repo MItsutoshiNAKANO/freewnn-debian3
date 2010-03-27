@@ -1,0 +1,81 @@
+.\"
+.\"   $Id: ren_conv.man,v 1.3 2001/06/14 18:08:32 ura Exp $
+.\"
+.\"
+.\" FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+.\" This file is part of FreeWnn.
+.\" 
+.\" Copyright Kyoto University Research Institute for Mathematical Sciences
+.\"                 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+.\" Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright FreeWnn Project 1999, 2000
+.\" 
+.\" Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+.\" 
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\" 
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\" 
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software
+.\" Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+.\"
+.TH JL_REN_CONV \  "2 October 1991"
+.SH 名称
+.sv 1
+.nf
+.ta 0.1i 2i
+jl_ren_conv()		連文節変換する。
+.fi
+.SH 形式
+.sv 1
+.nf
+.ta 0.1i 3i	
+#include "jllib.h"
+
+int
+jl_ren_conv(buf, yomi, bun_no, bun_no2, use_maep)
+struct wnn_buf *buf;	/* バッファ */
+w_char *yomi;		/* 読み */
+int bun_no;		/* 文節番号1 */
+int bun_no2;		/* 文節番号2 */
+int use_maep;		/* 前後の接続を使う/否 */
+.fi
+.SH 機能
+.HP 0
+.IP
+文節番号 bun_no から 文節番号 bun_no2 の前までの文節を削除し、読み yomi 
+を連文節変換した結果を挿入する。
+
+use_maep で前後の接続の指定をする。
+
+WNN_USE_MAE ならば、bun_no の前の小文節との接続を考慮して変換を行なう。
+すなわち、最前端の文節として、前の小文節と接続して大文節を作るような
+小文節は最優先され、つぎに、文節の前が大文節の区切りとなるような
+小文節が優先され、最後に、大文節の区切りとならない文節が優先される。
+WNN_USE_MAE が立っていない場合には、最前端の文節の前が大文節の区切りとな
+るような文節のみを選択する。
+
+WNN_USE_ATO ならば、後ろへの接続を見る。
+
+WNN_USE_ZENGO なら、前後両方とも見る。
+
+bun_no = bun_no2 の時は、bun_no の前の位置に変換結果が挿入さ
+れる。bun_no が文節数と等しい時は、現在の変換結果に変換結果を付け加える。
+bun_no2 が文節数と等しい時は、bun_no から 後ろの文字列を変換結果に置き換える。
+bun_no2 = -1 の時は、bun_no2 = 文節数 として、jl_ren_conv を行なう。
+.SH リターンバリュー
+.sv 1
+.nf
+正常終了時には文節数を返す。
+異常終了時には -1 を返す。
+.fi
+
+

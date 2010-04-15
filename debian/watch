@@ -1,0 +1,6 @@
+version=3
+
+opts="downloadurlmangle=s/sourceforge/iij.dl.sourceforge/;s/downloads\///;s/projects\///,\
+uversionmangle=s/-beta/~beta/;s/-rc/~rc/;s/-preview/~preview/;s/-a/~a/" \
+ http://sourceforge.jp/projects/freewnn/releases/ \
+  /projects/freewnn/downloads/.*/FreeWnn-(.*)\.tar.bz2/ debian uupdate

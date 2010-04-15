@@ -1,3 +1,4 @@
 newlayout
 makerules.mk.in
 man
+configure.in.kfreebsd

@@ -1,3 +1,12 @@
+freewnn (1.1.1~a021+cvs20100325-4) unstable; urgency=low
+
+  * debian/rules
+    - add autoreconf -i, sorry for missing (Closes: #577097) 
+  * debian/control
+    - add "Build-Depends: autoconf, automake, libtool"
+
+ -- Hideki Yamane (Debian-JP) <henrich@debian.or.jp>  Sun, 18 Apr 2010 23:05:33 +0900
+
 freewnn (1.1.1~a021+cvs20100325-3) unstable; urgency=low
 
   * debian/patches

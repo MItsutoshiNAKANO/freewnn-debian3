@@ -11,6 +11,7 @@ install_dir= DESTDIR=$(CURDIR)/debian/tmp
 
 
 override_dh_auto_configure:
+	autoreconf -i
 	dh_auto_configure -- $(config_option)
 
 override_dh_auto_install:

@@ -1,3 +1,16 @@
+freewnn (1.1.1~a021+cvs20100325-5) unstable; urgency=medium
+
+  * debian/patches
+    - add fix_add_words_dict patch to fix jserver will crash when word 
+      registration in certain environment.
+      Thanks to KASAI Shigeo <kasai@ss.iij4u.or.jp> for investigation 
+      and the patch.
+  * debian/control
+    - update my address and remove DM-Update-Allowed field.
+    - Bump up "Standard-Version: 3.9.1" with no change
+
+ -- Hideki Yamane <henrich@debian.org>  Sat, 04 Dec 2010 10:57:00 +0900
+
 freewnn (1.1.1~a021+cvs20100325-4) unstable; urgency=low
 
   * debian/rules

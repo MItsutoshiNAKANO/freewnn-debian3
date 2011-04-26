@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Keita Maehara <maehara@debian.org>
 Uploaders: Hideki Yamane <henrich@debian.org>
 Build-Depends: debhelper (>= 7.0.50~), libncurses5-dev, autoconf, automake, libtool
-Standards-Version: 3.9.1
+Standards-Version: 3.9.2
 Homepage: http://sourceforge.jp/projects/freewnn/
 
 Package: freewnn-common

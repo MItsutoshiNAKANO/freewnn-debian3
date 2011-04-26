@@ -1,3 +1,16 @@
+freewnn (1.1.1~a021+cvs20100325-6) unstable; urgency=low
+
+  * debian/lib{,c,k}wnn0.install
+    - remove unnecessary *.la files. Thanks to codehelp@debian.org
+      (Closes: #621175)
+  * debian/patches
+    - remove makerule.mk.in.old
+    - add fix_ftbfs_shell, thanks to upstream. (Closes: #621928)
+  * debian/control
+    - Bump up "Standard-Version: 3.9.2" with no change
+
+ -- Hideki Yamane <henrich@debian.org>  Tue, 26 Apr 2011 21:16:50 +0900
+
 freewnn (1.1.1~a021+cvs20100325-5) unstable; urgency=medium
 
   * debian/patches

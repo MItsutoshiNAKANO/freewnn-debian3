@@ -2,13 +2,14 @@
 # Uncomment this to turn on verbose mode. 
 #export DH_VERBOSE=1
 
+export DEB_BUILD_MAINT_OPTIONS=hardening=+all,-format,-pie
+
 config_option= --prefix=/usr --mandir=/usr/share/man --enable-client=yes \
                --disable-traditional-layout 
 install_dir= DESTDIR=$(CURDIR)/debian/tmp
 
 %:
 	dh $@
-
 
 override_dh_auto_configure:
 	autoreconf -i
@@ -28,5 +29,5 @@ override_dh_installinit:
 	dh_installinit
 	dh_installinit -pfreewnn-tserver --init-script=freewnn-cserver
 
-override_dh_installchangelos:
+override_dh_installchangelogs:
 	dh_installchangelogs $(CURDIR)/ChangeLog.en

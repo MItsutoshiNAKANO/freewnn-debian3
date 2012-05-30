@@ -1,3 +1,21 @@
+freewnn (1.1.1~a021+cvs20100325-7) experimental; urgency=low
+
+  * debian/control
+    - set "Build-Depends: debhelper (>= 9)" to enable hardening
+    - set "Standards-Version: 3.9.3"
+    - set "Multi-Arch: same" and "Pre-Depends: ${misc:Pre-Depends}" to each
+      library package
+  * debian/compat
+    - set 9
+  * debian/rules
+    - fix typo for lintian warning.
+    - add "export DEB_BUILD_MAINT_OPTIONS=hardening=+all,-format,-pie"
+     (-format needs to be built, yet)
+  * debian/lib*.install
+    - deal with Multi-Arch.
+
+ -- Hideki Yamane <henrich@debian.org>  Thu, 31 May 2012 04:25:40 +0900
+
 freewnn (1.1.1~a021+cvs20100325-6) unstable; urgency=low
 
   * debian/lib{,c,k}wnn0.install

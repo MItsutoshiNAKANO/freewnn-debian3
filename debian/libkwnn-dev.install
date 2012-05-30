@@ -1,4 +1,4 @@
 usr/include/kwnn
-usr/lib/libkwnn.a
-usr/lib/libkwnn.so
+usr/lib/*/libkwnn.a
+usr/lib/*/libkwnn.so
 

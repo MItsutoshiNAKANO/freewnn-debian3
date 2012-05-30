@@ -1,3 +1,1 @@
-usr/lib/libkwnn.so.0
-usr/lib/libkwnn.so.0.0.0
-
+usr/lib/*/libkwnn.so.0*

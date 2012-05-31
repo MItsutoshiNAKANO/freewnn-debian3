@@ -2,7 +2,7 @@
 # Uncomment this to turn on verbose mode. 
 #export DH_VERBOSE=1
 
-export DEB_BUILD_MAINT_OPTIONS=hardening=+all,-format,-pie
+export DEB_BUILD_MAINT_OPTIONS=hardening=+all,-pie
 
 config_option= --prefix=/usr --mandir=/usr/share/man --enable-client=yes \
                --disable-traditional-layout 

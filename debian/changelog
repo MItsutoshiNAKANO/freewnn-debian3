@@ -1,3 +1,16 @@
+freewnn (1.1.1~a021+cvs20100325-8) experimental; urgency=low
+
+  * debian/patches
+    - add format_strings.patch, Thanks to Makoto Fujiwara <makoto@ki.nu> for 
+      the hint
+  * debian/rules
+    - set "DEB_BUILD_MAINT_OPTIONS=hardening=+all,-pie", remove "-format" to
+      enable DEB_BUILD_HARDENING_FORMAT
+  * debian/control
+    - lib*wnn-dev: remove ${shlibs:Depends} from "Depends:" 
+
+ -- Hideki Yamane <henrich@debian.org>  Thu, 31 May 2012 21:50:55 +0900
+
 freewnn (1.1.1~a021+cvs20100325-7) experimental; urgency=low
 
   * debian/control

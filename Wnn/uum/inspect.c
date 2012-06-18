@@ -1,5 +1,5 @@
 /*
- *  $Id: inspect.c,v 1.5 2002/03/30 01:45:41 hiroo Exp $
+ *  $Id: inspect.c,v 1.7 2012/06/16 10:02:04 aonoto Exp $
  */
 
 /*
@@ -10,9 +10,9 @@
  *                 1987, 1988, 1989, 1990, 1991, 1992
  * Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
  * Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
- * Copyright FreeWnn Project 1999, 2000, 2002
+ * Copyright FreeWnn Project 1999, 2000, 2002, 2012
  *
- * Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+ * Maintainer:  FreeWnn Project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -213,7 +213,7 @@ sakujo_kouho1 (bun_no)
   sStrcpy (buf + strlen (buf), w_buf);
   set_escape_code (buf);
   strcat (buf, " ");
-  sprintf (buf + strlen (buf), MSG_GET (20));
+  sprintf (buf + strlen (buf), "%s", MSG_GET (20));	/* FIXME: check buffer length */
   /*
      sprintf(buf + strlen(buf), "を削除しますか?(Y/N)");
    */
@@ -262,7 +262,7 @@ inspectdel ()
      strcpy(buf, "「");
    */
   sStrcpy (buf + strlen (buf), buf1);
-  sprintf (buf + strlen (buf), MSG_GET (24));
+  sprintf (buf + strlen (buf), "%s", MSG_GET (24));	/* FIXME: check buffer length */
   /*
      sprintf(buf + strlen(buf), "」を削除します。(Y/N)");
    */
@@ -303,7 +303,7 @@ inspectuse ()
   buf1[kanji_len] = 0;
   sStrcpy (buf + strlen (buf), buf1);
   set_escape_code (buf);
-  sprintf (buf + strlen (buf), MSG_GET (26));
+  sprintf (buf + strlen (buf), "%s", MSG_GET (26));	/* FIXME: check buffer length */
   /*
      sprintf(buf + strlen(buf), "」の使用を中止します。(Y/N)");
    */

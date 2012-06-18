@@ -1,5 +1,5 @@
 #
-#   $Id: INSTALL.en,v 1.6 2007/06/23 16:34:16 aonoto Exp $
+#   $Id: INSTALL.en,v 1.7 2010/12/23 17:57:32 aonoto Exp $
 #
 
 #
@@ -10,7 +10,7 @@
 #                 1987, 1988, 1989, 1990, 1991, 1992
 # Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
 # Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
-# Copyright FreeWnn Project 1999, 2000, 2002, 2006, 2007
+# Copyright FreeWnn Project 1999, 2000, 2002, 2006, 2007, 2010
 # 
 # Maintainer:  FreeWnn Project
 # 
@@ -54,19 +54,29 @@
 
         $ make
 
-5. To install commands, libraries, dictionaries and so on,
-   run make install as a superuser(*3).
+5. (If you build server,) add user named `wnn'.
+
+	You don't need to add `wnn' if it exists. We don't login as `wnn',
+	so please lock password (or equivalent state). Please refer
+	to administration manual of your system to add user `wnn'.
+
+	*3: jserver (and [ckt]server) runs as user `wnn' to reduce affect
+	    system and files. We install them as setuid `wnn',
+	    so any local user can run jserver.
+
+6. To install commands, libraries, dictionaries and so on,
+   run make install as a superuser(*4).
 
         $ su
         # make install
 
-	*3: Currently, install target does not work well for other user.
+	*4: Currently, install target does not work well for other user.
 
-6. To install manuals, you should do the following as a superuser
+7. To install manuals, you should do the following as a superuser
 
         # make install.man
 
-   *4: You can ommit this if you do not want manuals installed.
+	*5: You can ommit this if you do not want manuals installed.
 
 [Configure options]
 
@@ -88,15 +98,19 @@ Below are the main configure option of FreeWnn.
   --enable-Wnn          compile and install Wnn (Japanese).
   --enable-cWnn         compile and install cWnn (Chinese).
   --enable-kWnn         compile and install kWnn (Korean).
+  --enable-traditional-layout
+			If disabled, install files in modern layout.
+			If leave enabled, install files in Wnn4 compatible
+			directories. (*6)
 
   disabled by default:
   --enable-ipv6         enable IPv6 feature.
-  --enable-unsafe-path  allow creating files in jserver_dir (*5).
+  --enable-unsafe-path  allow creating files in jserver_dir (*7).
   --enable-client	compile and install uum.
 
   auto determine by default:
   --with-libwrap	use libwrap (in TCP wrapper) for jserver
-			to enable connection-based access control (*6).
+			to enable connection-based access control (*8).
   --enable-client-utmp  (if --enable-client specified,) uum register
 			pseudo tty information to utmp. (Except some systems,
 			it is enabled by default.)
@@ -110,12 +124,30 @@ Below are the main configure option of FreeWnn.
 			program with specified group (you must specify group).
 			If this option (itself) is not specified,
 			configure determine if set-gid install is needed.
+  --enable-sub-bindir   Control if we install commands to separate sub directory
+			by language (ex. Japanese commands to $(bindir)/Wnn4).
+			If this option is not specified, it relies on
+			--enable-traditional-layout option. (Enable if
+			--enable-traditional-layout specified, disable
+			otherwise.) (*6)
 
-*5: If the option --enable-unsafe-path is enabled, the [cjkt]server
+*6: We intend to follow installation path like FHS (File Hierarchy
+  Standard). Currently difference between specifying parameter 
+  --enable-traditional-layout or not is following:
+
+  Files				If enabled		If disabled
+  jserver, wnnstat, wnnkill	$(bindir)/*Wnn4		$(sbindir)
+  Other commands		$(bindir)/*Wnn4		$(bindir)
+
+  Note the name of sub directory "*Wnn4" depends on language (Wnn4,
+  cWnn4, kWnn4). You can control whether you use "*Wnn4" by specifing
+  --enable-sub-bindir option.
+
+*7: If the option --enable-unsafe-path is enabled, the [cjkt]server
   daemons accept creation of an FreeWnn dictionary file in an arbitrary
   path, and they accept request from client of any hosts.
   This feature may be a security hole.
   Unless you used to place FreeWnn dictionary files in a path other than
   jserver_dir (lib/wnn/$LANG/dic/usr), you should not enable this feature.
 
-*6: If you specify --enable-ipv6, libwrap need to support IPv6 also.
+*8: If you specify --enable-ipv6, libwrap need to support IPv6 also.

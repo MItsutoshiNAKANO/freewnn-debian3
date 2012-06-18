@@ -1,3 +1,23 @@
+freewnn (1.1.1~a021+cvs20120618-1) experimental; urgency=low
+
+  * New upstream snapshot
+  * debian/patches
+    - drop fix_add_to_dict, merged upstream
+    - drop fix_ftbfs_shell, merged upstream
+    - drop format_strings.patch, merged upstream
+    - drop configure.in.kfreebsd, merged upstream
+    - refresh them
+    - add hurd_support.patch to avoid build failure in Hurd.
+  * debian/rules
+    - enable parallel build
+  * debian/freewnn-common.install
+    - cvt_key_*, lt_LN and serverdefs files moves from /usr/share/wnn to
+      /usr/lib/wnn
+  * debian/freewnn-{c,j,k}server.install, freewnn-{c,j}server-manpages
+    - adjust some directory
+
+ -- Hideki Yamane <henrich@debian.org>  Mon, 18 Jun 2012 10:53:02 +0900
+
 freewnn (1.1.1~a021+cvs20100325-8) experimental; urgency=low
 
   * debian/patches

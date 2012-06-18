@@ -1,16 +1,5 @@
-usr/bin/cWnn4/cserver	usr/sbin/
-usr/bin/cWnn4/tserver	usr/sbin/
-usr/bin/cWnn4/cwnnkill	usr/sbin/
-usr/bin/cWnn4/cwnnstat	usr/sbin/
-usr/bin/cWnn4/catod	usr/bin/
-usr/bin/cWnn4/catof	usr/bin/
-usr/bin/cWnn4/cdtoa	usr/bin/
-usr/bin/cWnn4/cuum	usr/bin/
-usr/bin/cWnn4/cwddel	usr/bin/
-usr/bin/cWnn4/cwdreg	usr/bin/
-usr/bin/cWnn4/cwnntouch	usr/bin/
-var/lib/wnn/zh_CN	var/lib/wnn/
-var/lib/wnn/zh_TW	var/lib/wnn/
-usr/share/wnn/zh_CN     usr/share/wnn/
-usr/share/wnn/zh_TW     usr/share/wnn/
+usr/sbin/c*
+usr/bin/c*
+usr/lib/wnn/zh_CN	usr/lib/wnn/
+usr/lib/wnn/zh_TW	usr/lib/wnn/
 

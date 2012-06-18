@@ -1,13 +1,9 @@
-usr/sbin/jserver	usr/sbin/
-usr/sbin/wnnkill	usr/sbin/
-usr/sbin/wnnstat	usr/sbin/
-usr/bin/atod		usr/bin/
-usr/bin/atof		usr/bin/
-usr/bin/dtoa		usr/bin/
-usr/bin/oldatonewa	usr/bin/
-usr/bin/uum		usr/bin/
-usr/bin/wddel		usr/bin/
-usr/bin/wdreg		usr/bin/
-usr/bin/wnntouch	usr/bin/
-var/lib/wnn/ja_JP	var/lib/wnn/
-usr/share/wnn/ja_JP	usr/share/wnn/
+usr/sbin/jserver
+usr/sbin/wnnkill
+usr/sbin/wnnstat
+usr/bin/oldatonewa
+usr/bin/uum
+usr/bin/wddel	
+usr/bin/wdreg
+usr/bin/wnntouch
+usr/lib/wnn/ja_JP	usr/lib/wnn/

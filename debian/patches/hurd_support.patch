@@ -1,0 +1,47 @@
+Description: <short summary of the patch>
+Author: Hideki Yamane <henrich@debian.org>
+
+---
+Origin: vendor
+Forwarded: no
+Last-Update: 2013-01-27
+
+Index: freewnn-1.1.1~a021+cvs20120618/Wnn/include/msg.h
+===================================================================
+--- freewnn-1.1.1~a021+cvs20120618.orig/Wnn/include/msg.h	2013-01-29 09:45:13.318848278 +0900
++++ freewnn-1.1.1~a021+cvs20120618/Wnn/include/msg.h	2013-01-29 09:45:39.558897063 +0900
+@@ -41,6 +41,15 @@
+ #include <sys/param.h>
+ #endif
+ 
++// GNU/Hurd doen't have MAXPATHLEN
++#ifndef MAXPATHLEN
++#  ifdef PATH_MAX
++#    define     MAXPATHLEN      PATH_MAX
++#  else
++#    define     MAXPATHLEN      1024
++#  endif
++#endif
++
+ struct msg_bd
+ {
+   int msg_id;
+Index: freewnn-1.1.1~a021+cvs20120618/Wnn/jserver/de_header.h
+===================================================================
+--- freewnn-1.1.1~a021+cvs20120618.orig/Wnn/jserver/de_header.h	2012-06-18 10:48:32.183480413 +0900
++++ freewnn-1.1.1~a021+cvs20120618/Wnn/jserver/de_header.h	2013-01-29 10:15:43.151173132 +0900
+@@ -69,6 +69,14 @@
+ #define MAX_FILES       600
+ #define MAX_DIC         1200
+ 
++#ifndef MAXPATHLEN
++#  ifdef PATH_MAX
++#    define     MAXPATHLEN      PATH_MAX
++#  else
++#    define     MAXPATHLEN      1024
++#  endif
++#endif
++
+ /* constants for one client */
+ /*
+ #define USER_NAME_LEN 20

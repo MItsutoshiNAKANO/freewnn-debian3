@@ -1,5 +1,5 @@
 /*
- *  $Id: select_ele.c,v 1.4 2002/03/30 01:45:41 hiroo Exp $
+ *  $Id: select_ele.c,v 1.5 2012/06/12 19:18:33 aonoto Exp $
  */
 
 /*
@@ -10,9 +10,9 @@
  *                 1987, 1988, 1989, 1990, 1991, 1992
  * Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
  * Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
- * Copyright FreeWnn Project 1999, 2000, 2002
+ * Copyright FreeWnn Project 1999, 2000, 2002, 2012
  *
- * Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+ * Maintainer:  FreeWnn Project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -816,7 +816,7 @@ kworddel ()
   /*
      sprintf(buf + strlen(buf), "」を削除します。(Y/N)");
    */
-  sprintf (buf + strlen (buf), MSG_GET (24));
+  sprintf (buf + strlen (buf), "%s", MSG_GET (24));	/* FIXME: check buffer length */
   if (yes_or_no (buf) == 1)
     {
       if (jl_word_delete (bun_data_, word_searched[lc].dic_no, word_searched[lc].serial) == -1)
@@ -847,19 +847,20 @@ kworduse ()
    */
   strcpy (buf, MSG_GET (23));
   sStrcpy (buf + strlen (buf), word_searched[lc].kanji);
+  /* FIXME: check buffer length */
   if (word_searched[lc].hindo == -1 || (word_searched[lc].int_hindo == -1 && !word_searched[lc].int_ima))
     {
       /*
          sprintf(buf + strlen(buf), "」の使用を再開します。(Y/N)");
        */
-      sprintf (buf + strlen (buf), MSG_GET (32));
+      sprintf (buf + strlen (buf), "%s", MSG_GET (32));
     }
   else
     {
       /*
          sprintf(buf + strlen(buf), "」の使用を中止します。(Y/N)");
        */
-      sprintf (buf + strlen (buf), MSG_GET (26));
+      sprintf (buf + strlen (buf), "%s", MSG_GET (26));
     }
   if (yes_or_no (buf) == 1)
     {

@@ -9,7 +9,7 @@ config_option= --prefix=/usr --mandir=/usr/share/man --enable-client=yes \
 install_dir= DESTDIR=$(CURDIR)/debian/tmp
 
 %:
-	dh $@
+	dh $@ --parallel
 
 override_dh_auto_configure:
 	autoreconf -i
@@ -20,7 +20,7 @@ override_dh_auto_install:
 	$(MAKE) $(install_dir) install.man
 
 override_dh_installman:
-	# install manpages
+# install manpages
 	for man in freewnn-jserver freewnn-common libwnn-dev ;\
         do dh_installman -p$$man --language ja; done
 	dh_installman -pfreewnn-cserver

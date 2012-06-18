@@ -63,9 +63,6 @@
 /* Define to 1 if you have the `bind' library (-lbind). */
 #undef HAVE_LIBBIND
 
-/* Define to 1 if you have the `nsl' library (-lnsl). */
-#undef HAVE_LIBNSL
-
 /* Define to 1 if you have the `socket' library (-lsocket). */
 #undef HAVE_LIBSOCKET
 

@@ -1,5 +1,5 @@
 #
-#   $Id: makerule.mk.in,v 1.15 2010/02/22 17:06:54 aonoto Exp $
+#   $Id: makerule.mk.in,v 1.17 2011/05/15 17:03:53 aonoto Exp $
 #
 
 #
@@ -10,7 +10,7 @@
 #                 1987, 1988, 1989, 1990, 1991, 1992
 # Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
 # Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
-# Copyright FreeWnn Project 1999, 2000, 2001, 2003, 2006, 2007, 2010
+# Copyright FreeWnn Project 1999, 2000, 2001, 2003, 2006, 2007, 2010, 2011
 # 
 # Maintainer:  FreeWnn Project
 # 
@@ -31,7 +31,10 @@
 
 all::
 
-            SHELL = /bin/sh
+            SHELL = @SHELL@
+# To developers: Please use common syntax / function of Bourne Shell
+#        (i.e. don't use extention of specific SHELL (bash, ksh, ...))
+#        on Makefile.in .
 
               TOP = $(top_builddir)
       CURRENT_DIR = `pwd`
@@ -79,6 +82,11 @@ FZK_PP = @FZK_PP@
   RANLIBINSTFLAGS =
 
           LIBTOOL = @LIBTOOL@
+# Notice: If you have trouble on building, please use following lines
+#        (explicitly use preferred shell by configure / Libtool).
+#           SHELL = /bin/sh
+#         LIBTOOL = @LIBTOOL_MOD@
+
 # LT_* : shortcut for Makefile.in
             LT_CC = $(LIBTOOL) --mode=compile $(CC)
             LT_LD = $(LIBTOOL) --mode=link $(CCLINK)
@@ -101,6 +109,8 @@ FZK_PP = @FZK_PP@
      INSTDATFLAGS = -m 0444
      INSTUUMFLAGS = @INSTUUMFLAGS@
 
+        transform = @program_transform_name@
+
 CCOPTIONS = @CCOPTIONS@
 ALLDEFINES = $(INCLUDES) $(DEFINES)
 CFLAGS = @CFLAGS@ @CDEBUGFLAGS@ $(CCOPTIONS) @ipv6@ @DEFS@ $(ALLDEFINES)
@@ -121,11 +131,24 @@ LDOPTIONS = @CDEBUGFLAGS@ $(CCOPTIONS)
 
          prefix = @prefix@
     exec_prefix = @exec_prefix@
-         PREFIX = @prefix@
-      WNNWNNDIR = ${PREFIX}/lib/wnn
-      WNNBINDIR = ${PREFIX}/bin
+         bindir = @bindir@
+        sbindir = @sbindir@
+      WNNWNNDIR = $(exec_prefix)/lib/wnn
+      WNNBINDIR = $(bindir)
+     WNNSBINDIR = @WNNSBINDIR@
       WNNINCDIR = @includedir@
       WNNLIBDIR = @libdir@
+
+# sub directory for binaries:
+# if --enable-sub-bindir specified:
+@if_enable_sub_bindir@ JWNNSUBBINDIR = /Wnn4
+@if_enable_sub_bindir@ CWNNSUBBINDIR = /cWnn4
+@if_enable_sub_bindir@ KWNNSUBBINDIR = /kWnn4
+# else:
+@if_disable_sub_bindir@ JWNNSUBBINDIR =
+@if_disable_sub_bindir@ CWNNSUBBINDIR =
+@if_disable_sub_bindir@ KWNNSUBBINDIR =
+# end if
 
   PUBDICPLUSSRC = $(IMTOP)/PubdicPlus
   WNNCONSDICSRC = $(IMTOP)/Wnn-consortium/dic
@@ -133,7 +156,8 @@ LDOPTIONS = @CDEBUGFLAGS@ $(CCOPTIONS)
          WNNTOP = $(IMTOP)/Wnn
        JWNNLANG = ja_JP
      JWNNWNNDIR = $(WNNWNNDIR)/$(JWNNLANG)
-     JWNNBINDIR = $(WNNBINDIR)/Wnn4
+     JWNNBINDIR = $(WNNBINDIR)$(JWNNSUBBINDIR)
+    JWNNSBINDIR = $(WNNSBINDIR)$(JWNNSUBBINDIR)
      JWNNINCDIR = $(WNNINCDIR)/wnn
      JWNNDICDIR = $(JWNNWNNDIR)/dic
   JWNNPUBDICDIR = $(JWNNDICDIR)/pubdic
@@ -164,7 +188,8 @@ WNNWNNCONSDICSRC = $(WNNWNNCONSSRC)/dic
        CWNNLANG = zh_CN
      CWNNWNNDIR = $(WNNWNNDIR)/$(CWNNLANG)
      CWNNINCDIR = $(WNNINCDIR)/cwnn
-     CWNNBINDIR = $(WNNBINDIR)/cWnn4
+     CWNNBINDIR = $(WNNBINDIR)$(CWNNSUBBINDIR)
+    CWNNSBINDIR = $(WNNSBINDIR)$(CWNNSUBBINDIR)
      CWNNDICDIR = $(CWNNWNNDIR)/dic
   CWNNSYSDICDIR = $(CWNNDICDIR)/sys
       CWNNCDSRC = $(CWNNTOP)/cd
@@ -187,7 +212,8 @@ CWNNJLIBVERSION = 0:0
        KWNNLANG = ko_KR
      KWNNWNNDIR = $(WNNWNNDIR)/$(KWNNLANG)
      KWNNINCDIR = $(WNNINCDIR)/kwnn
-     KWNNBINDIR = $(WNNBINDIR)/kWnn4
+     KWNNBINDIR = $(WNNBINDIR)$(KWNNSUBBINDIR)
+    KWNNSBINDIR = $(WNNSBINDIR)$(KWNNSUBBINDIR)
      KWNNDICDIR = $(KWNNWNNDIR)/dic
   KWNNSYSDICDIR = $(KWNNDICDIR)/sys
       KWNNKDSRC = $(KWNNTOP)/kd

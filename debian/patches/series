@@ -1,8 +1,5 @@
 newlayout
 makerules.mk.in
 man
-configure.in.kfreebsd
-fix_add_to_dict
-fix_ftbfs_shell
 hardening-flags
-format_strings.patch
+hurd_support.patch

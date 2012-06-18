@@ -1,5 +1,5 @@
 #
-#   $Id: Makefile.in,v 1.13 2007/06/23 16:34:30 aonoto Exp $
+#   $Id: Makefile.in,v 1.15 2011/04/17 16:29:50 aonoto Exp $
 #
 
 #
@@ -10,7 +10,7 @@
 #                 1987, 1988, 1989, 1990, 1991, 1992
 # Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
 # Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
-# Copyright FreeWnn Project 1999, 2000, 2001, 2005, 2006, 2007
+# Copyright FreeWnn Project 1999, 2000, 2001, 2005, 2006, 2007, 2010, 2011
 # 
 # Maintainer:  FreeWnn Project
 # 
@@ -36,7 +36,7 @@ top_builddir = @top_builddir@
 INSTALL         = @INSTALL@
 LOCAL_INSTFLAGS = $(INSTUUMFLAGS)
 
-       INCLUDES = -I$(KWNNINCLUDESRC) -I$(KWNNROMKANSRC) -I$(top_builddir)
+       INCLUDES = -I$(top_builddir) @EXTKWNNJINC@ -I$(KWNNINCLUDESRC) -I$(KWNNROMKANSRC)
         DEFINES = $(KWNNDEFINES) $(KWNNLANGDEF)
 LOCAL_LIBRARIES = $(KWNNJLIB) $(KWNNCONVLIB) @LIBS@
 # FIXME: libspt: need configure support ...
@@ -430,7 +430,7 @@ instclient:: install
 install:: kuum
 	@if [ -d $(DESTDIR)$(KWNNBINDIR) ]; then set +x; \
 	else (set -x; $(MKDIRHIER) $(DESTDIR)$(KWNNBINDIR)); fi
-	$(LT_INSTALL) $(INSTALLFLAGS) $(INSTPGMFLAGS) $(LOCAL_INSTFLAGS) kuum $(DESTDIR)$(KWNNBINDIR)/kuum
+	$(LT_INSTALL) $(INSTALLFLAGS) $(INSTPGMFLAGS) $(LOCAL_INSTFLAGS) kuum $(DESTDIR)$(KWNNBINDIR)/`echo kuum | sed '$(transform)'`
 
 $(OBJ2) : $(SRC2)
 	$(CC) -c $(CFLAGS)  $(KWNNETCSRC)/`basename $@ .o`.c

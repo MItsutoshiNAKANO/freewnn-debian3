@@ -1,3 +1,9 @@
+freewnn (1.1.1~a021+cvs20130302-1) experimental; urgency=low
+
+  * taken from upstream CVS.
+
+ -- Hideki Yamane <henrich@debian.org>  Sun, 03 Mar 2013 06:07:37 +0900
+
 freewnn (1.1.1~a021+cvs20120618-1) experimental; urgency=low
 
   * New upstream snapshot

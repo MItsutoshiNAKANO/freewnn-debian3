@@ -1,7 +1,7 @@
 Source: freewnn
 Section: utils
 Priority: optional
-Maintainer: Keita Maehara <maehara@debian.org>
+Maintainer: Debian QA Group <packages@qa.debian.org>
 Uploaders: Hideki Yamane <henrich@debian.org>
 Build-Depends: debhelper (>= 9), libncurses5-dev, autoconf, automake, libtool
 Standards-Version: 3.9.3

@@ -1,3 +1,9 @@
+freewnn (1.1.1~a021+cvs20130302-2) experimental; urgency=low
+
+  * Set the Maintainer field to Debian QA Group.
+
+ -- Keita Maehara <maehara@debian.org>  Tue, 02 Jul 2013 01:27:55 +0900
+
 freewnn (1.1.1~a021+cvs20130302-1) experimental; urgency=low
 
   * taken from upstream CVS.

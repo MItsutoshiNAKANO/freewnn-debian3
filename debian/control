@@ -2,9 +2,8 @@ Source: freewnn
 Section: utils
 Priority: optional
 Maintainer: Debian QA Group <packages@qa.debian.org>
-Uploaders: Hideki Yamane <henrich@debian.org>
 Build-Depends: debhelper (>= 9), libncurses5-dev, autoconf, automake, libtool
-Standards-Version: 3.9.3
+Standards-Version: 3.9.4
 Homepage: http://sourceforge.jp/projects/freewnn/
 
 Package: freewnn-common
@@ -105,7 +104,7 @@ Package: libwnn-dev
 Section: libdevel
 Architecture: any
 Multi-Arch: same
-Depends: ${misc:Depends}
+Depends: libwnn0 (= ${binary:Version}), ${misc:Depends}
 Conflicts: wnn6-dev, wnn-dev, freewnn-jserver-dev
 Replaces: wnn-dev, freewnn-jserver-dev
 Description: Header files and static libraries for Wnn (FreeWnn jserver)
@@ -123,7 +122,7 @@ Package: libcwnn-dev
 Section: libdevel
 Architecture: any
 Multi-Arch: same
-Depends: ${misc:Depends}
+Depends: libcwnn0 (= ${binary:Version}), ${misc:Depends}
 Conflicts: cwnn-dev, freewnn-cserver-dev
 Replaces: cwnn-dev, freewnn-cserver-dev
 Description: Header files and static library for cWnn (FreeWnn cserver)
@@ -142,7 +141,7 @@ Package: libkwnn-dev
 Section: libdevel
 Architecture: any
 Multi-Arch: same
-Depends: ${misc:Depends}
+Depends: libkwnn0 (= ${binary:Version}), ${misc:Depends}
 Conflicts: kwnn-dev, freewnn-kserver-dev
 Replaces: kwnn-dev, freewnn-kserver-dev
 Description: Header files and static library for kWnn (FreeWnn kserver)

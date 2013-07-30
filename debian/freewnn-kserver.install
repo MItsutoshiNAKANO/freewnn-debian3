@@ -1,3 +1,4 @@
 usr/sbin/k*
 usr/bin/k*
-usr/lib/wnn/ko_KR	usr/lib/wnn/
+usr/share/wnn/ko_KR	usr/share/wnn/
+var/lib/wnn/ko_KR	var/lib/wnn/

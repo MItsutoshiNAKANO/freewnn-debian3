@@ -1,3 +1,17 @@
+freewnn (1.1.1~a021+cvs20130302-3) unstable; urgency=low
+
+  * QA upload.
+  * Add libcwnn0 depends to libcwnn-dev. (Closes: #715075).
+  * Add libkwnn0 depends to libkwnn-dev. (Closes: #715089).
+  * Add libwnn0 depends to libwnn-dev. (Closes: #715126).
+  * Re-update makerules.mk.in patch to install dicts in var/lib 
+    instead of usr/lib. (Closes: #699622).
+  * Install cserver user manual. (Closes: #391978).
+  * Add as-needed to remove unnecessary links.
+  * Bump Standards Version to 3.9.4.
+
+ -- Barry deFreese <bdefreese@debian.org>  Mon, 29 Jul 2013 22:28:13 -0400
+
 freewnn (1.1.1~a021+cvs20130302-2) experimental; urgency=low
 
   * Set the Maintainer field to Debian QA Group.

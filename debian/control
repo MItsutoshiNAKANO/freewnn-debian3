@@ -2,14 +2,19 @@ Source: freewnn
 Section: utils
 Priority: optional
 Maintainer: Debian QA Group <packages@qa.debian.org>
-Build-Depends: debhelper (>= 9), libncurses5-dev, autoconf, automake, libtool
+Build-Depends: autoconf,
+               automake,
+               autotools-dev,
+               debhelper (>= 9),
+               libncurses5-dev,
+               libtool
 Standards-Version: 3.9.4
 Homepage: http://sourceforge.jp/projects/freewnn/
 
 Package: freewnn-common
 Architecture: all
 Depends: ${misc:Depends}
-Conflicts: wnn-common, freewnn-jserver (<< 1.1.0+1.1.1-a017-4)
+Conflicts: freewnn-jserver (<< 1.1.0+1.1.1-a017-4), wnn-common
 Replaces: wnn-common
 Description: Files shared among the FreeWnn packages
  FreeWnn is a network-extensible Japanese/Chinese/Korean input
@@ -23,7 +28,7 @@ Description: Files shared among the FreeWnn packages
 
 Package: freewnn-jserver
 Architecture: any
-Depends: freewnn-common, adduser (>= 3.34), ${shlibs:Depends}, ${misc:Depends}
+Depends: adduser (>= 3.34), freewnn-common, ${misc:Depends}, ${shlibs:Depends}
 Conflicts: wnn
 Replaces: wnn
 Description: Japanese input system
@@ -35,7 +40,7 @@ Description: Japanese input system
 
 Package: freewnn-cserver
 Architecture: any
-Depends: freewnn-common, adduser (>= 3.34), ${shlibs:Depends}, ${misc:Depends}
+Depends: adduser (>= 3.34), freewnn-common, ${misc:Depends}, ${shlibs:Depends}
 Conflicts: cwnn
 Replaces: cwnn
 Description: Chinese input system
@@ -48,7 +53,7 @@ Description: Chinese input system
 
 Package: freewnn-kserver
 Architecture: any
-Depends: freewnn-common, adduser (>= 3.34), ${shlibs:Depends}, ${misc:Depends}
+Depends: adduser (>= 3.34), freewnn-common, ${misc:Depends}, ${shlibs:Depends}
 Conflicts: kwnn
 Replaces: kwnn
 Description: Korean input system
@@ -61,7 +66,7 @@ Section: libs
 Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: FreeWnn library for Wnn (FreeWnn jserver)
  FreeWnn jserver (Wnn) is a network-extensible Kana-to-Kanji
  conversion system.  It was jointly developed and released by the
@@ -76,7 +81,7 @@ Section: libs
 Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: FreeWnn library for cWnn (FreeWnn cserver)
  FreeWnn cserver (cWnn) is an integrated Chinese input system running
  on Unix workstation. It supports a wide range of input methods,
@@ -92,7 +97,7 @@ Section: libs
 Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: FreeWnn library for kWnn (FreeWnn kserver)
  FreeWnn kserver (kWnn) is an integrated Korean input system running
  on Unix workstation. It supports a wide range of input methods,
@@ -105,8 +110,8 @@ Section: libdevel
 Architecture: any
 Multi-Arch: same
 Depends: libwnn0 (= ${binary:Version}), ${misc:Depends}
-Conflicts: wnn6-dev, wnn-dev, freewnn-jserver-dev
-Replaces: wnn-dev, freewnn-jserver-dev
+Conflicts: freewnn-jserver-dev, wnn-dev, wnn6-dev
+Replaces: freewnn-jserver-dev, wnn-dev
 Description: Header files and static libraries for Wnn (FreeWnn jserver)
  FreeWnn jserver (Wnn) is a network-extensible Kana-to-Kanji
  conversion system.  It was jointly developed and released by the
@@ -142,8 +147,8 @@ Section: libdevel
 Architecture: any
 Multi-Arch: same
 Depends: libkwnn0 (= ${binary:Version}), ${misc:Depends}
-Conflicts: kwnn-dev, freewnn-kserver-dev
-Replaces: kwnn-dev, freewnn-kserver-dev
+Conflicts: freewnn-kserver-dev, kwnn-dev
+Replaces: freewnn-kserver-dev, kwnn-dev
 Description: Header files and static library for kWnn (FreeWnn kserver)
  FreeWnn kserver (kWnn) is an integrated Korean input system running
  on Unix workstation. It supports a wide range of input methods,
@@ -152,14 +157,3 @@ Description: Header files and static library for kWnn (FreeWnn kserver)
  This package contains the header files and the static library for
  kWnn. Install this package if you wish to develop your own kWnn
  client programs.
-
-#Package: uum
-#Section: utils
-#Architecture: any
-#Depends: ${shlibs:Depends}
-#Conflicts: freewnn-jserver (<< 1.1.0+1.1.1-a019-1)
-#Description: Kana-To-Kanji conversion front-end processor for FreeWnn jserver
-# Uum is a command line utility which provides Japanese input/output
-# environment on the terminal. Uum is able to connect with FreeWnn
-# jserver of other machine via the internet.
-

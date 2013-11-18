@@ -1,3 +1,17 @@
+freewnn (1.1.1~a021+cvs20130302-4) unstable; urgency=low
+
+  * QA upload.
+  * debian/patches/fix-parallel-build.patch: (Closes: #724058)
+    - Add patch from upstream to fix:
+      "mv: cannot stat 'std.fzk': No such file or directory"
+      during parallel build.
+  * debian/control, debian/rules:
+    - Use autotools-dev and it's dh addon to update config.guess/sub
+      (Closes: #727380)
+  * Run wrap-and-sort to make files in the debian-directory more readable
+
+ -- Andreas Moog <amoog@ubuntu.com>  Mon, 18 Nov 2013 23:36:27 +0100
+
 freewnn (1.1.1~a021+cvs20130302-3) unstable; urgency=low
 
   * QA upload.

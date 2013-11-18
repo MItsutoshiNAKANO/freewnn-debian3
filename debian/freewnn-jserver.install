@@ -1,10 +1,10 @@
+usr/bin/oldatonewa
+usr/bin/uum
+usr/bin/wddel
+usr/bin/wdreg
+usr/bin/wnntouch
 usr/sbin/jserver
 usr/sbin/wnnkill
 usr/sbin/wnnstat
-usr/bin/oldatonewa
-usr/bin/uum
-usr/bin/wddel	
-usr/bin/wdreg
-usr/bin/wnntouch
 usr/share/wnn/ja_JP	usr/share/wnn/
 var/lib/wnn/ja_JP	var/lib/wnn/

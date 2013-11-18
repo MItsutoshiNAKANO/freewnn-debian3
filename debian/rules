@@ -10,7 +10,7 @@ config_option= --prefix=/usr --mandir=/usr/share/man --enable-client=yes \
 install_dir= DESTDIR=$(CURDIR)/debian/tmp
 
 %:
-	dh $@ --parallel
+	dh $@ --parallel --with autotools_dev
 
 override_dh_auto_configure:
 	autoreconf -i

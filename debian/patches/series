@@ -3,3 +3,4 @@ makerules.mk.in
 man
 hardening-flags
 hurd_support.patch
+fix-parallel-build.patch

@@ -1,7 +1,7 @@
-usr/sbin/c*
+
 usr/bin/c*
+usr/sbin/c*
 usr/share/wnn/zh_CN	usr/share/wnn/
 usr/share/wnn/zh_TW	usr/share/wnn/
 var/lib/wnn/zh_CN	var/lib/wnn/
 var/lib/wnn/zh_TW	var/lib/wnn/
-

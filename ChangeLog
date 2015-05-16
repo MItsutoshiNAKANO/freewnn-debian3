@@ -3,6 +3,457 @@
   Japanese...
  */
 
+Mon, 16 May 2011 02:03:53  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* configure, configure.in, makerule.mk.in:
+
+	まだ使ってないが、Libtool-2.4.xではconfigureで利用したSHELLに特化し
+	たlibtoolスクリプトを生成するらしい。そこでmakerule.mk.inのSHELLも
+	それを使うように変更。Debian Bug #621928の回避策として導入。
+
+	ただ、一部の環境で構築に失敗するかもしれないので従来通り使えるよう
+	なエントリ(とconfigureでのLIBTOOL_MOD)を作成しておいた。必要ならコ
+	メントを外して利用すること。詳細はmakerule.mk.inを参照。
+
+Mon, 18 Apr 2011 01:29:50  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* configure, configure.in, Wnn/jutil/Makefile.in,
+	  Wnn/uum/Makefile.in, cWnn/jutil/Makefile.in,
+	  cWnn/uum/Makefile.in, kWnn/jutil/Makefile.in,
+	  kWnn/uum/Makefile.in:
+
+	[freewnn-users 81]での指摘による(チケット#24188)。
+
+	- --with-*wnn-includesが機能するようにした(今まで動いてなかった)。
+	  --with-*wnn-librariesと同様に、このパラメータは*Wnn/jutil(一部)
+	  と*uumにしか働かない。
+
+	- --without-lib*wnnが明示的に指定されたとき、 指定なしの場合と挙動
+	  が違っていたので修正。
+
+Mon, 11 Apr 2011 01:51:16  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* Wnn/jserver/: de_header.h, renbn_kai.c:
+
+	Wnn/jserver/renbn_kai.c:
+	- tan_syo()内で呼び出されているsbn_kai()の引数に、ポインタへのキャ
+	ストを明示的に追加した。プロトタイプ宣言のない関数の型推定に役立つ
+	と思われる。Linux/amd64でjserverがクラッシュする別のバグを修正す
+	る。
+	- いつものごとく古いメールアドレスを削除。
+
+	Wnn/jserver/de_header.h:
+	- bnsetu_kai.c内の関数のプロトタイプ宣言を追加(安全のため)。
+
+Fri, 31 Dec 2010 23:40:51  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* configure, configure.in:
+	We cannot build Xwnmo for now, so we (temporally) disabled AC_PATH_X.
+	Probably workaround for systems with modern install layout of X11.
+	Also removed libcurses template because it was already described.
+
+Fri, 24 Dec 2010 02:57:32  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* INSTALL.en:
+	Update INSTALL.en to follow current INSTALL document.
+
+Fri, 24 Dec 2010 02:17:43  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* Wnn/: jserver/de_header.h, jutil/ujisf.c:
+
+	Wnn/jserver/de_header.h:
+	- Fix return type mismatch of kanjiaddr() prototype declaration.
+	  Spotted on http://twitter.com/pachira23/status/8875168688513024 ,
+	  and reported to freewnn-users by Hideki Yamane. Original reporter
+	  saids it also fixes crash bug of jserver when client register
+	  new word to dictionary.
+	- Add prototype declaration of functions in bdic.c (and some
+	  source files).
+	- Strip old mail address (as usual).
+
+	Wnn/jutil/ujisf.c:
+	- Added prototype declaration of kanjiaddr() and Print_entry().
+	- Strip old mail address (as usual).
+
+Sun, 11 Jul 2010 19:18:16  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* INSTALL, configure, configure.in, makerule.mk.in,
+	  Wnn/jserver/Makefile.in, Wnn/jutil/Makefile.in,
+	  Wnn/man/4.cmd/Makefile.in, Wnn/man/6.jutil/Makefile.in,
+	  Wnn/uum/Makefile.in, cWnn/jserver/Makefile.in,
+	  cWnn/jutil/Makefile.in, cWnn/man/4.cmd/Makefile.in,
+	  cWnn/man/6.jutil/Makefile.in, cWnn/uum/Makefile.in,
+	  kWnn/jserver/Makefile.in, kWnn/jutil/Makefile.in,
+	  kWnn/uum/Makefile.in:
+
+	Added (first step of) support for new installation path layout. Maybe
+	useful for package managers.  Please note that new layout is disabled
+	by default. You need to specify following configure parameter if you
+	try this.
+
+	- Added --enable-traditional-layout (default: yes) parameter to
+	  configure. If disabled, we install jserver / wnnstat / wnnkill to
+	  sbindir. Currently this will take effect on program path only.
+	- Also added --enable-sub-bindir (default: yes if
+	  --enable-traditional-layout, no otherwise). If disabled, we install
+	  programs to bindir (/ sbindir) directly (i.e. we don't mkdir Wnn4
+	  (, cWnn4 and kWnn4) sub directory to bindir (/ sbindir)) .
+	- Enable --program-transform-name and its family to programs
+	  (ex. jserver, uum, wnnkill, atod) and corresponding manpages.
+	- Update INSTALL documentation (Japanese version). English version
+	  will come later ...
+	- Strip old mail address (as usual).
+	- Merged part of my code to build correctly if builddir != srcdir (as
+	  usual).
+
+Sun, 25 Apr 2010 19:38:55  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* config.h.in, configure, configure.in:
+
+	configure.in, configure:
+	  - Added -D_GNU_SOURCE for architecture with GNU libc and
+	    non-Linux kernel (especially for Debian). Possible fix for Debian
+	    Bug #577097.
+	  - Cosmetic fix (for configure.in).
+
+	config.h.in:
+	  - Forgot to autoheader on last commit of configure.in.
+
+Mon, 15 Mar 2010 01:58:24  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* Makefile.in:
+	- Remove rules that exist on makerule.mk. make install (for example)
+	  runs two times faster :-p
+	- Remove old mail address (as usual).
+
+Tue, 23 Feb 2010 02:06:54  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* configure, configure.in, makerule.mk.in,
+	  Wnn/pubdicplus/Makefile.in, cWnn/cdic/Makefile.in,
+	  cWnn/tdic/Makefile.in, kWnn/kdic/Makefile.in:
+
+	Recent cpp of gcc (at least 4.4) splits line that has many
+	characters per line (in C language manner). This is problem
+	on *.fzk (pubdic etc.)  file processing. So adds -traditional-cpp
+	parameter to cpp (at least gcc-2.95 passes this parameter). Simply
+	adding it to CPPFLAGS may break other build, so split FZK_PP (cpp
+	for text processing) from normal CPP.  Spotted by some posters of
+	FreeWnn thread in 2ch.net .
+
+	(Other changes)
+	- Use AC_SEARCH_LIBS for libnsl checking (Linux (for example) does not
+	  need it).
+	- Strip old mail address (as usual).
+	- Modified to build correctly if builddir != srcdir (as usual).
+
+Tue,  5 Jan 2010 01:59:40  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* Wnn/: man/2.env/wnn/2b_romkan.man, manual/2.env/wnn/2b_romkana:
+
+	- Change '\' to '\e' to correctly format backspace in man file.
+	  (Also change formatted text file.) It should reduce Debian lintian
+	  warning.
+
+	- Added .nf / .fi to pre-formatted table.
+
+	- Strip old mail address (as usual).
+
+Sun, 29 Nov 2009 04:20:52  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* Wnn/uum/setutmp.c:
+
+	- For systems using utmp-update helper program (ex. Solaris),
+	  temporally restore SIGCHLD handler on setutmp().
+	  (But it runs only if user is normal user and uum isn't either
+	  setuid or setgid process. It seems resetutmp() currently does not
+	  need this.)
+
+	- Stop checking return value of pututline() because many systems
+	  does not have return value of this function.
+
+	- Change handling of ut_err to work correctly (especially on systems
+	  that have utmp (pututline()) without utmpx).
+
+Sun,  6 Sep 2009 04:35:51  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* aclocal.m4, config.guess, config.sub, configure, ltmain.sh:
+	Update libtool to 1.5.26 (last release of 1.5 series - bit old).
+	Also update config.guess, so maybe it will build on AVR32 architecture.
+	(cf. Debian Bug #534811)
+
+Mon,  1 Jun 2009 01:35:06  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* Wnn/uum/: jhlp.c, sheader.h:
+
+	- (jhlp.c) Check owner / permission of ttyp (tty_slave / ttypfd)
+	  on open_ttyp(). If check (and chown/chmod) fails, uum warns it may be
+	  insecure (ttyp readable) from other local users. (Probably you need
+	  proper privileges to uum (ex. setuid-root).)
+	- (jhlp.c) Verbose error message on restoring owner / permission of
+	  tty_master and ttyp in do_end().
+	- (sheader.h) Added Prototype of openTermData() / getTermData().
+
+Mon,  2 Feb 2009 02:52:17  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* Wnn/jlib/Makefile.in, Wnn/jlib.V3/Makefile.in,
+	  cWnn/jlib/Makefile.in, kWnn/jlib/Makefile.in:
+
+	- Tell Libtool to use external libraries needed for libwnn (and
+	  lib[ck]wnn). (ex. libcrypt, libnsl)
+	  You don't need detection of these libraries to use libwnn itself
+	  in configure (I hope).
+
+	- Use LT_LD to link libraries.
+
+	- (*Wnn/jlib/Makefile.in) Remove definition of LT_{CC,INSTALL}
+	  because we already defined in makerule.mk .
+
+	- (Wnn/jlib.V3/Makefile.in) Make use of LT_{CC,INSTALL} in makerule.mk
+	  to reduce libtool warning.
+
+	- (Wnn/jlib.V3/Makefile.in) My usual work to build correctly
+	  if builddir != srcdir .
+
+	- Strip old mail address (as usual).
+
+Sun, 26 Oct 2008 19:27:53  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* Wnn/include/: jllib.h, jslib.h:
+
+	- Added prototype (and simple macro (FRWNN_PARAMS) around the
+	  parameters for good-old C compilers) for jslib.h / jllib.h .
+	  Parameters are came from js.c / jl.c . This may or may not build
+	  your libwnn client, so please check.
+
+	- Added extern "C" { ... } for C++ clients.
+
+	- Strip old mail address (as usual).
+
+Mon, 13 Aug 2007 18:56:33  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* cWnn/man/2.env/ckey.man:
+	- Added .nf / .fi to pre-formatted table. Quick fix for Debian Bug
+	  #367550.
+	- Strip old mail address (as usual).
+
+Sun, 24 Jun 2007 01:34:16  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* INSTALL, INSTALL.en, configure, configure.in, makerule.mk.in,
+	  Wnn/uum/Makefile.in, cWnn/uum/Makefile.in, kWnn/uum/Makefile.in:
+
+	- Added detection code if your system need to install uum as
+	  set-[ug]id program on configure time. Recent systems may install
+	  uum as normal program (to reduce security risk).
+	  You can also specify
+	  --enable-client-setuid / --enable-client-setgid=group (group must
+	  be specified) to control set-[ug]id of uum.
+
+	- Added uum-related option to INSTALL* file.
+
+	- Use modern style AC_INIT. (added pseudo(?) version number and
+	  contact address. comments are welcome.)
+
+Mon, 20 Nov 2006 01:21:22  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* INSTALL, INSTALL.en, Wnn/Makefile.in, cWnn/Makefile.in,
+	  kWnn/Makefile.in:
+
+	- Current code cannot build on Mac OS X 10.2 (Darwin 6) environment
+	  (at least on cf.sourceforge.jp). So we changed to build libconvkey
+	  (*Wnn/conv/) only if --enable-client specified.
+
+	- This change also applies to [kc]Wnn, so you can build [kc]uum if you
+	  specify --enable-client .
+
+	- Other usual change (part of my change on builddir != srcdir case,
+	  strip mail address, ...)
+
+Sun, 15 Oct 2006 18:48:26  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* Wnn/uum/epilogue.c:
+	- epilogue_no_close(): Replaced to HAVE_TERMINFO (maybe it's right).
+	- Stripped old mail address (as usual work).
+
+Tue, 26 Sep 2006 02:31:35  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* config.h.in, configure, configure.in, Wnn/uum/jhlp.c:
+
+	Use posix_openpt() (if it and ptsname() exists) when opening tty.
+	Traditional pts system (that doesn't have posix_openpt()) fallback
+	to dummy function opening /dev/ptmx directly. Getting tty without
+	setting setuid root works in non-pts systems that have
+	posix-compatible pty functions (ex. recent FreeBSD).
+
+	Other changes to configure.in:
+	- Remove (already commented out) default case in system specific part.
+	- Commented out useless AC_DEFINE in term library detection part.
+
+Tue,  5 Sep 2006 02:21:29  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* Wnn/uum/: jhlp.c, termio.c:
+
+	jhlp.c:
+		- Mask IEXTEN in j_term_init().
+		- Use tty_master for systems that has /dev/ptmx and not have
+		  ptsname(). (ex. old Debian (2.1 or so))
+		- Added comment.
+
+	termio.c:
+		- Use tparm() as macro for fixed parameter system (ex. SVR4).
+
+Tue, 29 Aug 2006 01:26:22  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* Wnn/uum/jhlp.c:
+	More use of USE_LINUX_TERM in exec_cmd() (as of original canuum patch).
+	And window size setting code moved from Linux specific to generic.
+
+Tue, 22 Aug 2006 02:31:05  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* config.h.in, configure, configure.in:
+	Added configure test for setsid(). (I forgot it.)
+
+Mon, 24 Jul 2006 02:30:33  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* config.h.in, configure, configure.in, Wnn/uum/jhlp.c,
+	  Wnn/uum/setutmp.c:
+
+	More utmp fix:
+
+	- Fix build (more) correctly on recent NetBSD (that both have utmpx &
+	  traditional utmp)
+	- Moved setutmp() call from child to parent process (not sure if
+	  this is right thing)
+
+Mon, 19 Jun 2006 01:49:41  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* config.h.in, configure, configure.in, Wnn/uum/jhlp.c,
+	  Wnn/uum/setutmp.c, Wnn/uum/sheader.h:
+
+	Rewrote utmp code in uum (without libspt).
+	Recent BSD (4.4BSD or later based) developer: please write working
+	code specifying --enable-client-utmp . It works well (with
+	--enable-client-utmp) on recent NetBSD (that has putut(x)line()
+	implementation).
+
+	Other changes:
+	Because it cannot work on gcc with Linux/i386, temporally remove
+	-fstack-check from CDEBUGFLAGS if you specify --enable-debug
+	(and you're using gcc).
+
+Mon, 29 May 2006 01:37:02  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* Contrib/dic/gerodic/Makefile.in:
+	Usual work:
+		- Stripping old address
+		- Some modification in case if builddir != srcdir
+		  (Does not harm normal build.)
+
+Sun, 26 Mar 2006 23:33:20  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* Wnn/uum/setutmp.c:
+	In current setutmp.c code, saveut / nullut must be struct utmp.
+	So removed struct utmpx statement. This will fix compile on systems
+	that both have utmp.h and utmpx.h (e.g. NetBSD).
+
+Sun, 26 Mar 2006 23:10:51  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* Wnn/uum/jhlp.c:
+	Some minor fix for compiling some platforms:
+
+	- crow is declared in header.h, so remove duplicate extern.
+	- #ifdef-ed I_PUSH ptem / ldterm for platforms that don't have STREAMS
+	  but have ptsname (e.g. Linux, recent NetBSD).
+
+	This change will succeed compile on some platforms, but uum
+	segfaults on my environment (Linux) ...
+
+Mon, 20 Mar 2006 01:38:15  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* Wnn/uum/setutmp.c:
+	Some minor change to fix compile error on Linux.
+	UTMP feature is so complex to understand ...
+
+Wed,  8 Mar 2006 02:15:33  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* configure, configure.in, makerule.mk.in:
+	Modified WNNCNVFILEDIR to install correct cnv_* file
+	if you're in terminfo environment.
+
+Sun,  5 Mar 2006 04:01:45  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* CONTRIBUTORS, config.h.in, configure, configure.in,
+	  Wnn/conv/cvt_head.h, Wnn/conv/cvt_read.c, Wnn/include/commonhd.h,
+	  Wnn/include/wnn_os.h, Wnn/uum/Makefile.in, Wnn/uum/header.c,
+	  Wnn/uum/jhlp.c, Wnn/uum/sdefine.h, Wnn/uum/setutmp.c,
+	  Wnn/uum/sheader.h, Wnn/uum/termcap.c, Wnn/uum/termio.c,
+	  cWnn/uum/Makefile.in, kWnn/uum/Makefile.in:
+
+	Long awaited merge of uum-related patch (based on hiroo's work
+	in November, 2003)
+
+	- Detect termcap / terminfo, curses etc. automatically (from canuum)
+	  But, configure support of libspt does not implemented / does not
+	  include Canna support / utmp implementation does not work correctly.
+	- pty / pts processing (from Kabe). Auto detection in configure by
+	  hiroo.
+	- Some modification due to build error in my environment.
+	- (As usual) stripping old address / adding lines in case
+	  if builddir != srcdir .
+
+	Many thanks to AIDA shinra, Taketo Kabe @ SRA Tohoku, hiroo,
+	kouji at hiroshima-u.ac.jp (original author of Kabe's patch).
+
+Fri,  3 Mar 2006 02:18:49  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* makerule.mk.in, Wnn/romkan/Makefile.in, cWnn/romkan/Makefile.in,
+	  kWnn/romkan/Makefile.in:
+
+	Some minor changes before large commit:
+
+	makerule.mk.in:
+	- Remove MAKE (if your make does not need this). You can build
+	  with other make command (ex. gmake).
+	- Define LT_{CC,LD,INSTALL} globally.
+
+	*Wnn/romkan/Makefile.in:
+	- Use LT_CC to remove warning.
+	- (Usual work) changed some lines to build correctly
+	  in case builddir != srcdir . (I think this don't
+	  break normal build.)
+
+	both files:
+	- (Usual work) stripping old mail address.
+
+Sat, 11 Feb 2006 18:51:44  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* Wnn/uum/: hinsi.c, jikouho.c, printf.c, termio.c, touroku.c:
+	- Include string related header to reduce warning. (more merged from
+	  hiroo's work tree.)
+	- Stripped old mail address (as usual).
+
+Sat, 11 Feb 2006 03:29:38  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* Wnn/uum/basic_op.c:
+	- Include string related header to reduce warning. (Merged from
+	  hiroo's work tree.)
+	- Stripped old mail address (as usual).
+
+Sun, 11 Dec 2005 03:50:43  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* PubdicPlus/pod.c:
+	Reverse condition of prototype section.
+
+Sat,  3 Dec 2005 17:29:31  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* ChangeLog, ChangeLog.en:
+	LGPL coordinator is Nakai, not 'NaGai'. (Sorry)
+
+Sat,  3 Dec 2005 16:55:47  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* Wnn/include/commonhd.h:
+	Increment _SERVER_VERSION for next (alpha?) release. Also stripped
+	old mail address.
+
 Wed, 30 Nov 2005 02:25:00  Tomoki AONO <aonoto at users.sourceforge.jp>
 	Update ChangeLog and added 1.1.1-a021 tag.
 

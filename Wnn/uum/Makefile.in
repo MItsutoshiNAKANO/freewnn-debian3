@@ -1,5 +1,5 @@
 #
-#   $Id: Makefile.in,v 1.15 2007/06/23 16:34:22 aonoto Exp $
+#   $Id: Makefile.in,v 1.17 2011/04/17 16:29:50 aonoto Exp $
 #
 
 #
@@ -10,7 +10,8 @@
 #                 1987, 1988, 1989, 1990, 1991, 1992
 # Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
 # Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
-# Copyright FreeWnn Project 1999, 2000, 2001, 2002, 2005, 2006, 2007
+# Copyright FreeWnn Project
+#                 1999, 2000, 2001, 2002, 2005, 2006, 2007, 2010, 2011
 # 
 # Maintainer:  FreeWnn Project
 # 
@@ -37,7 +38,7 @@ top_builddir = @top_builddir@
 INSTALL         = @INSTALL@
 LOCAL_INSTFLAGS = $(INSTUUMFLAGS)
 
-       INCLUDES = -I$(WNNINCLUDESRC) -I$(WNNROMKANSRC) -I$(top_builddir)
+       INCLUDES = -I$(top_builddir) @EXTWNNJINC@ -I$(WNNINCLUDESRC) -I$(WNNROMKANSRC)
         DEFINES = $(WNNDEFINES) $(WNNLANGDEF)
 # todo: should update configure to switch both WNNJLIB and WNNCONVLIB
 #	according to --with-wnn-libraries
@@ -78,7 +79,7 @@ instclient:: install
 install:: uum
 	@if [ -d $(DESTDIR)$(JWNNBINDIR) ]; then set +x; \
 	else (set -x; $(MKDIRHIER) $(DESTDIR)$(JWNNBINDIR)); fi
-	$(LT_INSTALL) $(INSTALLFLAGS) $(INSTPGMFLAGS) $(LOCAL_INSTFLAGS) uum $(DESTDIR)$(JWNNBINDIR)/uum
+	$(LT_INSTALL) $(INSTALLFLAGS) $(INSTPGMFLAGS) $(LOCAL_INSTFLAGS) uum $(DESTDIR)$(JWNNBINDIR)/`echo uum | sed '$(transform)'`
 
 $(OBJ2) : $(SRC2)
 	$(CC) -c $(CFLAGS)  $(WNNETCSRC)/`basename $@ .o`.c

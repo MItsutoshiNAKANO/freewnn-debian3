@@ -6,9 +6,9 @@
  *                 1987, 1988, 1989, 1990, 1991, 1992
  * Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
  * Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
- * Copyright FreeWnn Project 1999, 2000, 2002
+ * Copyright FreeWnn Project 1999, 2000, 2002, 2011
  *
- * Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+ * Maintainer:  FreeWnn Project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-static char rcs_id[] = "$Id: renbn_kai.c,v 1.4 2002/09/01 17:13:11 hiroo Exp $";
+static char rcs_id[] = "$Id: renbn_kai.c,v 1.5 2011/04/10 16:51:16 aonoto Exp $";
 
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
@@ -321,7 +321,7 @@ tan_syo (int yomi_sno,		/* ≤Ú¿œ ∏ª˙ŒÛ start index */
   _status = 0;
   if (chk_yomi_endvect (yomi_sno, yomi_eno, endvect, endvect1) < 0)
     return (-1);
-  if (sbn_kai (yomi_sno, yomi_eno, endvect, endvect1, &rsbnptr, 1, 0) < 0)
+  if (sbn_kai (yomi_sno, yomi_eno, endvect, endvect1, &rsbnptr, 1, (struct SYO_BNSETSU *) 0) < 0)
     {
       init_work_areas ();
       return (-1);              /* ERROR */

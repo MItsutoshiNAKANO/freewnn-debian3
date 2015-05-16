@@ -1,5 +1,5 @@
 /*
- *  $Id: wddel.c,v 1.8 2002/05/12 22:51:17 hiroo Exp $
+ *  $Id: wddel.c,v 1.9 2012/06/12 19:18:32 aonoto Exp $
  */
 
 /*
@@ -10,9 +10,9 @@
  *                 1987, 1988, 1989, 1990, 1991, 1992
  * Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
  * Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
- * Copyright FreeWnn Project 1999, 2000, 2002
+ * Copyright FreeWnn Project 1999, 2000, 2002, 2012
  *
- * Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+ * Maintainer:  FreeWnn Project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@
  */
 
 #ifndef lint
-static char *rcs_id = "$Id: wddel.c,v 1.8 2002/05/12 22:51:17 hiroo Exp $";
+static char *rcs_id = "$Id: wddel.c,v 1.9 2012/06/12 19:18:32 aonoto Exp $";
 #endif /* lint */
 
 #ifdef HAVE_CONFIG_H
@@ -95,7 +95,7 @@ usage ()
 static void
 err ()
 {
-  printf ((char *) wnn_perror ());
+  printf ("%s", (char *) wnn_perror ());
   printf ("\n bye.\n");
   exit (1);
 }
@@ -226,7 +226,7 @@ main (argc, argv)
   while (fgets (s, sizeof (s), stdin))
     {
       char com[LENGTHYOMI];
-      char Com[LENGTHYOMI];
+      w_char Com[LENGTHYOMI];
       int ima, hindo;
       if (s[0] == '\\')
         continue;

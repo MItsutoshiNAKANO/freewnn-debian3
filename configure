@@ -989,9 +989,10 @@ _ACEOF
 
   cat <<\_ACEOF
 
-X features:
-  --x-includes=DIR    X include files are in DIR
-  --x-libraries=DIR   X library files are in DIR
+Program names:
+  --program-prefix=PREFIX            prepend PREFIX to installed program names
+  --program-suffix=SUFFIX            append SUFFIX to installed program names
+  --program-transform-name=PROGRAM   run sed PROGRAM on installed program names
 
 System types:
   --build=BUILD     configure for building on BUILD [guessed]
@@ -1020,6 +1021,8 @@ Optional Features:
   --enable-kWnn           build and install kWnn [default=yes]
   --enable-ipv6           build and install IPv6 [default=no]
   --enable-unsafe-path    allow creating files in an arbitrary path [default=no]
+  --enable-traditional-layout Install files in traditional directories [default=yes]
+  --enable-sub-bindir         Install executables to (ex.) $(bindir)/Wnn4 [default=yes if --enable-traditional-layout, no otherwise]
   --enable-shared[=PKGS]
                           build shared libraries [default=yes]
   --enable-static[=PKGS]
@@ -1032,20 +1035,19 @@ Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
   --with-libwnn             use installed Wnn library [default=no]
-  --with-wnn-includes=DIR   WNN include files are in DIR
-  --with-wnn-libraries=DIR  Search for WNN libraries in DIR [default=/usr/local/lib]
+  --with-wnn-includes=DIR   Installed Wnn include files are in DIR
+  --with-wnn-libraries=DIR  Search for Wnn libraries in DIR [default=/usr/local/lib]
   --with-libcwnn            use installed cWnn library [default=no]
-  --with-cwnn-includes=DIR  CWNN include files are in DIR
-  --with-cwnn-libraries=DIR Search for CWNN libraries in DIR [default=/usr/local/lib]
+  --with-cwnn-includes=DIR  Installed cWnn include files are in DIR
+  --with-cwnn-libraries=DIR Search for cWnn libraries in DIR [default=/usr/local/lib]
   --with-libkwnn            use installed kWnn library [default=no]
-  --with-kwnn-includes=DIR  KWNN include files are in DIR
-  --with-kwnn-libraries=DIR Search for KWNN libraries in DIR [default=/usr/local/lib]
+  --with-kwnn-includes=DIR  Installed kWnn include files are in DIR
+  --with-kwnn-libraries=DIR Search for kWnn libraries in DIR [default=/usr/local/lib]
   --with-gnu-ld           assume the C compiler uses GNU ld [default=no]
   --with-pic              try to use only PIC/non-PIC objects [default=use
                           both]
   --with-tags[=TAGS]
                           include additional configurations [automatic]
-  --with-x                use the X Window System
   --with-term-libs=-lLIB  terminal library to be used
   --with-libwrap[=DIR]    Compile in libwrap (tcp_wrappers) support [default=try to find libwrap]
 
@@ -1512,6 +1514,20 @@ host_os=`echo $ac_cv_host | sed 's/^\([^-]*\)-\([^-]*\)-\(.*\)$/\3/'`
 
 
 
+test "$program_prefix" != NONE &&
+  program_transform_name="s,^,$program_prefix,;$program_transform_name"
+# Use a double $ so make ignores it.
+test "$program_suffix" != NONE &&
+  program_transform_name="s,\$,$program_suffix,;$program_transform_name"
+# Double any \ or $.  echo might interpret backslashes.
+# By default was `s,x,x', remove it if useless.
+cat <<\_ACEOF >conftest.sed
+s/[\\$]/&&/g;s/;s,x,x,$//
+_ACEOF
+program_transform_name=`echo $program_transform_name | sed -f conftest.sed`
+rm conftest.sed
+
+
 
 # Check whether --enable-debug or --disable-debug was given.
 if test "${enable_debug+set}" = set; then
@@ -1692,11 +1708,13 @@ fi;
 
 
 
-
 # Check whether --with-libwnn or --without-libwnn was given.
 if test "${with_libwnn+set}" = set; then
   withval="$with_libwnn"
     with_libwnn="${withval}"
+else
+  with_libwnn=no
+fi;
 
 # Check whether --with-wnn-includes or --without-wnn-includes was given.
 if test "${with_wnn_includes+set}" = set; then
@@ -1713,22 +1731,28 @@ if test "${with_wnn_libraries+set}" = set; then
 else
   wnnlibdir='/usr/local/lib'
 fi;
-	if test "X${with_libwnn}" = X-lwnn; then
-		WNNJLIB="-L${wnnlibdir} -lwnn"
-	elif test X"`echo ${with_libwnn} | grep '^/.*'`" != X ; then
-		WNNJLIB="${with_libwnn}"
-	else
-		WNNJLIB="${wnnlibdir}/libwnn.a"
-	fi
-	DEPWNNJLIB=""
-	HINSI_DATA="\$(JWNNWNNDIR)/hinsi.data"
 
+if test X${with_libwnn} != Xno; then
+	case X${with_libwnn} in
+	Xyes | X-lwnn)
+		WNNJLIB="-L${wnnlibdir} -lwnn" ;;
+	X/*)
+		WNNJLIB="${wnnlibdir}/libwnn.a" ;;
+	*)
+		# Honor specified value --with-libwnn
+		# (maybe wrong in most cases)
+		WNNJLIB="${with_libwnn}" ;;
+	esac
+	DEPWNNJLIB=""
+		HINSI_DATA="\$(JWNNWNNDIR)/hinsi.data"
+	EXTWNNJINC=${wnnincludedir}
 else
-  	WNNJLIB="\$(top_builddir)/Wnn/jlib/libwnn.la"
+	WNNJLIB="\$(top_builddir)/Wnn/jlib/libwnn.la"
 	DEPWNNJLIB="\$(WNNJLIB)"
 	HINSI_DATA="\$(top_builddir)/Wnn/jd/hinsi.data"
+	EXTWNNJINC=""
+fi
 
-fi;
 
 
 
@@ -1737,7 +1761,10 @@ fi;
 # Check whether --with-libcwnn or --without-libcwnn was given.
 if test "${with_libcwnn+set}" = set; then
   withval="$with_libcwnn"
-
+    with_libcwnn="${withval}"
+else
+  with_libcwnn=no
+fi;
 
 # Check whether --with-cwnn-includes or --without-cwnn-includes was given.
 if test "${with_cwnn_includes+set}" = set; then
@@ -1754,24 +1781,30 @@ if test "${with_cwnn_libraries+set}" = set; then
 else
   cwnnlibdir='/usr/local/lib'
 fi;
-	if test "X${with_libcwnn}" = X-lcwnn; then
-		CWNNJLIB="-L${cwnnlibdir} -lcwnn"
-	elif test X"`echo ${with_libcwnn} | grep '^/.*'`" != X ; then
-		CWNNJLIB="${with_libcwnn}"
-	else
-		CWNNJLIB="${cwnnlibdir}/libcwnn.a"
-	fi
-	DEPCWNNJLIB=""
-	CHINSI_DATA="\$(CWNNWNNDIR)/cixing.data"
-	THINSI_DATA="\$(TWNNTDSRC)/cixing.data"
 
+if test X${with_libcwnn} != Xno; then
+   	case X${with_libcwnn} in
+	Xyes | X-lcwnn)
+		CWNNJLIB="-L${cwnnlibdir} -lcwnn" ;;
+	X/*)
+		CWNNJLIB="${cwnnlibdir}/libcwnn.a" ;;
+	*)
+		# Honor specified value --with-libcwnn
+		# (maybe wrong in most cases)
+		CWNNJLIB="${with_libcwnn}" ;;
+	esac
+	DEPCWNNJLIB=""
+		CHINSI_DATA="\$(CWNNWNNDIR)/cixing.data"
+	THINSI_DATA="\$(TWNNWNNDIR)/cixing.data"
+	EXTCWNNJINC=${cwnnincludedir}
 else
-  	CWNNJLIB="\$(top_builddir)/cWnn/jlib/libcwnn.la"
+	CWNNJLIB="\$(top_builddir)/cWnn/jlib/libcwnn.la"
 	DEPCWNNJLIB="\$(CWNNJLIB)"
 	CHINSI_DATA="\$(CWNNCDSRC)/cixing.data"
 	THINSI_DATA="\$(TWNNTDSRC)/cixing.data"
+	EXTCWNNJINC=""
+fi
 
-fi;
 
 
 
@@ -1781,7 +1814,10 @@ fi;
 # Check whether --with-libkwnn or --without-libkwnn was given.
 if test "${with_libkwnn+set}" = set; then
   withval="$with_libkwnn"
-
+    with_libkwnn="${withval}"
+else
+  with_libkwnn=no
+fi;
 
 # Check whether --with-kwnn-includes or --without-kwnn-includes was given.
 if test "${with_kwnn_includes+set}" = set; then
@@ -1798,22 +1834,28 @@ if test "${with_kwnn_libraries+set}" = set; then
 else
   kwnnlibdir='/usr/local/lib'
 fi;
-	if test "X${with_libkwnn}" = X-lkwnn; then
-		KWNNJLIB="-L${kwnnlibdir} -lkwnn"
-	elif test X"`echo ${with_libkwnn} | grep '^/.*'`" != X ; then
-		KWNNJLIB="${with_libkwnn}"
-	else
-		KWNNJLIB="${kwnnlibdir}/libkwnn.a"
-	fi
-	DEPKWNNJLIB=""
-	KHINSI_DATA="\$(KWNNWNNDIR)/hinsi.data"
 
+if test X${with_libkwnn} != Xno; then
+   	case X${with_libkwnn} in
+	Xyes | X-lkwnn)
+		KWNNJLIB="-L${kwnnlibdir} -lkwnn" ;;
+	X/*)
+		KWNNJLIB="${kwnnlibdir}/libkwnn.a" ;;
+	*)
+		# Honor specified value --with-libkwnn
+		# (maybe wrong in most cases)
+		KWNNJLIB="${with_libkwnn}" ;;
+	esac
+	DEPKWNNJLIB=""
+		KHINSI_DATA="\$(KWNNWNNDIR)/hinsi.data"
+	EXTKWNNJINC=${kwnnincludedir}
 else
-  	KWNNJLIB="\$(top_builddir)/kWnn/jlib/libkwnn.la"
+	KWNNJLIB="\$(top_builddir)/kWnn/jlib/libkwnn.la"
 	DEPKWNNJLIB="\$(KWNNJLIB)"
 	KHINSI_DATA="\$(KWNNKDSRC)/hinsi.data"
+	EXTKWNNJINC=""
+fi
 
-fi;
 
 
 
@@ -1855,6 +1897,81 @@ cat >>confdefs.h <<\_ACEOF
 #define WNN_ALLOW_UNSAFE_PATH 1
 _ACEOF
 
+fi
+
+# Check whether --enable-traditional-layout or --disable-traditional-layout was given.
+if test "${enable_traditional_layout+set}" = set; then
+  enableval="$enable_traditional_layout"
+  case "${enableval}" in
+   yes) trad_layout=true ;;
+   no)  trad_layout=false ;;
+   *)   { { echo "$as_me:$LINENO: error: bad value for --enable-traditional-layout" >&5
+echo "$as_me: error: bad value for --enable-traditional-layout" >&2;}
+   { (exit 1); exit 1; }; } ;;
+esac
+else
+  trad_layout=true
+fi;
+
+if test $trad_layout = "true"; then
+  WNNSBINDIR="\$(bindir)"
+  # More path settings will come later ...
+else
+  WNNSBINDIR="\$(sbindir)"
+  # Same as above.
+fi
+
+
+# Check whether --enable-sub-bindir or --disable-sub-bindir was given.
+if test "${enable_sub_bindir+set}" = set; then
+  enableval="$enable_sub_bindir"
+  case "${enableval}" in
+   yes) sub_bindir=true ;;
+   no)  sub_bindir=false ;;
+   *)   { { echo "$as_me:$LINENO: error: bad value for --enable-sub-bindir" >&5
+echo "$as_me: error: bad value for --enable-sub-bindir" >&2;}
+   { (exit 1); exit 1; }; } ;;
+esac
+else
+  sub_bindir=guess
+fi;
+
+if test $sub_bindir = "guess"; then
+  if test $trad_layout = "true"; then
+    sub_bindir=true
+  else
+    sub_bindir=false
+  fi
+fi
+if test $sub_bindir = "true"; then
+  if_enable_sub_bindir=' '
+  if_disable_sub_bindir='#'
+else
+  if_enable_sub_bindir='#'
+  if_disable_sub_bindir=' '
+fi
+
+
+
+# for debug
+echo "$as_me:$LINENO: checking if we use traditional layout" >&5
+echo $ECHO_N "checking if we use traditional layout... $ECHO_C" >&6
+if test $trad_layout = "true"; then
+  echo "$as_me:$LINENO: result: yes" >&5
+echo "${ECHO_T}yes" >&6
+else
+  echo "$as_me:$LINENO: result: no" >&5
+echo "${ECHO_T}no" >&6
+fi
+
+echo "$as_me:$LINENO: checking if we install binaries on \$(bindir)/Wnn4 (etc.)" >&5
+echo $ECHO_N "checking if we install binaries on \$(bindir)/Wnn4 (etc.)... $ECHO_C" >&6
+if test $sub_bindir = "true"; then
+  echo "$as_me:$LINENO: result: yes" >&5
+echo "${ECHO_T}yes" >&6
+else
+  echo "$as_me:$LINENO: result: no" >&5
+echo "${ECHO_T}no" >&6
 fi
 
 ac_ext=c
@@ -2619,6 +2736,10 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 case $host in
 *-*-linux*)
     CCOPTIONS="-Dlinux -D_GNU_SOURCE -D_POSIX_SOURCE -D_BSD_SOURCE"
+    ;;
+*-*-*-gnu)
+    # Non-Linux kernel with GNU libc.
+    CCOPTIONS="-D_GNU_SOURCE"
     ;;
 *-*-sunos*)
       if test $GCC = yes; then
@@ -3571,7 +3692,7 @@ ia64-*-hpux*)
   ;;
 *-*-irix6*)
   # Find out which ABI we are using.
-  echo '#line 3574 "configure"' > conftest.$ac_ext
+  echo '#line 3695 "configure"' > conftest.$ac_ext
   if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
@@ -4687,7 +4808,7 @@ fi
 
 
 # Provide some information about the compiler.
-echo "$as_me:4690:" \
+echo "$as_me:4811:" \
      "checking for Fortran 77 compiler version" >&5
 ac_compiler=`set X $ac_compile; echo $2`
 { (eval echo "$as_me:$LINENO: \"$ac_compiler --version </dev/null >&5\"") >&5
@@ -6003,11 +6124,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:6006: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:6127: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:6010: \$? = $ac_status" >&5
+   echo "$as_me:6131: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -6293,11 +6414,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:6296: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:6417: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:6300: \$? = $ac_status" >&5
+   echo "$as_me:6421: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -6397,11 +6518,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:6400: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:6521: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:6404: \$? = $ac_status" >&5
+   echo "$as_me:6525: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -8683,7 +8804,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 8686 "configure"
+#line 8807 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -8783,7 +8904,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 8786 "configure"
+#line 8907 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -11170,11 +11291,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:11173: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:11294: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:11177: \$? = $ac_status" >&5
+   echo "$as_me:11298: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -11274,11 +11395,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:11277: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:11398: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:11281: \$? = $ac_status" >&5
+   echo "$as_me:11402: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -12857,11 +12978,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:12860: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:12981: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:12864: \$? = $ac_status" >&5
+   echo "$as_me:12985: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -12961,11 +13082,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:12964: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:13085: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:12968: \$? = $ac_status" >&5
+   echo "$as_me:13089: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -15149,11 +15270,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:15152: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:15273: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:15156: \$? = $ac_status" >&5
+   echo "$as_me:15277: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -15439,11 +15560,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:15442: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:15563: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:15446: \$? = $ac_status" >&5
+   echo "$as_me:15567: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -15543,11 +15664,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:15546: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:15667: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:15550: \$? = $ac_status" >&5
+   echo "$as_me:15671: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -18209,6 +18330,11 @@ LIBTOOL='$(SHELL) $(top_builddir)/libtool'
 
 
 
+# Libtool-2.4 needs more powerful shell (other than /bin/sh),
+# so we explicitly use this SHELL directly.
+LIBTOOL_MOD=`echo $LIBTOOL | sed 's,\$(SHELL),'${SHELL}','`
+
+
 
 echo "$as_me:$LINENO: checking for library containing crypt" >&5
 echo $ECHO_N "checking for library containing crypt... $ECHO_C" >&6
@@ -18621,226 +18747,6 @@ _ACEOF
 
 fi
 
-
-echo "$as_me:$LINENO: checking for X" >&5
-echo $ECHO_N "checking for X... $ECHO_C" >&6
-
-
-# Check whether --with-x or --without-x was given.
-if test "${with_x+set}" = set; then
-  withval="$with_x"
-
-fi;
-# $have_x is `yes', `no', `disabled', or empty when we do not yet know.
-if test "x$with_x" = xno; then
-  # The user explicitly disabled X.
-  have_x=disabled
-else
-  if test "x$x_includes" != xNONE && test "x$x_libraries" != xNONE; then
-    # Both variables are already set.
-    have_x=yes
-  else
-    if test "${ac_cv_have_x+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-  # One or both of the vars are not set, and there is no cached value.
-ac_x_includes=no ac_x_libraries=no
-rm -fr conftest.dir
-if mkdir conftest.dir; then
-  cd conftest.dir
-  # Make sure to not put "make" in the Imakefile rules, since we grep it out.
-  cat >Imakefile <<'_ACEOF'
-acfindx:
-	@echo 'ac_im_incroot="${INCROOT}"; ac_im_usrlibdir="${USRLIBDIR}"; ac_im_libdir="${LIBDIR}"'
-_ACEOF
-  if (xmkmf) >/dev/null 2>/dev/null && test -f Makefile; then
-    # GNU make sometimes prints "make[1]: Entering...", which would confuse us.
-    eval `${MAKE-make} acfindx 2>/dev/null | grep -v make`
-    # Open Windows xmkmf reportedly sets LIBDIR instead of USRLIBDIR.
-    for ac_extension in a so sl; do
-      if test ! -f $ac_im_usrlibdir/libX11.$ac_extension &&
-         test -f $ac_im_libdir/libX11.$ac_extension; then
-        ac_im_usrlibdir=$ac_im_libdir; break
-      fi
-    done
-    # Screen out bogus values from the imake configuration.  They are
-    # bogus both because they are the default anyway, and because
-    # using them would break gcc on systems where it needs fixed includes.
-    case $ac_im_incroot in
-	/usr/include) ;;
-	*) test -f "$ac_im_incroot/X11/Xos.h" && ac_x_includes=$ac_im_incroot;;
-    esac
-    case $ac_im_usrlibdir in
-	/usr/lib | /lib) ;;
-	*) test -d "$ac_im_usrlibdir" && ac_x_libraries=$ac_im_usrlibdir ;;
-    esac
-  fi
-  cd ..
-  rm -fr conftest.dir
-fi
-
-# Standard set of common directories for X headers.
-# Check X11 before X11Rn because it is often a symlink to the current release.
-ac_x_header_dirs='
-/usr/X11/include
-/usr/X11R6/include
-/usr/X11R5/include
-/usr/X11R4/include
-
-/usr/include/X11
-/usr/include/X11R6
-/usr/include/X11R5
-/usr/include/X11R4
-
-/usr/local/X11/include
-/usr/local/X11R6/include
-/usr/local/X11R5/include
-/usr/local/X11R4/include
-
-/usr/local/include/X11
-/usr/local/include/X11R6
-/usr/local/include/X11R5
-/usr/local/include/X11R4
-
-/usr/X386/include
-/usr/x386/include
-/usr/XFree86/include/X11
-
-/usr/include
-/usr/local/include
-/usr/unsupported/include
-/usr/athena/include
-/usr/local/x11r5/include
-/usr/lpp/Xamples/include
-
-/usr/openwin/include
-/usr/openwin/share/include'
-
-if test "$ac_x_includes" = no; then
-  # Guess where to find include files, by looking for Intrinsic.h.
-  # First, try using that file with no special directory specified.
-  cat >conftest.$ac_ext <<_ACEOF
-#line $LINENO "configure"
-#include "confdefs.h"
-#include <X11/Intrinsic.h>
-_ACEOF
-if { (eval echo "$as_me:$LINENO: \"$ac_cpp conftest.$ac_ext\"") >&5
-  (eval $ac_cpp conftest.$ac_ext) 2>conftest.er1
-  ac_status=$?
-  egrep -v '^ *\+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } >/dev/null; then
-  if test -s conftest.err; then
-    ac_cpp_err=$ac_c_preproc_warn_flag
-  else
-    ac_cpp_err=
-  fi
-else
-  ac_cpp_err=yes
-fi
-if test -z "$ac_cpp_err"; then
-  # We can compile using X headers with no special include directory.
-ac_x_includes=
-else
-  echo "$as_me: failed program was:" >&5
-  cat conftest.$ac_ext >&5
-  for ac_dir in $ac_x_header_dirs; do
-  if test -r "$ac_dir/X11/Intrinsic.h"; then
-    ac_x_includes=$ac_dir
-    break
-  fi
-done
-fi
-rm -f conftest.err conftest.$ac_ext
-fi # $ac_x_includes = no
-
-if test "$ac_x_libraries" = no; then
-  # Check for the libraries.
-  # See if we find them without any special options.
-  # Don't add to $LIBS permanently.
-  ac_save_LIBS=$LIBS
-  LIBS="-lXt $LIBS"
-  cat >conftest.$ac_ext <<_ACEOF
-#line $LINENO "configure"
-#include "confdefs.h"
-#include <X11/Intrinsic.h>
-#ifdef F77_DUMMY_MAIN
-#  ifdef __cplusplus
-     extern "C"
-#  endif
-   int F77_DUMMY_MAIN() { return 1; }
-#endif
-int
-main ()
-{
-XtMalloc (0)
-  ;
-  return 0;
-}
-_ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } &&
-         { ac_try='test -s conftest$ac_exeext'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  LIBS=$ac_save_LIBS
-# We can link X programs with no special library path.
-ac_x_libraries=
-else
-  echo "$as_me: failed program was:" >&5
-cat conftest.$ac_ext >&5
-LIBS=$ac_save_LIBS
-for ac_dir in `echo "$ac_x_includes $ac_x_header_dirs" | sed s/include/lib/g`
-do
-  # Don't even attempt the hair of trying to link an X program!
-  for ac_extension in a so sl; do
-    if test -r $ac_dir/libXt.$ac_extension; then
-      ac_x_libraries=$ac_dir
-      break 2
-    fi
-  done
-done
-fi
-rm -f conftest.$ac_objext conftest$ac_exeext conftest.$ac_ext
-fi # $ac_x_libraries = no
-
-if test "$ac_x_includes" = no || test "$ac_x_libraries" = no; then
-  # Didn't find X anywhere.  Cache the known absence of X.
-  ac_cv_have_x="have_x=no"
-else
-  # Record where we found X for the cache.
-  ac_cv_have_x="have_x=yes \
-	        ac_x_includes=$ac_x_includes ac_x_libraries=$ac_x_libraries"
-fi
-fi
-
-  fi
-  eval "$ac_cv_have_x"
-fi # $with_x != no
-
-if test "$have_x" != yes; then
-  echo "$as_me:$LINENO: result: $have_x" >&5
-echo "${ECHO_T}$have_x" >&6
-  no_x=yes
-else
-  # If each of the values was on the command line, it overrides each guess.
-  test "x$x_includes" = xNONE && x_includes=$ac_x_includes
-  test "x$x_libraries" = xNONE && x_libraries=$ac_x_libraries
-  # Update the cache value to reflect the command line values.
-  ac_cv_have_x="have_x=yes \
-		ac_x_includes=$x_includes ac_x_libraries=$x_libraries"
-  echo "$as_me:$LINENO: result: libraries $x_libraries, headers $x_includes" >&5
-echo "${ECHO_T}libraries $x_libraries, headers $x_includes" >&6
-fi
 
 echo "$as_me:$LINENO: checking for ANSI C header files" >&5
 echo $ECHO_N "checking for ANSI C header files... $ECHO_C" >&6
@@ -20623,7 +20529,6 @@ fi
 
 
 
-
 echo "$as_me:$LINENO: checking for /dev/ptmx" >&5
 echo $ECHO_N "checking for /dev/ptmx... $ECHO_C" >&6
 if test "${ac_cv_file__dev_ptmx+set}" = set; then
@@ -21391,16 +21296,22 @@ s,@cWnn@,$cWnn,;t t
 s,@kWnn@,$kWnn,;t t
 s,@WNNJLIB@,$WNNJLIB,;t t
 s,@DEPWNNJLIB@,$DEPWNNJLIB,;t t
+s,@EXTWNNJINC@,$EXTWNNJINC,;t t
 s,@HINSI_DATA@,$HINSI_DATA,;t t
 s,@CWNNJLIB@,$CWNNJLIB,;t t
 s,@DEPCWNNJLIB@,$DEPCWNNJLIB,;t t
+s,@EXTCWNNJINC@,$EXTCWNNJINC,;t t
 s,@CHINSI_DATA@,$CHINSI_DATA,;t t
 s,@THINSI_DATA@,$THINSI_DATA,;t t
 s,@KWNNJLIB@,$KWNNJLIB,;t t
 s,@DEPKWNNJLIB@,$DEPKWNNJLIB,;t t
+s,@EXTKWNNJINC@,$EXTKWNNJINC,;t t
 s,@KHINSI_DATA@,$KHINSI_DATA,;t t
 s,@ipv6@,$ipv6,;t t
 s,@unsafe_path@,$unsafe_path,;t t
+s,@WNNSBINDIR@,$WNNSBINDIR,;t t
+s,@if_enable_sub_bindir@,$if_enable_sub_bindir,;t t
+s,@if_disable_sub_bindir@,$if_disable_sub_bindir,;t t
 s,@CC@,$CC,;t t
 s,@CFLAGS@,$CFLAGS,;t t
 s,@LDFLAGS@,$LDFLAGS,;t t
@@ -21440,6 +21351,7 @@ s,@FFLAGS@,$FFLAGS,;t t
 s,@ac_ct_F77@,$ac_ct_F77,;t t
 s,@LIBTOOL@,$LIBTOOL,;t t
 s,@LIBTOOL_DEPS@,$LIBTOOL_DEPS,;t t
+s,@LIBTOOL_MOD@,$LIBTOOL_MOD,;t t
 s,@TERMLIB@,$TERMLIB,;t t
 s,@CNVFILE_SUBDIR@,$CNVFILE_SUBDIR,;t t
 s,@LIBOBJS@,$LIBOBJS,;t t

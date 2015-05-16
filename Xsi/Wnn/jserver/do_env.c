@@ -60,11 +60,9 @@ js_open ()
   char tmp_buf[256];
 
   version = get4_cur ();
-  gets_cur (tmp_buf);
-  tmp_buf[WNN_HOSTLEN - 1] = '\0';      /* truncate by WNN_HOSTLEN */
+  gets_cur (tmp_buf, WNN_HOSTLEN);
   strcpy (c_c->host_name, tmp_buf);
-  gets_cur (tmp_buf);
-  tmp_buf[WNN_ENVNAME_LEN - 1] = '\0';  /* truncate by WNN_ENVNAME_LEN */
+  gets_cur (tmp_buf, WNN_ENVNAME_LEN);
   strcpy (c_c->user_name, tmp_buf);
   error1 ("Inet user=%s@%s\n", c_c->user_name, c_c->host_name);
   /* Moved to new_client, because del_client() will be called
@@ -111,7 +109,7 @@ js_connect ()
 {
   char n[256];
   register int x;
-  gets_cur (n);
+  gets_cur (n, 256);
   x = conn1 (n);
   if (x == -1)
     {
@@ -187,7 +185,7 @@ js_env_exist ()
 {
   char n[256];
 
-  gets_cur (n);
+  gets_cur (n, 256);
   if (find_env_by_name (n) != -1)
     {                           /* exist */
       put4_cur (1);

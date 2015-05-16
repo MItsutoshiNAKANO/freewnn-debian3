@@ -1,3 +1,48 @@
+Tue Mar 21 02:34:45 2000  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* 開発版 1.1.1-a017 として内部リリース
+
+Tue Mar 21 01:12:29 2000  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* Wnn/jserver/de_header.h: get_file_name、expand_file_name のプロ
+	トタイプ宣言の修正。([freewnn:00369] 飯島さんのパッチ)
+
+Tue Mar 21 01:04:22 2000  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* mkdir() が無いと判定された場合に system() で /bin/mkdir を呼び出
+	しているのを修正。(新規作成: Wnn/etc/mkdir.c)
+	注意: mkdir() を持っていても以下の条件に当てはまらない場合は 
+	mkdir() を持っていないと判定される。
+	defined(BSD42) || defined(uniosu) || defined(UX386) || defined(DGUX)
+	([freewnn:00358] 元木さんのパッチ)
+	
+Fri Mar 17 01:56:30 2000  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* gets_cur と getws_cur で受け側の領域のサイズ以上に書き込まないよ
+	うに修正。(buffer overflow 対策) ([freewnn:00361] 元木さんのパッチ)
+
+Fri Mar  3 01:04:09 2000  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* ソケット関連およびプロセスグループ関連を configure 化。これによ
+	り #ifdef BEOS が激減した。([freewnn:00347] 阿部さんのパッチ)
+
+Fri Mar  3 00:23:43 2000  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* Wnn/jutil/dic_head.c (input_header): 引数が間違っていた。
+	(未使用だったので実害なし) ([freewnn:00319] 小野さんのパッチ)
+
+Mon Feb 28 22:32:17 2000  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* Wnn/etc/msg.c (msg_open): msg_open() において libwnn.msg に 
+        空行や不正な形式の行が存在していた場合に '\0' を無視してアク
+        セスしてしまうバグを修正。([freewnn:00324]元木さんのパッチ、
+        [freewnn:00350]高田さんのパッチ)
+
+Mon Feb 28 22:17:43 2000  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* .msg ファイルに空行があると、msg_open で死ぬ。FreeWnnでまた 
+	enbug (T_T)。空行を削った。([freewnn:00328])
+
 Fri Feb 25 01:17:04 2000  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
 
 	* 開発版 1.1.1-a016 として内部リリース

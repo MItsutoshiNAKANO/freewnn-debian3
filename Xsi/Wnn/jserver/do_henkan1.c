@@ -29,8 +29,14 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <config.h>
+
 #include <stdio.h>
 #include <ctype.h>
+
+#if defined(HAVE_SYS_TYPES_H)
+#include <sys/types.h>
+#endif
 
 #include "demcom.h"
 #include "commonhd.h"
@@ -94,14 +100,15 @@ henkan_setup ()
 }
 
 static void
-get_fzk_vec (hinsi, fzk, vec, vec1)
+get_fzk_vec (hinsi, fzk, fzk_size, vec, vec1)
      register int *hinsi;
+     register w_char *fzk;
+     register size_t fzk_size;
      register int *vec;
      register int *vec1;
-     register w_char *fzk;
 {
   *hinsi = get4_cur ();
-  getws_cur (fzk);
+  getws_cur (fzk, fzk_size);
   *vec = get4_cur ();
   *vec1 = get4_cur ();
 }
@@ -147,7 +154,7 @@ do_kanren ()
   c_env = env[eid];
   end = maxchg - 1;
   err = henkan_setup ();
-  get_fzk_vec (&hinsi, fzk, &vec, &vec1);
+  get_fzk_vec (&hinsi, fzk, FZK_L, &vec, &vec1);
   vec2 = get4_cur ();
   if (err == -1)
     {
@@ -203,7 +210,7 @@ do_kantan_dai ()
   c_env = env[eid];
   end = maxchg - 1;
   err = henkan_setup ();
-  get_fzk_vec (&hinsi, fzk, &vec, &vec1);
+  get_fzk_vec (&hinsi, fzk, FZK_L, &vec, &vec1);
   if (err == -1)
     {
       error_ret ();             /* ERROR */
@@ -257,7 +264,7 @@ do_kantan_sho ()
   c_env = env[eid];
   end = maxchg - 1;
   err = henkan_setup ();
-  get_fzk_vec (&hinsi, fzk, &vec, &vec1);
+  get_fzk_vec (&hinsi, fzk, FZK_L, &vec, &vec1);
   if (err == -1)
     {
       error_ret ();             /* ERROR */
@@ -311,7 +318,7 @@ do_kanzen_dai ()
   c_env = env[eid];
   end = maxchg - 1;
   err = henkan_setup ();
-  get_fzk_vec (&hinsi, fzk, &vec, &vec1);
+  get_fzk_vec (&hinsi, fzk, FZK_L, &vec, &vec1);
   if (err == -1)
     {
       error_ret ();             /* ERROR */
@@ -365,7 +372,7 @@ do_kanzen_sho ()
   c_env = env[eid];
   end = maxchg - 1;
   err = henkan_setup ();
-  get_fzk_vec (&hinsi, fzk, &vec, &vec1);
+  get_fzk_vec (&hinsi, fzk, FZK_L, &vec, &vec1);
   if (err == -1)
     {
       error_ret ();             /* ERROR */

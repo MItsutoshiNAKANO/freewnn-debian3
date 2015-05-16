@@ -1,7 +1,6 @@
 #
 #   $Id: ./uum.msg $
 #
-
 #
 # FreeWnn is a network-extensible Kana-to-Kanji conversion system.
 # This file is part of FreeWnn.
@@ -27,15 +26,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-#
-
-#
-# Commentary:
-#
-# Change log:
-#
-# Last modified date: 20,Mar.1999
-#
 #
 ###	massage file for uum
 ### jhlp.c

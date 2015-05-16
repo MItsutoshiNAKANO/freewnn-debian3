@@ -1,7 +1,6 @@
 #
 #   $Id: ./wnnstat.msg $
 #
-
 #
 # FreeWnn is a network-extensible Kana-to-Kanji conversion system.
 # This file is part of FreeWnn.
@@ -28,7 +27,6 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
-
 #
 1	Env No.\t환경 이름\t참조수\t부속어\t사전수(사전No.)\t\t화일\n
 2	Env No.\t환경 이름\t참조수\n

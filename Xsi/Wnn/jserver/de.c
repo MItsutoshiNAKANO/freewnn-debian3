@@ -48,6 +48,10 @@ extern int errno;               /* Pure BSD */
 
 #include <sys/ioctl.h>
 
+#if defined(HAVE_SYS_TYPES_H)
+#include <sys/types.h>
+#endif
+
 #if (defined(__unix__) || defined(unix)) && !defined(USG)
 #include <sys/param.h>
 #endif
@@ -82,11 +86,19 @@ extern int errno;               /* Pure BSD */
 #endif
 #endif /* SOLARIS */
 
+#if defined(HAVE_SETSOCKOPT) && defined(SOL_SOCKET) && defined(SO_NONBLOCK)
+#define USE_SETSOCKOPT 1
+#else
+#undef USE_SETSOCKOPT
+#endif
+
 #define QUIET   1
 
 #define NOT_QUIET       DEBUG | !QUIET
 
+#ifndef min
 #define min(x,y)        ( (x)<(y) ? (x) : (y) )
+#endif
 
 /*      Accept Socket   */
 #define MAX_ACCEPTS     2
@@ -269,9 +281,9 @@ main (argc, argv)
 #endif /* 4.4BSD-Lite */
     }
 
-#if defined(hpux) || defined(SOLARIS) || defined(BEOS)
+#ifdef SETPGRP_VOID
   setpgrp ();
-#else /* defined(hpux) || defined(SOLARIS) */
+#else /* !SETPGRP_VOID */
 # if !defined(TIOCNOTTY) && defined(SVR4)
 #  define TIOCNOTTY     _IO('t', 113)
 # endif /* !defined(TIOCNOTTY) && defined(SVR4) */
@@ -282,7 +294,7 @@ main (argc, argv)
       close (tmpttyfd);
     }
 #endif /* HITACHI */
-#endif /* defined(hpux) || defined(SOLARIS) */
+#endif /* SETPGRP_VOID */
 #endif /* !NOTFORK */
 
   demon_main ();
@@ -431,13 +443,13 @@ new_client ()                   /* NewClient */
   if (full || sd >= nofile || clientp >= max_client)
     {
       fprintf (stderr, "%s: no more client\n", cmd_name);
-#ifdef BEOS
+#ifdef HAVE_RECV
       recv (sd, gomi, 1024, 0);
 #else
       read (sd, gomi, 1024);
 #endif
       shutdown (sd, 2);
-#ifdef BEOS
+#ifdef HAVE_CLOSESOCKET
       closesocket (sd);
 #else
       close (sd);
@@ -461,7 +473,7 @@ del_client ()
 {
   disconnect_all_env_of_client ();
   sock_clr (all_socks, cblk[cur_clp].sd);
-#ifdef BEOS
+#ifdef HAVE_CLOSESOCKET
   closesocket (cblk[cur_clp].sd);
 #else
   close (cblk[cur_clp].sd);
@@ -522,7 +534,7 @@ demon_fin ()
 #endif /* AF_UNIX */
   struct sockaddr_in addr_in;
   socklen_t addrlen;
-#ifdef BEOS
+#ifdef USE_SETSOCKOPT
   int on = ~0;
 #endif
 
@@ -554,13 +566,13 @@ demon_fin ()
 #endif /* AF_UNIX */
 
 #ifndef SOLARIS
-#ifdef BEOS
+#ifdef USE_SETSOCKOPT
   setsockopt (sock_d_in, SOL_SOCKET, SO_NONBLOCK, &on, sizeof (int));
 #else
 #if defined(FIONBIO)
   ioctl (sock_d_in, FIONBIO, &trueFlag);
 #endif
-#endif /* BEOS */
+#endif /* USE_SETSOCKOPT */
 #else /* !SOLARIS */
   fcntl (sock_d_in, F_SETFL, F_UNLCK);
 #endif /* !SOLARIS */
@@ -572,7 +584,7 @@ demon_fin ()
       /* EWOULDBLOCK EXPECTED, but we don't check */
     }
   shutdown (sock_d_in, 2);
-#ifdef BEOS
+#ifdef HAVE_CLOSESOCKET
   closesocket (sock_d_in);
 #else
   close (sock_d_in);
@@ -587,7 +599,7 @@ demon_fin ()
           sock_tst (all_socks, fd))
         {
           shutdown (fd, 2);
-#ifdef BEOS
+#ifdef HAVE_CLOSESOCKET
           closesocket (fd);
 #else
           close (fd);
@@ -599,19 +611,55 @@ demon_fin ()
 /*------*/
 
 /**     **/
-void
-gets_cur (cp)
-     register char *cp;
+char *
+gets_cur (buffer, buffer_size)
+     char *buffer;
+     size_t buffer_size;
 {
-  while ((*cp++ = getc_cur ()) != '\0');
+  char *b;
+
+  if (!buffer || !buffer_size)
+    return NULL;
+
+  b = buffer;
+
+  while (--buffer_size && (*b = getc_cur ()) != '\0')
+    b++;
+
+  if (*b != '\0')
+    {
+      *b = '\0';
+      while (getc_cur () != '\0')
+        ;
+    }
+
+  return buffer;
 }
 
 /**     **/
-void
-getws_cur (cp)
-     register w_char *cp;
+w_char *
+getws_cur (buffer, buffer_size)
+     w_char *buffer;
+     size_t buffer_size;
 {
-  while ((*cp++ = get2_cur ()) != 0);
+  w_char *b;
+
+  if (!buffer || !buffer_size)
+    return NULL;
+
+  b = buffer;
+
+  while (--buffer_size && (*b = get2_cur ()) != 0)
+    b++;
+
+  if (*b != 0)
+    {
+      *b = 0;
+      while (getc_cur () != 0)
+        ;
+    }
+
+  return buffer;
 }
 
 /**     カレント・クライアントから2バイト取る   **/
@@ -657,7 +705,7 @@ rcv_1_client (clp)
   while (cc <= 0)
     {
       errno = 0;
-#ifdef BEOS
+#ifdef HAVE_RECV
       cc = recv (cblk[clp].sd, rcv_buf, S_BUF_SIZ, 0);
 #else
       cc = read (cblk[clp].sd, rcv_buf, S_BUF_SIZ);
@@ -700,7 +748,7 @@ snd_1_client (clp, n)
   for (cc = 0; cc < n;)
     {
       errno = 0;
-#ifdef BEOS
+#ifdef HAVE_SEND
       x = send (cblk[clp].sd, &snd_buf[cc], n - cc, 0);
 #else
       x = write (cblk[clp].sd, &snd_buf[cc], n - cc);

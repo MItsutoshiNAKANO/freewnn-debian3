@@ -29,8 +29,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#define HAVE_UNISTD_H 0
-
+#undef HAVE_UNISTD_H
+#undef HAVE_SYS_TYPES_H
+#undef HAVE_MKDIR
 
 /* *_t が定義されているか? (定義されていればここでは undef になる) */
 #undef time_t
@@ -53,3 +54,13 @@
  *   perror() が定義されていればこれも定義される。
  */
 #undef HAVE_PERROR
+
+/*
+ *   その他イロイロ
+ */
+#undef HAVE_SETSOCKOPT
+#undef HAVE_CLOSESOCKET
+#undef HAVE_SEND
+#undef HAVE_RECV
+#undef HAVE_SETPGRP
+#undef SETPGRP_VOID

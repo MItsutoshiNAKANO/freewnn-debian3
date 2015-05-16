@@ -1,5 +1,5 @@
 /*
- *  $Id: dic_head.c $
+ *  $Id: mkdir.c $
  */
 
 /*
@@ -29,49 +29,48 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <stdio.h>
-#include "commonhd.h"
-#include "jslib.h"
-#include "jh.h"
-#include "jdata.h"
+#include <config.h>
 
-extern int create_file_header (), output_header_jt (), input_file_header (), input_header_jt (), input_header_hjt ();
+#if !defined(HAVE_MKDIR)
 
-int
-output_header (ofpter, jtp, fhp)
-     FILE *ofpter;
-     struct JT *jtp;
-     struct wnn_file_head *fhp;
-{
-  create_file_header (ofpter, WNN_FT_DICT_FILE, fhp->file_passwd);
-  output_header_jt (ofpter, jtp);
-  return (0);
-}
+#include <stdlib.h>
 
-int
-input_header (ifpter, jtp, fhp)
-     FILE *ifpter;
-     struct JT *jtp;
-     struct wnn_file_head *fhp;
-{
+#include <sys/types.h>
+#include <sys/wait.h>
 
-  if (input_file_header (ifpter, fhp) == -1 || input_header_jt (ifpter, jtp) == -1)
-    {
-      fprintf (stderr, "Not a Wnn file\n");
-      return (-1);
-    }
-  return (0);
-}
+#if !defined(WIFEXITED)
+#define WEXITSTATUS(status) (((status) & 0xff00) >> 8)
+#endif /* !WIFEXITED */
+#if !defined(WIFSIGNALED)
+#define WTERMSIG(status) ((status) & 0x7f)
+#endif /* !WIFSIGNALED */
+#if !defined(WIFSTOPPED)
+#define WSTOPSIG(status) WEXITSTATUS(status)
+#endif /* !WIFSTOPPED */
+#if !defined(WIFEXITED)
+#define WIFEXITED(status) (__WTERMSIG(status) == 0)
+#endif /* !WIFEXITED */
 
 int
-input_hindo_header (ifpter, hjtp, fhp)
-     FILE *ifpter;
-     struct wnn_file_head *fhp;
-     struct HJT *hjtp;
+mkdir (path, mode)
+     const char *path;
+     mode_t mode;
 {
-  if (input_file_header (ifpter, fhp) == -1 || input_header_hjt (ifpter, hjtp) == -1)
-    {
-      return (-1);
-    }
-  return (0);
+  const char *args[3];
+  int status;
+
+  if (!path)
+    return -1;
+
+  args[0] = "/bin/mkdir";
+  args[1] = path;
+  args[2] = NULL;
+
+  if (!fork ())
+    execv (args[0], args);
+  else
+    wait (&status);
+
+  return !(WIFEXITED (status));
 }
+#endif

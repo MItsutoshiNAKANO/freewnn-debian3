@@ -162,7 +162,7 @@ demon_dead ()
   current_js->js_dead = -1;
   wnn_errorno = WNN_JSERVER_DEAD;
   shutdown (current_sd, 2);
-#ifdef BEOS
+#ifdef HAVE_CLOSESOCKET
   closesocket (current_sd);
 #else
   close (current_sd);
@@ -320,7 +320,7 @@ cd_open_in (server, lang, timeout)
 #if DEBUG
       xerror ("jslib:Can't connect Inet socket.\n");
 #endif
-#ifdef BEOS
+#ifdef HAVE_CLOSESOCKET
       closesocket (sd);
 #else
       close (sd);
@@ -404,7 +404,7 @@ writen (n)
   for (cc = 0; cc < n;)
     {
       errno = 0;
-#ifdef BEOS
+#ifdef HAVE_SEND
       x = send (current_sd, &snd_buf[cc], n - cc, 0);
 #else
       x = write (current_sd, &snd_buf[cc], n - cc);
@@ -504,7 +504,7 @@ get1com ()
       while (1)
         {
           errno = 0;
-#ifdef BEOS
+#ifdef HAVE_RECV
           rbc = recv (current_sd, rcv_buf, R_BUF_SIZ, 0);
 #else
           rbc = read (current_sd, rcv_buf, R_BUF_SIZ);
@@ -767,7 +767,7 @@ js_close (server)
   x = get4com ();
   if (x == -1)
     wnn_errorno = get4com ();
-#ifdef BEOS
+#ifdef HAVE_CLOSESOCKET
   closesocket (current_sd);
 #else
   close (current_sd);

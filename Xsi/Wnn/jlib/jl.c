@@ -33,6 +33,8 @@
         Nihongo Henkan Hi-level Library
 */
 
+#include <config.h>
+
 #include "commonhd.h"
 #include "wnn_config.h"
 #include <stdio.h>
@@ -3287,25 +3289,12 @@ make_dir1 (env, dirname, error_handler, message_handler)
   if (dirname[0] == C_LOCAL)
     {                           /* Create Directory */
 #define MODE (0000000 | 0000777)
-#if defined(BSD42) || defined(uniosu)
       if (mkdir (dirname + 1, MODE) != 0)
         {
           wnn_errorno = WNN_MKDIR_FAIL;
           return (-1);
         }
-#endif
-#if defined(SYSVR2) && !defined(uniosu)
-      char buf[256];
-      strcpy (buf, "/bin/mkdir ");
-      strcat (buf, dirname + 1);
-      if (system (buf) != 0)
-        {
-          /*
-             wnn_errorno=WNN_MKDIR_FAIL;
-             return(-1);
-           */
-        }
-#endif
+
       chmod (dirname + 1, MODE);
       chown (dirname + 1, getuid (), -1);
     }

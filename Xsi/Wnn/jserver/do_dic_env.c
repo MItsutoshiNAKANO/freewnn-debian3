@@ -59,8 +59,8 @@ js_dic_add ()
   nice = get4_cur ();
   rw = get4_cur ();
   hrw = get4_cur ();
-  gets_cur (pw);
-  gets_cur (pw1);
+  gets_cur (pw, WNN_PASSWD_LEN);
+  gets_cur (pw1, WNN_PASSWD_LEN);
   rev = get4_cur ();            /* rev is to add it as reverse dict */
 
   error1 ("dic_add: eid=%d,fid=%d,hfid=%d", eid, fid, hfid);

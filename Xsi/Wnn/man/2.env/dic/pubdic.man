@@ -1,0 +1,75 @@
+.\"
+.\"   $Id: ./pubdic.man $
+.\"
+.\"
+.\" FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+.\" This file is part of FreeWnn.
+.\" 
+.\" Copyright Kyoto University Research Institute for Mathematical Sciences
+.\"                 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+.\" Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright FreeWnn Project 1999, 2000
+.\" 
+.\" Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+.\" 
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\" 
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\" 
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software
+.\" Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+.\"
+.TH PUBDIC \  "28 January 1992" 
+.SH 名称
+.sv 1
+.nf
+.ta 0.1i 2i
+PUBDIC		固定形式辞書
+.fi
+.SH 形式
+.sv 1
+.nf
+.ta 0.1i 3i 
+/usr/local/lib/wnn/dic/ja_JP/pubdic/*.dic
+.fi
+.SH 機能
+.HP 0
+.IP
+uum(1)のかな漢字変換で使用される固定形式辞書である。
+辞書の設定方法は、wnnenvrc(4)を参照のこと。
+各ユーザごとの頻度ファイルは、uum が起動される時に、デフォルトを
+
+    JSERVER_DIR/usr/ユーザ名/頻度ファイル名
+
+の形に作成する。(ただし、path は、uumrc(4) の内容に依存する。)
+JSERVER_DIR は、jserverrc(4) の中で、jserver_dir によって設定される。
+
+また、当システムが用意している固定形式辞書は、以下の１０本である
+(上記 * の部分)。
+
+    kihon    基本辞書 ( 第１水準 )             約 22,000 語
+    tankan   単漢辞書 ( 第１水準 )             約  3,000 語
+    chimei   地名辞書 ( 第１水準 )             約  5,000 語
+    jinmei   人名辞書 ( 第１水準 )             約  2,000 語
+    setsuji  接頭接尾語辞書 ( 第１水準 )       約    900 語
+    computer 情報処理辞書 ( 第１水準 )         約    800 語
+    bio      生物学関連用語 ( 第１水準 )       約    500 語
+    koyuu    人名地名以外の固有名詞辞書 ( 第１水準 )
+                                               約    200 語
+    koyuu    記号の一般呼称辞書 ( 第１水準 )   約    200 語
+    special  特殊語辞書 ( 第１水準 )           約     20 語
+
+.SH 関連項目
+.sv 1
+.nf
+uum(1), jserver(1), wnnenvrc(4), jserverrc(4), dtoa(1), atod(1).
+
+

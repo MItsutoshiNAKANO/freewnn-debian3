@@ -1,0 +1,126 @@
+.\"
+.\" $Id: ximconf.man,v 1.3.2.1 1999/02/08 08:09:10 yamasita Exp $
+.\"
+
+.\" FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+.\" This file is part of FreeWnn.
+.\" 
+.\" Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+.\" Copyright 1992 by Massachusetts Institute of Technology
+.\"
+.\" Author: OMRON SOFTWARE Co., Ltd. <freewnn@rd.kyoto.omronsoft.co.jp>
+.\"
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2, or (at your option)
+.\" any later version.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with GNU Emacs; see the file COPYING.  If not, write to the
+.\" Free Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+.\"
+.\" Commentary:
+.\"
+.\" Change log:
+.\"
+.\" Last modified date: 8,Feb.1999
+.\"
+
+.TH XIMCONF 4 "Release 5" "X Version 11"
+.SH NAME
+ximconf \- Configuration file of Input Manager of the X Window
+System Version 11 (xwnmo(1X))
+.SH SYNOPSIS
+.B /usr/local/lib/wnn/ximconf
+.SH DESCRIPTION
+In the \fIximconf\fP file, configurations of \fIxwnmo\fP are wrote.
+As configurations; environments of each supported languages(the relation
+between internal locale and external locale, CSWIDTH(code set width),
+whether use conversion server or not and etc.), default locale and
+locale for world environment.
+ 
+Lines that start with a semicolon (;) are comments.
+.PP
+.B Coding format:
+.sp
+.RS
+{ext_locale}[|{ext_locale}|...] {lang} {internal_locale}
+{cswidth} {using_server} {code_trans}
+.br
+or
+.br
+setdefaultlocale	{def_locale}
+.br
+or
+.br
+setworldlocale		{world_locale}
+.sp
+.RE
+.IP \fBext_locale\fP 1i
+Specifies a locale name which is used by client. If a client requests
+\fIxwnmo\fP to use the ext_locale, \fIxwnmo\fP will refer the client
+to lang, internal_locale and etc. in same line. Plural ext_locale can be
+specified with separator '|'.
+.IP \fBlang\fP 1i
+Specifies a lang name which is referred as LANG name on Wnn environment.
+Please refer manuals for serverdefs or uumrc of Wnn.
+.IP \fBinternal_locale\fP 1i
+Specifies a locale name which is used as internal locale by \fIxwnmo\fP.
+The Wnn library can process only EUC encoding. Therefore \fIxwnmo\fP
+must use locales are subset of EUC. Must specify locales are subset of EUC
+in internal_locale.
+.IP \fBcswidth\fP 1i
+Specifies CSWIDTH(code set width) of internal_locale.
+Code format of CSWIDTH follows.
+.br
+.br
+CSWIDTH=b1[:c1][,b2[:c2][,b3[:c3]]]
+.br
+.br
+"b1-b3" is byte length of each code set(except SS2 or SS3).
+.br
+"c1-c3" is column length of each code set.
+.br
+"b1" and "c1" is for code set 1.
+.br
+"b2" and "c2" is for code set 2.
+.br
+"b3" and "c3" is for code set 3.
+.IP \fBusing_server\fP 1i
+Specifies whether this language environment uses its conversion server
+or not. If ``True'' or ``TRUE'' is specified, the conversion server
+will be used.  Otherwise it will not be used. For example; in case of
+Latin languages, input of those languages will be realized with
+automaton conversion.
+.IP \fBcode_trans\fP 1i
+In case of peculiar languages(e.g. Chinese), it is necessary to translate
+internal code to code for drawing (e.g. Yincoding of Chinese). In those
+language, code_trans specifies the translation method as string.
+Otherwise ``Normal'' must be specified in code_trans.
+Currently, only ``Yincoding'' is support. It is for Yincoding of Chinese.
+.IP \fBdef_locale\fP 1i
+Specifies default locale name. If locale for Root-mode is empty or
+"C" locale, this default locale will be used. If def_locale is not
+specified, DEFAULT_LANG will be used as default locale. DEFAULT_LANG
+depends on environment of compiling. If you want to know DEFAULT_LANG,
+set the resource langName as NULL, set the environment variable LANG
+as "C" and execute \fIxwnmo\fP. Then \fIxwnmo\fP will print the message
+"I try to set locale to default ???.". This ??? is DEFAULT_LANG.
+.IP \fBworld_locale\fP 1i
+Specifies locale for world environment. If a client requests \fIxwnmo\fP
+to use this world locale,  \fIxwnmo\fP will create multi-language
+environment for the client. If world_locale is not specified, "wr_WR.ct"
+will be used as default.
+.SH "SEE ALSO"
+xwnmo(1X)
+.SH COPYRIGHT
+Copyright 1992 by OMRON Corporation
+.br
+Copyright 1992 by Massachusetts Institute of Technology
+.SH AUTHOR
+Seiji Kuwari (OMRON Corporation)

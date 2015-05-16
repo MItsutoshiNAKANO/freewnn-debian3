@@ -1,0 +1,106 @@
+.\"
+.\"   $Id: ./cst_end.man $
+.\"
+.\"
+.\" FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+.\" This file is part of FreeWnn.
+.\" 
+.\" Copyright Kyoto University Research Institute for Mathematical Sciences
+.\"                 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+.\" Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright FreeWnn Project 1999, 2000
+.\" 
+.\" Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+.\" 
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\" 
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\" 
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software
+.\" Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+.\"
+.TH CSTARTEND \  "13 May 1992"
+.SH NAME
+cstartend \- cWnn Startup and Termination
+.ad
+.SH DESCRIPTION
+.IP 1.
+Startup of cserver
+.sp 0
+~~~~~~~~~~~~~~~~~~
+.sp 0
+To start up cWnn, first, you need to start the cserver.  Type the following 
+command at the C Shell prompt:
+.sp 0
+     %  cserver  <CR>  
+
+The default path of cserver is "/usr/local/bin/cWnn4/".  If the user has 
+not set this path, he can either set it and type the command directly, 
+or type the full pathname of cserver while executing this command.
+
+cserver will only be started up once.  You may confirm the existence of 
+cserver by using the "cwnnstat" command.
+.IP 2.
+Startup of client module, cuum
+.sp 0
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.sp 0
+After starting cserver, the cWnn client module "cuum" may be started up. 
+
+To start "cuum", type the following command at the C Shell prompt of a 
+Chinese window:
+.sp 0
+     %  cuum  <CR>
+
+To activate other input environments, you may use the "-r" option of the 
+"cuum" command together with the default path of that environment.  
+For example, to activate Pinyin input environment, do the following:
+.sp 0
+     %  cuum  -r  /usr/local/lib/wnn/zh_CN/rk_p  <CR> 
+
+The default path for "cuum" is  
+.sp 0
+"/usr/local/bin/cWnn4/".  Many cuum's 
+may be started at the same time on different windows.  Each of them will 
+be registered as a client at the cserver. 
+
+After a startup message, the client module, cuum, is ready to be used.
+To enter the input mode, press ^\\.  
+.sp 0
+To leave the input mode, press ^\\ again.  
+.sp 0
+To confirm the existence of cuum, you may also use ^\\.
+
+.IP 3. 
+Termination of cuum 
+.sp 0
+~~~~~~~~~~~~~~~~~~~~
+.sp 0
+In order to terminate a client process, press ^D.
+
+The cserver will save all the usage frequency files and dictionaries of 
+the particular client and terminate the connection between itself and 
+that client.
+.IP 4.
+Termination of cserver 
+.sp 0
+~~~~~~~~~~~~~~~~~~~~~~
+.sp 0
+To terminate the cserver, type the following command:
+.sp 0
+      % cwnnkill  <CR>
+
+If some other clients still exist, a message will be displayed.  In this 
+case, you have to termiante all other client modules before you can 
+terminate the cserver.
+.SH NOTE
+.IP 1.
+For details, refer to cWnn Manual Ver.4.1, Chapter 2.

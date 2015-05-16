@@ -1,0 +1,350 @@
+  	   	     ©³©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©·	
+		      ©³©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©·
+		      ©§  £Ã£è£á£ð£ô£å£ò £±   £É£Î£Ô£Ò£Ï£Ä£Õ£Ã£Ô£É£Ï£Î  ©§
+		      ©»©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¿
+		     ©»©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¿
+
+
+©³©¥©¥©¥©¥©¥©¥©¥©¥©·
+©§ 1.1  OVERVIEW  ©§
+©»©¥©¥©¥©¥©¥©¥©¥©¥©¿
+
+	This  manual introduces  the  Chinese Input  System, cWnn,  which  runs on Unix 
+workstations.  cWnn provides a  wide range of  input methods,  satisfying  the needs of 
+Chinese users all over the world, including P.R.China  and Taiwan.  Besides that, it is
+capable of converting an arbitrary sequence of Pinyin/Zhuyin into the expected Hanzi.
+
+	Currently, most of the Chinese input systems are developed on personal computers.
+In  terms  of all aspects,  personal computers  are  not  as  powerful as  workstations, 
+especially in the network capabilities.  With the advance in technology, Unix has begun 
+to popularize as it supports  multi-windows, multi-users as well as  multi-environments.
+Based on these features, cWnn is developed  to cater for various input methods and other 
+useful facilities.
+
+The input methods in cWnn are divided into two categories:
+
+1. Phonetic  
+©¥©¥©¥©¥©¥©¥
+This is  a method of inputing Chinese characters using their pronunciations.  The common
+phonetic symbols for Chinese are  Pinyin and Zhuyin,  with Pinyin being used commonly in 
+P.R China  and  Singapore.  The  Zhuyin  phonetic  symbols  were used  before Pinyin was 
+introduced.  It is now currently used in Taiwan and Hong Kong.
+
+Currently,  some of the  Chinese input systems  are based on monosyllabic word, that is, 
+only a  single Chinese character is input at a time.  There are  also some systems using
+Chinese word input.  cWnn, being  different, is able to convert  any arbitrary length of 
+Pinyin/Zhuyin  sequence to Chinese  characters at one time.  The  system provides a good 
+environment for user input.  It performs an automatic check on  all inputs, making  sure 
+that they are legal.  Besides,  cWnn caters for  error tolerance in the  four tones, and
+has  standardized  Pinyin  and  Zhuyin,  together  with  the  four tones.  As such, cWnn 
+provides an ideal phonetic input environment for the users.
+
+
+
+
+
+
+
+
+
+					- 1-1 -
+2. Radical 
+©¥©¥©¥©¥©¥
+There are several radical methods for  Chinese input, such as Wubi and Cangjie etc.  In 
+these  methods, a  Chinese  character is  input by  breaking up  the character into its 
+components, which are subsequently entered one by one.  
+
+Currently, a few hundred of such input methods have been developed.  The default radical 
+input methods in cWnn are Wubi, Cangjie and Qianma.  However, the system is designed to 
+allow any radical input method to be setup easily.
+
+
+	With  the strong  network capabilities of Unix, together with the multi-user and 
+multi-window features, cWnn is able to achieve sharing of resources and at the same time,
+supports multi-environments.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					- 1-2 -
+©³©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©·
+©§ 1.2  NOTATIONS USED IN THIS MANUAL ©§
+©»©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¿
+	
+	Please  take note that  in this manual,  some  notations are being  used. Their
+respective meanings are as follows:
+
+	*  <CR>	©¤  This means press the return key once
+	*  \	©¤  This refers to the backslash in ASCII
+	*  ^	©¤  This refers to the control key.  For example, ^F means holding down 
+		    the F key together with the control key, and ^\  means holding down
+		    the control key together with the backslash key
+	*  %	©¤  Prompt for C Shell  
+	*  #	©¤  Prompt for Bourne Shell  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					- 1-3 -
+©³©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©·
+©§ 1.3  CWNN SYSTEM STRUCTURE ©§
+©»©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¿
+
+	cWnn  adopts the  Client-Server Model of  Unix operating  system.  The model is 
+made up of a  server and several clients.  One  server can  serve many  clients  at one 
+time.  The clients and server processes communicate through a well-defined protocol, but 
+are  completely independent.  As  a result, the clients  and server can be on different 
+machines communicating across the network, or on the same machine.
+	The clients  are the front-end processors  of the system and they interact with 
+the users.  The clients execute  on the  Unix shell and  request for services from  the 
+server via the socket. 
+	On the other hand, the  server will  run as a  background process.  It receives 
+service requests from the clients, performs the request, and passes the results back to 
+the clients via the socket.  
+
+	The server manages all the resources, such as  dictionaries and usage frequency 
+files, and  maintains  different input environments for each of its clients.  The input
+environment is  activated by executing the client "cuum".  To the user, each client has 
+a different  service environment  which  supports  different input  methods.  Note that
+there  may be more than  one server in the network, and each client may in turn obtains 
+services from different servers.  
+	Hence, cWnn is a  multi-environment  system.  The structure of cWnn is shown in 
+the following diagram. 
+ 
+	  client				   server
+	©°©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©´     	 	©°©¤©¤©¤©¤©¤©´
+	©¦ cuum		      ©¦		©¦ cserver  ©¦
+	©¦ front-end processor©À©¤©Ð©¤©¤©¤©¤©¤©¤©È          ©¦
+	©¸©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¼  ©¦		©¸©¤©Ð©¤©¤©¤©¼
+				  ©¦		    ©¦
+				  ©¦		    ©¦
+   	  client		  ©¦		    ©¦
+	©°©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©´  ©¦		©°©¤©Ø©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©´
+	©¦ cuum  	      ©¦  ©¦		©¦ System Resources : Dictionaries,   ©¦
+	©¦ front-end processor©À©¤©È		©¦		      Frequency files ©¦
+	©¸©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¼  ©¦		©¦ 		      and Grammar     ©¦
+	 	   :		  ©¦		©¦ 		      files   	      ©¦
+		   :		  ©¦		©¦				      ©¦
+	  client   :		  ©¦		©¦ Environment Resources : A env,     ©¦
+	©°©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©´  ©¦		©¦			   B env ...  ©¦
+	©¦ cuum               ©À©¤©¼		©¸©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¼
+	©¦ front-end processor©¦   
+	©¸©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¼ 
+
+			  Figure 1.1 : cWnn System Structure
+			  ©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤
+
+
+					- 1-4 -
+©³©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©·
+©§ 1.4  FEATURES ON THE SYSTEM STRUCTURE  ©§
+©»©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¿
+
+	One  main feature of  cWnn is its  system independency.  Every  environment will 
+have  individual environment files  according to the needs of the users.  Each  user may 
+specify  his own  environment  setup either  during or  after  system installation.  The 
+flexible environment setup includes the following:
+
+1. Input Automaton Setup
+©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥
+Input automaton is the  front-end  processor.  It allows  user to specify  his own input 
+environment according to his needs.  Through this  setup, Pinyin  input environment  and 
+Zhuyin input  environment  may be  specified.  Moreover, interfaces  like  the  keyboard 
+setup and function keys can be set.  For more details, refer to Chapter 7.
+
+2. Environment Setup
+©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥
+The service  environment of the user is  provided by the server.  It includes the setup 
+of conversion  methods,  grammer attributes  and  dictionaries, as well as the setup of 
+conversion parameters etc.  These can  be specified before the startup of the front-end 
+processor.  Refer to Chapter 5 for detailed descriptions.  Once the front-end is started 
+up, the  environment may also be set dynamically via keyboard.  Refer to  Chapter 5 for 
+detailed descriptions.
+
+3. Creation of Dictionaries and Grammer Files
+©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥
+Dictionaries and grammar files may be created using the utilities provided in the system.
+Users are able to  create their own  dictionaries to  suit their needs.  For example, a 
+computer professional  may have  his own dictionary  which consists of all the computer 
+terms needed.  This dictionary may be added into the system, hence enriching the system 
+resources.
+
+4. Encoded Input Method Setup
+©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥
+Besides phonetic input  methods, cWnn supports several encoded input methods.  In cWnn,
+the default encoded input methods are Wubi, Qianma and Cangjie.  The system is designed
+to allow any encoded input method to be installed. 
+
+5. Keyboard Setup
+©¥©¥©¥©¥©¥©¥©¥©¥©¥
+All the operations in  cWnn's input environment can be carried out by commands.  These 
+commands may be set via the keyboard.  Different users have different needs for keyboard 
+function.  Hence, by having  different keyboard setup, users are able to have different
+user interfaces.  For details, refer to Chapter 5. 
+
+
+
+
+					- 1-5 -
+NOTE:  Please take note that the  keys used in this manual (eg. PF1, PF2, ^\, ^F ..etc)
+       are only the keyboard setup in  cWnn system.  They  may be changed according to
+       the user.  Hence, all occurrence of these notations are merely the default setup 
+       in cWnn system.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					- 1-6 -
+©³©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©·
+©§ 1.5  HARDWARE AND SOFTWARE CONFIGURATIONS  ©§
+©»©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¿
+
+	cWnn is capable of displaying  Chinese characters based on  GB-2312  and CNS 
+internal codes.  It is developed on the Omron LUNA Unix Workstation, and is portable 
+to other Unix platforms. 
+ 
+		          Current Machines/OS that Support cWnn
+	©°©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©Ð©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©Ð©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©´
+	©¦      Hardware      ©¦    Operating System    ©¦     Window System  	©¦
+	©À©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©à©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©à©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©È
+	©¦    LUNA (Omron)    ©¦    UniOS-U, UniOS-B    ©¦        X, GMW	©¦
+	©¦		      ©¦                        ©¦                	©¦
+	©¦   LUNA II (Omron)  ©¦     UniOS-U, Mach      ©¦        X, GMW     	©¦
+	©¦    		      ©¦			©¦                	©¦
+	©¦  LUNA 88K (Omron)  ©¦ 	Mach		©¦	    X	  	©¦
+	©¦    		      ©¦			©¦                	©¦
+	©¦  	  Sun-3	      ©¦      SunOS 4.1		©¦      SunView, X 	©¦
+	©¦    		      ©¦			©¦                	©¦
+	©¦  	  Sun-4	      ©¦      SunOS 4.1		©¦      SunView, X 	©¦
+	©¦    		      ©¦			©¦                	©¦
+	©¦    SPARCstation    ©¦      SunOS 4.1		©¦      SunView, X   	©¦
+	©¸©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©Ø©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©Ø©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¼
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					- 1-7 -

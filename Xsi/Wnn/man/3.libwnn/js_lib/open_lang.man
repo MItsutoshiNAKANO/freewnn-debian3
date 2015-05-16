@@ -1,0 +1,88 @@
+.\"
+.\"   $Id: ./open_lang.man $
+.\"
+.\"
+.\" FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+.\" This file is part of FreeWnn.
+.\" 
+.\" Copyright Kyoto University Research Institute for Mathematical Sciences
+.\"                 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+.\" Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright FreeWnn Project 1999, 2000
+.\" 
+.\" Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+.\" 
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\" 
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\" 
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software
+.\" Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+.\"
+.TH JS_OPEN_LANG \  "20 September 1991"
+.SH 名称
+.sv 1
+.nf
+.ta 0.1i 2.5i
+js_open_lang()		ランゲージ・スペシフィックな変換サーバの
+              		使用を開始する。
+.fi
+.SH 形式
+.sv 1
+.nf
+.ta 0.1i 3i
+#include "jslib.h"
+
+WNN_JSERVER_ID *
+js_open(server, lang, timeout)
+char *server;		/* サーバのいるマシンのホスト名 */
+char *lang;		/* ランゲージ */
+int timeout;		/* タイムアウト時間 */
+.fi
+.SH 機能
+.HP 0
+.IP
+ランゲージ・スペシフィックな変換サーバの使用を開始する。
+サーバのいるマシンのホスト名 server が、NULLまたは、空文字列、または、
+"unix" の場合は、ホスト名は、"unix" になり、UNIX ドメインのソケットが
+使用される。この場合の、ソケットの終端名は、serverdefs ファイル中の
+lang が一致する行の第3項が使用される。それが見つからない場合は、
+デフォルト /tmp/jd_sockV4 である。
+それ以外の場合は、ホスト名は、gethostname(3N)で得た値になり、INET ドメ
+インのソケットが使用される。この場合の、サービス名は、serverdefs 
+ファイル中のlang が一致する行の第4項が使用される。それが見つからない
+場合は、デフォルト wnn4 である。
+
+lang で、変換対象の言語を指定する。
+.nf
+.ta 0.3i 2.5i
+	    "ja_JP"		日本語
+	    "zh_CN"		中国語
+	    "ko_KR"		韓国語
+	    "zh_TW"		台湾語
+.fi
+である。
+
+timeout(秒)以内に、サーバと接続できない場合は、接続を中断し異常終了する。
+タイムアウトの設定のために、SIGALARM を使用している。
+timeout が 0 または、負の場合は、SIGALARM を使用しない。
+.SH リターンバリュー
+.sv 1
+.nf
+正常終了時には、サーバIDを返す。
+異常終了時には、NULL を返す。
+.fi
+.SH 使用上の注意
+.HP 0
+.IP
+タイムアウトには、SIGALARM を使用しているので、注意が必要である。
+SIGALARM を使用する場合には、timeout に 0 を設定しなければならない。
+

@@ -1,0 +1,249 @@
+.\"
+.\"   $Id: ./ckey.man $
+.\"
+.\"
+.\" FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+.\" This file is part of FreeWnn.
+.\" 
+.\" Copyright Kyoto University Research Institute for Mathematical Sciences
+.\"                 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+.\" Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright FreeWnn Project 1999, 2000
+.\" 
+.\" Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+.\" 
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\" 
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\" 
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software
+.\" Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+.\"
+.TH CKEY \  "13 May 1992"
+.SH NAME
+ckey \- The standard definition of each function key in 
+       cWnn system.
+
+.SH DESCRIPTION
+ ----------------------------------------------------------
+.sp 0
+| Function | Other |  Description  |  Function  | Function |
+.sp 0
+|   Keys   |  Keys |               |  In Input  | In Input |
+.sp 0
+|          |       |               |   State    |  State   |
+.sp 0
+|   (a)    |  (b)  |    (c)        |   (d)      |   (e)    |
+.sp 0
+|----------+-------+---------------+------------+----------|
+|    -     |  ^\\   |To toggle input| Similar to | Similar  |
+|          |       | mode ON/OFF   | (c)        | to (c)   |
+|----------+-------+---------------+------------+----------|
+|   PF1    |   -   | To toggle     | To Toggle  | Similar  |
+|          |       | phonetic input| among input| to (d)   |
+|          |       | mode          | methods    |          |
+|----------+-------+---------------+------------+----------|
+|   PF2    |   -   | To toggle     | To toggle  | Similar  |
+|          |       | encoded input | among input| to (d)   |
+|          |       | mode          | methods    |          |
+|----------+-------+---------------+------------+----------|
+|   PF3    |   -   | To toggle     | To toggle  | Similar  |
+|          |       | ASCII         | among      | to (d)   |
+|          |       | character     | different  |          |
+|          |       | input mode    | ASCII      |          |
+|          |       |               | character  |          |
+|          |       |               | input      |          |
+|          |       |               | methods    |          |
+|----------+-------+---------------+------------+----------|
+|   PF4    |   -   | Toggle other  | To toggle  | Similar  |
+|          |       | input  mode   | among      | to (d)   |
+|          |       |(only in Pinyin| different  |          |
+|          |       | centred input | input      |          |
+|          |       | environment)  | methods    |          |
+|          |       |       +       |     +      |          |
+|          |       | Toggle the    | Similar to |          |
+|          |       | environment   | (c)        |          |
+|          |       | operation     |            |          |
+|          |       | functions     |            |          |
+|          |       |(same as PF6)  |            |          |
+|          |       |(only in Zhuyin|            |          |
+|          |       | centred input |            |          |
+|          |       | environment & |            |          |
+|          |       |Combined Pinyin|            |          |
+|          |       | & Zhuyin input|            |          |
+|          |       | environment   |            |          |
+|----------+-------+---------------+------------+----------|
+|   PF5    |   -   | To select the | Similar to | Similar  |
+|          |       | different     | (c)        | to (c)   |
+|          |       | input keys    |            |          |
+|          |       | allocations   |            |          |
+|----------+-------+---------------+------------+----------|
+|   PF6    |   -   | To toggle the | To select  | Similar  |
+|          |       | environment   | among the  | to (d)   |
+|          |       | operations    | different  |          |
+|          |       |               | environment|          |
+|          |       |               | operation  |          |
+|          |       |               | functions  |          |
+|----------+-------+---------------+------------+----------|
+|    -     |  ^G   | To quit the   | Similar to | Similar  |
+|          |       | environment   | (c)        | to (c)   |
+|          |       | operation     |            |          |
+|          |       | functions     |            |          |
+|----------+-------+---------------+------------+----------|
+|Conversion|  ^W   | To perform    | Similar to | Similar  |
+|   key    |       | Hanzi         | (c)        | to (d)   |
+|          |       | conversion    |     +      |          |
+|          |       |               | To list out|          |
+|          |       |               | possible   |          |
+|          |       |               | candidates |          |
+|----------+-------+---------------+------------+----------|
+|Conversion|   -   | To extract a  |     -      | Similar  |
+|   key    |       | candidate from|            | to (c)   |
+|          |       | the candidate |            |          |
+|          |       | list          |            |          |
+|----------+-------+---------------+------------+----------|
+|    -     |  ^Z   | To treat the  | Similar to | Similar  |
+|          |       | input string  | (c)        | to (d)   |
+|          |       | as a phrase & |     +      |          |
+|          |       | perform phrase| To list out|          |
+|          |       | conversion    | possible   |          |
+|          |       |               | phrase     |          |
+|          |       |               | candidates |          |
+|----------+-------+---------------+------------+----------|
+| Confirm  |  ^L   | To confirm the| Similar to | Similar  |
+|   key    |       | conversion    | (c)        | to (d)   |
+|          |       | result        |            |          |
+|----------+-------+---------------+------------+----------|
+| Confirm  |   -   | To extract a  |     -      | Similar  |
+|   key    |       | candidate     |            | to (c)   |
+|          |       | from the      |            |          |
+|          |       | candidate list|            |          |
+|----------+-------+---------------+------------+----------|
+|  Right   |  ^F   | To move cursor| To move the| Similar  |
+|  arrow   |       | one position  | cursor one | to (d)   |
+|   key    |       | to the right  | unit to the|    +     |
+|          |       | during input  | right      | To move  |
+|          |       | state, edit   |            | to the   |
+|          |       | state, & when |            | next     |
+|          |       | using PF6     |            | candidate|
+|          |       | functions     |            | on the   |
+|          |       |               |            | right    |
+|----------+-------+---------------+------------+----------|
+|  Left    |  ^B   | To move cursor| To move the| Similar  |
+|  arrow   |       | one position  | cursor one | to (d)   |
+|   key    |       | to the left   | unit to the|    +     |
+|          |       | during input  | left       | To move  |
+|          |       | state, edit   |            | to the   |
+|          |       | state, & when |            | next     |
+|          |       | using PF6     |            | candidate|
+|          |       | functions     |            | on the   |
+|          |       |               |            | left     |
+|----------+-------+---------------+------------+----------|
+|   Up     |  ^P   | To move to the| Similar to | Similar  |
+|  arrow   |       | previous menu | (c)        | to (c)   |
+|   key    |       | or previous   |     +      |    +     |
+|          |       | set of        | To recall  | To obtain|
+|          |       | candidates.   | the        | the      |
+|          |       | Also apply    | previous   | previous |
+|          |       | when using    | input      | single   |
+|          |       | functions in  |            | candidate|
+|          |       | PF6           |            |          |
+|----------+-------+---------------+------------+----------|
+|  Down    |  ^N   | To move to the| Similar to | Similar  |
+|  arrow   |       | next menu or  | (c)        | to (c)   |
+|   key    |       | the next set  |     +      |    +     |
+|          |       | of candidates.| To recall  | To obtain|
+|          |       | Also apply    | the        | the      |
+|          |       | when using    | next input | next     |
+|          |       | functions in  |            | single   |
+|          |       | PF6           |            | candidate|
+|----------+-------+---------------+------------+----------|
+|    -     |  ^D   | To delete an  | Similar to | Similar  |
+|          |       | input unit    | (c)        | to (d)   |
+|          |       |      +        |            |          |
+|          |       | Delete a word |            |          |
+|          |       | or character, |            |          |
+|          |       | or dictionary |            |          |
+|          |       | in the        |            |          |
+|          |       | environment   |            |          |
+|          |       | operations PF6|            |          |
+|----------+-------+---------------+------------+----------|
+| Backspace|   -   | To delete an  | Similar to | Similar  |
+|   key    |       | input         | (c)        | to (c)   |
+|          |       | character     |            |          |
+|----------+-------+---------------+------------+----------|
+|    -     |  ^E   | Move cursor to| Move cursor| Move the |
+|          |       | the last input| to the last| cursor to|
+|          |       | unit (end) or | unit of the| the last |
+|          |       | to the last   | user input | candidate|
+|          |       | candidate of  | string     | in the   |
+|          |       | the list.     |            | current  |
+|          |       | Also apply    |            | set of   |
+|          |       | when using    |            | candidate|
+|          |       | functions in  |            |          |
+|          |       | PF6           |            |          |
+|----------+-------+---------------+------------+----------|
+|    -     |  ^A   | Move cursor to| Move cursor| Move the |
+|          |       | the first     | to the     | cursor to|
+|          |       | unit          | first unit | the last |
+|          |       | (beginning) or| of the user| candidate|
+|          |       | to the first  | input      | in the   |
+|          |       | candidate of  | string     | current  |
+|          |       | of the list   |            | set of   |
+|          |       | Also apply    |            | candidate|
+|          |       | when using    |            |          |
+|          |       | functions in  |            |          |
+|          |       | PF6           |            |          |
+|----------+-------+---------------+------------+----------|
+|    -     |  ^K   | To undo a     | To delete  | Similar  |
+|          |       | conversion    | an input   | to (d)   |
+|          |       | from the      | string from|    +     |
+|          |       | cursor        | the cursor | Similar  |
+|          |       | position to   | position to| to (c)   |
+|          |       | the end of the| the end of | If press |
+|          |       | input string  | the input  | twice,   |
+|          |       |(if press once)| string     | will     |
+|          |       |               |(press once)| cancel   |
+|          |       |               |            | the whole|
+|          |       |               |            | converted|
+|          |       |               |            | Hanzi    |
+|          |       |               |            | string   |
+|----------+-------+---------------+------------+----------|
+|    -     |  ^I   | To shorten the|     -      | Separate |
+|          |       | length of a   |            | a word   |
+|          |       | word phrase by|            | into     |
+|          |       | one character |            |individual|
+|          |       |               |            |characters|
+|----------+-------+---------------+------------+----------|
+|    -     |  ^O   | To extend the |     -      | Join the |
+|          |       | length of a   |            |characters|
+|          |       | word phrase by|            | into one |
+|          |       | one character |            | word     |
+|----------+-------+---------------+------------+----------|
+|    -     |  ^G   | To extract a  |     -      | Similar  |
+|          |       | candidate from|            | to (c)   |
+|          |       | the candidate |            |          |
+|          |       | list          |            |          |
+|----------+-------+---------------+------------+----------|
+|    -     |  ^C   | To perform    |     -      | Re-enter |
+|          |       | reverse       |            | into the |
+|          |       | conversion    |            | input or |
+|          |       |               |            | insert   |
+|          |       |               |            | mode     |
+|          |       |               |            | (if press|
+|          |       |               |            | once )   |
+|          |       |               |            |    +     |
+|          |       |               |            | Perform  |
+|          |       |               |            | reverse  |
+|          |       |               |            |conversion|
+|          |       |               |            | (if press|
+|          |       |               |            | twice )  |
+ ----------------------------------------------------------

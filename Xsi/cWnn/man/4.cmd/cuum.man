@@ -1,0 +1,169 @@
+.\"
+.\"   $Id: ./cuum.man $
+.\"
+.\"
+.\" FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+.\" This file is part of FreeWnn.
+.\" 
+.\" Copyright Kyoto University Research Institute for Mathematical Sciences
+.\"                 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+.\" Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright FreeWnn Project 1999, 2000
+.\" 
+.\" Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+.\" 
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\" 
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\" 
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software
+.\" Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+.\"
+.TH CUUM \  "13 May 1992"
+.SH NAME
+cuum \- To start the front-end processor.
+.SH SYNOPSIS
+cuum  [-h/H] [-x/X]
+.sp 0
+      [-k  
+.I uumkeyfile
+]  [-c  
+.I convertkeyfile
+]
+.sp 0
+      [-r  
+.I rkfile
+]      [-D  
+.I hostname
+]
+.sp 0
+      [-n  
+.I username
+]    [-l  
+.I lines
+]
+.SH DEFAULT PATH
+/usr/local/bin/cWnn4/cuum
+.SH DESCRIPTION
+There are two more input environments: 
+.sp 0
+(1) Pinyin centred input environment
+.sp 0
+(2) Zhuyin centred input environment
+.sp 0
+.ad
+These two environments can be started up by using the "-r" option of 
+the "cuum" command together with the default path of each input 
+environment.  For example, to activate Pinyin centred input environment,
+execute the following:
+.sp 0
+.na
+     cuum  -r  /usr/local/lib/wnn/zh_CN/rk_p
+
+.ad
+Once "cuum" is executed, the initialization file for the front-end 
+processor will be read from ONE of the following paths, in decreasing order: 
+.sp 0
+(1) The file specified by the UUMRC C-Shell environment 
+    variable.
+.sp 0
+(2) @HOME/.uumrc
+.sp 0
+(3) /usr/local/lib/wnn/zh_CN/uumrc  (default path)
+
+After the initialization file is read, all the initializing operations set 
+in the file will be performed.  
+
+If the user happens to start up cuum after it has already been started, 
+an error message will be given.  Refer to cWnn manual for the error messages.
+.SH OPTIONS
+.IP -H 
+The input mode will be set to ON after the startup of cuum.
+.IP -h 
+The input mode will be set to OFF after the startup of cuum (default).
+.IP -X 
+During cuum startup, the flow control of tty is ON (default).
+.IP -x
+During cuum startup, the flow control of tty is OFF.
+.IP -k  
+.I uumkeyfile
+.sp 0
+Specify the keyboard definition file.  If this option is not specified, 
+ONE of the following definition files will be read by default, in 
+decreasing order:
+.sp 0
+(1) The filename indicated by "setuumkey" in the 
+    initialization file "uumrc".  
+.sp 0
+(2) /usr/local/lib/wnn/zh_CN/uumkey
+.IP -c  
+.I convertkeyfile 
+.sp 0
+Specify the conversion file for the keyboard input codes.  If this option 
+is not specified, ONE of the following files will be read by default, in 
+decreasing order:
+.sp 0
+(1) The filename indicated by "setconvkey" in the 
+    initialization file "uumrc" . 
+.sp 0
+(2) /usr/local/lib/wnn/cvt_key_tbl
+.IP -r  
+.I rkfile 
+.sp 0
+Specify the directory of the input mode definition file of the input 
+automaton.  If this option is not specified, ONE of the followings 
+will be read by default, in decreasing order:
+.sp 0
+(1) The directory indicated by "setrkfile" in the 
+    initialization file "uumrc".  
+.sp 0
+(2) /usr/local/lib/wnn/zh_CN/rk
+.IP -l  
+.I lines
+.sp 0
+Specify the number of lines for input at the front-end processor.  
+(0  <  lines  <  window_line-1).  
+.sp 0
+The maximum input line is the window line minus one.  The default line 
+number is 1.
+.IP -D  
+.I hostname
+.sp 0
+Specify the server at another host indicated by 
+.sp 0
+.I hostname.  
+In this case, 
+each user environment may be set via "setenv" in the front-end processor 
+initialization file, for example "uumrc".
+.sp 0
+If no 
+.I hostname 
+is specified, the one specified by the environment variable 
+CSERVER will be used.
+.IP -n  
+.I username
+.sp 0
+Specify the username for the front-end processor. If the  
+.I username
+is 
+not specified, the value in environment variable UUMUSER will be taken as 
+the default value.  If UUMUSER is not defined, the username of the current 
+front-end processor will be taken.
+.SH NOTE
+.IP 1.
+The command options inside [ ] shown in the Command Format indicates that 
+they are optional.  If they are not required, "cuum" alone is sufficient 
+to start up the front-end processor.
+.IP 2.
+During the startup of cuum, a "pty" is required from the operating system.  
+If "pty" is unable to be obtained, cuum startup will fail.  Similarly, if 
+the initialization file, input automaton definition files and keyboard 
+definition file cannot be read in, cuum startup will also fail.

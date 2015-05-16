@@ -1,0 +1,76 @@
+# FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+# This file is part of FreeWnn.
+#
+# Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+# Copyright 1991, 1992 by Massachusetts Institute of Technology
+#
+# Author: OMRON SOFTWARE Co., Ltd. <freewnn@rd.kyoto.omronsoft.co.jp>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with GNU Emacs; see the file COPYING.  If not, write to the
+# Free Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+include @top_srcdir@/makerule.mk
+
+   INSTALLFLAGS = $(INSTDATFLAGS)
+
+XWNMOJDS = ximrc 	ximrc_vi 	ximconf 	cvt_xim_tbl
+
+XWNMOLANGJDS = uumrc.xim 	uumrc_vi.xim 	uumrc_e.xim 	uumkey.xim 	uumkey_v.xim 	uumkey_e.xim
+
+XWNMOMSGS = xim.msg 	xjutil.msg
+
+all::
+
+includes:: $(XWNMOMSGS)
+
+xim.msg:  $(XWNMOSRC)/xi.msg.ja_JP
+	$(RM) $@
+	$(LN) $? $@
+
+xjutil.msg:  $(XJUTILSRC)/xj.msg.ja_JP
+	$(RM) $@
+	$(LN) $? $@
+
+install::  $(XWNMOJDS)
+	@if [ -d $(DESTDIR)$(WNNWNNDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(WNNWNNDIR)); fi
+	@for flag in ${MAKEFLAGS} ''; do \
+	case "$$flag" in *=*) ;; *[i]*) set +e;; esac; done; \
+	for i in  $(XWNMOJDS); do \
+	(set -x; $(INSTALL) $(INSTALLFLAGS) $(INSTDATFLAGS) $$i $(DESTDIR)$(WNNWNNDIR)); \
+	done
+
+install::  $(XWNMOLANGJDS)
+	@if [ -d $(DESTDIR)$(JWNNWNNDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(JWNNWNNDIR)); fi
+	@for flag in ${MAKEFLAGS} ''; do \
+	case "$$flag" in *=*) ;; *[i]*) set +e;; esac; done; \
+	for i in  $(XWNMOLANGJDS); do \
+	(set -x; $(INSTALL) $(INSTALLFLAGS) $(INSTDATFLAGS) $$i $(DESTDIR)$(JWNNWNNDIR)); \
+	done
+
+install::  $(XWNMOMSGS)
+	@if [ -d $(DESTDIR)$(JWNNWNNDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(JWNNWNNDIR)); fi
+	@for flag in ${MAKEFLAGS} ''; do \
+	case "$$flag" in *=*) ;; *[i]*) set +e;; esac; done; \
+	for i in  $(XWNMOMSGS); do \
+	(set -x; $(INSTALL) $(INSTALLFLAGS) $(INSTDATFLAGS) $$i $(DESTDIR)$(JWNNWNNDIR)); \
+	done
+
+depend::
+
+clean::
+	$(RM) $(XWNMOMSGS)
+

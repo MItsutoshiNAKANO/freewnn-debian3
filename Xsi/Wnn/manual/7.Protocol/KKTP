@@ -1,0 +1,1494 @@
+ 
+仮名漢字変換プロトコル（ＫＫＴＰバージョン4.003）一覧
+
+1.	コネクションの確立
+
+KKTP は、ストリーム型のソケットを用いて通信を行なう。
+アドレス・ファミリーとしては、INET と UNIX と両方サポートしている。
+INET 型の場合、ポート番号は、0x5701 である。
+
+socket, connect により、通信路の確立は終了する。
+以下、個々の通信プリミティブについてプロトコルを述べる。
+通信路を確立した後、最初に、JS_OPEN プリミティブを呼ぶ必要がある。
+
+
+2.	データの種類
+
+  このプロトコルで使用されるデータの種類と名前、構造は以下の通り。
+
+  ・基本型
+	BYTE:		8ビットデータ
+	WORD:		16ビット文字
+	INT:		32ビット符号付き整数
+
+  ・定数
+	NULL:		WORD型	 	0x0000
+	BNULL:		BYTE型		0x00
+	EOF:		BYTE型		0xFF,0xFF
+	ERROR:		INT型		-1
+
+  ・文字列
+	TEXT:		WORD列、列の最後に終端文字として NULL を持つ。
+	STRING:	BYTE列、列の最後に終端文字として BNULL を持つ。
+    	FILE:		BYTE列、列の最後に終端文字として EOF もつ。
+
+	#	FILE型 はファイルの内容をBYTE列にしたもの。
+	#	ただし、BYTE の内容が 0xFF の場合はこれを
+	#	0xFF, 0x00 に変換する。
+
+
+  ・構造を持ったデータ
+
+	データ構造の記述は以下のように行なう。
+
+	(0) データの並び
+
+	    { A B C }		データ A B C の並びを表す。
+
+	(1) データの繰り返し
+
+	    repeat ( A ) { B C }	データの並び B C の A 回繰り返し。
+
+	(2) 選択
+
+	    if ( A ) { B C }
+
+	条件 A が成り立つ場合には、データ並び B C をとる。
+
+	(3) 終了
+
+		exit		データの終り。
+
+    構造を持ったデータ
+
+		
+    UNIFIER:	ファイル唯一子
+	{
+		INT	time
+		INT	dev
+		INT	inode
+		repeat(16) {
+			BYTE	createhost
+		}
+	}
+
+
+    JOHO:		単語情報、複数の単語に関する情報を持つ。
+						struct	wnn_jdata
+	{		
+		INT	語数
+		INT	送られる文字列の大きさ
+			(terminate 文字は含まれていない)
+		repeat(語数){
+			INT	辞書番号	
+			INT	辞書内のエントリ番号
+			INT	品詞番号
+			INT	頻度
+			INT	"今使ったよ"ビット
+			INT	辞書内頻度
+			INT	辞書内の"今使ったよ"ビット
+		}
+		repeat(語数){
+			TEXT	読み
+			TEXT	漢字
+			TEXT	コメント
+		}
+	}
+#	ただし、「語数」に達していないうちに「辞書番号」が -1 になった場合には、
+#	単語情報はその前の語数分のみとする。
+
+
+    DIC:		辞書情報		struct	wnn_dic_info
+	{
+		INT	辞書番号
+		INT	辞書本体のファイル番号
+		INT	頻度のファイルの番号
+		INT	辞書の登録可能性
+		INT	頻度の更新可能性
+		INT	辞書使用中
+		INT	変換時の辞書の優先度
+		INT	逆変換
+		TEXT	辞書のコメント
+		STRING	辞書のファイル名
+		STRING	頻度のファイル名
+		STRING	辞書のパスワード
+		STRING	頻度のパスワード
+		INT	辞書の種類
+		INT	辞書の語数
+		INT	localf
+		INT	hlocalf
+	}
+
+
+    DAIBUN:		大文節			struct	wnn_dai_bunsetsu
+	{
+	  INT	大文節数
+	  if(大文節数 == -1){
+		INT	エラー番号
+		exit
+	  }
+	  INT	小文節数
+	  INT	漢字情報長さ
+	  repeat(大文節数){
+		INT	候補文節の end char index
+		INT	候補文節の start char index
+		INT	小文節数
+		INT	大文節評価値
+	  }
+	  repeat(大文節数) {
+		  repeat(各大文節の小文節数){
+			INT	候補文節の end char index
+			INT	候補文節の top char index
+			INT	候補文節の自立語 end char index
+			INT	自立語の辞書エントリ番号
+			INT	候補文節の自立語辞書エントリー
+			INT	候補自立語の頻度
+			INT	候補自立語の"今使ったよ"ビット
+			INT	自立語品詞
+			INT	大文節の先頭
+			INT	後ろの文節に接続できるか ?
+			INT	接続ベクトルテーブルへのポインタ
+			INT	小文節評価値
+		}
+	  }
+	  repeat(大文節数) {
+		repeat(各大文節の小文節数){
+			TEXT	漢字		# 自立語文字列
+			TEXT	読み		# 自立語の読み文字列
+			TEXT	付属語
+		}
+	}
+
+
+    SHOBUN:	小文節			struct	wnn_sho_bunsetus
+	{
+		INT	小文節数
+		if(小文節数 == -1){
+			INT	エラー番号
+			exit
+		}
+		INT	漢字情報長さ
+		repeat(小文節数){
+			INT	候補文節の end char index
+			INT	候補文節の start char index
+			INT	候補文節の自立語 end char index
+			INT	自立語辞書内のエントリ番号
+			INT	候補文節の自立語辞書 entry
+			INT	自立語品詞
+			INT	候補自立語の"今使ったよ"ビット
+			INT	自立語品詞
+			INT	大文節の先頭
+			INT	後ろの文節に接続できるか ?
+			INT	接続テーブルへのポインタ
+			INT	小文節評価値
+		}
+		repeat(小文節数){
+			TEXT	漢字		# 自立語文字列
+			TEXT	読み		# 自立語の読み文字列
+			TEXT	付属語
+		}
+	}
+
+
+
+3.	受渡しの方式
+
+それぞれの型のデータについて、受け渡し方は、以下の通りである。受け渡し
+方は、クライアントからサーバ、サーバからクライアントのどちらの通信でも
+同じである。
+
+	BYTE		1バイト送る。
+	WORD		上位バイトから順に2バイト送る。
+	INT		上位バイトから順に4バイト送る。
+
+	TEXT		WORD を先頭から順に送り、最後に Null を送る。
+	STRING		BYTE を先頭から順に送り、最後に Bnull を送る。
+
+構造を持ったデータは、データの並びの順に送り出す。
+ここのデータは上記の手順に従う。
+
+
+4.	個々のプリミティブの説明
+
+4.0	凡例
+
+	本ドキュメントの書式と表記法について
+
+    Request =>
+
+	クライアントから、サーバへ向けての要求のデータの並び。
+
+	"名称"、"型"、"内容" の順に書かれている。
+
+	データの並び順は制御構造に従う。
+
+    <= Reply
+
+	サーバーからクライアントに向けての応答データの並び。
+
+	表記法は Request と同じ。
+
+    #	必要に応じて、このようにコメントが入れられる。
+
+
+4.1	JS_OPEN
+	  
+	  日本語マルチクライアントサーバ (jserver) の使用を開始する。
+
+    Request =>
+
+	識別子				INT		0x0001
+	バージョン番号			INT		0x4003
+	ホスト名			STRING
+	ユーザー名			STRING
+
+    <= Replay
+
+	状態				INT
+	if ( 状態 == ERROR ) {
+		エラー番号		INT
+	}
+
+
+
+4.2	JS_CLOSE
+
+	  日本語マルチクライアントサーバの使用を終了する。
+
+    Request =>
+
+	識別子			INT		0x0003
+
+    <= Reply
+
+	状態			INT
+	if(状態 == ERROR){
+		エラー番号	INT
+	}
+
+
+4.3	JS_CONNECT
+
+	  サーバとの間にコネクションを張る。
+
+    Request =>
+
+	識別子			INT		0x0005
+	環境名			STRING
+
+    <= Replay
+
+	環境ID			INT
+	if(環境ID == ERROR){
+	    エラー番号		INT
+	}
+
+
+4.4	JS_ENV_EXIST
+	
+	  サーバ中に環境が存在するかを調べる。
+
+    Request =>
+
+	識別子			INT		0x0007
+	環境名			STRING
+
+    <= Replay
+
+	返値			INT
+
+
+4.5	JS_ENV_STICKY
+
+	  環境をスティッキーにする。
+
+    Request =>
+
+	識別子			INT		0x0008
+	環境ID			INT
+
+    <= Replay
+
+	返値			INT
+
+
+4.6	JS_ENV_UN_STICKY
+
+	  環境をスティッキーにしない。
+
+    Request =>
+
+	識別子			INT		0x0009
+	環境ID			INT
+
+    <= Replay
+
+	返値			INT
+
+
+4.7	JS_DISCONNECT
+
+	  サーバとの間のコネクションを切る。
+	  	  	  	
+    Request =>
+
+	識別子			INT		0x0006
+	環境ID			INT
+
+    <= Replay
+
+	状態			INT
+	if(状態 == ERROR){
+		エラー番号	INT
+	}
+
+
+4.8	JS_PARAM_SET
+
+	  変換パラメータを設定する。
+
+    Request =>
+
+	識別子				INT		0x0041
+	環境ID				INT
+
+	N(大)文節解析			INT
+	大文節中の小文節の最大数	INT
+	自立語の頻度パラメータ		INT
+	小文節長のパラメータ		INT
+	自立語長のパラメータ		INT
+	今使ったよビットのパラメータ	INT
+	辞書のパラメータ		INT
+	小文節の評価値のパラメータ	INT
+	大文節長のパラメータ		INT
+	小文節数のパラメータ		INT
+	疑似品詞 数字の頻度		INT
+	疑似品詞 カナの頻度		INT
+	疑似品詞 英数の頻度		INT
+	疑似品詞 記号の頻度		INT
+	疑似品詞 閉じ括弧の頻度		INT
+	疑似品詞 付属語の頻度		INT
+	疑似品詞 開括弧の頻度		INT
+
+    <= Replay
+
+	状態				INT
+	if(状態 == ERROR){
+		エラー番号		INT
+	}
+
+
+4.9	JS_PARAM_GET
+
+	  変換パラメータを取り出す。
+
+    Request =>
+
+	識別子				INT		0x0042
+	環境ID				INT
+
+    <= Replay
+
+	状態				INT
+	if(状態 == ERROR){
+		エラー番号		INT
+		exit
+	}
+
+	N(大)文節解析			INT
+	大文節中の小文節の最大数	INT
+	自立語の頻度パラメータ		INT
+	小文節長のパラメータ		INT
+	自立語長のパラメータ		INT
+	今使ったよビットのパラメータ	INT
+	辞書のパラメータ		INT
+	小文節の評価値のパラメータ	INT
+	大文節長のパラメータ		INT
+	小文節数のパラメータ		INT
+	疑似品詞 数字の頻度		INT
+	疑似品詞 カナの頻度		INT
+	疑似品詞 英数の頻度		INT
+	疑似品詞 記号の頻度		INT
+	疑似品詞 閉じ括弧の頻度		INT
+	疑似品詞 付属語の頻度		INT
+	疑似品詞 開括弧の頻度		INT
+
+
+4.10	JS_MKDIR
+
+	  サーバの管理下にディレクトリを作成する。
+
+    Request =>
+
+	識別子				INT		0x0051
+	環境ID				INT
+	パス名				STRING
+
+    <= Replay
+
+	状態				INT
+	if(状態 == ERROR){
+		エラー番号		INT
+	}
+
+
+4.11	JS_ACCESS
+
+	  ファイルのアクセス権を調べる。
+
+    Request =>
+
+	識別子				INT		0x0053
+	環境ID				INT
+	アクセスモード			INT
+	パス名				STRING
+
+    <= Replay
+
+	状態				INT
+
+
+4.12	JS_FILE_LIST_ALL
+
+	  サーバ中の全てのファイルに関する情報を得る。
+
+    Request =>
+
+	識別子				INT		0x0056
+
+    <= Replay
+
+	個数				INT
+	repeat(個数){
+		ファイル番号		INT
+		ファイルロケーション	INT
+		環境からの参照数	INT
+		ファイルの種類		INT
+		ファイル名		STRING
+	}
+
+	# ファイルロケーション	1: サーバホストのファイル
+	#			0: クライアントホストのファイル
+
+
+4.13	JS_FILE_LIST
+
+	  環境中の全てのファイルに関する情報を得る。
+
+    Request =>
+
+	識別子				INT		0x0068
+	環境ID				INT
+
+    <= Replay
+
+	個数				INT
+	repeat(個数){
+		ファイル番号		INT
+		ファイルロケーション	INT
+		環境からの参照数	INT
+		ファイルの種類		INT
+		ファイル名		STRING
+	}
+
+4.14	JS_FILE_STAT
+
+	  ファイルのタイプを調べる。
+
+    Request =>
+
+	識別子				INT		0x006f
+	環境ID				INT
+	パス名				STRING
+
+    <= Replay
+
+	ファイルの種類			INT
+
+4.15	JS_FILE_INFO
+
+	  ファイルの情報を調べる。
+
+    Request =>
+
+	識別子				INT		0x0069
+	環境ID				INT
+	ファイルID			INT
+
+    <= Replay
+
+	状態				INT
+	if(状態 == ERROR){
+		エラー番号		INT
+		exit
+	}	
+
+	ファイル番号			INT
+	ファイルロケーション		INT
+	環境からの参照数		INT
+	ファイルの種類			INT
+
+
+4.16	JS_FILE_LOADED
+
+	  サーバマシン上のファイルがロードされているかを調べる。
+
+    Request =>
+
+	識別子				INT		0x006a
+	パス名				STRING
+
+    <= Replay
+
+	状態				INT
+
+
+4.17	JS_FILE_LOADED_LOCAL
+	
+	  クライアントマシン上のファイルがロードされているかを調べる。
+
+# ローカルなファイルのヘッダー部分の情報を送り、そのファイルが
+#	サーバ内に存在するかどうかを得る。
+
+    Request =>
+
+	識別子				INT		0x006b
+	ファイル唯一子			UNIFIER
+
+    <= Replay
+
+	状態				INT
+
+
+4.18	JS_HINDO_FILE_CREATE
+
+	  辞書ファイルの頻度ファイルを作る。
+
+    Request =>
+
+	識別子				INT		0x0065
+	環境ID				INT
+	ファイルID			INT
+	ファイル名			STRING
+	コメント			TEXT
+	パスワード文字列		STRING
+
+    <= Replay
+
+	状態				INT
+	if(状態 == ERROR){
+		エラー番号		INT
+	}
+
+
+4.19	JS_DIC_FILE_CREATE
+
+	  辞書ファイルの作成を行なう。
+
+    Request =>
+
+	識別子				INT		0x0066
+	環境ID				INT
+	ファイル名			STRING
+	コメント			TEXT
+	パスワード文字列		STRING
+	頻度部分パスワード文字列	STRING
+	辞書のタイプ			INT
+
+    <= Replay
+
+	状態				INT
+	if(状態 == ERROR){
+		エラー番号		INT
+	}
+
+
+4.20	JS_FILE_DISCARD
+
+	  ファイルをサーバ上からなくす。
+
+    Request =>
+
+	識別子				INT		0x006c
+	環境ID				INT
+	ファイルID			INT
+
+    <= Reply
+
+	状態				INT
+	if(状態 == ERROR){
+		エラー番号		INT
+	}
+
+
+4.21	JS_FILE_READ
+
+	  サーバ側のファイルをロードする。
+
+    Request =>
+
+	識別子				INT		0x0061
+	環境ID				INT
+	ファイル名			STRING
+
+    <= Reply
+
+	ファイルID			INT
+	if( ファイルID == ERROR){
+		エラー番号		INT
+	}
+
+
+4.22	JS_FILE_WRITE
+
+	  サーバマシン上にファイルをセーブする。
+
+    Request =>
+
+	識別子				INT		0x0062
+	環境ID				INT
+	ファイルID			INT
+	ファイル名			STRING
+
+    <= Replay
+
+	状態				INT
+	if(状態 == ERROR){
+		エラー番号		INT
+	}
+
+
+4.23	JS_FILE_RECEIVE
+
+	  クライアント側へファイルをダウンロードする。
+
+    Request =>
+
+	識別子				INT		0x0064
+	環境ID				INT
+	ファイルID			INT
+
+    <= Reply
+
+	ファイル名			STRING
+	    # サーバ内に蓄えられていた名前
+
+    Request =>
+
+	if(中断したい時){
+	    # 条件「中断したい時」は、Reply の内容を見て決める。
+
+		中断する		INT		-1
+		exit
+	}
+	継続する			INT		0
+
+	ファイル唯一子			UNIFIER
+	    # ファイルをセーブしたい場所に Wnn のファイルが存在する
+	    # 場合、そのファイル唯一子を送る。それ以外の場合には、
+	    # すべて0を送る。
+
+    <= Reply
+
+	モード				INT
+	    # ファイルを書き換える必要性を「モード」として返す
+	    #	モード=-1:エラー
+	    #	モード=0:必要なし
+	    #	モード=1:全体を書き換える
+	    #	モード=2:辞書の頻度部分のみを書き換える
+	    #	モード=3:元のファイルと異なる内容を書き込む
+
+	if (モード == ERROR) {
+		エラー番号		INT
+		exit
+	}
+
+    Request =>
+
+	if (中断したい時) {
+	    # 条件「中断したい時」は、Reply の内容を見て決める。
+
+		中断する		INT		-1
+		exit
+	}
+
+	継続する			INT		0
+
+    <= Reply
+
+	ファイルの内容			FILE
+	    # モード=1,2,3の時、ファイルの先頭から送られてくる。
+	    #		モード = 1,3 の時は、ファイルの最後まで送られる。
+	    #		モード = 2 の時は、頻度部分の最後までが送られる。
+
+	状態				INT
+	if (状態 == ERROR){
+		エラー番号		INT
+	}
+
+
+4.24	JS_FILE_SEND
+
+	  クライアント側のファイルをアップロードする。
+
+    Request =>
+
+	識別子				INT		0x0063
+	環境ID				INT
+	ファイル唯一子			UNIFIER
+
+	# まず、ファイルがすでにサーバ内に存在しているか調べる。
+
+    <= Replay
+
+	存在				INT
+	if (存在 != -1) {
+	    # ファイルがすでに存在している。
+
+		状態			INT
+		if (状態 == ERROR) {
+			エラー番号	INT
+			exit
+		}
+		exit
+	}	
+	状態				INT
+	if (状態 == ERROR) {
+		エラー番号		INT
+		exit
+	}
+
+    Request =>
+
+	ファイルの内容			FILE
+	    # もし、何かの理由でファイルの送信をしない時には、
+	    # 大きさ0の文字列を送る。
+
+    <= Reply
+
+	状態				INT
+	if (状態 == ERROR) {
+		エラー番号		INT
+	}
+
+
+4.25	JS_DIC_ADD
+
+	  使用辞書を追加する。
+
+    Request =>
+
+	識別子				INT		0x0021
+	環境ID				INT
+	ファイルID			INT
+	頻度ファイルのファイルID	INT
+	プライオリティ			INT
+	更新可能か			INT
+	頻度更新可能か			INT
+	パスワード			STRING
+	頻度パスワード			STRING
+	正変換/逆変換			INT
+
+    <= Replay
+
+	状態				INT
+	if ( 状態 == ERROR ) {
+		エラー番号		INT
+	}
+
+
+4.26	JS_DIC_DELETE
+
+	  使用辞書を削除する。
+
+    Request =>
+
+	識別子				INT		0x0022
+	環境ID				INT
+	辞書no				INT
+
+    <= Reply
+
+	状態				INT
+	if (状態 == ERROR) {
+		エラー番号		INT
+	}
+
+
+4.27	JS_DIC_USE
+
+	  辞書の使用／不使用の状態を設定する。
+
+    Request =>
+
+	識別子				INT		0x0023
+	環境ID				INT
+	辞書no				INT
+	flag				INT		# 0 か 1
+
+    <= Reply
+
+	状態				INT
+	if (状態 == ERROR) {
+		エラー番号		INT
+	}
+
+
+4.28	JS_FUZOKUGO_SET
+
+	  付属語ファイルを指定する。
+
+    Request =>
+
+	識別子				INT		0x0029
+	環境ID				INT
+	ファイルID			INT
+
+    <= Reply
+
+	状態				INT
+	if (状態 == ERROR) {
+		エラー番号		INT
+	}
+
+
+4.29	JS_FUZOKUGO_GET
+
+	  付属語ファイルのファイル番号を得る。
+
+    Request =>
+
+	識別子				INT		0x0030
+	環境ID				INT
+
+    <= Reply
+
+	状態				INT
+	if (状態 == ERROR) {
+		エラー番号		INT
+	}
+
+
+4.30	JS_DIC_LIST_ALL
+
+	  全ての辞書情報を得る。
+
+    Request =>
+
+	識別子				INT		0x0029
+
+    <= Reply
+
+	個数				INT
+	repeat(個数){
+		辞書情報		DIC
+	}
+
+
+4.31	JS_DIC_LIST
+
+	  使用中の辞書情報を得る。
+
+    Request =>
+
+	識別子				INT		0x0024
+	環境ID				INT
+
+    <= Reply
+
+	個数				INT
+	repeat(個数){
+		辞書情報		DIC
+	}
+
+
+4.32	JS_WORD_ADD
+
+	  辞書に単語を登録する。
+	  
+    Request =>
+
+	識別子				INT		0x0031
+	環境ID				INT
+	辞書no				INT
+	読み				TEXT
+	漢字				TEXT
+	コメント			TEXT
+	品詞				INT
+	初期頻度			INT
+
+    <= Reply
+
+	状態				INT
+	if (状態 == ERROR) {
+		エラー番号		INT
+	}
+
+
+4.33	JS_WORD_DELETE
+
+	  辞書から単語を削除する。
+
+    Request =>
+
+	識別子				INT		0x0032
+	環境ID				INT
+	辞書no				INT
+	エントリ			INT
+
+    <= Reply
+
+	状態				INT
+	if (状態 == ERROR) {
+		エラー番号		INT
+	}
+
+
+4.34	JS_WORD_SEARCH
+
+	  辞書から単語を検索する。
+
+    Request =>
+
+	識別子				INT		0x0033
+	環境ID				INT
+	辞書no				INT
+	読み				TEXT
+
+    <=  Reply
+
+	辞書単語情報			JOHO
+
+
+4.35	JS_WORD_SEARCH_BY_ENV
+
+	  環境の内の全ての辞書から単語を検索する。
+
+    Request =>
+
+	識別子				INT		0x0034
+	環境ID				INT
+	読み				TEXT
+
+    <= Replay
+
+	辞書単語情報			JOHO
+
+4.36	JS_WORD_INFO
+
+	  辞書引きを行なう。
+
+    Request =>
+
+	識別子				INT		0x0034
+	環境ID				INT
+	辞書no				INT
+	エントリ			INT
+
+    <= Reply
+
+	状態				INT
+	if (状態 == ERROR) {
+		エラー番号		INT
+	}
+	読み				TEXT
+
+    Request =>
+
+	辞書単語情報			JOHO		# 1つのみである
+
+
+4.37	JS_WORD_COMMENT_SET
+
+	  単語にコメントをセットする。
+
+    Request =>
+
+	識別子				INT		0x0036
+	環境ID				INT
+	辞書no				INT
+	エントリ			INT
+	コメント			TEXT
+
+    <= Reply
+
+	状態				INT
+	if (状態 == ERROR) {
+		エラー番号		INT
+	}
+
+4.38	JS_DIC_INFO
+
+	  辞書情報の取り出し。
+
+    Request =>
+
+	識別子				INT		0x0025
+	環境ID				INT
+	辞書no				INT
+
+    <= Reply
+
+	状態				INT
+	if (状態 == ERROR) {
+		エラー番号		INT
+	}
+	辞書情報			DIC
+
+4.39	JS_WHO
+
+	  サーバの使用者を得る。
+
+    Request =>
+
+	識別子					INT		0x0039
+
+    <= Reply
+
+	個数					INT
+	if (個数 == ERROR) {
+		エラー番号			INT
+	}
+	repeat(個数){
+		ソケットディスクリプタ		INT
+		ユーザ名			STRING
+		ホスト名			STRING
+		repeat(j=0:WNN_MAX_ENV_OF_A_CLIENT){
+			環境番号列		INT
+		}
+	}
+
+
+4.40	JS_ENV_LIST
+
+	  サーバ中の全ての環境に関する情報を得る。
+
+    Request =>
+
+	識別子					INT		0x0055
+
+    <= Reply
+
+	個数					INT
+	if (個数 == ERROR) {
+		エラー番号			INT
+	}
+
+	repeat(個数){
+		環境番号			INT
+		環境名				STRING
+		参照数				INT
+		付属語のファイル番号		INT
+		使用辞書数			INT
+		repeat(j=0:WNN_MAX_JISHO_OF_AN_ENV){
+			使用辞書番号		INT
+		}
+		repeat(j=0:WNN_MAX_FILE_OF_AN_ENV){
+			使用ファイル番号	INT
+		}
+	}
+
+4.41	JS_HINDO_SET
+
+	  辞書ファイルの頻度を設定する。
+
+    Request =>
+
+	識別子				INT		0x0018
+	環境ID				INT
+	辞書no				INT
+	エントリ			INT
+	今使ったよビット		INT
+	頻度				INT
+
+    <= Reply
+
+	状態				INT
+	if (状態 == ERROR) {
+		エラー番号		INT
+	}
+
+
+4.42	JS_KANREN
+
+	  連文節変換を行なう。
+
+    Request =>
+
+	識別子				INT		0x0011
+	環境ID				INT
+	読み				TEXT
+	(前の)品詞			INT
+	(前の)付属語			TEXT
+	終端ベクトル			INT
+	終端ベクトル1			INT
+	終端ベクトル2			INT
+
+    <= Reply
+
+	大文節受けとり			DAIBUN
+
+
+4.43	JS_KANTAN_DAI
+
+	  大文節単位で単文節変換を行なう。
+
+    Request =>
+
+	識別子				INT		0x0014
+	環境ID				INT
+	読み				TEXT
+	(前の)品詞			INT
+	(前の)付属語			TEXT
+	終端ベクトル			INT
+	終端ベクトル1			INT
+
+    <= Reply
+
+	大文節受けとり			DAIBUN
+
+
+4.44	JS_KANTAN_SHO
+
+	  小文節単位で単文節変換を行なう。
+
+    Request =>
+
+	識別子				INT		0x0012
+	環境ID				INT
+	読み				TEXT
+	(前の)品詞			INT
+	(前の)付属語			TEXT
+	終端ベクトル			INT
+	終端ベクトル1			INT
+
+    <= Reply
+
+	小文節受けとり			SHOBUN
+
+
+4.45	JS_KANZEN_DAI
+
+	  大文節単位で単文節変換し全候補を得る。
+
+    Request =>
+
+	識別子				INT		0x0015
+	環境ID				INT
+	読み				TEXT
+	(前の)品詞			INT
+	(前の)付属語			TEXT
+	終端ベクトル			INT
+	終端ベクトル1			INT
+
+    <= Reply
+
+	大文節受けとり			DAIBUN
+
+
+4.46	JS_KANZEN_SHO
+
+	  小文節単位で単文節変換し全候補を得る。
+
+    Request =>
+
+	識別子				INT		0x0013
+	環境ID				INT
+	読み				TEXT
+	(前の)品詞			INT
+	(前の)付属語			TEXT
+	終端ベクトル			INT
+	終端ベクトル1			INT
+
+    <= Reply
+
+
+
+
+
+
+	小文節受けとり			SHOBUN
+
+
+4.47	JS_VERSION
+
+	  サーバ、及び、ライブラリのバージョンを調べる。
+
+    Request =>
+
+	識別子				INT		0x0000
+
+    <= Reply
+
+	サーバ・バージョン		INT
+
+
+4.48	JS_KILL
+
+	  サーバを終了させる。
+
+    Request =>
+
+	識別子				INT		0x0070
+
+    <= Reply
+
+	状態				INT
+
+
+4.49	JS_FILE_REMOVE
+
+	  サーバのファイルシステムのファイルを消去する。
+
+    Request =>
+
+	識別子				INT		0x0067
+	ファイル名			STRING
+	パスワード			STRING
+
+    <= Reply
+
+	状態				INT
+	if (状態 == ERROR) {
+		エラー番号		INT
+	}
+
+
+4.50	JS_HINDO_FILE_CREATE_CLIENT
+
+	  クライアント・サイトに辞書ファイルの頻度ファイルを作る。
+
+    Request =>
+
+	識別子				INT		0x0071
+	環境ID				INT
+	ファイルID			INT		# 辞書の
+
+    <= Replay
+
+	状態				INT
+	if(状態 == ERROR){
+		エラー番号		INT
+		exit
+	}
+	語数				INT
+	ファイル唯一子			UNIFIER
+
+
+4.51	JS_FILE_COMMENT_SET
+
+	  ファイルにコメントをセットする。
+
+    Request =>
+
+	識別子				INT		0x0060
+	環境ID				INT
+	ファイルID			INT
+	コメント			TEXT
+
+    <= Reply
+
+	状態				INT
+	if (状態 == ERROR) {
+		エラー番号		INT
+	}
+
+
+4.52	JS_HINSI_NAME
+
+	  品詞番号から名前を取る。
+
+    Request =>
+
+	識別子				INT		0x0073
+	品詞番号			INT
+
+    <= Reply
+
+	名前の長さ			INT
+	if(名前の長さ== ERROR){
+		エラー番号		INT
+		exit
+	}
+	名前				TEXT
+
+
+4.53	JS_HINSI_NUMBER
+
+	  品詞名を品詞番号に変換する。
+
+    Request =>
+
+	識別子				INT		0x0074
+	名前				TEXT
+
+    <= Reply
+
+	番号				INT
+	if(番号 == ERROR){
+		エラー番号		INT
+	}
+
+
+4.54	JS_HINSI_LIST
+
+	  あるノードに属する品詞名の一覧を得る。
+
+    Request =>
+
+	識別子				INT		0x0072
+	環境ID				INT
+	辞書no				INT
+	名前				TEXT
+
+    <= Reply
+
+	個数				INT
+	if(個数 == ERROR){
+		エラー番号		INT
+	}
+	必要な領域の長さ		INT
+	repeat(個数){
+		品詞ノード名		TEXT
+	}
+
+
+4.55	JS_HINSI_DICTS
+
+	  ある品詞の単語が登録可能な辞書の一覧を得る。
+
+    Request =>
+
+	識別子				INT		0x0075
+	環境ID				INT
+	品詞番号			INT
+
+    <= Reply
+
+	個数				INT
+	if(個数 == ERROR){
+		エラー番号		INT
+		exit
+	}
+	repeat(個数){
+		辞書番号		INT
+	}
+
+
+4.56	JS_FILE_PASSWORD_SET
+
+	  ファイルのパスワードを更新する。
+
+    Request =>
+
+	識別子				INT		0x006E
+	環境ID				INT
+	ファイルID			INT
+	辞書部分か、頻度部分か		INT
+	昔のパスワード			STRING
+	新しいパスワード		STRING
+
+    <= Reply
+
+	状態				INT
+	if(状態 == ERROR){
+		エラー番号		INT
+	}
+
+
+4.57	JS_HINSI_TABLE_SET
+
+	  辞書に登録可能な品詞の一覧を登録する。
+
+    Request =>
+
+	識別子				INT		0x0076
+	環境ID				INT
+	辞書no				INT
+	品詞テーブル			TEXT
+
+    <= Reply
+
+	状態				INT
+	if(状態 == ERROR){
+		エラー番号		INT
+	}
+
+
+
+
+5.	プリミティブ識別番号一覧
+
+各プリミティブは、ヘッダーとして、プリミティブを識別する整数(表参照)を
+クライアントからサーバに送ることにより始まる。
+
+	プリミティブ名		識別番号
+
+	JS_VERSION		0x00
+	JS_OPEN			0x01
+
+	JS_CLOSE		0x03
+	JS_CONNECT		0x05
+	JS_DISCONNECT		0x06
+	JS_ENV_EXIST		0x07
+	JS_ENV_STICKY		0x08
+	JS_ENV_UN_STICKY	0x09
+
+	JS_KANREN		0x11
+	JS_KANTAN_SHO		0x12
+	JS_KANZEN_SHO		0x13
+	JS_KANTAN_DAI		0x14
+	JS_KANZEN_DAI		0x15
+	JS_HINDO_SET		0x18
+
+	JS_DIC_ADD		0x21
+	JS_DIC_DELETE		0x22
+	JS_DIC_USE		0x23
+	JS_DIC_LIST		0x24
+	JS_DIC_INFO		0x25
+
+	JS_FUZOKUGO_SET		0x29
+	JS_FUZOKUGO_GET		0x30
+
+
+	JS_WORD_ADD		0x31
+	JS_WORD_DELETE		0x32
+	JS_WORD_SEARCH		0x33
+	JS_WORD_SEARCH_BY_ENV	0x34
+	JS_WORD_INFO		0x35
+	JS_WORD_COMMENT_SET 	0x36
+
+	JS_PARAM_SET		0x41
+	JS_PARAM_GET		0x42
+
+	JS_MKDIR		0x51
+	JS_ACCESS		0x52
+	JS_WHO			0x53
+	JS_ENV_LIST		0x55
+	JS_FILE_LIST_ALL	0x56
+	JS_DIC_LIST_ALL		0x57
+
+	JS_FILE_READ		0x61
+	JS_FILE_WRITE		0x62
+	JS_FILE_SEND		0x63
+	JS_FILE_RECEIVE		0x64
+
+	JS_HINDO_FILE_CREATE	0x65
+	JS_DIC_FILE_CREATE	0x66
+	JS_FILE_REMOVE		0x67
+	JS_FILE_LIST		0x68
+	JS_FILE_INFO		0x69
+	JS_FILE_LOADED		0x6A
+	JS_FILE_LOADED_LOCAL	0x6B
+	JS_FILE_DISCARD		0x6C
+	JS_FILE_COMMENT_SET 	0x6D
+	JS_FILE_PASSWORD_SET 	0x6E
+	JS_FILE_STAT		0x6F
+	JS_KILL			0x70
+	JS_HINDO_FILE_CREATE_CLIENT	0x71
+	JS_HINSI_LIST		0x72
+	JS_HINSI_NAME		0x73
+	JS_HINSI_NUMBER		0x74
+	JS_HINSI_DICTS  	0x75
+	JS_HINSI_TABLE_SET 	0x76
+

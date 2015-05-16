@@ -1,0 +1,120 @@
+;;;
+;;; FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+;;; This file is part of FreeWnn.
+;;; 
+;;; Copyright Wnn Consortium. 1993
+;;;
+;;; Author: OMRON SOFTWARE Co., Ltd. <freewnn@rd.kyoto.omronsoft.co.jp>
+;;;
+;;; This program is free software; you can redistribute it and/or modify
+;;; it under the terms of the GNU General Public License as published by
+;;; the Free Software Foundation; either version 2, or (at your option)
+;;; any later version.
+;;;
+;;; This program is distributed in the hope that it will be useful,
+;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;;; GNU General Public License for more details.
+;;;
+;;; You should have received a copy of the GNU General Public License
+;;; along with GNU Emacs; see the file COPYING.  If not, write to the
+;;; Free Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+;;;
+;;; Commentary:
+;;;
+;;; Change log:
+;;;
+;;; Last modified date: 8,Feb.1999
+;;;
+;;; 
+;;;
+\jiritugo			;;;
+;;;
+ÜÜÅÏ/ÜÜÅÏ:		; 1
+í°Çó/@âØâ¤:ÜÜÅÏ:		; 2
+ØõÇØ/ÜÜÅÏ:		; 3
+ÓÁí°/Îû¡¹:Ø´æÀ:ÜÜÅÏ:		; 4
+Ø´æÀ/ÜÜÅÏ:		; 5
+ÝðÑÄæÀ/ÜÜÅÏ:		; 6
+Åéúèë£/ÜÜÅÏ:		; 7
+âäÑÄæÀ/ÜÜÅÏ:		; 8
+áðóé/			; 9 ???
+;;;
+;;;
+;;;
+ßÛÝ×ÇØ/Îû¡¹:ßÛÝ×ÇØ:Íäâ¯ÇØ:@Ù«â¤:ßÛÝ×ÝÙ:@Ù¯â¤:ÜÜÅÏ:
+Ä©ÇØ¡¹/Îû¡¹:Ô¯¡¹:Äã¡¹:ÇÙÈ©ÅÉÈíÇØ:@Ù«â¤:ßÛÝ×ÝÙ:@Ù¯â¤:@Äõâ¤:ÜÜÅÏ:
+Ô¯¡¹/Îû¡¹:Äã¡¹:ÇÙÈ©ÅÉÈíÇØ:@Ù«â¤:ßÛÝ×ÝÙ:@Ù¯â¤:@Äõâ¤:ÜÜÅÏ:
+ÈËÕ¥Ìï¡¹/ê¢òÁÇØ¡¹:Îû¡¹:Ù«¡¹:ÜÜÅÏ:
+ê¢òÁÇØ¡¹/Îû¡¹:Ô¯¡¹:Äã¡¹:ÇÙÈ©ÅÉÈíÇØ:@Ù«â¤:ßÛÝ×ÝÙ:@Ù¯â¤:@Äõâ¤:ÜÜÅÏ:
+ËçÎìÇØ¡¹/Îû¡¹:ÞÌ×ÅÅÉÈíÇØ:ÇÙÈ©ÅÉÈíÇØ:ßÛÝ×ÇØ:Ä©ÇØ¡¹:@Ù«â¤:ßÛÝ×ÝÙ:@Ù¯â¤:ÜÜÅÏ:
+Íäâ¯ÇØ/Îû¡¹:ßÛÝ×ÇØ:Íäâ¯ÇØ:ßÛÝ×ÝÙ:ÜÜÅÏ:
+ÕëâæÇØ/Îû¡¹:ÕëâæÇØ:ÞÌ×ÅÅÉÈíÇØ:ÇÙÈ©ÅÉÈíÇØ:@Ù«â¤:ßÛÝ×ÝÙ:ÜÜÅÏ:
+Ý¨ÍÔÇØ/Îû¡¹:Ý¨ÍÔÇØ:Äã¡¹:ÇÙÈ©ÅÉÈíÇØ:ßÛÝ×ÇØ:Ä©ÇØ¡¹:ËçÎìÇØ¡¹:@Ù«â¤:ßÛÝ×ÝÙ:@Ù¯â¤:ÜÜÅÏ:
+ÞÌ×ÅÅÉÈíÇØ/Îû¡¹:ÞÌ×ÅÅÉÈíÇØ:ù±¡¹:Óò¡¹:@Ù«â¤:ßÛÝ×ÝÙ:ÜÜÅÏ:
+ÇÙÈ©ÅÉÈíÇØ/Îû¡¹:@Ù¯â¤:@Ù«â¤:ßÛÝ×ÝÙ:ÜÜÅÏ:
+Äã¡¹/Îû¡¹:ÜÜÅÏ:
+Åè¡¹/@ÇØâ¤:@í°â¤:@âØâ¤:@Åîâ¤:á£ÐùÙ«:ÜÜÅÏ:
+Äæ¡¹/ÞÌ×ÅÅÉÈíÇØ:ÜÜÅÏ:
+ù±¡¹/Îû¡¹:ßÛÝ×ÝÙ:ÜÜÅÏ:
+Óò¡¹/Îû¡¹:ßÛÝ×ÝÙ:ÜÜÅÏ:
+ÈçÒ³Ù¯/Ù¯èèÉ·:ßÛÝ×ÝÙ:ÈçÒ³Ù¯:@ÇØâ¤:@í°â¤:@Åîâ¤:@Ê°Õ©â¤:ÕëâæÄõ:ÅÉÇ×Äõ:õØÇ×Ù¯:Úµ¡¹:Îû¡¹:ÜÜÅÏ:
+Å¯ÎìÙ¯¡¹/Ù¯èèÉ·:ßÛÝ×ÝÙ:Å¯ÎìÙ¯¡¹:@ÇØâ¤:@í°â¤:@Åîâ¤:@Ê°Õ©â¤:õØÇ×Ù¯:Îû¡¹:ÜÜÅÏ:
+ÄâÅ¯ÎìÙ¯¡¹/Ù¯èèÉ·:ßÛÝ×ÝÙ:ÄâÅ¯ÎìÙ¯¡¹:õØÇ×Ù¯:É²öËÙ¯:Úµ¡¹:ÕëâæÄõ:ÅÉÇ×Äõ:ÜÜÅÏ:
+ÅÀÜ¡Ù¯/@ÇØâ¤:@í°â¤:@Åîâ¤:@Ê°Õ©â¤:ÈçÒ³Ù¯:Å¯ÎìÙ¯¡¹:ÄâÅ¯ÎìÙ¯¡¹:ËðÅïÙ¯:É·Ù¯:@Äõâ¤:@ÝÙâ¤:ÜÜÅÏ:
+ÇôÇãÙ¯/Ù¯èèÉ·:@ÇØâ¤:@í°â¤:@Åîâ¤:@Ê°Õ©â¤:ÜÜÅÏ:
+ËðÅïÙ¯/@ÇØâ¤:@í°â¤:Ä©ê¢Åî:ÜÜÅÏ:
+É·Ù¯/@Ù¯â¤:Îû¡¹:@Äõâ¤:Ó¶ÞØÙ«:Õëó¢Ù«:ÝÙÓìÙ«:á£ÐùÙ«:íýÉÁÙ«:ÚÅèèÙ«:ÜÜÅÏ:
+õØÇ×Ù¯/@ÇØâ¤:@í°â¤:@Åîâ¤:@Ê°Õ©â¤:ÜÜÅÏ:
+É²öËÙ¯/@ÇØâ¤:@Ê°Õ©â¤:@í°â¤:@Ù«â¤:@Åîâ¤:@Äõâ¤:@ë£Ö´â¤:Îû¡¹:ÈçÒ³Ù¯:Å¯ÎìÙ¯¡¹:ÄâÅ¯ÎìÙ¯¡¹:ÅÀÜ¡Ù¯:ÇôÇãÙ¯:ËðÅïÙ¯:ÜÜÅÏ:
+ßÛÝ×Ê°Õ©/Îû¡¹:Çâ¡¹:Úµ¡¹:ßÛÝ×ÇØ:Ä©ÇØ¡¹:ê¢òÁÇØ¡¹:ËçÎìÇØ¡¹:Íäâ¯ÇØ:ÈçÒ³Ù¯:ÄâÅ¯ÎìÙ¯¡¹:ßÛÝ×ÝÙ:@ë£Ö´â¤:ÜÜÅÏ:
+Ù«¡¹/ê¢òÁÇØ¡¹:ÜÜÅÏ:
+á£ÐùÊ°Õ©/Îû¡¹:á£ÐùÊ°Õ©:ÜÜÅÏ:
+ÏæòÁÊ°Õ©/Îû¡¹:ÈçÒ³Ù¯:ÄâÅ¯ÎìÙ¯¡¹:ßÛÝ×ÇØ:ËçÎìÇØ¡¹:ÜÜÅÏ:
+ßÛÝ×í°/@âØâ¤:ÜÜÅÏ:
+Ù×í°/Ù×í°:@âØâ¤:ÜÜÅÏ:
+Ä¡¡¹/@âØâ¤:Ëè¡¹:ÜÜÅÏ:
+Ê©í°ÚÙó¤/Ù×í°:í°Çó:ÜÜÅÏ:
+Ê©í°/@âØâ¤:ÜÜÅÏ:
+í°âØÜÚ/@ÇØâ¤:@Ê°Õ©â¤:@Ù¯â¤:ÜÜÅÏ:
+ßÛÝ×âØ/@ÇØâ¤:@Ê°Õ©â¤:É²öËÙ¯:Îû¡¹:ÜÜÅÏ:
+ÏÐÄ©âØ/Ä©ÇØ¡¹:@Ê°Õ©â¤:ÏÐÄ©âØ:É²öËÙ¯:ÜÜÅÏ:
+ÞÌÈíâØ/ßÛÝ×ÇØ:Ä©ÇØ¡¹:ê¢òÁÇØ¡¹:ËçÎìÇØ¡¹:Ù×í°:í°Çó:@âØâ¤:@Ù¯â¤:ÜÜÅÏ:
+ÏÐÎìâØ/ßÛÝ×ÇØ:ËçÎìÇØ¡¹:@Ê°Õ©â¤:ÏÐÎìâØ:É²öËÙ¯:ÜÜÅÏ:
+Ëè¡¹/@ÇØâ¤:@Ê°Õ©â¤:É²öËÙ¯:ÜÜÅÏ:
+ÏÐÙ¯É¢âØ/@Ù¯â¤:ÏÐÙ¯É¢âØ:É²öËÙ¯:ÜÜÅÏ:
+Ó¶ÞØÙ«/@Ù¯â¤:ÜÜÅÏ:
+Õëó¢Ù«/@Ù¯â¤:á£ÐùÙ«:@Äõâ¤:ÜÜÅÏ:
+ÝÙÓìÙ«/@Ù¯â¤:@Ê°Õ©â¤:ÜÜÅÏ:
+á£ÐùÙ«/ßÛÝ×Ê°Õ©:ÅÀÜ¡Ù¯:ÜÜÅÏ:
+Æ«¡¹/ßÛÝ×Ê°Õ©:@Ù¯â¤:ÜÜÅÏ:
+íýÉÁÙ«/@Ù¯â¤:@Ê°Õ©â¤:ÜÜÅÏ:
+ÚÅèèÙ«/Çâ¡¹:ÈçÒ³Ù¯:Å¯ÎìÙ¯¡¹:ÄâÅ¯ÎìÙ¯¡¹:ÜÜÅÏ:
+ë£Ö´Ù«/
+ßÛÝ×Åî/ÜÜÅÏ:
+Ä©ê¢Åî/Îû¡¹:ê¢òÁÇØ¡¹:@Ù¯â¤:@Ù«â¤:@Äõâ¤:ÜÜÅÏ:
+ÑÀÆüÅî/Îû¡¹:É²öËÙ¯:@Ù«â¤:É²öËÙ¯:ÜÜÅÏ:
+ÇÖ¡¹/ßÛÝ×ÇØ:Ä©ÇØ¡¹:ê¢òÁÇØ¡¹:ËçÎìÇØ¡¹:Ý¨ÍÔÇØ:ßÛÝ×âØ:ÏÐÄ©âØ:ÏÐÎìâØ:ÏÐÙ¯É¢âØ:ÈçÒ³Ù¯:Å¯ÎìÙ¯¡¹:ÄâÅ¯ÎìÙ¯¡¹:ÇôÇãÙ¯:É²öËÙ¯:ÜÜÅÏ:
+éêÙÂÅî/Îû¡¹:@Ù¯â¤:@Ù«â¤:@Äõâ¤:ÜÜÅÏ:
+ßÛÝ×è¬/ÜÜÅÏ:
+
+ÅÉÇ×Äõ/@Åîâ¤:ÜÜÅÏ:
+è×â¯Äõ/@ÇØâ¤:@Åîâ¤:@Ê°Õ©â¤:ÜÜÅÏ:
+Ý·¡¹/@ÇØâ¤:@Åîâ¤:@Ê°Õ©â¤:ÈçÒ³Ù¯:Å¯ÎìÙ¯¡¹:ÄâÅ¯ÎìÙ¯¡¹:ËðÅïÙ¯:ÜÜÅÏ:
+ÕëâæÄõ/@ÇØâ¤:@Åîâ¤:@Ù¯â¤:@Ù«â¤:@í°â¤:ÜÜÅÏ:
+Ý¨ÍÔÄõ/Ý¨ÍÔÇØ:ÇÙÈ©ÅÉÈíÇØ:ÜÜÅÏ:
+ÆøÎûÅÉÈ¢Äõ/@ÇØâ¤:@Åîâ¤:@Ê°Õ©â¤:ÜÜÅÏ:
+ÅÒç¤ÚêØæÄõ/@ÇØâ¤:@Åîâ¤:@Ê°Õ©â¤:@Ù¯â¤:ÜÜÅÏ:
+ßÛÝ×ÝÙ/@ÇØâ¤:@Ù¯â¤:@Ê°Õ©â¤:@Åîâ¤:ÜÜÅÏ:			; ÄØÌù
+ÚÙó¤ÝÙ/@ÇØâ¤:@Ù¯â¤:@Ê°Õ©â¤:@Åîâ¤:ÜÜÅÏ:			; ÄØÌù
+ñÁÇ¡ÝÙ/ÜÜÅÏ:					; ÄØÌù
+ßÛÝ×É·/ÜÜÅÏ:
+á¸é¬É·/ÜÜÅÏ:
+Îû¡¹/@ÇØâ¤:É²öËÙ¯:ÜÜÅÏ:
+Çâ¡¹/ÈçÒ³Ù¯:Å¯ÎìÙ¯¡¹:ÄâÅ¯ÎìÙ¯¡¹:ÅÀÜ¡Ù¯:ÜÜÅÏ:
+Úµ¡¹/@ÇØâ¤:@Ù¯â¤:@Ê°Õ©â¤:@í°â¤:ÜÜÅÏ:
+Ù¯èèÉ·/õØÇ×Ù¯:ÜÜÅÏ:
+ÅÒÎÓÉ·/ÜÜÅÏ:
+Ì§ÅìÉ·/
+ë£Ö´/ÜÜÅÏ:					; ÄØÌù
+óéôø/óéôø:Çâ¡¹:ÜÜÅÏ:

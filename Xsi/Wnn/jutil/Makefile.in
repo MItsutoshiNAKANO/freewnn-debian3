@@ -1,0 +1,221 @@
+#
+#   $Id: ./Makefile.in $
+#
+
+#
+# FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+# This file is part of FreeWnn.
+# 
+# Copyright Kyoto University Research Institute for Mathematical Sciences
+#                 1987, 1988, 1989, 1990, 1991, 1992
+# Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+# Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+# Copyright FreeWnn Project 1999, 2000
+# 
+# Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+include @top_srcdir@/makerule.mk
+
+INSTALL         = @INSTALL@
+
+       INCLUDES = -I$(WNNINCLUDESRC)
+        DEFINES = $(WNNDEFINES) $(WNNLANGDEF)
+   INSTALLFLAGS = $(INSTBINFLAGS) $(INSTPGMFLAGS) -o $(WNNOWNER)
+    HINSIDEFINE = -DHINSIDATA_FILE=\"/$(JWNNLANG)/hinsi.data\"
+
+CLIENTPROGRAMS = wnnstat wnnkill wddel wdreg
+
+DICUTIL2PROGRAMS = atod atof wnntouch
+
+DICUTILPROGRAMS = oldatonewa dtoa
+
+PROGRAMS = $(CLIENTPROGRAMS) $(DICUTILPROGRAMS) $(DICUTIL2PROGRAMS)
+
+SRC1= $(WNNETCSRC)/bdic.c
+OBJ1= bdic.o
+SRC2= $(WNNETCSRC)/strings.c
+OBJ2= strings.o
+SRC3= $(WNNETCSRC)/sstrings.c
+OBJ3= sstrings.o
+SRC4= $(WNNETCSRC)/gethinsi.c
+OBJ4= gethinsi.o
+SRC5= $(WNNETCSRC)/revdic.c
+OBJ5= revdic.o
+SRC6= $(WNNETCSRC)/hindo.c
+OBJ6= hindo.o
+SRC7= $(WNNETCSRC)/pwd.c
+OBJ7= pwd.o
+SRC8= $(WNNETCSRC)/bcopy.c
+OBJ8= bcopy.o
+SRC9= $(WNNETCSRC)/dic_atojis.c
+OBJ9= dic_atojis.o
+SRC10= $(WNNETCSRC)/xutoj.c
+OBJ10= xutoj.o
+SRC11= $(WNNETCSRC)/server_env.c
+OBJ11= server_env.o
+
+LOCAL_ETCSRCS3= $(SRC1) $(SRC2) $(SRC3) $(SRC4)           $(SRC7) $(SRC8) $(SRC9) $(SRC10)
+
+LOCAL_ETCOBJS3= $(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4)           $(OBJ7) $(OBJ8) $(OBJ9) $(OBJ10)
+
+LOCAL_ETCSRCS2= $(LOCAL_ETCSRCS3) $(SRC6)
+LOCAL_ETCOBJS2= $(LOCAL_ETCOBJS3) $(OBJ6)
+LOCAL_ETCSRCS1= $(LOCAL_ETCSRCS2) $(SRC5)
+LOCAL_ETCOBJS1= $(LOCAL_ETCOBJS2) $(OBJ5)
+
+SRCATOD= atod.c ujisf.c dic_head.c atorev.c $(LOCAL_ETCSRCS1)
+OBJATOD= atod.o ujisf.o dic_head.o atorev.o $(LOCAL_ETCOBJS1)
+SRCATOF= atof.c $(LOCAL_ETCSRCS3)
+OBJATOF= atof.o $(LOCAL_ETCOBJS3)
+SRCTOUCH= wnntouch.c $(LOCAL_ETCSRCS3)
+OBJTOUCH= wnntouch.o $(LOCAL_ETCOBJS3)
+
+SRCDTOA= dtoa.c ujisf.c dic_head.c $(LOCAL_ETCSRCS1)
+OBJDTOA= dtoa.o ujisf.o dic_head.o $(LOCAL_ETCOBJS1)
+SRCOLDTONEW= oldatonewa.c $(LOCAL_ETCSRCS2)
+OBJOLDTONEW= oldatonewa.o $(LOCAL_ETCOBJS2)
+
+SRCSTAT= wnnstat.c $(SRC3) $(SRC8) $(SRC10) $(SRC11)
+OBJSTAT= wnnstat.o $(OBJ3) $(OBJ8) $(OBJ10) $(OBJ11)
+SRCKILL= wnnkill.c $(SRC3) $(SRC8) $(SRC10) $(SRC11)
+OBJKILL= wnnkill.o $(OBJ3) $(OBJ8) $(OBJ10) $(OBJ11)
+SRCSORT= sort.c ujisf.c $(LOCAL_ETCSRCS2)
+OBJSORT= sort.o ujisf.o $(LOCAL_ETCOBJS2)
+SRCWDDEL= wddel.c $(SRC3) $(SRC8) $(SRC10)
+OBJWDDEL= wddel.o $(OBJ3) $(OBJ8) $(OBJ10)
+SRCWDREG= wdreg.c ujisf.c $(SRC1) $(SRC3) $(SRC4) $(SRC7) 	  $(SRC8) $(SRC9) $(SRC10)
+
+OBJWDREG= wdreg.o ujisf.o $(OBJ1) $(OBJ3) $(OBJ4) $(OBJ7) 	  $(OBJ8) $(OBJ9) $(OBJ10)
+
+SRCS= atod.c dic_head.c wddel.c wnnkill.c atof.c dtoa.c ujisf.c       wdreg.c wnnstat.c atorev.c oldatonewa.c sort.c       wnntouch.c $(SRC1) $(SRC2) $(SRC3) $(SRC4) $(SRC5) $(SRC6) $(SRC6)       $(SRC7) $(SRC9) $(SRC10) $(SRC11)
+
+OBJS= atod.o dic_head.o wddel.o wnnkill.o atof.o dtoa.o ujisf.o       wdreg.o wnnstat.o atorev.o oldatonewa.o sort.o       wnntouch.c $(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4) $(OBJ5) $(OBJ6) $(OBJ6)       $(OBJ7) $(OBJ9) $(OBJ10) $(OBJ11)
+
+all:: $(PROGRAMS)
+
+atod: $(OBJATOD)
+	$(RM) $@
+	$(CCLINK) -o $@ $(LDOPTIONS) $(OBJATOD) @LIBS@
+
+clean::
+	$(RM) atod
+
+atof: $(OBJATOF)
+	$(RM) $@
+	$(CCLINK) -o $@ $(LDOPTIONS) $(OBJATOF) @LIBS@
+
+clean::
+	$(RM) atof
+
+wnntouch: $(OBJTOUCH)
+	$(RM) $@
+	$(CCLINK) -o $@ $(LDOPTIONS) $(OBJTOUCH) @LIBS@
+
+clean::
+	$(RM) wnntouch
+
+dicsort: $(OBJSORT)
+	$(RM) $@
+	$(CCLINK) -o $@ $(LDOPTIONS) $(OBJSORT)
+
+clean::
+	$(RM) dicsort
+
+oldatonewa: $(OBJOLDTONEW)
+	$(RM) $@
+	$(CCLINK) -o $@ $(LDOPTIONS) $(OBJOLDTONEW) @LIBS@
+
+clean::
+	$(RM) oldatonewa
+
+dtoa: $(OBJDTOA)
+	$(RM) $@
+	$(CCLINK) -o $@ $(LDOPTIONS) $(OBJDTOA) @LIBS@
+
+clean::
+	$(RM) dtoa
+
+wnnstat: $(OBJSTAT) $(WNNJLIB)
+	$(RM) $@
+	$(CCLINK) -o $@ $(LDOPTIONS) $(OBJSTAT) $(WNNJLIB) @LIBS@
+
+clean::
+	$(RM) wnnstat
+
+wnnkill: $(OBJKILL) $(WNNJLIB)
+	$(RM) $@
+	$(CCLINK) -o $@ $(LDOPTIONS) $(OBJKILL) $(WNNJLIB) @LIBS@
+
+clean::
+	$(RM) wnnkill
+
+wddel: $(OBJWDDEL) $(WNNJLIB)
+	$(RM) $@
+	$(CCLINK) -o $@ $(LDOPTIONS) $(OBJWDDEL) $(WNNJLIB) @LIBS@
+
+clean::
+	$(RM) wddel
+
+wdreg: $(OBJWDREG) $(WNNJLIB)
+	$(RM) $@
+	$(CCLINK) -o $@ $(LDOPTIONS) $(OBJWDREG) $(WNNJLIB) @LIBS@
+
+clean::
+	$(RM) wdreg
+
+install:: $(PROGRAMS)
+	@if [ -d $(DESTDIR)$(JWNNBINDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(JWNNBINDIR)); fi
+	@for flag in ${MAKEFLAGS} ''; do \
+	case "$$flag" in *=*) ;; *[i]*) set +e;; esac; done; \
+	for i in $(PROGRAMS); do \
+	(set -x; $(INSTALL) $(INSTALLFLAGS)  $$i $(DESTDIR)$(JWNNBINDIR)); \
+	done
+
+$(OBJ1) : $(SRC1)
+	$(CC) -c $(CFLAGS)  $(WNNETCSRC)/`basename $@ .o`.c
+
+$(OBJ2) : $(SRC2)
+	$(CC) -c $(CFLAGS)  $(WNNETCSRC)/`basename $@ .o`.c
+
+$(OBJ3) : $(SRC3)
+	$(CC) -c $(CFLAGS)  $(WNNETCSRC)/`basename $@ .o`.c
+
+$(OBJ4) : $(SRC4)
+	$(CC) -c $(CFLAGS) $(HINSIDEFINE) $(WNNETCSRC)/`basename $@ .o`.c
+
+$(OBJ5) : $(SRC5)
+	$(CC) -c $(CFLAGS)  $(WNNETCSRC)/`basename $@ .o`.c
+
+$(OBJ6) : $(SRC6)
+	$(CC) -c $(CFLAGS)  $(WNNETCSRC)/`basename $@ .o`.c
+
+$(OBJ7) : $(SRC7)
+	$(CC) -c $(CFLAGS)  $(WNNETCSRC)/`basename $@ .o`.c
+
+$(OBJ8) : $(SRC8)
+	$(CC) -c $(CFLAGS)  $(WNNETCSRC)/`basename $@ .o`.c
+
+$(OBJ9) : $(SRC9)
+	$(CC) -c $(CFLAGS)  $(WNNETCSRC)/`basename $@ .o`.c
+
+$(OBJ10) : $(SRC10)
+	$(CC) -c $(CFLAGS) $(WNNLANGDEF) $(WNNETCSRC)/`basename $@ .o`.c
+
+$(OBJ11) : $(SRC11)
+	$(CC) -c $(CFLAGS)  $(WNNETCSRC)/`basename $@ .o`.c

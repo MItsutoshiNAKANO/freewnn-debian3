@@ -1,0 +1,950 @@
+	    ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+             ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+             ┃  Ａｐｐｅｎｄｉｘ １   ＰＩＮＹＩＮ / ＺＨＵＹＩＮ 	 ┃ 
+	     ┃ 		       ＤＥＦＩＮＩＴＩＯＮ  ＴＡＢＬＥ  ┃
+             ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+            ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+	
+	Pinyin and Zhuyin are both external representations of Chinese pronunciations.
+In cWnn, these external representations are made up English alphabets and some special
+characters that are defined for cWnn for the purpose of Pinyin and Zhuyin input.  
+For example, the Pinyin "Zh幁ng幚".  "Zh" are just normal English alphabets while "幁" is  
+the special character defined for cWnn.
+
+	The  structures of  Pinyin and  Zhuyin  follow certain rules given below.  The
+following are the rules for defining Pinyin and Zhuyin in cWnn system.
+
+  (1) Construction of Pinyin   ─  In accordance to Xinhua dictionary (新华字典).
+  (2) Construction of Zhuyin   ─  In accordance to Xinhua dictionary and  conforms in
+			           representation with  dictionaries commonly  used in
+			           Taiwan.
+  (3) Initial Pinyin character ─  For  a Pinyin that contains a consonant (声母), the 
+				   first character  is in  upper case, and  subsequent
+				   characters  are in lower case.  For example, Zhong幚
+				   If a Pinyin  does not  begin with a consonant, only 
+				   lower case characters are used. For example, en幚
+  (4) Input using Pinyin  can only be done in Pinyin mode, and input using  Zhuyin can 
+      only be done in Zhuyin mode.  The input mode may be assessed via the  PF1 key in
+      cWnn system. 
+
+
+	The  special character  set defined for cWnn, and the  Pinyin definition table 
+as well as the Zhuyin definition table are shown in the following.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					- A-1 -
+	         	The Special Character Set Defined for cWnn
+	 ┌────────────────────────────────────┐
+	 │  80       81       82       83       84       85       86       87     │
+	 │  88       89       8a       8b       8c       8d       8e       8f     │
+	 │  90       91       92       93       94       95       96       97     │
+	 │  98       99       9a       9b       9c       9d       9e       9f     │
+	 │  a0       a1 帯     a2 帰     a3 帲     a4 帳     a5 帴     a6 帵     a7 帶   │
+	 │  a8 帹     a9 帺     aa 帾     ab 帿     ac 幀     ad 幁     ae 幃     af 幆   │
+	 │  b0 幇     b1 幈     b2 幉     b3 幊     b4 幋     b5 幍     b6 幎     b7 幏   │
+	 │  b8 幐     b9 幑     ba 幒     bb 幓     bc 幖     bd 幗     be 幘     bf 幙   │
+	 │  c0 幚     c1 幜     c2 幝     c3 幟     c4 幠     c5 幣     c6 幤     c7 幥   │
+	 │  c8 幦     c9 幧     ca 幨     cb 幩     cc 幪     cd 幫     ce 幬     cf 幭   │
+	 │  d0 幮     d1 幯     d2 幰     d3 幱     d4 幵     d5 幷     d6 幹     d7 幾   │
+	 │  d8 庁     d9 庂     da 広     db 庅     dc 庈     dd 庉     de 庌     df 庍   │
+	 │  e0 庎     e1 庒     e2 庘     e3 庛     e4 庝     e5 庡     e6 庢     e7 庣   │
+	 │  e8 庤     e9 庨     ea       eb       ec       ed       ee       ef     │
+	 │  f0       f1       f2       f3       f4       f5       f6       f7     │
+	 │  f8       f9       fa       fb       fc       fd       fe       ff     │
+	 └────────────────────────────────────┘
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					- A-2 -
+				Pinyin Definition Table
+	┌───────────────────────────────────┐
+	│ 1	a 	Cui 	Guai 	Kua 	N 	Qing 	Suan 	Yin	│
+	│ 2	ai 	Cun 	Guan 	Kuai 	Na 	Qiong 	Sui 	Ying	│
+	│ 3	an 	Cuo 	Guang 	Kuan 	Nai 	Qiu 	Sun 	Yo	│
+	│ 4	ang 	Da 	Gui 	Kuang 	Nan 	Qu 	Suo 	Yong	│
+	│ 5	ao 	Dai 	Gun 	Kui 	Nang 	Quan 	Ta 	You	│
+	│ 6	Ba 	Dan 	Guo 	Kun 	Nao 	Que 	Tai 	Yu 	│
+	│ 7	Bai 	Dang 	Ha 	Kuo 	Ne 	Qun 	Tan 	Yuan	│
+	│ 8	Ban 	Dao 	Hai 	La 	Nei 	Ran 	Tang 	Yue	│
+	│ 9	Bang 	De 	Han 	Lai 	Nen 	Rang 	Tao 	Yun	│
+	│ 10	Bao 	Dei 	Hang 	Lan 	Neng 	Rao 	Te 	Za	│
+	│ 11	Bei 	Den 	Hao 	Lang 	Ng 	Re 	Tei 	Zai	│
+	│ 12	Ben 	Deng 	He 	Lao 	Ni 	Ren 	Teng 	Zan	│
+	│ 13	Beng 	Di 	Hei 	Le 	Nia 	Reng 	Ti 	Zang	│
+	│ 14	Bi 	Dia 	Hen 	Lei 	Nian 	Ri 	Tian 	Zao	│
+	│ 15	Bian 	Dian 	Heng 	Leng 	Niang 	Rong 	Tiao 	Ze	│
+	│ 16	Biao 	Diao 	Hm 	Li 	Niao 	Rou 	Tie 	Zei	│
+	│ 16	Bie 	Die 	Hng 	Lia 	Nie 	Ru 	Ting 	Zen	│
+	│ 18	Bin 	Ding 	Hong 	Lian 	Nin 	Rua 	Tong 	Zeng	│
+	│ 19	Bing 	Diu 	Hou 	Liang 	Ning 	Ruan 	Tou 	Zha	│
+	│ 20	Bo 	Dong 	Hu 	Liao 	Niu 	Rui 	Tu 	Zhai	│
+	│ 21	Bu 	Dou 	Hua 	Lie 	Nong 	Run 	Tuan 	Zhan	│
+	│ 22	Ca 	Du 	Huai 	Lin 	Nou 	Ruo 	Tui 	Zhang	│
+	│ 23	Cai 	Duan 	Huan 	Ling 	Nu 	Sa 	Tun 	Zhao	│
+	│ 24	Can 	Dui 	Huang 	Liu 	Nuan 	Sai 	Tuo 	Zhe	│
+	│ 25	Cang 	Dun 	Hui 	Lo 	Nuo 	San 	Wa 	Zhei	│
+	│ 26	Cao 	Duo 	Hun 	Long 	N幑 	Sang 	Wai 	Zhen	│
+	│ 27	Ce 	e 	Huo 	Lou 	N幑e 	Sao 	Wan 	Zheng	│
+	│ 28	Cen 	ei 	Ji 	Lu 	o 	Se 	Wang 	Zhi	│
+	│ 29	Ceng 	en 	Jia 	Luan 	ou 	Sen 	Wei 	Zhong	│
+	│ 30	Cha 	eng 	Jian 	Lun 	Pa 	Seng 	Wen 	Zhou	│
+	│ 31	Chai 	er 	Jiang 	Luo 	Pai 	Sha 	Weng 	Zhu	│
+	│ 32	Chan 	Fa 	Jiao 	L幑 	Pan 	Shai 	Wo 	Zhua	│
+	│ 33	Chang 	Fan 	Jie 	L幑e 	Pang 	Shan 	Wu 	Zhuai	│
+	│ 34	Chao 	Fang 	Jin 	M 	Pao 	Shang 	Xi 	Zhuan	│
+	│ 35	Che 	Fei 	Jing 	Ma 	Pei 	Shao 	Xia 	Zhuang	│
+	│ 36	Chen 	Fen 	Jiong 	Mai 	Pen 	She 	Xian 	Zhui	│
+	│ 37	Cheng 	Feng 	Jiu 	Man 	Peng 	Shei 	Xiang 	Zhun	│
+	│ 38	Chi 	Fo 	Ju 	Mang 	Pi 	Shen 	Xiao 	Zhuo	│
+	│ 39	Chong 	Fou 	Juan 	Mao 	Pian 	Sheng 	Xie 	Zi	│
+	│ 40	Chou 	Fu 	Jue 	Me 	Piao 	Shi 	Xin 	Zong	│
+	└───────────────────────────────────┘
+
+
+
+
+
+
+					- A-3 -
+	┌───────────────────────────────────┐
+	│ 41	Chu 	Ga 	Jun 	Mei 	Pie 	Shou 	Xing 	Zou	│
+	│ 42	Chua 	Gai 	Ka 	Men 	Pin 	Shu 	Xiong 	Zu	│
+	│ 43	Chuai 	Gan 	Kai 	Meng 	Ping 	Shua 	Xiu 	Zuan	│
+	│ 44	Chuan 	Gang 	Kan 	Mi 	Po 	Shuai 	Xu 	Zui	│
+	│ 45	Chuang	Gao 	Kang 	Mian 	Pou 	Shuan 	Xuan 	Zun	│
+	│ 46	Chui 	Ge 	Kao 	Miao 	Pu 	Shuang 	Xue 	Zuo	│
+	│ 47	Chun 	Gei 	Ke 	Mie 	Qi 	Shui 	Xun		│
+	│ 48	Chuo 	Gen 	Kei 	Min 	Qia 	Shun 	Ya		│
+	│ 49	Ci 	Geng 	Ken 	Ming 	Qian 	Shuo 	Yan		│
+	│ 50	Cong 	Gong 	Keng 	Miu 	Qiang 	Si 	Yang		│
+	│ 51	Cou 	Gou 	Kong 	Mo 	Qiao 	Song 	Yao		│
+	│ 52	Cu 	Gu 	Kou 	Mou 	Qie 	Sou 	Ye		│
+	│ 53	Cuan 	Gua 	Ku 	Mu 	Qin 	Su 	Yi		│
+	└───────────────────────────────────┘
+
+
+				Zhuyin Definition Table
+	┌───────────────────────────────────┐
+	│ 1	広 	庁庤庍 	幫庤庌 	幬庤広 	幩 	幯庣庡 	庂庤庘 	庣庛      │
+	│ 2	庌 	庁庤庛 	幫庤庘 	幬庤庌 	幩広 	幯庨庡 	庂庤庍 	庣庡      │
+	│ 3	庘 	庁庤庅 	幫庤庝 	幬庤庘 	幩庌 	幯庣庒 	庂庤庛 	庣庅      │
+	│ 4	庝 	幧広 	幫庤庍 	幬庤庝 	幩庘 	幯庨 	庂庤庅 	庨庡      │
+	│ 5	庎 	幧庌 	幫庤庛 	幬庤庍 	幩庝 	幯庨庘 	幨広 	庣庒      │
+	│ 6	幣広 	幧庘 	幫庤庅 	幬庤庛 	幩庎 	幯庨庉 	幨庌 	庨       │
+	│ 7	幣庌 	幧庝 	幭広 	幬庤庅 	幩庈 	幯庨庛 	幨庘 	庨庘      │
+	│ 8	幣庘 	幧庎 	幭庌 	幪広 	幩庍 	幹庘 	幨庝 	庨庉      │
+	│ 9	幣庝 	幧庈 	幭庘 	幪庌 	幩庛 	幹庝 	幨庎 	庨庛      │
+	│ 10	幣庎 	幧庍 	幭庝 	幪庘 	幩庡 	幹庎 	幨庈 	幾広      │
+	│ 11	幣庍 	幧庛 	幭庎 	幪庝 	@ 	幹庈 	幨庍 	幾庌      │
+	│ 12	幣庛 	幧庡 	幭庈 	幪庎 	幩庣 	幹庛 	幨庡 	幾庘      │
+	│ 13	幣庡 	幧庣 	幭庍 	幪庈 	幩庣広 	幹庡 	幨庣 	幾庝      │
+	│ 14	幣庣 	幧庣広 	幭庛 	幪庍 	幩庣庘 	幹 	幨庣庘 	幾庎      │
+	│ 15	幣庣庘 	幧庣庘 	幭庡 	幪庡 	幩庣庝 	幹庤庡 	幨庣庎 	幾庈      │
+	│ 16	幣庣庎 	幧庣庎 	幭幥 	幪庣 	幩庣庎 	幹庒 	幨庣庉 	幾庍      │
+	│ 17	幣庣庉 	幧庣庉 	@ 	幪庣広 	幩庣庉 	幹庤 	幨庣庡 	幾庛      │
+	│ 18	幣庣庛 	幧庣庡 	幭庤庡 	幪庣庘 	幩庣庛 	幹庤広 	幨庤庡 	幾庡      │
+	│ 19	幣庣庡 	幧庣庒 	幭庒 	幪庣庝 	幩庣庡 	幹庤庘 	幨庒 	幱広      │
+	│ 20	幣庅 	幧庤庡 	幭庤 	幪庣庎 	幩庣庒 	幹庤庍 	幨庤 	幱庌      │
+	│ 21	幣庤 	幧庒 	幭庤広 	幪庣庉 	幩庤庡 	幹庤庛 	幨庤庘 	幱庘      │
+	│ 22	庁広 	幧庤 	幭庤庌 	幪庣庛 	幩庒 	幹庤庅 	幨庤庍 	幱庝      │
+	│ 23	庁庌 	幧庤庘 	幭庤庘 	幪庣庡 	幩庤 	庂広 	幨庤庛 	幱庎      │
+	│ 24	庁庘 	幧庤庍 	幭庤庝 	幪庣庒 	幩庤庘 	庂庌 	幨庤庅 	幱庈      │
+	│ 25	庁庝 	幧庤庛 	幭庤庍 	幪庅 	幩庤庅 	庂庘 	庤広 	幱庍      │
+	│ 26	庁庎 	幧庤庅 	幭庤庛 	幪庤庡 	幩庨 	庂庝 	庤庌 	幱庛      │
+	│ 27	庁庈 	庈 	幭庤庅 	幪庒 	幩庨庉 	庂庎 	庤庘 	幱庡      │
+	└───────────────────────────────────┘
+
+
+					- A-4 -
+	┌───────────────────────────────────┐
+	│ 28	庁庛 	庍 	幮庣 	幪庤 	庅 	庂庈 	庤庝 	幱       │
+	│ 29	庁庡 	庛 	幮庣広 	幪庤庘 	庒 	庂庛 	庤庍 	幱庤庡     │
+	│ 30	幵広 	庡 	幮庣庘 	幪庤庛 	幤広 	庂庡 	庤庛 	幱庒      │
+	│ 31	幵庌 	庢 	幮庣庝 	幪庤庅 	幤庌 	幷広 	庤庡 	幱庤      │
+	│ 32	幵庘 	幦広 	幮庣庎 	幪庨 	幤庘 	幷庌 	庤庅 	幱庤広     │
+	│ 33	幵庝 	幦庘 	幮庣庉 	幪庨庉 	幤庝 	幷庘 	庤 	幱庤庌     │
+	│ 34	幵庎 	幦庝 	幮庣庛 	幥 	幤庎 	幷庝 	幰庣 	幱庤庘     │
+	│ 35	幵庈 	幦庍 	幮庣庡 	幥広 	幤庍 	幷庎 	幰庣広 	幱庤庝     │
+	│ 36	幵庛 	幦庛 	幮庨庡 	幥庌 	幤庛 	幷庈 	幰庣庘 	幱庤庍     │
+	│ 37	幵庡 	幦庡 	幮庣庒 	幥庘 	幤庡 	幷庍 	幰庣庝 	幱庤庛     │
+	│ 38	幵 	幦庅 	幮庨 	幥庝 	幤庣 	幷庛 	幰庣庎 	幱庤庅     │
+	│ 39	幵庤庡 	幦庒 	幮庨庘 	幥庎 	幤庣庘 	幷庡 	幰庣庉 	幾       │
+	│ 40	幵庒 	幦庤 	幮庨庉 	幥庈 	幤庣庎 	幷 	幰庣庛 	幾庤庡     │
+	│ 41	幵庤 	幫広 	幮庨庛 	幥庍 	幤庣庉 	幷庒 	幰庣庡 	幾庒      │
+	│ 42	幵庤広 	幫庌 	幬広 	幥庛 	幤庣庛 	幷庤 	幰庨庡 	幾庤      │
+	│ 43	幵庤庌 	幫庘 	幬庌 	幥庡 	幤庣庡 	幷庤広 	幰庣庒 	幾庤庘     │
+	│ 44	幵庤庘 	幫庝 	幬庘 	幥庣 	幤庅 	幷庤庌 	幰庨 	幾庤庍     │
+	│ 45	幵庤庝 	幫庎 	幬庝 	幥庣庘 	幤庒 	幷庤庘 	幰庨庘 	幾庤庛     │
+	│ 46	幵庤庍 	幫庈 	幬庎 	幥庣庎 	幤庤 	幷庤庝 	幰庨庉 	幾庤庅     │
+	│ 47	幵庤庛 	幫庍 	幬庈 	幥庣庉 	幯庣 	幷庤庍 	幰庨庛	        │
+	│ 48	幵庤庅 	幫庛 	幬庍 	幥庣庛 	幯庣広 	幷庤庛 	庣広	        │
+	│ 49	庁 	幫庡 	幬庛 	幥庣庡 	幯庣庘 	幷庤庅 	庣庘	        │
+	│ 50	庁庤庡 	幫庤庡 	幬庡 	幥庣庒 	幯庣庝 	庂 	庣庝	        │
+	│ 51	庁庒 	幫庒 	幬庤庡 	幥庅 	幯庣庎 	庂庤庡 	庣庎	        │
+	│ 52	庁庤 	幫庤 	幬庒 	幥庒 	幯庣庉 	庂庒 	庣庉	        │
+	│ 53	庁庤庘 	幫庤広 	幬庤 	幥庤 	幯庣庛 	庂庤 	庣	        │
+	└───────────────────────────────────┘
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					- A-5 -
+	    ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+             ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+             ┃  Ａｐｐｅｎｄｉｘ ２   ＥＲＰＩＮ  ＩＮＰＵＴ  ＫＥＹＳ    ┃
+	     ┃ 		       ＡＬＬＯＣＡＴＩＯＮＳ		   ┃
+             ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+            ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+
+	Erpin (二拼) is also known as Shuangpin (双拼), which  uses two keys to input a 
+Pinyin.  The Erpin input in cWnn is defined in the input automaton (refer to Chapter 7).  
+Any  Erpin input  method may be defined in cWnn.  There are  many ways of arranging the 
+input keys for Erpin.  Two common  Erpin input  keys  allocations are provided by cWnn.  
+In the Pinyin centred input environment, these two types of  Erpin input may be changed 
+dynamically.  Refer to Section 3.2.
+
+The two input keys allocation tables are shown below:
+
+
+1. Guangming Ribao Erpin Table (光明日报二拼表)
+━━━━━━━━━━━━━━━━━━━━━━━
+Consonants are represented by  English alphabets such as "Ch" "Sh" and "Zh".  The keys
+used to input them  are  "I",  "U" and  "V" respectively.   For  Pinyin  which has  no 
+consonants, input  "0"  as the first  key, and  this  Pinyin will be taken to have  no 
+consonant.
+
+The consonants table, vowels table and the special Pinyin table are shown below:
+
+     		  ┌──────────┬──────────┬──────────┐
+     		  │ input 		│ input              │ input              │
+     a. Consonants│  key   → consonant│  key   → consonant│  key   → consonant│
+        Table     ├──────────┼──────────┼──────────┤
+     	(声母表)  │    B   →   B      │    N   →   N      │    I   →   Ch     │
+		  │    C   →   C      │    P   →   P      │    U   →   Sh     │
+     		  │    D   →   D      │    Q   →   Q      │    V   →   Zh     │
+     		  │    F   →   F      │    R   →   R      │    O   →   空     │
+     		  │    G   →   G      │    S   →   S      │		    │
+     		  │    H   →   H      │    T   →   T      │		    │
+     		  │    J   →   J      │    W   →   W      │		    │
+     		  │    K   →   K      │    X   →   X      │ 		    │
+     		  │    L   →   L      │    Y   →   Y      │		    │
+     		  │    M   →   M      │    Z   →   Z      │		    │
+     		  └──────────┴──────────┴──────────┘
+
+
+
+
+
+
+
+					- A-6 -
+     		  ┌─────────┬─────────┬─────────┐
+     		  │ input 	      │ input            │ input            │
+     b. Vowels    │  key   → vowel  │  key   → vowel  │  key   → vowel  │
+	Table	  ├─────────┼─────────┼─────────┤
+     	(韵母表)  │    A   →  a     │    H   →  ian   │    U   →  u     │
+    		  │    S   →  ai    │    J   →  iang  │    P   →  ua    │
+    		  │    F   →  an    │    K   →  iao   │    K   →  uai   │
+    		  │    G   →  ang   │    L   →  ie	  │    X   →  uan   │
+    		  │    D   →  ao    │    M   →  in	  │    J   →  uang  │
+    		  │    E   →  e     │    N   →  ing   │    C   →  ue    │   
+    		  │    W   →  ei    │    B   →  iong  │    C   →  ui    │
+   	 	  │    R   →  en    │    Y   →  iu	  │    Z   →  un    │
+    		  │    T   →  eng   │    O   →  o	  │    O   →  uo    │
+    		  │    I   →  i     │    B   →  ong   │    V   →  幑     │
+    		  │    P   →  ia    │    Q   →  ou	  │    C   →  幑e    │
+		  └─────────┴─────────┴─────────┘
+
+
+       		  ┌─────────┬─────────┐
+    	   	  │ input 	      │ input  	  │
+    c. Special	  │  keys → Pinyin  │  keys  → Pinyin │
+       Pinyin	  ├─────────┼─────────┤
+      (特殊拼音)  │  ER   →   er    │  HN    →  Hng   │
+		  │  OY   →   er    │  NG' ' →  Ng    │
+		  └─────────┴─────────┘
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					- A-7 -
+2. Puji Hanzi Conversion System (PJY) Erpin Table (普及型汉字变换系统 PJY 的二拼表)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Consonants are input using the corresponding alphabets.  The three consonants, "Ch", 
+"Sh" and "Zh" are input using  keys "E", "A" and "V" respectively.  For Pinyin which 
+has no consonant, input  "O" as the first key, and this Pinyin will be taken to have
+no consonant.
+The consonants table, vowels table and the special Pinyin table are shown below:
+
+     		  ┌──────────┬──────────┬──────────┐
+     		  │ input 		│ input              │ input              │
+     a. Consonants│  key   → consonant│  key   → consonant│  key   → consonant│
+        Table     ├──────────┼──────────┼──────────┤
+     	(声母表)  │    B   →   B      │    N   →   N      │    E   →   Ch     │
+		  │    C   →   C	│    P   →   P      │    A   →   Sh     │
+	          │    D   →   D	│    Q   →   Q      │    V   →   Zh     │
+		  │    F   →   F	│    R   →   R      │    O   →   空     │
+		  │    G   →   G	│    S   →   S      │		    │
+		  │    H   →   H	│    T   →   T      │		    │
+ 		  │    J   →   J	│    W   →   W      │		    │
+		  │    K   →   K	│    X   →   X      │		    │
+		  │    L   →   L	│    Y   →   Y      │		    │
+		  │    M   →   M	│    Z   →   Z      │		    │
+		  └──────────┴──────────┴──────────┘
+
+     		  ┌─────────┬─────────┬─────────┐
+     		  │ input 	      │ input            │ input            │
+     b. Vowels    │  key   → vowel  │  key   → vowel  │  key   → vowel  │
+	Table	  ├─────────┼─────────┼─────────┤
+     	(韵母表)  │    A   →  a     │    H   →  ian   │    U   →  u     │
+        	  │    D   →  ai    │    L   →  iang  │    P   →  ua    │
+		  │    F   →  an    │    Y   →  iao   │    Y   →  uai   │
+		  │    G   →  ang   │    N   →  ie	  │    X   →  uan   │
+		  │    S   →  ao    │    M   →  in	  │    L   →  uang  │
+		  │    E   →  e     │    K   →  ing   │    B   →  ue    │
+		  │    W   →  ei    │    J   →  iong  │    B   →  ui    │
+		  │    R   →  en    │    Q   →  iu	  │    Z   →  un    │
+		  │    T   →  eng   │    O   →  o	  │    O   →  uo    │
+		  │    I   →  i     │    J   →  ong   │    V   →  幑     │
+		  │    P   →  ia    │    C   →  ou	  │    B   →  幑e    │
+		  └─────────┴─────────┴─────────┘
+
+       		  ┌─────────┬─────────┐
+    	   	  │ input 	      │ input  	  │
+    c. Special	  │  keys → Pinyin  │  keys  → Pinyin │
+       Pinyin	  ├─────────┼─────────┤
+      (特殊拼音)  │  OQ   →   er    │  HN    →  Hng   │
+		  │		      │  NG' ' →  Ng    │
+		  └─────────┴─────────┘
+
+					- A-8 -
+	    ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+             ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+             ┃  Ａｐｐｅｎｄｉｘ ３   ＺＨＵＹＩＮ  ＩＮＰＵＴ  ＫＥＹＳ  ┃ 
+	     ┃ 		       ＡＬＬＯＣＡＴＩＯＮＳ   	   ┃
+             ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+            ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+
+	Zhuyin was used before Pinyin is introduced.  It is now commonly used in Taiwan 
+and Hong Kong.
+
+	Zhuyin  characters are not  found on the  standard keyboard.  In order to input
+Zhuyin, each  key has to be defined on the standard keyboard.  There are several Zhuyin 
+input keys allocations. cWnn provides two input keys allocations which are commonly used 
+in Taiwan  ─  (1) Yitian input keys allocation (倚天)
+	   ─  (2) Xiyong input keys allocation (习用)
+
+In the Zhuyin centred input environment, these two types of Zhuyin input may be changed 
+dynamically.  Refer to Section 3.2.
+
+	Note that  the  consonants  and  vowels  of  Pinyin and  Zhuyin  are different.
+However, user is  able to  input  both Pinyin and Zhuyin  using the front-end processor 
+"cuum".
+
+The two input keys allocation tables are shown below.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					- A-9 -
+1. Yitian Zhuyin Input Arrangement Table (倚天注音排键法)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+	 a. Consonants Table (声母表)
+	┌────┬─────┬─────┐  ┌────┬─────┬─────┐
+	│ Input  │  Zhuyin  │  Pinyin  │  │ Input  │  Zhuyin  │  Pinyin  │
+	│  key   │ consonant│equivalent│  │  key   │ consonant│equivalent│
+	├────┼─────┼─────┤  ├────┼─────┼─────┤
+	│  B(b)  │	幣     │    B	  │  │   ,    │    幱     │    Zh    │
+	│  P(p)  │	幤     │    P	  │  │   .    │    幵     │    Ch    │
+	│  M(m)  │	幥     │    M	  │  │   /    │    幷     │    Sh    │
+	│  F(f)  │	幦     │    F     │  │   J(j) │    幹     │    R     │
+	├────┼─────┼─────┤  ├────┼─────┼─────┤
+	│  D(d)  │	幧     │    D	  │  │   ;    │    幾     │    Z     │
+	│  T(t)  │	幨     │    T	  │  │   :    │    庁     │    C     │
+	│  N(n)  │	幩     │    N	  │  │   S(s) │    庂     │    S     │
+	│  L(l)  │	幪     │    L  	  │  └────┴─────┴─────┘
+	├────┼─────┼─────┤
+	│  V(v)  │	幫     │    G	  │
+	│  K(k)  │	幬     │    K	  │
+	│  H(h)  │	幭     │    H	  │
+	├────┼─────┼─────┤
+	│  G(g)  │	幮     │    J	  │
+	│  7	  │	幯     │    Q	  │
+	│  C(c)  │	幰     │    X 	  │
+	└────┴─────┴─────┘
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					- A-10 -
+     	 b. Vowels Table (韵母表)
+	┌────┬─────┬─────┐  ┌────┬─────┬─────┐
+	│ Input  │  Zhuyin  │  Pinyin  │  │ Input  │  Zhuyin  │  Pinyin  │
+	│  key   │  vowels  │equivalent│  │  key   │  vowels  │equivalent│
+	├────┼─────┼─────┤  ├────┼─────┼─────┤
+	│   A    │    広     │   a      │  │   U-   │    庨庡    │   iong   │
+	│   I    │    庌     │   ai     │  │   EY   │    庣庒    │   iu     │
+	│   8    │    庘     │   an     │  │   O    │    庅     │   o      │
+	│   0    │    庝     │   ang    │  │   X-   │    庤庡    │   ong    │
+	│   Z    │    庎     │   ao     │  │   Y    │    庒     │   ou     │
+	│   R    │    庈     │   e      │  │   X    │    庤     │   u      │
+	│   W    │    庉     │   e      │  │   XA   │    庤広    │   ua     │
+	│   Q    │    庍     │   ei     │  │   XI   │    庤庌幚   │   uai    │
+	│   9    │    庛     │   en     │  │   X8   │    庤庘    │   uan    │
+	│   -    │    庡     │   eng    │  │   X0   │    庤庝    │   uang   │
+	│   ^    │    庢     │   er     │  │   XQ   │    庤庍    │   ui     │
+	│   E    │    庣     │   i      │  │   X9   │    庤庛    │   un     │
+	│   EA   │    庣広    │   ia     │  │   XO   │    庤庅    │   uo     │
+	│   E8   │    庣庘    │   ian    │  │   U    │    庨     │   幑      │
+	│   E0   │    庣庝    │   iang   │  │   UW   │    庨庉    │   幑e     │
+	│   EZ   │    庣庎    │   iao    │  │   U8   │    庨庘    │ uan(幑an) │
+	│   EW   │    庣庉    │   ie     │  │   U9   │    庨庛    │ un(幑n)   │
+	│   E9   │    庣庛    │   in     │  └────┴─────┴─────┘
+	│   E-   │    庣庡    │   ing    │
+	└────┴─────┴─────┘
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					- A-11 -
+2. Xiyong Zhuyin Input Arrangement Table (习用注音排键法)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+	 a. Consonants Table (声母表)
+	┌────┬─────┬─────┐  ┌────┬─────┬─────┐
+	│ Input  │  Zhuyin  │  Pinyin  │  │ Input  │  Zhuyin  │  Pinyin  │
+	│  key   │ consonant│equivalent│  │  key   │ consonant│equivalent│
+	├────┼─────┼─────┤  ├────┼─────┼─────┤
+	│  1     │	幣     │    B	  │  │   5    │    幱     │    Zh    │
+	│  Q(q)  │	幤     │    P	  │  │   T(t) │    幵     │    Ch    │
+	│  A(a)  │	幥     │    M	  │  │   G(g) │    幷     │    Sh    │
+	│  Z(z)  │	幦     │    F     │  │   B(b) │    幹     │    R     │
+	├────┼─────┼─────┤  ├────┼─────┼─────┤
+	│  2     │	幧     │    D	  │  │   Y(y) │    幾     │    Z     │
+	│  W(w)  │	幨     │    T	  │  │   H(h) │    庁     │    C     │
+	│  S(s)  │	幩     │    N	  │  │   N(n) │    庂     │    S     │
+	│  X(x)  │	幪     │    L	  │  └────┴─────┴─────┘
+	├────┼─────┼─────┤
+	│  E(e)  │	幫     │    G	  │
+	│  D(d)  │	幬     │    K	  │
+	│  C(c)  │	幭     │    H	  │
+	├────┼─────┼─────┤
+	│  R(r)  │	幮     │    J	  │
+	│  F(f)  │	幯     │    Q	  │
+	│  V(v)  │	幰     │    X     │
+	└────┴─────┴─────┘
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					- A-12 -
+    	 b. Vowels Table (韵母表)
+	┌────┬─────┬─────┐  ┌────┬─────┬─────┐
+	│ Input  │  Zhuyin  │  Pinyin  │  │ Input  │  Zhuyin  │  Pinyin  │
+	│  key   │  vowels  │equivalent│  │  key   │  vowels  │equivalent│
+	├────┼─────┼─────┤  ├────┼─────┼─────┤
+	│   8    │    広     │   a      │  │   M/   │    庨庡    │   iong   │
+	│   9    │    庌     │   ai     │  │   U.   │    庣庒    │   iu     │
+	│   0    │    庘     │   an     │  │   I    │    庅     │   o      │
+	│   ;    │    庝     │   ang    │  │   .    │    庒     │   ou     │
+	│   L    │    庎     │   ao     │  │   J/   │    庤庡    │   ong    │
+	│   K    │    庈     │   e      │  │   J    │    庤     │   u      │
+	│   ,    │    庉     │   e      │  │   J8   │    庤広    │   ua     │
+	│   O    │    庍     │   ei     │  │   J9   │    庤庌幚   │   uai    │
+	│   P    │    庛     │   en     │  │   J0   │    庤庘    │   uan    │
+	│   /    │    庡     │   eng    │  │   J;   │    庤庝    │   uang   │
+	│   -    │    庢     │   er     │  │   JO   │    庤庍    │   ui     │
+	│   U    │    庣     │   i      │  │   JP   │    庤庛    │   un     │
+	│   U8   │    庣広    │   ia     │  │   JI   │    庤庅    │   uo     │
+	│   U0   │    庣庘    │   ian    │  │   M    │    庨     │   幑      │
+	│   U;   │    庣庝    │   iang   │  │   M,   │    庨庉    │   幑e     │
+	│   UL   │    庣庎    │   iao    │  │   MO   │    庨庘    │ uan(幑an) │
+	│   U,   │    庣庉    │   ie     │  │   MP   │    庨庛    │ un(幑n)   │
+	│   UP   │    庣庛    │   in     │  └────┴─────┴─────┘
+	│   U/   │    庣庡    │   ing    │
+	└────┴─────┴─────┘
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					- A-13 -
+	    ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+             ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+             ┃ Ａｐｐｅｎｄｉｘ ４   ＳＴＡＮＤＡＲＤ  ＦＵＮＣＴＩＯＮ  ＫＥＹＳ ┃ 
+	     ┃		              ＤＥＦＩＮＩＴＩＯＮ  ＩＮ  ＣＷＮＮ         ┃
+             ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+            ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+	
+	In  cWnn system, each function key (eg. PF1, PF2 .etc ) has its default operational 
+functions.  The function keys setup may be changed.  
+
+We will now show the standard definition of each function key in cWnn system.
+
+
+			   The Standard Definition of Function Keys
+  ┌───────┬─────┬─────────┬─────────┬────────┐
+  │ Function Key │Other Keys│   Description    │    Function In   │    Function In │
+  │     (a)      │   (b)    │      (c)         │(d) Input State   │(e) Edit State  │
+  ├───────┼─────┼─────────┼─────────┼────────┤
+  │     -        │   ^\     │To toggle input   │ Similar to (c)   │ Similar to (c) │
+  │              │          │mode ON/OFF       │                  │	        │
+  ├───────┼─────┼─────────┼─────────┼────────┤
+  │    PF1       │    -     │To toggle phonetic│To toggle among   │ 	        │
+  │              │          │input mode        │different phonetic│ Similar to (d) │
+  │              │          │eg. Pinyin, Zhuyin│input methods     │	        │
+  ├───────┼─────┼─────────┼─────────┼────────┤
+  │    PF2       │    -     │To toggle encoded │To toggle among   │ 	        │
+  │              │          │input mode        │different encoded │ Similar to (d) │
+  │              │          │eg. Wubi, Cangjie,│input methods     │	        │
+  │              │          │    Qianma        │                  │	        │
+  ├───────┼─────┼─────────┼─────────┼────────┤
+  │    PF3       │    -     │To toggle ASCII   │To toggle among   │ 	        │
+  │              │          │character input   │different ASCII   │ Similar to (d) │
+  │              │          │mode eg. Quanjiao,│character input   │	        │
+  │              │          │         Banjiao  │methods           │	        │
+  └───────┴─────┴─────────┴─────────┴────────┘
+
+
+
+
+
+
+
+
+
+
+
+
+
+					- A-14 -
+  ┌───────┬─────┬─────────┬─────────┬────────┐
+  │ Function Key │Other Keys│   Description    │    Function In   │    Function In │
+  │     (a)      │   (b)    │      (c)         │(d) Input State   │(e) Edit State  │
+  ├───────┼─────┼─────────┼─────────┼────────┤
+  │    PF4       │    -     │To toggle other   │To toggle among   │ 	        │
+  │              │          │input mode        │different input   │ Similar to (d) │
+  │              │          │eg. Guobiao,      │methods           │	        │
+  │              │          │    Quwei, Neima  │        +         │	        │
+  │              │          │(only in Pinyin   │ Similar to (c)   │	        │
+  │              │          │ centred input    │                  │	        │
+  │              │          │ environment)     │                  │	        │
+  │              │          │      +           │                  │	        │
+  │              │          │To toggle the     │                  │	        │
+  │              │          │environment       │                  │	        │
+  │              │          │operation function│                  │	        │
+  │              │          │(similar to PF6)  │                  │	        │
+  │              │          │(only in Zhuyin   │                  │	        │
+  │              │          │ centred input    │                  │	        │
+  │              │          │ environment and  │                  │	        │
+  │              │          │Combined Pinyin & │                  │	        │
+  │              │          │Zhuyin input env.)│                  │	        │
+  │              │          │                  │                  │	        │
+  ├───────┼─────┼─────────┼─────────┼────────┤
+  │    PF5       │    -     │To select the     │		      │ 	        │
+  │              │          │different input   │  Similar to (c)  │ Similar to (c) │
+  │              │          │keys allocations  │		      │	        │
+  │              │          │eg. Guangming or  │                  │	        │
+  │              │          │    PJY for Erpin,│                  │	        │
+  │              │          │and Yitian or     │                  │	        │
+  │              │          │    Xiyong for    │                  │	        │
+  │              │          │    Zhuyin        │                  │	        │
+  ├───────┼─────┼─────────┼─────────┼────────┤
+  │    PF6       │ 前面キ-  │To toggle the     │To select among   │ 	        │
+  │              │    +     │environment       │the different     │ Similar to (d) │
+  │              │ 呼出し   │operations eg.    │environment       │	        │
+  │              │          │Word / dictionary │operation         │	        │
+  │              │          │add or search etc.│functions         │	        │
+  ├───────┼─────┼─────────┼─────────┼────────┤
+  │   前面キ-    │    -     │To cancel         │		      │ 	        │
+  │      +       │          │enviornment       │  Similar to (c)  │ Similar to (c) │
+  │ ↓down arrow │          │operation function│                  │	        │
+  │   key        │          │                  │                  │	        │
+  └───────┴─────┴─────────┴─────────┴────────┘
+
+
+
+
+
+
+					- A-15 -
+  ┌───────┬─────┬─────────┬─────────┬────────┐
+  │ Function Key │Other Keys│   Description    │    Function In   │    Function In │
+  │     (a)      │   (b)    │      (c)         │(d) Input State   │(e) Edit State  │
+  ├───────┼─────┼─────────┼─────────┼────────┤
+  │   变换 key   │   ^W     │To perform        │  Similar to (c)  │ 		│
+  │              │          │Hanzi conversion  │        +         │ Similar to (d) │
+  │              │          │                  │To list out the   │	        │
+  │              │          │                  │possible candidate│	        │
+  ├───────┼─────┼─────────┼─────────┼────────┤
+  │   变换 key   │    -     │To extract a      │ 	              │ 		│
+  │              │          │candidate from the│	    -	      │ Similar to (c) │
+  │              │          │candidate list    │		      │ 		│
+  ├───────┼─────┼─────────┼─────────┼────────┤
+  │     -        │   ^Z     │To treat the input│  Similar to (c)  │ 		│
+  │              │          │string as a phrase│       +	      │ Similar to (d) │
+  │              │          │and perform phrase│To list out the   │	        │
+  │              │          │conversion	  │possible phrase   │	        │
+  │              │          │                  │candidates	      │ 		│
+  ├───────┼─────┼─────────┼─────────┼────────┤
+  │   确定 key   │   ^L     │To confirm the    │  Similar to (c)  │ Similar to (d) │
+  │              │          │conversion result │	   	      │ 		│
+  ├───────┼─────┼─────────┼─────────┼────────┤
+  │   确定 key   │    -     │To extract a      │ 		      │		│
+  │              │          │candidate from the│ 	    -	      │ Similar to (c) │
+  │              │          │candidate list    │ 		      │		│
+  ├───────┼─────┼─────────┼─────────┼────────┤
+  │ → The right │   ^F     │To move cursor one│To move the cursor│ Similar to (d)	│
+  │    arrow key │          │position to the   │one input unit to │       +	│
+  │              │          │right during input│the right	      │ To move to the	│
+  │              │          │state, edit state,│		      │ next candidate	│
+  │              │          │and when using PF6│		      │ on the right   │
+  ├───────┼─────┼─────────┼─────────┼────────┤
+  │ ← The left  │   ^B     │To move cursor one│To move the cursor│ Similar to (d)	│
+  │    arrow key │          │position to the   │one input unit to │       +	│
+  │              │          │left during input │the left 	      │ To move to the	│
+  │              │          │state, edit state,│		      │ next candidate	│
+  │              │          │and when using    │		      │ on the left    │
+  │              │          │functions in PF6  │		      │ 		│
+  ├───────┼─────┼─────────┼─────────┼────────┤
+  │ ↑ The up    │   ^P     │To move to the    │ 		      │		│
+  │    arrow key │          │previous menu or  │  Similar to (c)  │ Similar to (c)	│
+  │              │          │the previous set  │	     +        │       +	│
+  │              │          │of candidates.    │To recall the     │ To obtain  the │
+  │              │          │Also apply when   │previous input    │ previous single│
+  │              │          │using functions in│		      │ candidate      │
+  │              │          │PF6 		  │		      │ 		│
+  └───────┴─────┴─────────┴─────────┴────────┘
+
+
+					- A-16 -
+  ┌───────┬─────┬─────────┬─────────┬────────┐
+  │ Function Key │Other Keys│   Description    │    Function In   │    Function In │
+  │     (a)      │   (b)    │      (c)         │(d) Input State   │(e) Edit State  │
+  ├───────┼─────┼─────────┼─────────┼────────┤
+  │ ↓ The up    │   ^N     │To move to the    │ 		      │		│
+  │    arrow key │          │next menu or the  │  Similar to (c)  │ Similar to (c)	│
+  │              │          │next set of       │         +        │	+	│
+  │              │          │candidates.       │To recall the     │ To obtain  the │
+  │              │          │Also apply when   │previous input    │ next single    │
+  │              │          │using functions in│		      │ candidate      │
+  │              │          │PF6 		  │		      │ 		│
+  ├───────┼─────┼─────────┼─────────┼────────┤
+  │     -        │   ^D     │To delete an input│To delete an input│ Similar to (d) │
+  │              │          │unit              │unit      	      │       		│
+  │              │          │       +          │		      │		│
+  │              │          │To delete a word  │		      │		│
+  │              │          │or character, or  │		      │		│
+  │              │          │dictionary in the │		      │		│
+  │              │          │environment       │		      │		│
+  │              │          │operations PF6    │		      │		│
+  ├───────┼─────┼─────────┼─────────┼────────┤
+  │   消去 key   │    -     │To delete an input│  Similar to (c)  │ Similar to (c) │
+  │              │          │unit              │          	      │       		│
+  ├───────┼─────┼─────────┼─────────┼────────┤
+  │ Backspace key│    -     │To delete an input│  Similar to (c)  │ Similar to (c) │
+  │              │          │character         │           	      │       		│
+  ├───────┼─────┼─────────┼─────────┼────────┤
+  │   前面キ-    │   ^E     │To move the cursor│To move the cursor│To move cursor  │
+  │     +        │          │to the last input │to the last unit  │to the last     │
+  │ right arrow  │          │unit (end) or to  │(end) of the user │candidate in the│
+  │   key →     │          │the last candidate│input string      │current set  of │
+  │              │          │of the list.      │		      │candidates      │
+  │              │          │Also apply when   │		      │ 		│
+  │              │          │using functions in│		      │ 		│
+  │              │          │PF6 		  │		      │ 		│
+  ├───────┼─────┼─────────┼─────────┼────────┤
+  │   前面キ-    │   ^A     │To move the cursor│To move the cursor│To move cursor  │
+  │     +        │          │to the first input│to the first unit │to the last     │
+  │  left arrow  │          │unit (beginning)  │(beginning) of the│candidate in the│
+  │   key ←     │          │or to the first   │user input string │current set  of │
+  │              │          │candidate of the  │		      │candidates      │
+  │              │          │list.             │		      │		│
+  │              │          │Also apply when   │		      │ 		│
+  │              │          │using functions in│		      │ 		│
+  │              │          │PF6 		  │		      │ 		│
+  └───────┴─────┴─────────┴─────────┴────────┘
+
+
+
+					- A-17 -
+  ┌───────┬─────┬─────────┬─────────┬────────┐
+  │ Function Key │Other Keys│   Description    │    Function In   │    Function In │
+  │     (a)      │   (b)    │      (c)         │(d) Input State   │(e) Edit State  │
+  ├───────┼─────┼─────────┼─────────┼────────┤
+  │   前面キ-    │   ^K     │To undo a         │To delete an input│ 		│
+  │     +        │          │conversion from   │string from the   │ Similar to (d) │
+  │  ↑up arrow  │          │the cursor 	  │cursor position to│       +        │
+  │    key       │          │position to the   │the end of the    │ Similar to (c) │
+  │              │          │end of the input  │input string      │If press twice, │
+  │              │          │string, ie. to    │(press once)      │will cancel the │
+  │              │          │convert from Hanzi│		      │whole converted │
+  │              │          │back to user input│		      │Hanzi string    │
+  │              │          │(if press once)   │		      │		│
+  ├───────┼─────┼─────────┼─────────┼────────┤
+  │   文节← key │   ^I     │To shorten the    │ 	   -  	      │To separate a   │
+  │              │          │length of a word  │		      │word into	│
+  │              │          │phrase by one     │		      │individual      │
+  │              │          │character         │		      │characters	│
+  ├───────┼─────┼─────────┼─────────┼────────┤
+  │   文节→ key │   ^O     │To entend the     │ 	   -  	      │To separate a   │
+  │              │          │length of a word  │		      │word into	│
+  │              │          │phrase by one     │		      │individual      │
+  │              │          │character         │		      │characters	│
+  ├───────┼─────┼─────────┼─────────┼────────┤
+  │   前面キ-    │    -     │To enter the Quwei│  Similar to (c)  │ Similar to (c) │
+  │     +        │          │input mode 	  │		      │		│
+  │  文节← key  │          │		  │		      │		│
+  ├───────┼─────┼─────────┼─────────┼────────┤
+  │   前面キ-    │    -     │To enter the      │  Similar to (c)  │ Similar to (c) │
+  │     +        │          │Guobiao input mode│		      │		│
+  │  文节→ key  │          │                  │		      │                │
+  ├───────┼─────┼─────────┼─────────┼────────┤
+  │     -        │   ^G     │To extract a      │	   -	      │ 		│
+  │              │          │candidate from the│ 		      │ Similar to (c) │
+  │              │          │candidate list    │ 		      │		│
+  │              │          │       +          │ 		      │		│
+  │              │          │To quit the       │ 		      │		│
+  │              │          │environment       │ 		      │		│
+  │              │          │operation function│ 		      │		│
+  │              │          │(PF6 functions)   │ 		      │		│
+  └───────┴─────┴─────────┴─────────┴────────┘
+
+
+
+
+
+
+
+
+					- A-18 -
+  ┌───────┬─────┬─────────┬─────────┬────────┐
+  │ Function Key │Other Keys│   Description    │    Function In   │    Function In │
+  │     (a)      │   (b)    │      (c)         │(d) Input State   │(e) Edit State  │
+  ├───────┼─────┼─────────┼─────────┼────────┤
+  │     -        │   ^C     │To perform reverse│       -          │Re-enter into	│
+  │              │          │conversion        │		      │input or insert │
+  │              │          │                  │		      │mode (if press  │
+  │              │          │                  │		      │      once)     │
+  │              │          │                  │		      │       +        │
+  │              │          │                  │		      │Perform reverse │
+  │              │          │                  │		      │conversion      │
+  │              │          │                  │		      │(if press twice)│
+  └───────┴─────┴─────────┴─────────┴────────┘
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					- A-19 -

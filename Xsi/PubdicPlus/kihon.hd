@@ -1,0 +1,40 @@
+\comment
+\comment FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+\comment This file is part of FreeWnn.
+\comment 
+\comment Copyright Wnn Consortium. 1993
+\comment
+\comment Author: OMRON SOFTWARE Co., Ltd. <freewnn@rd.kyoto.omronsoft.co.jp>
+\comment
+\comment This program is free software; you can redistribute it and/or modify
+\comment it under the terms of the GNU General Public License as published by
+\comment the Free Software Foundation; either version 2, or (at your option)
+\comment any later version.
+\comment
+\comment This program is distributed in the hope that it will be useful,
+\comment but WITHOUT ANY WARRANTY; without even the implied warranty of
+\comment MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+\comment GNU General Public License for more details.
+\comment
+\comment You should have received a copy of the GNU General Public License
+\comment along with GNU Emacs; see the file COPYING.  If not, write to the
+\comment Free Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+\comment
+\comment Commentary:
+\comment
+\comment Change log:
+\comment
+\comment Last modified date: 8,Feb.1999
+\comment
+\comment 
+\comment	基本語彙(pubdic)
+\hinsi
+/|普通名詞/:動詞/:動詞以外の用言/:その他の独立語/
+普通名詞/|名詞:サ行(する)&名詞:一段&名詞:形容動詞&名詞:数詞
+動詞/|一段:一段&名詞\
+	:カ行五段:ガ行五段:サ行五段:タ行五段:ナ行五段\
+	:バ行五段:マ行五段:ラ行五段:ワ行五段\
+	:サ行(する):サ行(する)&名詞:ザ行(ずる)
+動詞以外の用言/|形容詞:形容動詞:形容動詞&名詞:形容動詞(たる)
+その他の独立語/|副詞:連体詞:接続詞,感動詞
+

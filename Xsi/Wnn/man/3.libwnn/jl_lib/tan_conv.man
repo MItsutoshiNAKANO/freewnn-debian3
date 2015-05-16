@@ -1,0 +1,70 @@
+.\"
+.\"   $Id: ./tan_conv.man $
+.\"
+.\"
+.\" FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+.\" This file is part of FreeWnn.
+.\" 
+.\" Copyright Kyoto University Research Institute for Mathematical Sciences
+.\"                 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+.\" Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright FreeWnn Project 1999, 2000
+.\" 
+.\" Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+.\" 
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\" 
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\" 
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software
+.\" Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+.\"
+.TH JL_TAN_CONV \  "3 October 1991"
+.SH 名称
+.sv 1
+.nf
+.ta 0.1i 2i
+jl_tan_conv()		単文節変換する。
+.fi
+.SH 形式
+.sv 1
+.nf
+.ta 0.1i 3i
+#include "jllib.h"
+
+int
+jl_tan_conv(buf, yomi, bun_no, bun_no2, use_maep, ich_shop)
+struct wnn_buf *buf;	/* バッファ */
+w_char *yomi;		/* 読み */
+int bun_no;		/* 文節番号1 */
+int bun_no2;		/* 文節番号2 */
+int use_maep;		/* 前後の接続を使う/否 */
+int ich_shop;		/* 小文節/否 */
+.fi
+.SH 機能
+.HP 0
+.IP
+文節番号 bun_no から 文節番号 bun_no2 の前までの文節を削除し、読みを単文節変換
+した結果を挿入する。「小文節/否」の値が WNN_SHO ならば小文節、WNN_DAI な
+らば大文節として変換を行なう。(当然、大文節として変換した場合には、変
+換結果は1文節ではない)
+
+bun_no = bun_no2 の時は、bun_no の前の位置に変換結果が挿入さ
+れる。bun_no が文節数と等しい時は、現在の変換結果に変換結果を付け加える。
+bun_no2 が文節数と等しい時は、bun_no から 後ろの文字列を変換結果に置き換える。
+bun_no2 = -1 の時は、bun_no2 = 文節数 として、tan_conv を行なう。
+.SH リターンバリュー
+.sv 1
+.nf
+正常終了時には文節数を返す。
+異常終了時には -1 を返す。
+.fi
+

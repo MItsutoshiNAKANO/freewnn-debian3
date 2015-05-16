@@ -1,0 +1,132 @@
+
+
+
+JS_WORD_COMMENT_S( )UNIX Programmer's Manual JS_WORD_COMMENT_S( )
+
+
+
+名称
+
+     js_word_comment_set()    単語にコメントをセットする。
+
+形式
+
+     #include "jslib.h"
+
+     int
+     js_word_comment_set(env, dic_no, entry, comment)
+     struct wnn_env *env;          /* 環境 */
+     int dic_no;                   /* 辞書番号 */
+     int entry;                    /* エントリー番号 */
+     w_char *comment;              /* コメント */
+
+機能
+
+     dic_no, entry で指定された辞書内の単語にコメントをセットする。
+     コメントをセット可能なためには、その辞書は、登録可能である必
+     要がある。漢字と読みとコメントの合計最大文字数は、 127 文字
+     である。
+
+リターンバリュー
+
+     正常終了時には、0 を返す。
+     異常終了時には、-1 を返す。
+
+
+
+
+Printed 1/22/92          11 October 1991                        1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,119 @@
+.\"
+.\"   $Id: ./cwdreg.man $
+.\"
+.\"
+.\" FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+.\" This file is part of FreeWnn.
+.\" 
+.\" Copyright Kyoto University Research Institute for Mathematical Sciences
+.\"                 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+.\" Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright FreeWnn Project 1999, 2000
+.\" 
+.\" Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+.\" 
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\" 
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\" 
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software
+.\" Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+.\"
+.TH CWDREG \  "13 May 1992"
+.SH NAME
+cwdreg \- To register characters/words into the binary format 
+         dictionary.
+.SH SYNOPSIS
+cwdreg   [-D 
+.I server
+]   -n 
+.I envname  
+.sp 0
+         -d 
+.I dicno   
+<   
+.I textdic
+.sp 0
+OR
+.sp 0
+cwdreg   [-D 
+.I server
+]   -n 
+.I envname  
+.sp 0
+         -L 
+.I filename   
+<   
+.I textdic
+.SH DEFAULT PATH
+/usr/local/bin/cWnn4/cwdreg
+.ad
+.SH DESCRIPTION
+This function allows user to register characters/words into the specified 
+binary dictionary, with either dictionary number 
+.I dicno
+or dictionary 
+filename 
+.I filename 
+specified.
+
+.I server 
+is the machine name of the server.  If this is not specified, 
+the default cserver indicated by the environment variable CSERVER will 
+be taken.
+
+"-n 
+.I envname
+"  must be  specified.   
+.I envname 
+is the environment name.  
+You may execute "cwnnstat -E" to see the current environment name. 
+
+Either "-d 
+.I dicno
+" or "-L 
+.I filename
+" must be specified.
+.sp 0
+.I dicno 
+is the dictionary number.  
+.I filename 
+is the filename of the 
+dictionary.  "-L" is used for when the dictionary is from the local machine.
+
+"<" means to pipe the 
+.I textdic 
+as an input to "cwdreg" command.
+
+.I textdic  
+is the text file which user enters the characters/words to be 
+registered.   The format of this text file must be the same as that in 
+the system text format dictionary.  That is,
+.na
+.sp 0
+ --------------------------------------------------
+.sp 0
+|  Pinyin      Word       Cixing        Frequency  | 
+.sp 0
+|   :           :          :              :        |
+.sp 0
+ --------------------------------------------------
+.sp 0
+.ad
+Refer to cWnn manual for details on dictionary.
+.sp 0
+By using "cwdreg", all the characters/words in 
+.I textdic 
+will be 
+registered into the specified binary dictionary permanently.
+.SH NOTE
+.IP 1.
+The parts in [ ] are options.  They may be omitted.

@@ -1,0 +1,116 @@
+.\"
+.\" $Id: cvtxim.man,v 1.1.2.1 1999/02/08 08:09:12 yamasita Exp $
+.\"
+
+.\" FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+.\" This file is part of FreeWnn.
+.\" 
+.\" Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+.\" Copyright 1992 by Massachusetts Institute of Technology
+.\"
+.\" Author: OMRON SOFTWARE Co., Ltd. <freewnn@rd.kyoto.omronsoft.co.jp>
+.\"
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2, or (at your option)
+.\" any later version.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with GNU Emacs; see the file COPYING.  If not, write to the
+.\" Free Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+.\"
+.\" Commentary:
+.\"
+.\" Change log:
+.\"
+.\" Last modified date: 8,Feb.1999
+.\"
+
+.TH CVTXIM 4 "Release 5" "X Version 11"
+.SH 名称
+cvt_xim_tbl \- Ｘウィンドウ・インプットマネージャー(xwnmo(1X))用
+キー変換テーブル
+.SH 形式
+.B /usr/local/lib/wnn/cvt_xim_tbl (デフォルト)
+.SH 解説
+\fIXLookupString()\fP で返されたキーのコード(\fIKeySym\fP) を、
+１バイトの文字(\fIWnn code\fP) へ変換するためのテーブルです。
+.PP
+.TP 8
+.B コーディンクフォーマット:
+[ \fIState-or-KeySym\fP <space_character> \fPWnn-code\fP ]
+.br
+\fIState-or-KeySym\fP = [\fIStates\fP]\fIKeySym-name\fP
+.br
+\fIStates\fP = \fIState-name\fP'\fI|\fP'[\fIStates\fP]
+.PP
+セミコロン (;) で始まる行は、コメント行です。
+.PP
+KeySym-nameは、keysymdef.hで宣言されている文字列です(接頭子"XA_"は除きます)。
+.TP 8
+State-nameは、以下の文字列の中のいずれかです。
+"Shift"   ---> ShiftMaskを意味します。
+.br
+"Ctrl"    ---> ControlMaskを意味します。
+.br
+"Meta"    ---> Mod1Maskを意味します。
+.br
+"Meta1"   ---> Mod1Maskを意味します。("Meta"と同じ意味です)
+.br
+"Meta2"   ---> Mod2Maskを意味します。
+.br
+"Meta3"   ---> Mod3Maskを意味します。
+.br
+"Meta4"   ---> Mod4Maskを意味します。
+.br
+"Meta5"   ---> Mod5Maskを意味します。
+.TP 8
+.B コードの記述法
+0??             ---> ８進数
+.br
+0x?? or 0X??    ---> １６進数
+.br
+??              ---> １０進数
+.SH サンプル
+Meta|Left            0x9A
+.br
+Meta|Up              0x99
+.br
+Meta|F11             0x95
+.br
+Meta|minus           0x81
+.br
+Meta|asciicircum     0x82
+.br
+Kanji                0x81
+.br
+F1                   0x91
+.br
+F2                   0x90
+.br
+Meta|Shift|F1        0x91
+.SH 注意
+古いバージョンの\fIxwnmo\fPでは、\fIcvt_fun_tbl\fPと\fIcvt_meta_tbl\fP
+の２つの変換テーブルを使って変換を行なっていました。互換性のために
+これら２つの変換テーブルも、オプション、あるいはリソースで指定された
+場合のみ有効になります。その場合、これら２つの変換テーブルが先に
+読み込まれされ、その後で、cvt_xim_tblが読み込まれされます。
+重複した設定がある場合は、ワーニングが表示され、これら２つの変換
+テーブルの内容が優先されます。
+
+このテーブルにより変換されたコードは、オートマトンテーブルである
+\fI2A_CTRL\fP (デフォルト)で評価され、その後、\fIuumkey\fP により評価
+されます。
+.SH 関連項目
+xwnmo(1X), 2A_CTRL(4_JT), uumkey(4_JT) cvt_fun_tbl(4X), cvt_meta_tbl(4X)
+.SH COPYRIGHT
+Copyright 1992 by OMRON Corporation
+.br
+Copyright 1992 by Massachusetts Institute of Technology
+.SH AUTHOR
+Seiji Kuwari (OMRON Corporation)

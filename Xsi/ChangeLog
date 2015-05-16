@@ -1,0 +1,470 @@
+Fri Feb 25 01:17:04 2000  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* 開発版 1.1.1-a016 として内部リリース
+
+Thu Feb 24 02:24:05 2000  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* 何度 indent コマンドを実行しても同じ結果が出るようにソースを修正。
+	(問題の箇所を /* *INDENT-OFF* */、/* *INDENT-ON* */ で囲っている。)
+	
+Wed Feb 23 00:35:09 2000  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* Wnn/jutil/wnnkill.c: indent が美しくなるように ifdef の関係を調
+	整
+	* Wnn/jutil/wnnstat.c: (同上)
+	* Wnn/jutil/dtoa.c: (同上)
+	
+Wed Feb 23 00:32:19 2000  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* Wnn/etc/xutoj.c: 文法エラーの修正(普段は指定されない ifdef のた
+	めわからなかった。indent を書ける際に発覚) 
+	([freewnn:00336] 元木さんのパッチ)
+
+Mon Feb 14 02:23:38 2000  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* 開発版 1.1.1-a015 として内部リリース
+
+Sun Feb 13 18:56:32 2000  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* configure.in: socklen_t がうまく検出できない場合があるので変更。
+	([freewnn:00238] 元木さんのパッチ)
+	
+Sun Feb 13 18:41:43 2000  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* Wnn/jserver/do_env.c: new_env 内で sticky と jishomax を明示的に
+	初期化していないので明示的に初期化するようにした。
+ 	([freewnn:00229] 元木さんのパッチ)
+
+	* Wnn/jserver/do_dic_env.c: del_all_dic_in_env 内ですべての辞書を 
+	env[eid] 内から外しているのに jishomax はそのままなので 0 を入れた。
+  	(でも、この関数を呼んだ後に jishomax を使う箇所は無いはずなのでい
+	らないかも。)
+ 	([freewnn:00229] 元木さんのパッチ)
+
+Sun Feb 13 18:28:02 2000  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* Wnn/jserver/de.c: Solaris2.4+gcc-2.95.1で出力されるwarningの一部
+	を取った。([freewnn:00206] 鵜川さんのパッチ + [freewnn:00209])
+
+Sun Feb 13 18:16:54 2000  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* makerule.mk.in: ar のコマンドを "clq" から "cq" に変更。SunOS
+ 	2.4 では l コマンドがエラーになるため。ar の l コマンドはHP-UX で
+	は作業ディレクトリの変更、GNUld では No Operation なので省略可能と
+	判断した。 ([freewnn:00207],[freewnn:00208],[freewnn:00210])
+
+Sun Feb 13 18:05:09 2000  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* gerodic をデフォルトで読み込むように rc ファイルを変更
+  	([freewnn:00214] kaz / 大森保英さんのパッチ)
+
+Sun Feb 13 17:54:13 2000  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* *.man の誤字および roff の文法エラーの修正
+	([freewnn:00216] 永江さん作成のパッチ)
+
+Sun Feb 13 16:36:01 2000  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* Wnn/jserver/de.c: jserver の usage メッセージに -N を追加。
+	([freewnn:00273] 片山さん作成のパッチ)
+
+	* Wnn/jserver/de.c: jserver に -p オプションを追加(ポート番号の指
+	定)
+	([freewnn:00277] 元木さん作成のパッチ)
+
+	* Wnn/man/4.cmd/jserver.man: -p オプション、-N オプションの記述を
+	追加。(英語の方は手抜き。ごめん)
+	
+Thu Feb 10 02:17:38 2000  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* man で冒頭に大量の空白行が作成されるのを直した。
+	([freewnn:00203] 植松 文徳 <uematsu@kgz.com>さんのパッチ)
+
+Mon Feb  7 02:32:22 2000  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* 開発版 1.1.1-a014 として内部リリース
+
+Sun Feb  6 17:22:32 2000  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* COPYRIGHT, COPYRIGHT-j を添付。これは GPL そのものと、その日本語
+	訳である。
+
+Sun Feb  6 17:17:57 2000  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* ChangeLog.old を作成。これは、以前の著作権表記ヘッダに記録された
+	いた変更情報をまとめたもの。
+
+	* CONTRIBUTORS に、FreeWnn 1.0/1.1 時代の情報を追加。
+	
+Sun Feb  6 17:15:44 2000  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* 著作権表記を変更。但し、以下のディレクトリに含まれるファイルは著
+	作権表記を変更しなかった。
+
+	1. 辞書関連 → FreeWnn Project で全くいじっていないから
+
+	    cWnn/tdic, cWnn/cdic, kWnn/kdic, Contrib/dic/gerodic,
+	    Wnn-consortium/dic
+
+	2. マニュアル関連 →FreeWnn Project で全くいじっていないから
+
+	    Wnn/manual, Wnn/manual.en, cWnn/manual, cWnn/manual.en
+
+	3. Xwnmo → FreeWnn Project で全くいじっていないから
+
+	    Xwnmo
+
+	4. PubdicPlus は FreeWnn に合わせるための作業が発生しているが、
+	   Public Domain とする。これは Pubdic 本来の思想にあわせるため。
+
+	    PubdicPlus
+
+Tue Oct 19 01:07:40 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* 開発版 1.1.1-a013 として内部リリース
+
+Tue Oct 19 00:09:48 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* Wnn/jserver/de.c: jserver がエラーで終了する時、perror() を呼ん
+	で「何が原因で異常終了したのか」を表示するようにした。
+	が出るため。([freewnn:00199])
+	
+Mon Oct 18 23:11:20 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* Wnn/jserver/do_hindo_s.c: drand48() のプロトタイプ宣言を追加
+	(stdlib.h をインクルードする)。FreeBSD で jserver が死ぬのはこれが
+	原因だった。([freewnn:00195] 片山さんのパッチ)
+	
+	* Wnn/jserver/do_hindo_s.c: 1U → (unsigned)1 に変更。K&R でエラー
+	が出るため。([freewnn:00195] 片山さんのパッチ)
+	
+Sat Oct 16 00:47:38 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* Wnn/jserver/de.c: accept の引数のキャストを行ない、warning をな
+	くした。
+	([freewnn:00140]: にしくさんのパッチ)
+
+Wed Sep 29 03:19:17 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* 開発版 1.1.1-a012 として内部リリース
+
+Wed Sep 29 02:13:56 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* gerodic の Makefile.in が古いままだった。
+	([freewnn:00143]: kaz / 大森保英さんの指摘)
+
+	* gerodic が make および make install の対象になるようにした。
+
+Wed Sep 29 00:46:31 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* Wnn/jserver/de_header.h: wnn_get_hinsi_name() のプロトタイプ宣言
+	が間違っていたので修正(関数の型が int(誤) -> char*(正))。
+
+Wed Sep 29 00:01:03 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* Makefile.in:    ".c.i" のルールを削除。使ってないので。
+	* makerule.mk.in: ".c.i" のルールを削除。使ってないので。
+
+Tue Sep 28 23:25:42 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* Wnn/jlib/js.c: BSD系のOSで SUN_LEN を正しく定義
+	([freewnn:00144]: 坂本さん報告のパッチ)
+
+Tue Sep 28 23:03:26 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* Wnn/etc/strings.c: 使いもしないのに NULL が定義されていたので
+	削除
+
+Tue Sep 28 02:04:44 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* HAVE_DRAND48 および HAVE_RAND_MAX を導入。SRAND48 は削除。
+
+	* Wnn/jserver/do_hindo_s.c (RAND): (1<<31) が int を越えていたので 
+	1U に変更。
+	([freewnn:00136]: 永江さんのパッチ)
+
+Tue Sep 28 01:04:36 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* Wnn/jserver/de.c: socklen_t 型を導入
+	* Wnn/jserver/error.c: time_t 型を導入
+
+	([freewnn:00140]: にしくさんのパッチ、[freewnn:00135]: 元木さんの
+	アドバイス)
+	
+Tue Sep 28 00:25:12 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* Wnn/jserver/de.c: typo の修正(恥ずかしい…)
+	([freewnn:00136] 永江さん、[freewnn:00139] 冨樫さんのパッチ)
+
+Fri Sep 24 03:05:11 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* 開発版 1.1.1-a011 として内部リリース
+
+Fri Sep 24 02:59:28 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* Wnn/jserver/de.c: NOFILE の再定義の不具合を修正。
+	([freewnn:00131]: にしくさんの指摘による)
+
+	* time((long*)0) を time(NULL) に修正。
+	([freewnn:00131]: にしくさんの指摘による)
+
+Fri Sep 24 02:55:57 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* PubdicPlus/pod.c: 「static 変数の初期値が定数でない」ところがあっ
+	たので修正。
+	([freewnn:00129]: 阿部宏明さん提供のパッチ)
+
+Thu Sep 23 01:32:04 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* 開発版 1.1.1-a010 として内部リリース
+
+Thu Sep 23 00:17:25 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* PubdicPlus/Makefile.in: コンパイラが gcc 決めうちだったのを修正
+	
+Wed Sep 22 01:53:51 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* 開発版 1.1.1-a009 として内部リリース
+	
+Wed Sep 22 01:48:16 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* configure.in: Intel 版の Solaris に対応(伊藤健二さん提供のパッチ)
+
+	* Wnn/etc/bdic.c: 内部関数 getnstr() の定義が ncurses ライブラリの
+	同名関数のプロトタイプ宣言と干渉を起こすため、名前を getnstring() 
+	に変更。(伊藤健二さん提供のパッチ)
+
+Wed Sep 22 01:38:33 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* configure.in: AC_CHECK_LIB のチェック関数が main になっていたの
+	を各々ふさわしいものに変更。
+	([freewnn:00127] 元木さんのパッチ)
+
+Wed Sep 22 01:15:58 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* 開発版 1.1.1-a008 として内部リリース
+
+Wed Sep 22 00:30:33 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* configure を autoconf-1.13 ベースに変更。(今までは 1.12 ベー
+	ス)
+
+Wed Sep 22 00:26:07 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* 辞書を Pubdic から Pubdic+ に変更。
+ 
+Sun Sep 19 00:24:33 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* 開発版 1.1.1-a007 として内部リリース
+
+Sat Sep 18 20:09:23 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* crypt ライブラリがリンクされないようになっていたため NetBSD でコ
+	ンパイルできなくなっていたのを修正。
+	([freewnn:00124] のパッチ。[freewnn:00123] にて永江さんが指摘)
+
+Thu Sep 16 03:40:33 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* 開発版 1.1.1-a006 として内部リリース
+
+Thu Sep 16 02:05:58 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* makerule.mk.in: いらない変数を削った。
+
+        * 〜/Makefile.in: 不要なライブラリを多数リンクしていたので、そ
+	れを止めさせた。
+
+Thu Sep 16 01:56:04 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* Wnn/include/Makefile.in: config.h -> wnn_config.h のシンボリック
+	リンクで $DESTDIR を考慮するように修正([freewnn:00121] 前原さ
+	んのパッチ)。上書きインストールする際にあらかじめシンボリック
+	リンクを rm する必要があったので修正。
+
+	* cWnn/man/6.jutil/Makefile.in: wnntouch.man のターゲットがなかっ
+	たので追加。([freewnn:00121] 前原さんのパッチ)
+
+	* make install.man でマニュアルがインストールされるようにした。
+	([freewnn:00121] 前原さんのパッチ)
+
+	* makerule.mk.in: MANPATH が /usr/X11R6/man に決めうちになっている
+	のを修正(→ @mandir@ にした)。([freewnn:00121] 前原さんのパッチ)
+
+	* makerule.mk.in: 定数 COMPRESSMANCMD が未定義のためマニュアルの
+	インストールの際にエラーが出る。とりあえず ':' に定義しておいた。
+	
+
+Thu Sep 16 01:48:36 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* 時々付属語ファイル関連でエラーが出ることがある([freewnn:00077] 
+	元木さんからの報告)のを修正。
+	[freewnn:00100] 片山さんのパッチ
+
+Mon Sep 13 03:37:15 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* パッチ patch-1.1.1-a005 として内部リリース
+
+Mon Sep 13 03:35:56 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+        * ファイル CONTRIBUTORS を作成
+
+Mon Sep 13 02:04:34 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* Wnn/include/Makefile.in: config.h を wnn_config.h に改名したが、
+	FreeWnn 以外のクライアントは依然として config.h をインクルードしよ
+	うとするはずなので、インストール時に "ln -s wnn_config.h config.h" 
+	を実行するようにした。
+	([freewnn:00115] 元木さんの指摘による)
+
+Mon Sep 13 01:56:19 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* configure.in: CPP や CCOPTIONS などの値の決定に OS の判定をして
+	いるところがあるが、知らない OS でもとりあえず configure を続ける
+	ようにした。(いままでは途中で止まっていた)
+
+Sun Sep 12 23:29:59 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* AIX 対応(configure, configure.in)
+	([freewnn:00112] Tomoyuki Niijima 氏提供のパッチ)
+
+	* cpp の出力に行番号情報(#line 1 "" というような感じ)が出る場合
+	(AIX の cpp ではこれが起こる)でも正しく扱えるように以下の 
+	Makefile.in を変更。
+ 	([freewnn:00112] Tomoyuki Niijima 氏提供のパッチ)
+	    Xsi/Wnn/pubdic/Makefile.in
+	    Xsi/cWnn/cdic/Makefile.in
+	    Xsi/kWnn/kdic/Makefile.in
+	    Xsi/cWnn/tdic/Makefile.in
+
+	* Xsi/makerule.mk.in: SUBDIR が未定義の場合にエラーになるのを回避	
+ 	([freewnn:00112] Tomoyuki Niijima 氏提供のパッチ)
+
+Fri Aug 20 03:21:52 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* パッチ patch-1.1.1-a004 として内部リリース
+
+Fri Aug 20 02:12:23 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* HP-UX 11.0 対応
+	([freewnn:00079] 濱嶋さん、[freewnn:00081] 矢吹さん提供のパッチ)
+
+Fri Aug 20 01:35:17 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* (元からあった) config.h を wnn_config.h に改名し、configure で
+	config.h を作成するようにした(ただし中身は空)。
+	([freewnn:00050] 元木さん提供のパッチ)
+
+Thu Aug 19 02:22:33 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* Makefile.in から共通定義部分を括り出して makerule.mk というファ
+	イルにまとめた
+
+	* コンパイルでエラーが出た時、その時点で make が止まるようにした
+          (いままでそうなっていなかったのがどうかしている!)
+
+	* makerule.mk: WNNINCDIR と WNNLIBDIR を configure の定義に合わせ
+	た(今までは /usr/X11R6 以下に入るようになっていた)
+
+	* install-sh を autoconf パッケージから持ってきた。これで install 
+	コマンドがないマシンでも FreeWnn のインストールが可能になった
+	
+Sat Aug 14 02:49:58 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* Intel版BeOS 対応
+	([freewnn:00061] 阿部さん提供のパッチ)
+
+
+Wed Aug 11 01:42:28 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* パッチ patch-1.1.1-a003 として内部リリース
+
+Wed Aug 11 01:00:59 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* OpenBSD/i386, HP-UX 9.X 対応
+	([freewnn:00045] 濱嶋さん提供のパッチ)
+
+Wed Aug 11 00:43:11 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* --prefix=dir を有効にする。(今までは /usr/local で決めうちだった)
+	([freewnn:00036] 永江さん提供のパッチ)
+
+	* configure, configure.in: NetBSD 対応
+	([freewnn:00036] 永江さん提供のパッチ)
+	
+Mon Jul 28 22:27:44 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* パッチ patch-1.1.1-a002 として内部リリース
+	
+Wed Jul 28 22:12:25 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* configure, configure.in: BSD/OS 対応 (冨樫さん提供のパッチ)
+
+Wed Jul 28 22:07:32 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* Wnn/jutil/wddel.c:main() にて gets() を使っていたので fgets() に
+	変更 ([freewnn:00024] 矢吹＠SRAさんの指摘による)
+
+	* Wnn/etc/msg.c:msg_get() にてローカル変数のアドレスを返している部
+	分があったので修正([freewnn:00024] 矢吹＠SRAさんの指摘による)
+
+
+Tue Jul 27 01:41:14 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	main() 関数の戻り値型が int になっていないのを修正
+	([freewnn:00024] 矢吹＠SRAさんの指摘による)
+	Wnn/jserver/de.c
+	Wnn/jutil/wnnstat.c
+	Wnn/jutil/wnnkill.c
+	Wnn/jutil/wddel.c
+	Wnn/jutil/wdreg.c
+	Wnn/jutil/oldatonewa.c
+	Wnn/jutil/dtoa.c
+	Wnn/jutil/atod.c
+	Wnn/jutil/atof.c
+	Wnn/jutil/wnntouch.c
+
+	Makefile.in で定義されている _NULLCMD_ を全て削除した
+	([freewnn:00024] 矢吹＠SRAさんの指摘による)。OS によっては、
+	(_NULLCMD_ が定義している) echo -n で -n が表示されてしまうため。_
+ 	NULLCMD_ そのものは Makefile.in の自動生成時にできる副作用的なマク
+	ロと推測され、それ自体には意味はない(と思う ^^;)。
+
+
+Mon Jul 19 04:44:37 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* パッチ patch-1.1.1-a001 として内部リリース
+	
+Mon Jul 19 04:02:14 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* CHANGES: 古川竜雄
+
+	Pubdic/Makefile.in を作成。
+	([freewnn:00013] 前原＠DebianProjectさんの指摘による)
+
+Mon Jul 19 03:13:38 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* CHANGES: (片山＠ＰＦＵさん & 川幡＠ＮＴＴさん)
+
+	SunOS4.* でのコンパイルのために configure と configure.in を修正
+
+	Makefile.in にて @LN_S@ に余計な -s がついていた。(ln -s -s と展開
+	されるため SunOS 4 でエラーとなる)。→ -s をとった。
+
+	Wnn/jserver/ddefine.h で ctype.h をインクルードするように変更(もと
+	もとコメントで先に ctype.h をインクルードせよって書いてあった)。
+	Solaris 2.6 では、"wnn_os.h" がインクルードしているファイルが 
+	<ctype.h> をインクルードしているために、<ctype.h> のインクルードが
+	後になることがあり、これによって、isspace() マクロの二重定義が生じ
+	る。通常は warning で済むが、egcs ではエラーになってしまう。
+	(Wnn/jserver/de_vars.c などで起こる)。
+
+	"char *strchr();”の宣言を削除。ANSI C では、<string.h> での宣言と
+	マッチしないため。
+
+	
+Mon Jul 19 02:58:12 1999  Tatsuo Furukawa  <frkwtto@osk3.3web.ne.jp>
+
+	* CHANGES: [freewnn:00013] (前原＠DebianProjectさん)
+
+	strchr() のプロトタイプの修正
+

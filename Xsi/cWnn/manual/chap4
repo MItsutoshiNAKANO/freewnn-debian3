@@ -1,0 +1,450 @@
+        ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+         ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+         ┃  Ｃｈａｐｔｅｒ ４    ＰＩＮＹＩＮ-ＨＡＮＺＩ  ＣＯＮＶＥＲＳＩＯＮ  ┃
+         ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+        ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+
+┏━━━━━━━━┓
+┃ 4.1  OVERVIEW  ┃
+┗━━━━━━━━┛
+	
+	In Chapter 3, we have described Pinyin input.  In this chapter, we will explain 
+in greater details on the Pinyin input environment, and how the input is being processed 
+in the system.  General concepts on  Pinyin-Hanzi conversion are also explained, as well 
+as the conversion methods used in cWnn. 
+
+
+
+┏━━━━━━━━━━━━━━━┓
+┃ 4.2 PINYIN INPUT ENVIRONMENT ┃
+┗━━━━━━━━━━━━━━━┛
+
+	As described in Chapter 3, Pinyin can be input via three methods: Quanpin, Erpin 
+and Sanpin.  The  implementation of these  methods is not  performed  internally, but is
+through some  definitions in an external environment of the system.  The function in the
+external environment  which allows  such definitions is known as Input Automaton.  Refer 
+to Chapter 7 for details.  
+	Input automaton  provides different input environments for different users.  For 
+example, a  user who needs to input Pinyin may use the Pinyin centred input environment, 
+as explained in Chapter 3. 
+	However, besides the input automaton, user  may  specify  their own Pinyin input 
+methods in certain environment files.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					- 4-1 -
+Internal/External Representations of Chinese Pronuncations
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Pinyin is the  external  representation of  Chinese pronunciation.  When a user inputs a 
+Pinyin at the user interface, the input  will first be processed in the input automaton. 
+Through the input automaton, it will be converted into the standard Pinyin as defined in
+the system.  This standard Pinyin is known as the internal representation (音码).  
+For example:
+
+      	┌────────────────────────────────────┐
+	│  The phrase 汉语语音在计算机中的表现 during user input will be:	  │
+	│      han4yu3yu3yin1zai4ji4suan4ji1zhong1debiao3xian4			  │
+     	│					 				  │
+	│  However, the system will automatically convert these to the standard  │ 
+	│  Pinyin defined in the system, that is:				  │
+  	│	H帳n Y幊 Y幊 Y帺n Z帳i J幀 Su帳n J帺 Zh幁ng De Bi帲o Xi帳n			  │
+	└────────────────────────────────────┘
+
+Within the system, each Pinyin is represented  by an individual internal code as defined 
+in the system.  Before the process of Hanzi conversion, the user Pinyin input will first 
+be converted into its corresponding internal representations.
+
+You may observe from the above that the system  does not require the user to segment the 
+Pinyin input string.  The  user only  needs to input the correct  Pinyin, and the system 
+will perform  the segmentation  on  the input.  For example, the input  "han4yu3yu3yin1"  
+will be segmented to  "H帳n Y幊 Y幊 Y帺n"  automatically by  the system.  To the system, one 
+Pinyin is represented as an  individual unit.  For example, 汉 is not considered as four 
+characters  "h", "a", "n", "4",  but is represented as a single unit  "H帳n".  Hence, the 
+input string will be segmented and displayed as a more readable form to the user.
+
+The Pinyin input  interface is an  editor by itself.  Besides  having the  input feature 
+mentioned above, facilities such as  cursor movement, inserting and  deleting operations 
+on the input string are also provided.  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					- 4-2 -
+┏━━━━━━━━━━━━━━━━━━━━┓
+┃ 4.3 CONCEPT ON PINYIN-HANZI CONVERSION ┃
+┗━━━━━━━━━━━━━━━━━━━━┛
+	
+A good Pinyin input system should  provide users with a good Pinyin input environment 
+and a Pinyin-Hanzi conversion mechanism  with high accuracy.  Pinyin-Hanzi conversion
+refers to converting the input from Pinyin to the expected Chinese character(Hanzi).
+
+There are 3 categories of conversion mechanism:
+	(a) Conversion based on character
+	(b) Conversion based on word
+	(c) Conversion based on phrase or any arbitrary Pinyin string
+
+(a) Conversion based on character
+    This conversion mechanism only allows one Pinyin to be input.  The conversion result 
+    is a Chinese character (Hanzi), which has the same pronunciation as the Pinyin input.
+    We must  take note that there are  several  Hanzi that  have the  same pronunciation.
+    This would  mean that the Pinyin that  has been input will correspond to  many Hanzi. 
+    In order to obtain the correct  Hanzi, it has to be selected manually among all the 
+    candidates. For example,
+
+	The Pinyin "Zh幁ng幚" corresponds to Hanzi 中, 钟, 仲 ..etc.  Hence, if the 
+	user wants the word 中国, then he has to select the Hanzi 中.
+
+    This  mechanism of  conversion is  time consuming and is not a convenient way of
+    conversion.
+
+
+(b) Conversion based on word
+    In this  conversion mechanism,  more than  one Pinyin is allowed.  This Pinyin input 
+    will  correspond to the  expected  Chinese  word.  A word  may consist of  more than 
+    one  character.  Hence, by  having  word based  conversion mechanism, the  number of 
+    candidates is much reduced.  For example,
+
+	The word 中国 consist of characters 中 and 国.  If the user wants this word,
+ 	he only needs to input  "Zh幁ng幚Gu幃幚" and the conversion result will be 中国.
+
+    We can see from the above example that the number of candidate selections is reduced.
+    However, user  must have the concept of word  during input, and we need to take note 
+    that only  words that  are  registered in the system  are valid.  Hence, the need of 
+    candidate selection still exists.
+
+
+
+
+
+
+
+
+					- 4-3 -
+(c) Conversion based on phrase or any arbitrary Pinyin string
+    For this conversion, the user is able to input any arbitrary length of Pinyin.  That
+    is, the user terminates the Pinyin input string whenever he thinks is suitable.  The 
+    system  will analyse the input string,  performs the necessary  grammatical analysis 
+    and word segmentation, and subsequently produces a more accurate conversion output.
+    The number of conversions is very much reduced than in (b).
+
+    cWnn system makes use of this mechanism of conversion, hence provides a more flexible
+    user input interface.  The diagram below shows the conversion process for the entire 
+    cWnn system. 
+
+
+    	       ↓  Input          Output ↑
+             ━┿━━━              ━━┿━━  User Interface
+     ┌────┼────────────┼──────────────────┐
+     │        │                        │			  	       │
+     │        │			 ↓ Internal / External     	       │
+     │        │                        │                                    │
+     │    ┏━┷━━━━┓          ┏━┷━━┓        ┏━━━━━━┓      │
+     │    ┃   Input    ┠──↓──┨ Editor ┠────┨ Conversion ┃      │
+     │    ┃ Automaton  ┃External/ ┗━━━━┛        ┃ Mechanism  ┃      │
+     │    ┗━┯━━━━┛Internal			 ┗━━━┯━━┛      │
+     │        │						 │	       │
+     │    ┏━┷━━━━━┓                            ┏━━━┷━━━┓    │
+     │    ┃    Input     ┃                            ┃  Conversion  ┃    │
+     │    ┃ Environment  ┃        		         ┃  Environment ┃    │
+     │    ┗━━━━━━━┛ 			 	 ┗━━━━━━━┛    │
+     │									       │
+     └────────────────────────────────────┘  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					- 4-4 -
+┏━━━━━━━━━━━━━━━━━━━┓
+┃ 4.4  PINYIN-HANZI CONVERSION IN CWNN ┃
+┗━━━━━━━━━━━━━━━━━━━┛
+
+	In cWnn system, there are two ways of conversion: (1) Forward conversion (正向变换)
+						     	  (2) Reverse conversion (逆向变换)
+ 	Forward conversion refers to Pinyin-Hanzi conversion, whereas reverse conversion 
+refers to  Hanzi-Pinyin conversion.  In Pinyin-Hanzi conversion, Pinyin is the input and 
+the conversion result is the corresponding Hanzi.  Vice versa for Hanzi-Pinyin conversion.
+
+	As mentioned in Section 4.3,  no  conversion mechanism is able to perform a 100%
+accuracy conversion.  Hence, besides providing a multi-phrase conversion mechanism, cWnn 
+also provides facilities to perform  re-editing,  re-conversion  as well as to allow the
+user to segment the words and phrases manually.
+
+We  will now  explain the  Pinyin-Hanzi conversion mechanism, as well as the  assessment 
+formula for the multi-phrase conversion in cWnn system. 
+
+
+1. Conversion Mechanism
+━━━━━━━━━━━━
+Pinyin-Hanzi conversion includes the following five conversions. The first three listed  
+below are most commonly used.  The last two conversions are meant for system developers 
+to check on grammatical analysis.
+
+(a) Multi-phrase conversion
+	The concept of  multi-phrase  conversion has  been mentioned in Section 4.3.  In
+	cWnn, once a Pinyin input string is sent for conversion, the system will perform 
+	the conversion based on the current  environment (refer to Chapter 5) as well as 
+	the  conversion  parameters of  the current environment.  After  conversion, the 
+	result  will appear  on the input line,  with the cursor positioned at the first 
+	word of the  sentence.  If  a  re-conversion is  required (done by  pressing the 
+	conversion 变换 key again), the conversion method as in (c) will be performed.
+
+(b) Word conversion
+	The concept of word conversion has been mentioned in Section 4.3.  In cWnn, the
+	portion of the  input  string indicated  by the cursor is treated as a word and 
+	conversion  is performed  based on this word.  The candidate word  that has the 
+	highest assessment value is output as the result.  
+	For example, Pinyin  "Shi幚Yong幚" corresponds to Hanzi such as 使用, 适用, 施用,
+	实用, 食用 and 试用 ...etc.  However, 使用 has the highest assessment value in 
+	the system.  Hence, 使用 will be the initial conversion result.
+
+(c) Word candidates extraction
+	Treat  the  portion  of  the input string indicated by the cursor as a word and 
+	perform word conversion.  Output all the possible word candidates.
+	From the above example of (a), if 使用 is not the word that you want, press the
+	conversion 变换 key again to get all the possible candidates such as 适用, 施用,
+	实用, 食用 and 试用 ...etc. and select accordingly.
+					- 4-5 -
+(d) Phrase conversion 
+	Treat the portion  of the input string  indicated by the cursor as a phrase and 
+	perform  phrase conversion.  Output the candidate  phrase that  has the highest 
+	assessment value as result.
+
+(e) Phrase candidates extraction
+	Treat the portion of the input string indicated by the cursor  as  a phrase and 
+	perform  phrase  conversion.  Output all the possible phrase candidates.
+
+
+
+2. Manual Word Segmentation
+━━━━━━━━━━━━━━
+Automatic  character segmentation  has been mentioned in Section 4.2.  cWnn also performs
+word segmentation.  However, in Pinyin-Hanzi conversion, automatic  word segmentation may
+not be 100% accurate.  Hence, when the  conversion result is incorrect, the user needs to  
+segment the words manually by using the segmentation keys (^O or ^I).  The word indicated 
+by the cursor will be segmented.  To complete the manual segmentation process, press the 
+conversion key again.  For example,
+	┎────────────────────────────────────┐
+	│ In the phrase 今天天气正好, 今天 ,天气 and 正好 are treated as words.  │
+	│ We know that 正好 is not the correct word.  Hence we need to segment   │
+	│ the word 正好 to individual characters, then perform a re-conversion.  │
+	│ (1) First, move the cursor to 正好, then press ^I to separate the      │
+	│     word.								  │
+	│ (2) The word will be converted back to individual Pinyin. You may now  │
+	│     do a re-conversion be pressing the conversion 变换 key again. 	  │
+	└────────────────────────────────────┘
+
+Similarly, to ^O may be used to combine characters into one unit.  For exmaple,
+	┎────────────────────────────────────┐
+	│ 你好 is treated as separate characters.  In order to make these two    │
+	│ characters as one unit.  You may do the following:			  │
+	│ (1) Place the cursor at 你, then press ^O  to combine 你 and 好.       │
+	│ (2) The characters will be converted back to Pinyin.  You may now do a │
+	│     re-conversion be pressing the conversion 变换 key again.  If no    │
+	│     candidate for this word exists, a message will be displayed	  │
+	│     " 侯补１个也没有  (怎么办)".  This means that the word does not    │
+	│     exist in the current dictionaries.				  │
+	└────────────────────────────────────┘
+
+NOTE:  Another way to perform ^O is by using the 文节→ key.
+       Another way to perform ^I is by using the 文节← key.
+
+
+
+
+
+
+					- 4-6 -
+3. Assessment Formula for Multi-Phrase Conversion 
+━━━━━━━━━━━━━━━━━━━━━━━━━
+The multi-phrase conversion plays a major role in the Pinyin-Hanzi conversion.  The level 
+of accuracy  for this  conversion has a direct effect on the effectiveness of the system. 
+There  are  several factors that affect the conversion result of Pinyin-Hanzi conversion, 
+each  differs  according  to different  conditions.  The  followings  are  the assessment 
+formula  for  multi-phrase  conversion.  Users  are  able  to  change  the  corresponding 
+conversion parameters in order to obtain the most suitable conversion environment.
+
+(a) Assessment parameters
+	parameter (0) 	Number of phrase "n" 
+	    		During the assessment process, this is the maximum number of 
+			phrases that can be assessed at one time.
+			The default "n" value in cWnn is "1".			
+
+	parameter (1) 	Number of words "m" 
+	    		During the assessment process, this is the maximum number of 
+			words that can be in a phrase.  
+			The default "m" value in cWnn is "5".			
+ 
+(b) Word assessment parameters
+	parameter (2) 	Usage frequency weight 
+	    		A usage frequency is given to each word in the dictionary.
+			When  a user  uses the dictionary, the system will create as 
+			well as manage  a usage frequency file for the user.  As the 
+			user uses the  system,  the usage frequency of  each word in 
+			the  dictionary  will be updated according to how  often the 
+			user  uses  each  word.   Hence,  each  user  will  have his 
+			individual usage frequency file. 
+			The default value in cWnn is "2".			
+	    
+	parameter (3) 	Word length weight
+			Word length refers to the number of characters in a word.
+			The default value in cWnn is "750".
+
+	parameter (4) 	Tone correctness weight
+			This gives  higher assessment values to words  entered with 
+			correct  four tones, although  cWnn  allows  input  with or 
+			without four tones.  The default value in cWnn is "10".			
+
+	parameter (5) 	Last used weight
+	    		Last used refers to the most recently used word for a Pinyin.
+			By  increasing  the weight of this parameter, the assessment 
+			value of recently used word can be increased.
+			The default value in cWnn is "80".
+
+
+
+
+					- 4-7 -
+	parameter (6) 	Dictionary priority weight
+	    		Each  dictionary has  a priority defined  by the environment.  
+			By  changing  this  value,  assessment  values may be biased
+	    		towards certain dictionaries.
+			The default value in cWnn is "10".			
+	    
+(c) Phrase assessment parameters
+	parameter (7) 	Average word assessment value weight
+	    		A phrase  consists  of several  words, and each word has its 
+			own  word  assessment value as described above.  The average 
+			of these values is the average word assessment value.
+			The default value in cWnn is "5".			
+
+	parameter (8) 	Phrase length weight
+	    		Phrase length refers to the number of characters in a phrase.
+			The default value in cWnn is "1000".			
+
+	parameter (9) 	Number of words in phrase weight 
+	    		This  refers to the the number of words in a phrase.  Larger 
+			number  of  words  in  a  phrase  shows  greater grammatical 
+			certainty among the words, and hence higher reliability.
+			The default value in cWnn is "50".			
+
+(d) Other paramters
+	Characters  other than  Hanzi that  appear at the input line  have their own 
+	individual weights.  The followings are the parameters:
+
+	parameter (10) 	Usage frequency of numerals
+			The default value in cWnn is "0".			
+
+	parameter (11) 	Usage frequency of alphabets
+			The default value in cWnn is "-200".			
+
+	parameter (12) 	Usage frequency of symbols
+			The default value in cWnn is "0".			
+
+	parameter (13) 	Usage frequency of open parentheses
+			The default value in cWnn is "0".			
+
+	parameter (14) 	Usage frequency of close parentheses
+			The default value in cWnn is "0".			
+
+	parameter (16) 	Maximum number of candidates allowed during conversion
+			The default value in cWnn is "16".			
+
+
+
+
+
+					- 4-8 -
+(e) Assessment formula for multi-phrase conversion
+	Pinyin-Hanzi conversion in cWnn is based on an assessment formula.  We can see 
+	from the above that each parameter  has its value.  By increasing their values,
+	their weightage in the conversion process will increase. 
+
+	The formulae  shown below determine the assessment values for a word, a phrase 
+	and the total assessment value for candidates of a phrase.
+
+		Assessment value for word :
+			f = (c1 x frequency) + (c2 x word length) 
+			    + (c3 x tone correctness) + (c4 x last used) 
+			    + (c5 x dictionary priority)
+
+		Assessment value for phrase :
+			F = k1 x avg( f1, f2, ..fm ) + (k2 x phrase length) 
+		    	    + (k3 x number of words in phrase)
+
+		Total assessment value for candidates of a phrase :
+			Vi = avg( Fi1 + Fi2 + ... + Fin )
+
+		Best assessment value for a phrase :
+			MAX( V1, V2, ... Vk )
+
+
+	NOTE:
+	     	*   c1 =  parameter (2) 
+		    c2 =  parameter (3)
+		    c3 =  parameter (4)
+		    c4 =  parameter (5)
+	  	    c5 =  parameter (6)
+
+		*   k1 =  parameter (7)
+		    k2 =  parameter (8)
+	  	    k3 =  parameter (9)
+
+
+The above mentioned  parameter values are the default values set in cWnn.  These
+default values may be set in a environment file.  Refer to Section 5.3.
+
+The default values may be changed dynamically by using the environment operation 
+functions.  Refer to Section 5.2 for explanations.
+
+
+
+
+
+
+
+
+					- 4-9 -

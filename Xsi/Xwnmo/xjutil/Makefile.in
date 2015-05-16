@@ -1,0 +1,180 @@
+# FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+# This file is part of FreeWnn.
+#
+# Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+# Copyright 1991, 1992 by Massachusetts Institute of Technology
+#
+# Author: OMRON SOFTWARE Co., Ltd. <freewnn@rd.kyoto.omronsoft.co.jp>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with GNU Emacs; see the file COPYING.  If not, write to the
+# Free Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+include @top_srcdir@/makerule.mk
+
+LOCAL_INSTFLAGS = $(INSTBINFLAGS) -o $(WNNOWNER)
+       INCLUDES = -I. $(XWNMOINCLUDES) -I$(XWNMOSRC)
+
+        DEPLIBS = $(XWNMOJLIB)
+
+  LOCAL_DEFINES = -DXJUTIL
+        DEFINES = $(WNNDEFINE) $(ALLLANGDEF) $(LOCAL_DEFINES) $(XWNMODEF)
+LOCAL_LIBRARIES = $(XWNMOJLIB) $(XLIB)
+       LOCALMAN = man.en
+
+LINKS = xjutil.man
+
+SRCS1 = display.c 	hinsi.c 	init_w.c 	jhlp.c 	jutil.c 	kensaku.c 	keyin.c 	message.c 	prologue.c 	touroku.c 	uif.c 	xheader.c 	xichiran.c 	xselectele.c 	xw_touroku.c
+
+OBJS1 = display.o 	hinsi.o 	init_w.o 	jhlp.o 	jutil.o 	kensaku.o 	keyin.o 	message.o 	prologue.o 	touroku.o 	uif.o 	xheader.o 	xichiran.o 	xselectele.o 	xw_touroku.o
+
+SRC2 = $(XWNMOSRC)/w_string.c
+SRC3 = $(XWNMOSRC)/printf.c
+SRC4 = $(XWNMOSRC)/termio.c
+SRC5 = $(XWNMOSRC)/screen.c
+SRC6 = $(XWNMOSRC)/cursor.c
+SRC7 = $(XWNMOSRC)/localalloc.c
+SRC8 = $(XWNMOSRC)/xcvtkey.c
+SRC9 = $(XWNMOSRC)/box.c
+SRC10 = $(XWNMOSRC)/basic_op.c
+SRC11 = $(XWNMOSRC)/key_bind.c
+SRC12 = $(XWNMOSRC)/xlc_util.c
+SRC13 = $(XWNMOSRC)/functions.c
+SRC14 = $(XWNMOSRC)/ichiran.c
+SRC15 = $(XWNMOSRC)/jis_in.c
+SRC16 = $(XWNMOSRC)/kuten.c
+SRC17 = $(XWNMOSRC)/select_ele.c
+ETC_SRC1 = $(WNNETCSRC)/xutoj.c
+ETC_SRC2 = $(WNNETCSRC)/sstrings.c
+
+OBJ2 = w_string.o
+OBJ3 = printf.o
+OBJ4 = termio.o
+OBJ5 = screen.o
+OBJ6 = cursor.o
+OBJ7 = localalloc.o
+OBJ8 = xcvtkey.o
+OBJ9 = box.o
+OBJ10 = basic_op.o
+OBJ11 = key_bind.o
+OBJ12 = xlc_util.o
+OBJ13 = functions.o
+OBJ14 = ichiran.o
+OBJ15 = jis_in.o
+OBJ16 = kuten.o
+OBJ17 = select_ele.o
+ETC_OBJ1 = xutoj.o
+ETC_OBJ2 = sstrings.o
+
+LOCAL_XWNMOSRCS= $(SRC2) $(SRC3) $(SRC4) $(SRC5) $(SRC6) $(SRC7) 	$(SRC8) $(SRC9) $(SRC10) $(SRC11) $(SRC12) $(SRC13) $(SRC14) 	$(SRC15) $(SRC16) $(SRC17)
+
+LOCAL_XWNMOOBJS= $(OBJ2) $(OBJ3) $(OBJ4) $(OBJ5) $(OBJ6) $(OBJ7) 	$(OBJ8) $(OBJ9) $(OBJ10) $(OBJ11) $(OBJ12) $(OBJ13) $(OBJ14) 	$(OBJ15) $(OBJ16) $(OBJ17)
+
+LOCAL_ETCSRCS= $(ETC_SRC1) $(ETC_SRC2)
+LOCAL_ETCOBJS= $(ETC_OBJ1) $(ETC_OBJ2)
+SRCS= $(SRCS1) $(LOCAL_XWNMOSRCS) $(LOCAL_ETCSRCS)
+OBJS= $(OBJS1) $(LOCAL_XWNMOOBJS) $(LOCAL_ETCOBJS)
+
+all:: xjutil
+
+xjutil: $(OBJS) $(DEPLIBS)
+	$(RM) $@
+	$(CCLINK) -o $@ $(LDOPTIONS) $(OBJS) $(LOCAL_LIBRARIES) @LIBS@ $(SYSLIBS)
+
+clean::
+	$(RM) xjutil
+
+includes:: $(LINKS)
+
+xjutil.man:  $(LOCALMAN)/xjutil.man
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: xjutil.man
+
+depend:: xjutil.man
+
+clean::
+	$(RM) xjutil.man
+
+install:: xjutil
+	@if [ -d $(DESTDIR)$(BINDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(BINDIR)); fi
+	$(INSTALL) $(INSTALLFLAGS) $(INSTPGMFLAGS) $(LOCAL_INSTFLAGS) xjutil $(DESTDIR)$(BINDIR)/xjutil
+
+install.man:: xjutil.man
+	@if [ -d $(DESTDIR)$(MANDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(MANDIR)); fi
+	$(RM) $(DESTDIR)$(MANDIR)/xjutil.$(MANSUFFIX)*
+	$(INSTALL) -c $(INSTMANFLAGS) xjutil.man \
+ $(DESTDIR)$(MANDIR)/xjutil.$(MANSUFFIX)
+	-$(COMPRESSMANCMD) $(DESTDIR)$(MANDIR)/xjutil.$(MANSUFFIX)
+
+$(OBJ2) : $(SRC2)
+	$(CC) -c $(CFLAGS)  $(XWNMOSRC)/`basename $@ .o`.c
+
+$(OBJ3) : $(SRC3)
+	$(CC) -c $(CFLAGS)  $(XWNMOSRC)/`basename $@ .o`.c
+
+$(OBJ4) : $(SRC4)
+	$(CC) -c $(CFLAGS)  $(XWNMOSRC)/`basename $@ .o`.c
+
+$(OBJ5) : $(SRC5)
+	$(CC) -c $(CFLAGS)  $(XWNMOSRC)/`basename $@ .o`.c
+
+$(OBJ6) : $(SRC6)
+	$(CC) -c $(CFLAGS)  $(XWNMOSRC)/`basename $@ .o`.c
+
+$(OBJ7) : $(SRC7)
+	$(CC) -c $(CFLAGS) $(ALLOCDEBUGFLAGS) $(XWNMOSRC)/`basename $@ .o`.c
+
+$(OBJ8) : $(SRC8)
+	$(CC) -c $(CFLAGS)  $(XWNMOSRC)/`basename $@ .o`.c
+
+$(OBJ9) : $(SRC9)
+	$(CC) -c $(CFLAGS)  $(XWNMOSRC)/`basename $@ .o`.c
+
+$(OBJ10) : $(SRC10)
+	$(CC) -c $(CFLAGS)  $(XWNMOSRC)/`basename $@ .o`.c
+
+$(OBJ11) : $(SRC11)
+	$(CC) -c $(CFLAGS)  $(XWNMOSRC)/`basename $@ .o`.c
+
+$(OBJ12) : $(SRC12)
+	$(CC) -c $(CFLAGS)  $(XWNMOSRC)/`basename $@ .o`.c
+
+$(OBJ13) : $(SRC13)
+	$(CC) -c $(CFLAGS)  $(XWNMOSRC)/`basename $@ .o`.c
+
+$(OBJ14) : $(SRC14)
+	$(CC) -c $(CFLAGS)  $(XWNMOSRC)/`basename $@ .o`.c
+
+$(OBJ15) : $(SRC15)
+	$(CC) -c $(CFLAGS)  $(XWNMOSRC)/`basename $@ .o`.c
+
+$(OBJ16) : $(SRC16)
+	$(CC) -c $(CFLAGS)  $(XWNMOSRC)/`basename $@ .o`.c
+
+$(OBJ17) : $(SRC17)
+	$(CC) -c $(CFLAGS)  $(XWNMOSRC)/`basename $@ .o`.c
+
+$(ETC_OBJ1) : $(ETC_SRC1)
+	$(CC) -c $(CFLAGS)  $(WNNETCSRC)/`basename $@ .o`.c
+
+$(ETC_OBJ2) : $(ETC_SRC2)
+	$(CC) -c $(CFLAGS)  $(WNNETCSRC)/`basename $@ .o`.c
+
+depend:: .depend
+
+clean::
+	$(RM) $(LINKS)

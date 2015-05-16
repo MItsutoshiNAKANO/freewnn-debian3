@@ -1,0 +1,72 @@
+;;;
+;;; FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+;;; This file is part of FreeWnn.
+;;; 
+;;; Copyright Wnn Consortium. 1993
+;;;
+;;; Author: OMRON SOFTWARE Co., Ltd. <freewnn@rd.kyoto.omronsoft.co.jp>
+;;;
+;;; This program is free software; you can redistribute it and/or modify
+;;; it under the terms of the GNU General Public License as published by
+;;; the Free Software Foundation; either version 2, or (at your option)
+;;; any later version.
+;;;
+;;; This program is distributed in the hope that it will be useful,
+;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;;; GNU General Public License for more details.
+;;;
+;;; You should have received a copy of the GNU General Public License
+;;; along with GNU Emacs; see the file COPYING.  If not, write to the
+;;; Free Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+;;;
+;;; Commentary:
+;;;
+;;; Change log:
+;;;
+;;; Last modified date: 8,Feb.1999
+;;;
+;;; 
+;;;
+;;; 自立語の属性定義
+;;;
+
+\jiritugo-attr
+
+数字@数,名
+カナ@名,形動
+英数@名,形動
+記号@名
+閉括弧@名
+疑似@名
+
+一動幹@一,用
+サ行(する)&名詞@名
+来(き)@用,き
+来(こ)@こ
+為(し)@用,し
+為(せ)@せ
+形容詞@形
+形容動詞@形動
+名詞@名
+接頭語@接頭
+接頭語(お)@接頭
+接頭語(各)@接頭
+接尾語@名
+形容動詞化接尾語@形動
+サ行(する)&名詞化接尾語@名
+接尾動詞@名
+形容詞化接尾動詞@形
+固有名詞@名
+
+接頭数詞@接頭
+数詞@数,名
+助数詞@名
+接頭助数詞@名
+接尾助数詞@名
+
+人名@名
+地名@名
+接頭地名@接頭
+接尾人名@名
+接尾地名@名

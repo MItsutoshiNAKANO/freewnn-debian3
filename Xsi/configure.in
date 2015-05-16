@@ -1,0 +1,284 @@
+dnl
+dnl   $Id: configure.in $
+dnl
+
+dnl
+dnl FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+dnl This file is part of FreeWnn.
+dnl 
+dnl Copyright Kyoto University Research Institute for Mathematical Sciences
+dnl                 1987, 1988, 1989, 1990, 1991, 1992
+dnl Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+dnl Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+dnl Copyright FreeWnn Project 1999, 2000
+dnl 
+dnl Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+dnl 
+dnl This program is free software; you can redistribute it and/or modify
+dnl it under the terms of the GNU General Public License as published by
+dnl the Free Software Foundation; either version 2 of the License, or
+dnl (at your option) any later version.
+dnl 
+dnl This program is distributed in the hope that it will be useful,
+dnl but WITHOUT ANY WARRANTY; without even the implied warranty of
+dnl MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+dnl GNU General Public License for more details.
+dnl 
+dnl You should have received a copy of the GNU General Public License
+dnl along with this program; if not, write to the Free Software
+dnl Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+dnl
+
+dnl
+dnl Process this file with autoconf to produce a configure script.
+dnl
+AC_INIT(Wnn/conv/cvt_head.h)
+AC_CONFIG_HEADER(config.h)
+
+dnl
+dnl srcdir の絶対パスバージョンの作成。本当はこんなものを定義しなくても
+dnl 動くように Makefile.in を書くべきである。ちょっとずつそうなるように
+dnl 直していきたい
+dnl
+case "$top_srcdir" in
+  .)  abs_top_srcdir=`pwd` ;;
+  /*) abs_top_srcdir=top_srcdir;;
+  *) # Relative path.
+    abs_top_srcdir=`pwd`$ac_dots$ac_given_srcdir ;;
+esac
+AC_SUBST(abs_top_srcdir)
+
+
+
+dnl
+dnl Checks for cc and cpp.
+dnl
+AC_PROG_CC
+AC_MSG_CHECKING(for cpp)
+hosttype=`uname`
+CCOPTIONS=""
+CDEBUGFLAGS=-O
+case $hosttype in
+"Linux")
+    CCOPTIONS="-Dlinux -D_POSIX_SOURCE -D_BSD_SOURCE"
+    CDEBUGFLAGS="-O2 -fno-strength-reduce"
+    if test -x /lib/cpp; then
+        CPP=/lib/cpp
+    fi
+    ;;
+"FreeBSD"|"NetBSD"|"OpenBSD")
+    CCOPTIONS="-DCSRG_BASED"
+    CDEBUGFLAGS="-O2 -fno-strength-reduce"
+    if test -x /usr/libexec/cpp; then
+        CPP=/usr/libexec/cpp
+    fi
+    ;;
+"BSD/OS")
+    CCOPTIONS="-DCSRG_BASED"
+    CDEBUGFLAGS="-O2 -fno-strength-reduce"
+    if test -x /usr/bin/cpp; then
+        CPP=/usr/bin/cpp
+    fi
+    ;;
+"SunOS")
+    case `uname -r` in
+    4.*)
+      if test $CC = gcc; then
+        CDEBUGFLAGS=-O2
+	CCOPTIONS="-Dsun -Dsparc"
+      else
+        CDEBUGFLAGS=-O4
+        CCOPTIONS=""
+      fi
+      CPP=/usr/lib/cpp
+      ;;
+    5.*)
+      if test $CC = gcc; then
+          CDEBUGFLAGS=-O2
+          CCOPTIONS="-Dsun -D`uname -p` -DSVR4 -DSYSV"
+      else
+          CCOPTIONS="-Xc -xF -xcg92 -Dsun -D`uname -p` -DSVR4 -DSYSV"
+      fi
+      if test -x /usr/ccs/lib/cpp; then
+          CPP=/usr/ccs/lib/cpp
+      fi
+      ;;
+    *)
+      AC_MSG_WARN("This system is not supported.  But continuing...")
+      ;;
+    esac
+    ;;
+"HP-UX")
+    if test $CC = gcc; then
+        CDEBUGFLAGS=-O2
+        CCOPTIONS="-Dhpux -DSYSV"
+    else
+        CCOPTIONS="-Ae -Dhpux -DSYSV"
+    fi
+    case `uname -r` in
+    A.09.*)
+      if test -x /lib/cpp; then
+          CPP=/lib/cpp
+      fi
+      ;;
+    B.10.*|B.11.*)
+      if test -x /opt/langtools/lbin/cpp; then
+          CPP=/opt/langtools/lbin/cpp
+      fi
+      ;;
+    *)
+      AC_MSG_WARN("This system is not supported.  But continuing...")
+      ;;
+    esac
+    ;;
+"BeOS")
+	case `uname -m` in
+    "BePC")
+	  CCOPTIONS="-DBEOS -D_POSIX_SOURCE -D_BSD_SOURCE"
+	  CDEBUGFLAGS="-O2 -fno-strength-reduce"
+	  if test -x /boot/develop/tools/gnupro/lib/gcc-lib/i586-beos/2.9-beos-980929/cpp; then
+	    CPP=/boot/develop/tools/gnupro/lib/gcc-lib/i586-beos/2.9-beos-980929/cpp
+	  fi
+	;;
+    "BeBox"|"BeMac")
+	  CCOPTIONS="-DBEOS -D_POSIX_SOURCE -D_BSD_SOURCE"
+	  NON_GNU_CPP=/boot/apps/GeekGadgets/bin/cpp
+	;;
+    *)
+      { echo "configure: error: "This system is not supported."" 1>&2; exit 1; }
+      ;;
+    esac
+    ;;
+"AIX")
+    if test $CC = gcc; then
+      CDEBUGFLAGS=-O2
+    else
+      CDEBUGFLAGS=-O
+    fi
+    CCOPTIONS="-DSYSV"
+    CPP=/usr/lib/cpp
+    ;;
+*)
+    AC_MSG_WARN("This system is not supported.  But continuing...")
+    ;;
+esac
+AC_PROG_CPP
+
+dnl
+dnl Checks for programs.
+dnl
+dnl ### AC_PROG_YACC
+dnl ### AC_PROG_LEX
+AC_PROG_INSTALL
+AC_PROG_LN_S
+AC_PROG_MAKE_SET
+AC_PROG_RANLIB
+AC_SUBST(CCOPTIONS)
+AC_SUBST(CDEBUGFLAGS)
+
+dnl Checks for libraries.
+dnl ### dnl Replace `main' with a function in -lFS:
+dnl ### AC_CHECK_LIB(FS, main)
+dnl ### dnl Replace `main' with a function in -lFresco:
+dnl ### AC_CHECK_LIB(Fresco, main)
+dnl ### dnl Replace `main' with a function in -lICE:
+dnl ### AC_CHECK_LIB(ICE, main)
+dnl ### dnl Replace `main' with a function in -lPEX5:
+dnl ### AC_CHECK_LIB(PEX5, main)
+dnl ### dnl Replace `main' with a function in -lSM:
+dnl ### AC_CHECK_LIB(SM, main)
+dnl ### dnl Replace `main' with a function in -lX11:
+dnl ### AC_CHECK_LIB(X11, main)
+dnl ### dnl Replace `main' with a function in -lXIE:
+dnl ### AC_CHECK_LIB(XIE, main)
+dnl ### dnl Replace `main' with a function in -lXau:
+dnl ### AC_CHECK_LIB(Xau, main)
+dnl ### dnl Replace `main' with a function in -lXaw:
+dnl ### AC_CHECK_LIB(Xaw, main)
+dnl ### dnl Replace `main' with a function in -lXbsd:
+dnl ### AC_CHECK_LIB(Xbsd, main)
+dnl ### dnl Replace `main' with a function in -lXdmcp:
+dnl ### AC_CHECK_LIB(Xdmcp, main)
+dnl ### dnl Replace `main' with a function in -lXext:
+dnl ### AC_CHECK_LIB(Xext, main)
+dnl ### dnl Replace `main' with a function in -lXi:
+dnl ### AC_CHECK_LIB(Xi, main)
+dnl ### dnl Replace `main' with a function in -lXmu:
+dnl ### AC_CHECK_LIB(Xmu, main)
+dnl ### dnl Replace `main' with a function in -lXt:
+dnl ### AC_CHECK_LIB(Xt, main)
+dnl ### dnl Replace `main' with a function in -lXtf:
+dnl ### AC_CHECK_LIB(Xtf, main)
+dnl ### dnl Replace `main' with a function in -lXtst:
+dnl ### AC_CHECK_LIB(Xtst, main)
+dnl ### dnl Replace `main' with a function in -lcurses:
+dnl ### AC_CHECK_LIB(curses, main)
+dnl ### dnl Replace `main' with a function in -lfl:
+dnl ### AC_CHECK_LIB(fl, main)
+dnl ### dnl Replace `main' with a function in -lfont:
+dnl ### AC_CHECK_LIB(font, main)
+dnl ### dnl Replace `main' with a function in -loldX:
+dnl ### AC_CHECK_LIB(oldX, main)
+dnl ### dnl Replace `main' with a function in -lphigs:
+dnl ### AC_CHECK_LIB(phigs, main)
+dnl ### dnl Replace `main' with a function in -lxpg4:
+dnl ### AC_CHECK_LIB(xpg4, main)
+
+AC_CHECK_LIB(crypt, crypt)
+AC_CHECK_LIB(socket, connect)
+AC_CHECK_LIB(nsl, gethostbyname)
+
+dnl
+dnl Checks for header files.
+dnl
+AC_PATH_X
+AC_HEADER_STDC
+AC_HEADER_SYS_WAIT
+AC_CHECK_HEADERS(fcntl.h limits.h malloc.h sgtty.h strings.h sys/file.h sys/ioctl.h sys/time.h termio.h unistd.h)
+
+dnl
+dnl Checks for typedefs, structures, and compiler characteristics.
+dnl
+AC_TYPE_MODE_T
+AC_HEADER_TIME
+AC_CHECK_TYPE(time_t, long)
+
+dnl
+dnl socklen_t は sys/socket.h や bits/socket.h で定義されているので、
+dnl AC_CHECK_TYPE では検出できない
+dnl
+AC_MSG_CHECKING(for socklen_t)
+AC_EGREP_CPP(socklen_t, [#include <sys/socket.h>], AC_MSG_RESULT(yes), 
+[ 
+AC_DEFINE(socklen_t, int)
+AC_MSG_RESULT(no)
+])
+
+dnl
+dnl Checks for symbol
+dnl
+
+AC_MSG_CHECKING(for RAND_MAX)
+AC_EGREP_CPP(yes,
+[#include <stdlib.h>
+#ifdef RAND_MAX
+yes
+#endif
+],AC_DEFINE(HAVE_RAND_MAX))
+
+dnl
+dnl Checks for library functions.
+dnl
+AC_PROG_GCC_TRADITIONAL
+AC_FUNC_MEMCMP
+AC_TYPE_SIGNAL
+AC_FUNC_WAIT3
+AC_CHECK_FUNCS(gethostname mkdir select socket strtol)
+AC_CHECK_FUNCS(drand48)
+AC_CHECK_FUNCS(perror)
+
+
+dnl
+dnl Creating Makefiles.
+dnl
+AC_OUTPUT(makerule.mk Wnn/man/2.env/wnn/Makefile Wnn/pubdicplus/Makefile cWnn/uum/Makefile cWnn/man/6.jutil/Makefile cWnn/man/Makefile Wnn/man/4.cmd/Makefile kWnn/uum/Makefile cWnn/td/rk/Makefile cWnn/include/Makefile Wnn/jd/rk.vi/Makefile Wnn/jd/Makefile Makefile kWnn/include/Makefile Wnn/ld/Makefile Wnn/man/2.env/dic/Makefile Wnn/man/2.env/Makefile Wnn/man/3.libwnn/Makefile Wnn/man/6.jutil/Makefile Wnn/uum/Makefile cWnn/man/1.intro/Makefile cWnn/conv/Makefile Wnn/jd/rk/Makefile cWnn/td/Makefile Wnn/man/Makefile cWnn/td/rk_z/Makefile kWnn/conv/Makefile cWnn/man/4.cmd/Makefile cWnn/jlib/Makefile Wnn/include/Makefile Wnn/jutil/Makefile kWnn/jlib/Makefile cWnn/cd/rk_z/Makefile cWnn/Makefile cWnn/cdic/Makefile cWnn/man/2.env/Makefile Wnn/man/3.libwnn/js_lib/Makefile Wnn/man/3.libwnn/rk_lib/Makefile Contrib/dic/gerodic/Makefile kWnn/Makefile cWnn/jserver/Makefile kWnn/kdic/Makefile cWnn/tdic/Makefile Wnn/romkan/Makefile cWnn/cd/Makefile cWnn/jutil/Makefile cWnn/romkan/Makefile kWnn/jserver/Makefile Wnn/Makefile Wnn/man/3.libwnn/jl_lib/Makefile kWnn/romkan/Makefile kWnn/jutil/Makefile PubdicPlus/Makefile Wnn/conv/Makefile cWnn/cd/rk/Makefile cWnn/td/rk_p/Makefile Wnn/jlib.V3/Makefile kWnn/kd/Makefile Wnn/ld/rk/Makefile cWnn/etc/Makefile Wnn/jlib/Makefile Wnn/jserver/Makefile Wnn/wnncons/dic/Makefile cWnn/cd/rk_p/Makefile kWnn/kd/rk/Makefile Wnn/wnncons/Makefile Wnn/man/3.libwnn/misc_lib/Makefile kWnn/etc/Makefile)

@@ -1,0 +1,446 @@
+#
+#   $Id: ./Makefile.in $
+#
+
+#
+# FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+# This file is part of FreeWnn.
+# 
+# Copyright Kyoto University Research Institute for Mathematical Sciences
+#                 1987, 1988, 1989, 1990, 1991, 1992
+# Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+# Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+# Copyright FreeWnn Project 1999, 2000
+# 
+# Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+include @top_srcdir@/makerule.mk
+
+INSTALL      = @INSTALL@
+
+       UUMOWNER = root
+       INCLUDES = -I$(KWNNINCLUDESRC) -I$(KWNNROMKANSRC)
+        DEFINES = $(KWNNDEFINES) $(KWNNLANGDEF)
+LOCAL_INSTFLAGS = $(INSTUIDFLAGS) -o $(UUMOWNER)
+LOCAL_LIBRARIES = $(KWNNJLIB) $(KWNNCONVLIB)
+
+HDRS= buffer.h cvtcode.h sdefine.h sheader.h
+SRC1= epilogue.c header.c kensaku.c kuten.c jis_in.c       prologue.c touroku.c jikouho.c jutil.c w_string.c       printf.c termio.c hinsi.c termcap.c       ttyfdslot.c setutmp.c redraw.c history.c key_bind.c       screen.c basic_op.c uif.c cursor.c jhlp.c       select_ele.c inspect.c wnnrc_op.c functions.c
+
+OBJ1= epilogue.o header.o kensaku.o kuten.o jis_in.o       prologue.o touroku.o jikouho.o jutil.o w_string.o       printf.o termio.o hinsi.o termcap.o       ttyfdslot.o setutmp.o redraw.o history.o key_bind.o       screen.o basic_op.o uif.o cursor.o jhlp.o       select_ele.o inspect.o wnnrc_op.o functions.o
+
+SRC2= $(KWNNETCSRC)/bcopy.c
+OBJ2= bcopy.o
+SRC3= $(KWNNETCSRC)/xutoj.c
+OBJ3= xutoj.o
+SRC4= $(KWNNETCSRC)/server_env.c
+OBJ4= server_env.o
+SRC5= $(WNNETCSRC)/sstrings.c
+OBJ5= sstrings.o
+LOCAL_ETCSRCS= $(SRC2) $(SRC3) $(SRC4) $(SRC5)
+LOCAL_ETCOBJS= $(OBJ2) $(OBJ3) $(OBJ4) $(OBJ5)
+SRCS= $(SRC1) $(LOCAL_ETCSRCS)
+OBJS= $(OBJ1) $(LOCAL_ETCOBJS)
+
+all:: $(HDRS) $(SRC1) kuum
+
+kuum: $(OBJS) $(LOCAL_LIBRARIES)
+	$(RM) $@
+	$(CCLINK) -o $@ $(LDOPTIONS) $(OBJS) $(LOCAL_LIBRARIES) $(WNNTERM_LIB)
+
+clean::
+	$(RM) kuum
+
+includes:: $(HDRS) $(SRC1)
+
+buffer.h:  $(WNNUUMSRC)/buffer.h
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: buffer.h
+
+depend:: buffer.h
+
+clean::
+	$(RM) buffer.h
+
+cvtcode.h:  $(WNNUUMSRC)/cvtcode.h
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: cvtcode.h
+
+depend:: cvtcode.h
+
+clean::
+	$(RM) cvtcode.h
+
+sdefine.h:  $(WNNUUMSRC)/sdefine.h
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: sdefine.h
+
+depend:: sdefine.h
+
+clean::
+	$(RM) sdefine.h
+
+sheader.h:  $(WNNUUMSRC)/sheader.h
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: sheader.h
+
+depend:: sheader.h
+
+clean::
+	$(RM) sheader.h
+
+epilogue.c:  $(WNNUUMSRC)/epilogue.c
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: epilogue.c
+
+depend:: epilogue.c
+
+clean::
+	$(RM) epilogue.c
+
+header.c:  $(WNNUUMSRC)/header.c
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: header.c
+
+depend:: header.c
+
+clean::
+	$(RM) header.c
+
+kensaku.c:  $(WNNUUMSRC)/kensaku.c
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: kensaku.c
+
+depend:: kensaku.c
+
+clean::
+	$(RM) kensaku.c
+
+kuten.c:  $(WNNUUMSRC)/kuten.c
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: kuten.c
+
+depend:: kuten.c
+
+clean::
+	$(RM) kuten.c
+
+jis_in.c:  $(WNNUUMSRC)/jis_in.c
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: jis_in.c
+
+depend:: jis_in.c
+
+clean::
+	$(RM) jis_in.c
+
+prologue.c:  $(WNNUUMSRC)/prologue.c
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: prologue.c
+
+depend:: prologue.c
+
+clean::
+	$(RM) prologue.c
+
+touroku.c:  $(WNNUUMSRC)/touroku.c
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: touroku.c
+
+depend:: touroku.c
+
+clean::
+	$(RM) touroku.c
+
+jikouho.c:  $(WNNUUMSRC)/jikouho.c
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: jikouho.c
+
+depend:: jikouho.c
+
+clean::
+	$(RM) jikouho.c
+
+jutil.c:  $(WNNUUMSRC)/jutil.c
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: jutil.c
+
+depend:: jutil.c
+
+clean::
+	$(RM) jutil.c
+
+w_string.c:  $(WNNUUMSRC)/w_string.c
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: w_string.c
+
+depend:: w_string.c
+
+clean::
+	$(RM) w_string.c
+
+printf.c:  $(WNNUUMSRC)/printf.c
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: printf.c
+
+depend:: printf.c
+
+clean::
+	$(RM) printf.c
+
+termio.c:  $(WNNUUMSRC)/termio.c
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: termio.c
+
+depend:: termio.c
+
+clean::
+	$(RM) termio.c
+
+hinsi.c:  $(WNNUUMSRC)/hinsi.c
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: hinsi.c
+
+depend:: hinsi.c
+
+clean::
+	$(RM) hinsi.c
+
+termcap.c:  $(WNNUUMSRC)/termcap.c
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: termcap.c
+
+depend:: termcap.c
+
+clean::
+	$(RM) termcap.c
+
+ttyfdslot.c:  $(WNNUUMSRC)/ttyfdslot.c
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: ttyfdslot.c
+
+depend:: ttyfdslot.c
+
+clean::
+	$(RM) ttyfdslot.c
+
+setutmp.c:  $(WNNUUMSRC)/setutmp.c
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: setutmp.c
+
+depend:: setutmp.c
+
+clean::
+	$(RM) setutmp.c
+
+redraw.c:  $(WNNUUMSRC)/redraw.c
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: redraw.c
+
+depend:: redraw.c
+
+clean::
+	$(RM) redraw.c
+
+history.c:  $(WNNUUMSRC)/history.c
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: history.c
+
+depend:: history.c
+
+clean::
+	$(RM) history.c
+
+key_bind.c:  $(WNNUUMSRC)/key_bind.c
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: key_bind.c
+
+depend:: key_bind.c
+
+clean::
+	$(RM) key_bind.c
+
+screen.c:  $(WNNUUMSRC)/screen.c
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: screen.c
+
+depend:: screen.c
+
+clean::
+	$(RM) screen.c
+
+basic_op.c:  $(WNNUUMSRC)/basic_op.c
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: basic_op.c
+
+depend:: basic_op.c
+
+clean::
+	$(RM) basic_op.c
+
+uif.c:  $(WNNUUMSRC)/uif.c
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: uif.c
+
+depend:: uif.c
+
+clean::
+	$(RM) uif.c
+
+cursor.c:  $(WNNUUMSRC)/cursor.c
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: cursor.c
+
+depend:: cursor.c
+
+clean::
+	$(RM) cursor.c
+
+jhlp.c:  $(WNNUUMSRC)/jhlp.c
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: jhlp.c
+
+depend:: jhlp.c
+
+clean::
+	$(RM) jhlp.c
+
+select_ele.c:  $(WNNUUMSRC)/select_ele.c
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: select_ele.c
+
+depend:: select_ele.c
+
+clean::
+	$(RM) select_ele.c
+
+inspect.c:  $(WNNUUMSRC)/inspect.c
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: inspect.c
+
+depend:: inspect.c
+
+clean::
+	$(RM) inspect.c
+
+wnnrc_op.c:  $(WNNUUMSRC)/wnnrc_op.c
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: wnnrc_op.c
+
+depend:: wnnrc_op.c
+
+clean::
+	$(RM) wnnrc_op.c
+
+functions.c:  $(WNNUUMSRC)/functions.c
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: functions.c
+
+depend:: functions.c
+
+clean::
+	$(RM) functions.c
+
+instclient:: install
+
+install:: kuum
+	@if [ -d $(DESTDIR)$(KWNNBINDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(KWNNBINDIR)); fi
+	$(INSTALL) $(INSTALLFLAGS) $(INSTPGMFLAGS) $(LOCAL_INSTFLAGS) kuum $(DESTDIR)$(KWNNBINDIR)/kuum
+
+$(OBJ2) : $(SRC2)
+	$(CC) -c $(CFLAGS)  $(KWNNETCSRC)/`basename $@ .o`.c
+
+$(OBJ3) : $(SRC3)
+	$(CC) -c $(CFLAGS)  $(KWNNETCSRC)/`basename $@ .o`.c
+
+$(OBJ4) : $(SRC4)
+	$(CC) -c $(CFLAGS)  $(KWNNETCSRC)/`basename $@ .o`.c
+
+$(OBJ5) : $(SRC5)
+	$(CC) -c $(CFLAGS)  $(KWNNETCSRC)/`basename $@ .o`.c
+
+depend:: .depend
+
+
+clean::
+	$(RM) $(HDRS) $(SRC1)

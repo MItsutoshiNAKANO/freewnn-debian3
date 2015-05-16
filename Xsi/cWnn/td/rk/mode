@@ -1,0 +1,46 @@
+;
+;   $Id: ./mode $
+;
+
+;
+; FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+; This file is part of FreeWnn.
+; 
+; Copyright Kyoto University Research Institute for Mathematical Sciences
+;                 1987, 1988, 1989, 1990, 1991, 1992
+; Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+; Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+; Copyright FreeWnn Project 1999, 2000
+; 
+; Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+; 
+; This program is free software; you can redistribute it and/or modify
+; it under the terms of the GNU General Public License as published by
+; the Free Software Foundation; either version 2 of the License, or
+; (at your option) any later version.
+; 
+; This program is distributed in the hope that it will be useful,
+; but WITHOUT ANY WARRANTY; without even the implied warranty of
+; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+; GNU General Public License for more details.
+; 
+; You should have received a copy of the GNU General Public License
+; along with this program; if not, write to the Free Software
+; Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+;
+
+(search @LIBDIR/zh_CN/rk)
+
+(defmode YIN  on) 
+	(defmode PY on) (defmode ZY)
+(defmode ASCII	)
+	(defmode ban_jiao on) (defmode quan_jiao)
+2A_CTRL
+(if  YIN
+   (if PY    1B_TOUPPER   2P_QuanPin  2P_RongCuo   2Z_tail_pin   "«¿—ª:P")
+   (if ZY    1Z_ZhuYin  1B_TOUPPER  2Z_ZhuYin  2Z_tail "Œ√”ˆ:Z")
+)
+(if  ASCII
+        (if ban_jiao            "∆§À≈:")
+        (if quan_jiao           3B_quanjiao    "«¿À≈:")
+)

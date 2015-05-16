@@ -1,0 +1,66 @@
+.\"
+.\"   $Id: hinsi_dct.man,v 1.3 2001/06/14 18:08:33 ura Exp $
+.\"
+.\"
+.\" FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+.\" This file is part of FreeWnn.
+.\" 
+.\" Copyright Kyoto University Research Institute for Mathematical Sciences
+.\"                 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+.\" Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright FreeWnn Project 1999, 2000
+.\" 
+.\" Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+.\" 
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\" 
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\" 
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software
+.\" Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+.\"
+.TH JS_HINSI_DICTS \  "30 September 1991"
+.SH 名称
+.sv 1
+.nf
+.ta 0.1i 2i
+js_hinsi_dicts()	ある品詞の単語が登録可能な辞書の一覧を得る
+.fi
+.SH 形式
+.sv 1
+.nf
+.ta 0.1i 3i
+#include "jslib.h"
+
+int
+js_hinsi_dicts(env, no,  rb)
+struct wnn_env *env;
+int no;
+struct wnn_ret_buf *rb;
+.fi
+.SH 機能
+.HP 0
+.IP
+no の番号の品詞の単語を登録可能な辞書の一覧を得る。返値として
+辞書の個数を返し、rb の先に、辞書番号(int)の配列が入れて返され
+る。
+
+登録可能な辞書は、辞書ごとに存在する品詞ノードの情報を元に調べ
+られ、もし辞書が登録可能なモードで使われており、品詞ノードの情
+報の中にその番号の品詞が存在していれば、その品詞はその辞書に登
+録可能とみなされる。また、no として -1 が与えられれば、登録可
+能なモードで使われている辞書の一覧が得られる。
+.SH リターンバリュー
+.sv 1
+.nf
+その品詞の語が登録可能な辞書の個数を返す。
+異常終了時には -1 を返す。
+.fi

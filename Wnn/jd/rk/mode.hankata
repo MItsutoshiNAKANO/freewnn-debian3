@@ -1,0 +1,58 @@
+;
+;   $Id: ./rk/mode.hankata $
+;
+
+;
+; FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+; This file is part of FreeWnn.
+; 
+; Copyright Kyoto University Research Institute for Mathematical Sciences
+;                 1987, 1988, 1989, 1990, 1991, 1992
+; Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+; Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+; Copyright FreeWnn Project 1999, 2000
+; 
+; Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+; 
+; This program is free software; you can redistribute it and/or modify
+; it under the terms of the GNU General Public License as published by
+; the Free Software Foundation; either version 2 of the License, or
+; (at your option) any later version.
+; 
+; This program is distributed in the hope that it will be useful,
+; but WITHOUT ANY WARRANTY; without even the implied warranty of
+; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+; GNU General Public License for more details.
+; 
+; You should have received a copy of the GNU General Public License
+; along with this program; if not, write to the Free Software
+; Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+;
+
+(defmode romkan on)
+(defmode katakana)
+(defmode zenkaku)
+(defmode esc)
+;(defmode tcode)
+(defmode quote)
+
+2A_CTRL
+(if esc "[ESC]")
+;(if tcode 1B_TOUPPER 2_TCODE "[ t ]")
+(if quote
+	(if zenkaku 3B_ZENKAKU "[ Q ]")
+	"[ q ]")
+(if romkan
+	1B_newTOUPPER
+	2B_ROMKANA 2B_JIS
+	(if (not katakana) "[あr]")
+	(if zenkaku 3B_KATAKANA	"[アr]")
+	3B_HANKATA "[ｱｲr]")
+
+2B_DAKUTEN
+(if (not katakana) 1B_ZENHIRA
+	(if zenkaku 3B_ZENKAKU "[あ ]")
+	"[Aあ]")
+
+(if zenkaku 1B_ZENKATA 3B_ZENKAKU "[ア ]")
+"[ｱｲA]"

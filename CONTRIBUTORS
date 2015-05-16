@@ -1,0 +1,84 @@
+#
+#   $Id: CONTRIBUTORS,v 1.14 2006/03/04 19:01:45 aonoto Exp $
+#
+
+#
+# FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+# This file is part of FreeWnn.
+# 
+# Copyright Kyoto University Research Institute for Mathematical Sciences
+#                 1987, 1988, 1989, 1990, 1991, 1992
+# Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+# Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+# Copyright FreeWnn Project 1999, 2000, 2001, 2002
+# 
+# Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+FreeWnn の開発にたずさわった人々のリストです。
+
+
+FreeWnn 1.1.1 (予定)
+
+        古川竜雄 (リリース担当)
+	KATAYAMA Yoshio - 片山 善夫 <kate@pfu.fujitsu.com>
+	川幡太一
+        前原恵太 (Debian Project)
+	YABUKI Youichi - 矢吹洋一 <yabuki@sranhm.sra.co.jp>
+        冨樫伸明
+	永江英武
+        濱嶋＠ＹＤＣ
+        MOTOKI Sinichi - 元木伸一 <sin@itl.co.jp>
+        Tomoyuki Niijima
+        伊藤健二
+        Hiroaki Abe
+        にしく まさお
+	kaz / 大森保英
+	Kazuki Sakamoto (NetBSD package)
+        川本芳久
+        TAOKA Satoshi - 田岡 智志 <taoka@infonets.hiroshima-u.ac.jp>
+	Nobuyuki Hikichi - 引地信之 <hikichi@sra.co.jp>
+        Fuminori Uematsu - 植松 文徳 <uematsu@kgz.com>
+	Francis Bond <bond@ieee.org>
+	Tomoki AONO - 青野 智樹 <aono@cc.osaka-kyoiku.ac.jp>
+	Fumitoshi Ukai - 鵜飼 文敏 <ukai@debian.org>
+	Matui Fe2+ Tetsushi <VED03370@nifty.ne.jp>
+	Keiji Wada - 和田@川崎 <keiji@hiemalis.org>
+	Kazuo ISHIDA - いしだ@NEC <ishidakz@hml.cl.nec.co.jp>
+	Yukihiro Nakai
+	AIDA Shinra and Canna contributors
+	Taketo Kabe
+
+Pubdic+ 部分
+	SUNAGAWA Keiki <kei_sun@ba2.so-net.ne.jp>
+	Tetsuo Tsukamoto - 塚本 徹雄 <czkmt@remus.dti.ne.jp>
+	KATAYAMA Yoshio - 片山 善夫 <kate@pfu.fujitsu.com>
+	Matsui Fe2+ Tetsushi <VED03370@nifty.ne.jp>
+
+
+# これより下の情報は FreeWnn の以前のソースコードから抜き出したものです 
+
+FreeWnn 1.1、1.0 
+
+        nakanisi, yamasita  (ソースコード保守)
+        片山＠ＰＦＵ <kate@pfu.co.jp>
+        Akitoshi MORISHIMA <ohm@rcac.tdi.co.jp>
+        渡邊剛 (Watanabe,Go) <go@isoternet.org/go@dsl.gr.jp>
+        よしだともこ <tomo@tomo.gr.jp>
+        Hidekazu Kuroki - 黒木 秀和(hidekazu@cs.titech.ac.jp)
+        TAOKA Satoshi - 田岡 智志<taoka@infonets.hiroshima-u.ac.jp>
+        Toshiaki Nakanisi <nakanisi@rd.kyoto.omronsoft.co.jp>

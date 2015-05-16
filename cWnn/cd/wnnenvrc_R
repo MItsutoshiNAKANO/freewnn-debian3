@@ -1,0 +1,65 @@
+;
+;   $Id: ./wnnenvrc_R $
+;
+
+;
+; FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+; This file is part of FreeWnn.
+; 
+; Copyright Kyoto University Research Institute for Mathematical Sciences
+;                 1987, 1988, 1989, 1990, 1991, 1992
+; Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+; Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+; Copyright FreeWnn Project 1999, 2000
+; 
+; Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+; 
+; This program is free software; you can redistribute it and/or modify
+; it under the terms of the GNU General Public License as published by
+; the Free Software Foundation; either version 2 of the License, or
+; (at your option) any later version.
+; 
+; This program is distributed in the hope that it will be useful,
+; but WITHOUT ANY WARRANTY; without even the implied warranty of
+; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+; GNU General Public License for more details.
+; 
+; You should have received a copy of the GNU General Public License
+; along with this program; if not, write to the Free Software
+; Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+;
+
+confirm1
+
+setdic	sys/level_1.dic		usr/@USR/level_1.h	4 1 0 - - 1
+setdic	sys/level_2.dic		usr/@USR/level_2.h	1 1 0 - - 1
+setdic	sys/basic.dic		usr/@USR/basic.h	7 1 0 - - 1
+;setdic	sys/computer.dic	usr/@USR/computer.h	4 1 0 - - 1
+
+setdic	usr/@USR/ud 		- 			5 0 0 - - 1
+
+setfuzokugo	sys/full.conR
+
+setparam  1  5  2   750 10  80  10  5   1000   50  0  -200  0  0  0  16  0
+;	  N  M  频  长  四  刚  优  值   组    个  数  英   记 开 闭 最  备
+
+;	N:  解析词组个数		   	变换规模参数
+;	M:  词组中词的最大个数
+
+;	频:  频度权值				词评价参数
+;	长:  词长度权值
+;	四:  四声正确度权值
+;	刚:  刚才用过权值
+;	优:  字典优先级权值
+
+;	值:  词评价均值权值			词组评价参数
+;	组:  词组长权值
+;	个:  词组中词个数权值
+
+;	数:  数字的频度				其他参数
+;	英:  英文字母的频度
+;	记:  记号的频度
+;	开:  开括弧的频度
+;	闭:  闭括弧的频度
+;	最:  最大候补个数
+;	备:  备用

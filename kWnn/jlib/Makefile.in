@@ -1,0 +1,177 @@
+#
+#   $Id: Makefile.in,v 1.13 2009/02/01 17:52:18 aonoto Exp $
+#
+
+#
+# FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+# This file is part of FreeWnn.
+# 
+# Copyright Kyoto University Research Institute for Mathematical Sciences
+#                 1987, 1988, 1989, 1990, 1991, 1992
+# Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+# Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+# Copyright FreeWnn Project 1999, 2000, 2001, 2003, 2009
+# 
+# Maintainer:  FreeWnn Project
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+include @top_builddir@/makerule.mk
+  top_srcdir = @top_srcdir@
+top_builddir = @top_builddir@
+
+LINKS    = jl.c js.c wnnerrmsg.c
+JLIBDEFINES = -DWRITE_CHECK
+INCLUDES = -I$(KWNNINCLUDESRC) -I$(top_builddir)
+DEFINES  = $(KWNNDEFINES) $(KWNNLANGDEF) $(CWNNLANGDEF) $(JLIBDEFINES)
+#					# for Mule
+#					#   -- S. Taoka
+LINTLIBS =
+INSTALL  = @INSTALL@ $(INSTALLFLAGS)
+
+SRC1= js.c wnnerrmsg.c jl.c
+OBJ1= js.o wnnerrmsg.o jl.o
+
+SRC3= $(KWNNETCSRC)/msg.c
+OBJ3= msg.o
+SRC4= $(KWNNETCSRC)/strings.c
+OBJ4= strings.o
+SRC5= $(KWNNETCSRC)/bcopy.c
+OBJ5= bcopy.o
+SRC6= $(KWNNETCSRC)/yincoding.c
+# for Mule
+#   -- S. Taoka
+OBJ6= yincoding.o
+SRC7= $(KWNNETCSRC)/py_table.c
+OBJ7= py_table.o
+SRC8= $(KWNNETCSRC)/zy_table.c
+OBJ8= zy_table.o
+
+LOCAL_RKSRCS= $(KWNNROMKANSRC)/rk_bltinfn.c 	$(KWNNROMKANSRC)/rk_main.c 	$(KWNNROMKANSRC)/rk_modread.c 	$(KWNNROMKANSRC)/rk_read.c 	$(KWNNROMKANSRC)/rk_vars.c
+
+LOCAL_RKOBJS= $(KWNNROMKANSRC)/rk_bltinfn.o 	$(KWNNROMKANSRC)/rk_main.o 	$(KWNNROMKANSRC)/rk_modread.o 	$(KWNNROMKANSRC)/rk_read.o 	$(KWNNROMKANSRC)/rk_vars.o
+
+LOCAL_ETCSRCS = $(SRC4) $(SRC5) $(SRC6) $(SRC7) $(SRC8)
+LOCAL_ETCOBJS = $(OBJ4) $(OBJ5) $(OBJ6) $(OBJ7) $(OBJ8)
+OTHER_SRCS = $(WNNETCSRC)/mkdir.c
+OTHER_OBJS = mkdir.o
+SRCS= $(SRC1) $(SRC3) $(LOCAL_ETCSRCS) $(OTHER_SRCS)
+OBJS= $(OBJ1) $(OBJ3) $(LOCAL_ETCOBJS) $(LOCAL_RKOBJS) $(OTHER_OBJS)
+
+all::
+
+includes::
+
+.c.o:
+	$(RM) $@
+	$(LT_CC) -c $(CFLAGS) $(_NOOP_) $*.c
+
+clean::
+	$(RM) -r .libs
+	$(RM) *.lo *.la
+
+all:: $(LINKS) $(OBJS) libkwnn.la
+
+includes:: $(LINKS)
+
+jl.c:  $(WNNJLIBSRC)/jl.c
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: jl.c
+
+depend:: jl.c
+
+clean::
+	$(RM) jl.c
+
+js.c:  $(WNNJLIBSRC)/js.c
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: js.c
+
+depend:: js.c
+
+clean::
+	$(RM) js.c
+
+wnnerrmsg.c:  $(WNNJLIBSRC)/wnnerrmsg.c
+	$(RM) $@
+	$(LN) $? $@
+
+includes:: wnnerrmsg.c
+
+depend:: wnnerrmsg.c
+
+clean::
+	$(RM) wnnerrmsg.c
+
+js.o : js.c 	$(KWNNETCSRC)/bdic.c 	$(KWNNETCSRC)/pwd.c 	$(KWNNETCSRC)/gethinsi.c
+
+lint:
+	$(LINT) $(LINTFLAGS) $(FILE) $(LINTLIBS)
+
+all:: libkwnn.la
+
+libkwnn.la: $(OBJS) $(EXTRALIBRARYDEPS)
+	$(LT_LD) -o $@ $(OBJS:.o=.lo) -rpath $(WNNLIBDIR) -version-info $(KWNNJLIBVERSION) @LIBS@
+
+lintlib:: llib-lkwnn.ln
+
+llib-lkwnn.ln: $(SRCS) $(EXTRALIBRARYDEPS)
+	$(RM) $@
+	$(LINT) $(LINTLIBFLAG)kwnn $(LINTFLAGS) $(SRCS)
+
+instlib:: install
+
+install:: libkwnn.la
+	@if [ -d $(DESTDIR)$(WNNLIBDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(WNNLIBDIR)); fi
+	$(LT_INSTALL) $(INSTLIBFLAGS) libkwnn.la $(DESTDIR)$(WNNLIBDIR)
+
+$(OBJ3) : $(SRC3)
+	$(LT_CC) -c $(CFLAGS)  $(KWNNETCSRC)/`basename $@ .o`.c
+
+$(OBJ4) : $(SRC4)
+	$(LT_CC) -c $(CFLAGS)  $(KWNNETCSRC)/`basename $@ .o`.c
+
+$(OBJ5) : $(SRC5)
+	$(LT_CC) -c $(CFLAGS)  $(KWNNETCSRC)/`basename $@ .o`.c
+
+$(OBJ6) : $(SRC6)
+	$(LT_CC) -c $(CFLAGS)  $(KWNNETCSRC)/`basename $@ .o`.c
+
+$(OBJ7) : $(SRC7)
+	$(LT_CC) -c $(CFLAGS)  $(KWNNETCSRC)/`basename $@ .o`.c
+
+$(OBJ8) : $(SRC8)
+	$(LT_CC) -c $(CFLAGS)  $(KWNNETCSRC)/`basename $@ .o`.c
+
+mkdir.o : $(WNNETCSRC)/mkdir.c
+	$(LT_CC) -c $(CFLAGS) $?
+
+$(LOCAL_RKOBJS) : $(LOCAL_RKSRCS)
+	@case '${MFLAGS}' in *[ik]*) set +e;; esac; \
+ 	cd $(KWNNROMKANSRC); \
+	echo "making all in $(KWNNROMKANSRC)"; \
+	$(MAKE) $(MFLAGS)
+
+depend:: .depend
+
+clean::
+	-$(RM) $(LINKS)
+

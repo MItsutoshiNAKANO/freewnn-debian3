@@ -1,0 +1,225 @@
+;
+;   $Id: ./cixing.data $
+;
+
+;
+; FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+; This file is part of FreeWnn.
+; 
+; Copyright Kyoto University Research Institute for Mathematical Sciences
+;                 1987, 1988, 1989, 1990, 1991, 1992
+; Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+; Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+; Copyright FreeWnn Project 1999, 2000
+; 
+; Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+; 
+; This program is free software; you can redistribute it and/or modify
+; it under the terms of the GNU General Public License as published by
+; the Free Software Foundation; either version 2 of the License, or
+; (at your option) any later version.
+; 
+; This program is distributed in the hope that it will be useful,
+; but WITHOUT ANY WARRANTY; without even the implied warranty of
+; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+; GNU General Public License for more details.
+; 
+; You should have received a copy of the GNU General Public License
+; along with this program; if not, write to the Free Software
+; Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+;
+
+;;
+;;
+;;;;			â¤ÍÌê§Ü¡ÅÆÇµ(cixing.chinese)
+;;;;			    version 4.0
+;;;;			    1989/12/25
+;;;;					
+;;;; 
+;;;; ÈºÅÆÇµÑÒâ¤ÍÌÌùåøÅ¯ê§Ü¡ÅÆÇµ
+;;;;
+;;;;
+;;;; Å¡æÀ";"ÇÛÑÒæØúËë£Æ»
+;;;;
+;;;; â¤ÍÌÝ·ÌùåøÈ©ðùÐÎá¸é¬:
+;;;;		"â¤ÍÌ/": ÏÐÆüÏæðùæ´Îûá¸öµ
+;;;;		"â¤ÍÌ" : ÏÐÆüðùæ´(ÈºÝ¨Îû"â¤ÍÌ"Ò³ÖøÆßÈ´ÆîÎûâ¤ÍÌ)
+;;;;		 Ð©á¸öµÌÏÇÛá¸öµÎûùÃË·ÏÐÆü:
+;;;;				Ð©á¸öµ|ÇÛá¸öµ1: ... :ÇÛá¸öµm
+;;;;
+;;;;
+;;;; îïÇÙâ¤ÍÌÌùåøÒ³:
+;;;;		îïÇÙâ¤ÍÌ$â¤ÍÌ1: ... :â¤ÍÌn
+;;;;
+;;;; 
+;;;; â¤ÍÌÎûðùÐÎá¸é¬:
+;;;;
+/|ÇØâ¤/:Ù¯â¤/:Ê°Õ©â¤/:í°â¤/:âØâ¤/:Ù«â¤/:Åîâ¤/:è¬â¤/\
+	:Äõâ¤/:ÝÙâ¤/:É·â¤/:ë£Ö´â¤/:óéôøâ¤/:Ì§ÆÆâ¤/
+
+ÇØâ¤/|ßÛÝ×ÇØâ¤/:Íäâ¯ÇØ:ÕëâæÇØ:Ý¨ÍÔÇØ:ÅÉÈíÇØâ¤/:ÏÐÄ©ÖÖÖ±ÇØ/
+ßÛÝ×ÇØâ¤/|ßÛÝ×ÇØ:Ä©ÇØ¡¹:ËçÎìÇØ¡¹
+ÅÉÈíÇØâ¤/|ÞÌ×ÅÅÉÈíÇØ:ÇÙÈ©ÅÉÈíÇØ
+ÏÐÄ©ÖÖÖ±ÇØ/|ÈËÕ¥Ìï¡¹:ê¢òÁÇØ¡¹
+
+Ù¯â¤/|ÈçÒ³Ù¯â¤/:ÅÀÜ¡Ù¯:ÇôÇãÙ¯:ËðÅïÙ¯:É·Ù¯:õØÇ×Ù¯:É²öËÙ¯
+ÈçÒ³Ù¯â¤/|ÈçÒ³Ù¯:Å¯ÎìÙ¯¡¹:ÄâÅ¯ÎìÙ¯¡¹
+
+Ê°Õ©â¤/|ßÛÝ×Ê°Õ©:á£ÐùÊ°Õ©:ÏæòÁÊ°Õ©
+
+í°â¤/|ßÛÝ×í°:Ù×í°:Ê©í°ÚÙó¤:Ê©í°
+
+âØâ¤/|ÏÐÎìâØâ¤/:ÏÐÙ¯É¢âØ
+ÏÐÎìâØâ¤/|ßÛÝ×âØ:ÏÐÄ©âØ:ÞÌÈíâØ:ÏÐÎìâØ
+
+Ù«â¤/|ÔºçèòÁë£Ù«/:ÔºçèÇÀÆ»Ù«/
+ÔºçèòÁë£Ù«/|Ó¶ÞØÙ«:Õëó¢Ù«:ÝÙÓìÙ«:á£ÐùÙ«:íýÉÁÙ«:ÚÅèèÙ«
+ÔºçèÇÀÆ»Ù«/|ë£Ö´Ù«
+
+Åîâ¤/|Ä©ê¢Åî:ÑÀÆüÅî:éêÙÂÅî
+
+è¬â¤/|ßÛÝ×è¬
+
+
+Äõâ¤/|ÅÉÇ×Äõ:è×â¯Äõ:ÆøÎûÅÉÈ¢Äõ:ÅÒç¤ÚêØæÄõ
+
+ÝÙâ¤/|ßÛÝ×ÝÙ:ÚÙó¤ÝÙ:ñÁÇ¡ÝÙ
+
+É·â¤/|á¸é¬É·:Ù¯èèÉ·:ÅÒÎÓÉ·:Ì§ÅìÉ·
+
+ë£Ö´â¤/|ë£Ö´
+
+óéôøâ¤/|óéôø
+
+îïÇÙâ¤ÍÌ/|ÇÑÍÌîïÇÙâ¤/:Ü¬ÍÌîïÇÙâ¤/
+ÇÑÍÌîïÇÙâ¤/|ÌïÇØâ¤-:ÏÐÄ©ÎìâØ-:ÈçÒ³Ù¯â¤-
+Ü¬ÍÌîïÇÙâ¤/|Ù¯ÇØâ¤-:Ê°ÇØâ¤-:Ê°Ù¯â¤-:âØÇØâ¤-:Ê°Ù¯ÇØâ¤-
+
+Ì§ÆÆâ¤/|Ë·ÜÓ/:ÞÌÇó:Ñ¡Ìùåø:ÆÜÌùåø
+Ë·ÜÓ/|í°Çó:ÓÁí°:Ø´æÀ:ÝðÑÄæÀ:âäÑÄæÀ:Åéúèë£:ØõÇØ:áðóé:ÜÜÅÏ
+;;;;
+;;;;
+;;;; â¤ÍÌÎûÌùåø:
+;;;;
+;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;
+;;;; ÅèÄ¶Ä¦Ô¶ÑÒáðóéâ¤ÍÌ
+;;;; 
+ÜÜÅÏ		;;; 0  ÜÜÅÏ, É¢Ò³ÅÆåçÎûÜÜÅÏ
+í°Çó		;;; 1  í°Çó
+ØõÇØ		;;; 2  ÅÚØõÇØ
+ÓÁí°		;;; 3  ÓÁí°
+Ø´æÀ		;;; 4  Ø´æÀ
+ÝðÑÄæÀ		;;; 5  ÝðÑÄÍ¹
+Åéúèë£		;;; 6  Åéúèë£
+âäÑÄæÀ   	;;; 7  âäÑÄÍ¹
+áðóé		;;; 8  ØæÅèÄ¸Ä¬Ô¶ÄæÆÀÎûáðóéâ¤ÍÌ
+@		;;; 9
+@		;;; 10
+@		;;; 11
+@		;;; 12
+ÞÌÇó		;;; 13
+Ñ¡Ìùåø		;;; 14
+ßÛÝ×ÇØ
+Ä©ÇØ¡¹
+ËçÎìÇØ¡¹
+Ô¯¡¹
+ÈËÕ¥Ìï¡¹
+ê¢òÁÇØ¡¹
+Íäâ¯ÇØ
+ÕëâæÇØ
+Ý¨ÍÔÇØ
+ÞÌ×ÅÅÉÈíÇØ
+ÇÙÈ©ÅÉÈíÇØ
+Äã¡¹
+Åè¡¹
+Äæ¡¹
+ù±¡¹
+Óò¡¹	;Óò ó¤
+ÖÖÖ±ÇØ
+ÈçÒ³Ù¯
+Å¯ÎìÙ¯¡¹
+ÄâÅ¯ÎìÙ¯¡¹
+ÅÀÜ¡Ù¯
+ÇôÇãÙ¯
+ËðÅïÙ¯
+É·Ù¯
+õØÇ×Ù¯
+É²öËÙ¯	;;; 40
+ßÛÝ×Ê°Õ©
+Ù«¡¹
+á£ÐùÊ°Õ©
+ÏæòÁÊ°Õ©
+ßÛÝ×í°
+Ù×í°
+Ä¡¡¹
+Ê©í°ÚÙó¤
+Ê©í°
+í°âØÜÚ
+ßÛÝ×âØ
+ÏÐÄ©âØ
+ÞÌÈíâØ
+ÏÐÎìâØ
+Ëè¡¹
+ÏÐÙ¯É¢âØ
+ÖÖÖ±âØ
+Ó¶ÞØÙ«
+Õëó¢Ù«
+ÝÙÓìÙ«
+á£ÐùÙ«
+Æ«¡¹
+íýÉÁÙ«
+ë£Ö´Ù«
+ÚÅèèÙ«
+ßÛÝ×Åî
+Ä©ê¢Åî	;;; 67
+ÑÀÆüÅî
+ÇÖ¡¹
+éêÙÂÅî
+ÖÖÖ±Åî
+ßÛÝ×è¬
+ÖÖÖ±è¬
+ÅÉÇ×Äõ
+è×â¯Äõ
+Ý·¡¹
+ÕëâæÄõ
+Ý¨ÍÔÄõ
+ÆøÎûÅÉÈ¢Äõ
+ÅÒç¤ÚêØæÄõ
+ßÛÝ×ÝÙ
+ÚÙó¤ÝÙ
+ñÁÇ¡ÝÙ
+ßÛÝ×É·
+á¸é¬É·
+Îû¡¹
+Çâ¡¹
+Úµ¡¹
+Ù¯èèÉ·
+ÅÒÎÓÉ·
+Ì§ÅìÉ·
+ë£Ö´
+ÖÖÖ±ë£Ö´
+óéôø
+;
+;
+;;;; 	îïÇÙâ¤ÍÌÌùåø
+;
+;	ÇÑÍÌîïÇÙâ¤
+;
+ÌïÇØâ¤-$ßÛÝ×ÇØ:ÈËÕ¥Ìï¡¹
+ÏÐÄ©ÎìâØ-$ÏÐÄ©âØ:ÏÐÎìâØ
+ÈçÒ³Ù¯â¤-$Å¯ÎìÙ¯¡¹:ÄâÅ¯ÎìÙ¯¡¹
+;
+;	Ü¬ÍÌîïÇÙâ¤
+;
+Ù¯ÇØâ¤-$ßÛÝ×ÇØ:ËçÎìÇØ¡¹:ÈçÒ³Ù¯:Å¯ÎìÙ¯¡¹:ÄâÅ¯ÎìÙ¯¡¹
+Ê°ÇØâ¤-$ßÛÝ×ÇØ:ËçÎìÇØ¡¹:ßÛÝ×Ê°Õ©
+Ê°Ù¯â¤-$ßÛÝ×Ê°Õ©:ÈçÒ³Ù¯:Å¯ÎìÙ¯¡¹:ÄâÅ¯ÎìÙ¯¡¹
+âØÇØâ¤-$ßÛÝ×ÇØ:ÏÐÎìâØ
+Ù¯âØâ¤-$Å¯ÎìÙ¯¡¹:ÏÐÎìâØ
+ÕëÙ«â¤-$ÕëâæÇØ:Õëó¢Ù«
+Ê°Ù¯ÇØâ¤-$ßÛÝ×ÇØ:ËçÎìÇØ¡¹:ÈçÒ³Ù¯:Å¯ÎìÙ¯¡¹:ÄâÅ¯ÎìÙ¯¡¹:ßÛÝ×Ê°Õ©
+;
+ÆÜÌùåø$Ñ¡Ìùåø:ßÛÝ×ÇØ:ßÛÝ×Ê°Õ©:ÈçÒ³Ù¯
+;;;; the end

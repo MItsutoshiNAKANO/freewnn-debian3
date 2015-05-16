@@ -1,0 +1,150 @@
+			©³©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©·
+			 ©³©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©·
+			 ©§          £Ã£Ï£Î£Ô£Å£Î£Ô£Ó  	     ©§	
+			 ©»©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¿
+			©»©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¿
+
+
+
+  CHAPTER ONE		INTRODUCTION
+
+		1.1	Overview ................................................ 1-1
+		1.2	Notations Used in this Manual ........................... 1-3
+		1.3	cWnn System Structure ................................... 1-4 
+		1.4	Features on the System Structure ........................ 1-5
+		1.5	Hardware and Software Configurations .................... 1-7
+
+
+  CHAPTER TWO 		GETTING STARTED
+
+		2.1	cWnn Startup and Termination ............................ 2-1
+
+
+  CHAPTER THREE		INPUT METHODS
+
+		3.1	Overview ................................................ 3-1
+		3.2	Three Standard Input Environment ........................ 3-1
+		3.3	The Different Input Modes ............................... 3-3
+		3.4	Phonetic Input Procedure ................................ 3-6
+		3.5	Radical Input Procedure ................................ 3-12
+
+
+  CHAPTER FOUR		PINYIN-HANZI CONVERSION 
+
+		4.1	Overview ................................................ 4-1
+		4.2	Pinyin Input Environment ................................ 4-1
+		4.3	Concept on Pinyin-Hanzi Conversion ...................... 4-4
+		4.4	Pinyin-Hanzi Conversion in cWnn ......................... 4-5
+	
+
+
+
+
+
+
+
+
+
+
+
+					  - i -
+  CHAPTER FIVE		ENVIRONMENT SETUP
+
+		5.1	Overview ................................................ 5-1
+		5.2	Environment Operation Functions ......................... 5-2
+		5.3	Initialization File for Server (cserverrc) .............. 5-8
+		5.4	Initialization File for Front-end Processor (uumrc)..... 5-11
+		5.5	Initialization File for Forward Conversion Environment
+			(wnnenvrc) ............................................. 5-17
+		5.6	Initialization File for Reverse Conversion Environment
+			(wnnenvrc_R) ........................................... 5-21
+		5.7	Keyboard Definition File for Front-end Processor
+			(uumkey) ............................................... 5-22
+		5.8	Conversion File for Keyboard input code (cvt_key_tbl) .. 5-31
+
+
+  CHAPTER SIX		COMMANDS
+
+		6.1	Overview ................................................ 6-1
+		6.2	Startup of Server (cserver) ............................. 6-2
+		6.3	Startup of Front-end Processor (cuum) ................... 6-4
+		6.4	Current Status Report of Server (cwnnstat) .............. 6-7
+		6.5	Server Termination (cwnnkill) ........................... 6-9
+		6.6	Dictionary Header Update (cwnntouch) ................... 6-10
+		6.7	Creation of Dictionary (catod) ......................... 6-11
+		6.8	Conversion of Binary Dictionary to Text Format (cdtoa) . 6-13
+		6.9	Creation of Usage Frequency File (catof) ............... 6-15
+	       6.10	Registration of characters/words into a dictionary  
+			(cwdreg) ............................................... 6-16
+	       6.11	Deletion of characters/words from a dictionary (cwddel). 6-17
+	       6.12	Dictionary sort (cdicsort) ............................. 6-18
+
+
+  CHAPTER SEVEN		INPUT AUTOMATON
+
+		7.1	Overview ................................................ 7-1
+		7.2	Structure of Input Automaton ............................ 7-1
+		7.3	Mode Definition Table ................................... 7-4
+		7.4	Mapping Tables .......................................... 7-7
+		7.5	An Example of Input Automaton .......................... 7-15
+
+
+  CHAPTER EIGHT		CWNN FILE MANAGEMENT
+
+		8.1	Overview ................................................ 8-1
+		8.2	Dictionary Files ........................................ 8-2
+		8.3	Usage Frequency Files ................................... 8-5
+		8.4	Grammar Files and Cixing Files .......................... 8-6 
+	
+
+					  - ii -
+  APPENDIX 
+		Appendix 1  Pinyin/Zhuyin Definition Table ...................... A-1
+		Appendix 2  Erpin Input Keys Allocations ........................ A-6
+		Appendix 3  Zhuyin Input Keys Alllcations ....................... A-9
+		Appendix 4  Standard Function Keys Definition in cWnn .......... A-14
+
+
+  GLOSSARY ...................................................................... G-1
+
+
+  INDEX ......................................................................... I-1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					   - iii -

@@ -1,0 +1,63 @@
+.\"
+.\"   $Id: rk_next.man,v 1.3 2001/06/14 18:08:34 ura Exp $
+.\"
+.\"
+.\" FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+.\" This file is part of FreeWnn.
+.\" 
+.\" Copyright Kyoto University Research Institute for Mathematical Sciences
+.\"                 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+.\" Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright FreeWnn Project 1999, 2000
+.\" 
+.\" Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+.\" 
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\" 
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\" 
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software
+.\" Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+.\"
+.TH ROMKAN_NEXT \  "11 October 1991"
+.SH 名称
+.sv 1
+.nf
+.ta 0.1i 2i 
+romkan_next()  ローマ字仮名変換非変換文字の入力
+.fi
+.SH 形式
+.sv 1
+.nf
+.ta 0.1i 3i    
+#include <wnn/rk_spcl_val.h>
+
+letter romkan_next()
+.fi
+.SH 機能説明
+.HP 0
+.IP
+romkan_next は、文字入力関数 keyin (romkan_init を参照。) からの値を文字単
+位にまとめたコード(１バイトコードの文字はそのまま、２バイトコードの場合は 、
+上位バイ ト×２５６＋下位バイト)を返す。この関数は、ローマ字仮名変換を行わ
+ずに入力文字を受け取るときに使用する。
+.SH 使用上の注意事項
+.HP 0
+.IP
+最初の romkan_next を呼ぶ前に、romkan_init で初期処理をしておかなければな
+らない。
+.SH 関連項目
+.HP 0
+.IP
+romkan_init(JT_LIB), romkan_getc(JT_LIB), romkan_clear(JT_LIB), 
+romkan_dispmode(JT_LIB), romkan_ungetc(JT_LIB), 2A_CTRL(JT_ENV), 
+2B_ROMKANA(JT_ENV)
+

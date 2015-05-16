@@ -1,0 +1,91 @@
+.\"
+.\"   $Id: cserver.man,v 1.3 2001/06/14 18:08:35 ura Exp $
+.\"
+.\"
+.\" FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+.\" This file is part of FreeWnn.
+.\" 
+.\" Copyright Kyoto University Research Institute for Mathematical Sciences
+.\"                 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+.\" Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright FreeWnn Project 1999, 2000
+.\" 
+.\" Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+.\" 
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\" 
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\" 
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software
+.\" Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+.\"
+.TH CSERVER \  "13 May 1992"
+.SH NAME
+cserver \- To start the Chinese server.
+.SH SYNOPSIS
+cserver  [-f 
+.I file
+]  [-s 
+.I file
+]
+.SH DEFAULT PATH
+/usr/local/bin/cWnn4/cserver
+.ad
+.SH DESCRIPTION
+During Chinese input, cserver provides the services (such as conversion 
+services) and resources (such as dictionaries, grammar files etc.), 
+required by the users (front-end processors).  
+
+The input environment is provided by the front-end processor (cuum), 
+which sends its request to the cserver, which subsequently performs the 
+service and return the result back to the front-end processor.  
+
+Normally, once the system is up, fork() will be executed and the server 
+runs as a background process. The startup of cserver can be set in 
+"/etc/rc" to be executed automatically in the Unix system.
+
+When the "cserver" command is executed, all the settings in the 
+initialization file "/usr/local/lib/wnn/zh_CN/cserverrc"  will be read 
+and the corresponding initialization operations will be performed.
+
+Besides, all resources such as dictionaries and usage frequency files of 
+the clients will be maintained by the cserver.  Refer to cWnn manual 
+for details on "cserverrc". 
+
+If the user happens to start up cserver after it has already been started, 
+an error message will be given.  Refer to cWnn manual for the error message.
+.SH OPTIONS
+.IP -f
+.I file
+.sp 0
+.I file 
+is the specified initialization file for the server.  If this 
+option is not specified, the default initialization file
+.sp 0
+"/usr/local/lib/wnn/zh_CN/cserverrc" will be read. 
+.IP -s 
+.I file
+.sp 0
+.I file 
+is the specified logfile of cserver.  All error messages will be 
+directed to this specified logfile.  When 
+.I file 
+is specified as "-", 
+(eg. cserver -s -), the error messages will be sent to the standard error 
+output.
+.SH NOTE
+.IP 1.
+The command options inside [ ] shown in the Command Format indicates that 
+they are optional.   
+.IP 2.
+If they are not required,  "cserver" alone is sufficient to start up the 
+Chinese server.
+

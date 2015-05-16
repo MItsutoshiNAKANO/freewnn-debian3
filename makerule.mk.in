@@ -1,0 +1,359 @@
+#
+#   $Id: makerule.mk.in,v 1.15 2010/02/22 17:06:54 aonoto Exp $
+#
+
+#
+# FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+# This file is part of FreeWnn.
+# 
+# Copyright Kyoto University Research Institute for Mathematical Sciences
+#                 1987, 1988, 1989, 1990, 1991, 1992
+# Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+# Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+# Copyright FreeWnn Project 1999, 2000, 2001, 2003, 2006, 2007, 2010
+# 
+# Maintainer:  FreeWnn Project
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+all::
+
+            SHELL = /bin/sh
+
+              TOP = $(top_builddir)
+      CURRENT_DIR = `pwd`
+
+           DEPEND = gccmakedep
+        MKDIRHIER = mkdir -p
+
+# for libtool (AM_PROG_LIBTOOL)
+#     top_builddir = @abs_top_srcdir@
+
+           MANDIR = @mandir@/man$(MANSUFFIX)
+        LIBMANDIR = @mandir@/man$(LIBMANSUFFIX)
+
+        MANSUFFIX = 1
+     LIBMANSUFFIX = 3
+
+   COMPRESSMANCMD = :
+
+
+               AR = ar cq
+               AS = as
+
+CPP = @CPP@
+CC = @CC@
+CCLINK = $(CC)
+
+# Split fuzoku-go preprocessor (for text processing) from CPP.
+FZK_PP = @FZK_PP@
+
+     INSTALLFLAGS =
+               LD = ld
+             LINT = lint
+      LINTLIBFLAG = -C
+         LINTOPTS = -axz
+               LN = @LN_S@
+# コンパイル時に違うmake (ex. システムのmakeとGNU make)を使えるよう、
+# ($MAKEが定義されるmakeならば) $MAKEは定義しない。
+# If you like to use specific make, uncomment and modify following line ...
+#            MAKE = make
+              @SET_MAKE@
+               MV = mv -f
+               CP = cp
+
+           RANLIB = @RANLIB@
+  RANLIBINSTFLAGS =
+
+          LIBTOOL = @LIBTOOL@
+# LT_* : shortcut for Makefile.in
+            LT_CC = $(LIBTOOL) --mode=compile $(CC)
+            LT_LD = $(LIBTOOL) --mode=link $(CCLINK)
+       LT_INSTALL = $(LIBTOOL) --mode=install $(INSTALL)
+
+               RM = rm -f
+              TBL = tbl
+
+             TAGS = ctags
+
+   PARALLELMFLAGS =
+
+
+     INSTPGMFLAGS = @INSTPGMFLAGS@
+     INSTBINFLAGS = -m 0755
+     INSTUIDFLAGS = -m 4711
+     INSTLIBFLAGS = -m 0644
+     INSTINCFLAGS = -m 0444
+     INSTMANFLAGS = -m 0444
+     INSTDATFLAGS = -m 0444
+     INSTUUMFLAGS = @INSTUUMFLAGS@
+
+CCOPTIONS = @CCOPTIONS@
+ALLDEFINES = $(INCLUDES) $(DEFINES)
+CFLAGS = @CFLAGS@ @CDEBUGFLAGS@ $(CCOPTIONS) @ipv6@ @DEFS@ $(ALLDEFINES)
+LIBS = @LIBS@
+LINTFLAGS = $(LINTOPTS) -DLINT $(ALLDEFINES) $(DEPEND_DEFINES)
+LDOPTIONS = @CDEBUGFLAGS@ $(CCOPTIONS)
+
+
+#
+# OMRON INPUT METHOD MAKE ENV
+#
+
+       WNNOWNER = wnn
+       UUMOWNER = @UUMOWNER@
+       UUMGROUP = @UUMGROUP@
+
+          IMTOP = $(TOP)
+
+         prefix = @prefix@
+    exec_prefix = @exec_prefix@
+         PREFIX = @prefix@
+      WNNWNNDIR = ${PREFIX}/lib/wnn
+      WNNBINDIR = ${PREFIX}/bin
+      WNNINCDIR = @includedir@
+      WNNLIBDIR = @libdir@
+
+  PUBDICPLUSSRC = $(IMTOP)/PubdicPlus
+  WNNCONSDICSRC = $(IMTOP)/Wnn-consortium/dic
+
+         WNNTOP = $(IMTOP)/Wnn
+       JWNNLANG = ja_JP
+     JWNNWNNDIR = $(WNNWNNDIR)/$(JWNNLANG)
+     JWNNBINDIR = $(WNNBINDIR)/Wnn4
+     JWNNINCDIR = $(WNNINCDIR)/wnn
+     JWNNDICDIR = $(JWNNWNNDIR)/dic
+  JWNNPUBDICDIR = $(JWNNDICDIR)/pubdic
+JWNNWNNCONSDICDIR = $(JWNNDICDIR)/wnncons
+  JWNNFZKSRCDIR = $(JWNNDICDIR)/src
+     WNNCONVSRC = $(WNNTOP)/conv
+      WNNETCSRC = $(WNNTOP)/etc
+  WNNINCLUDESRC = $(WNNTOP)/include
+       WNNJDSRC = $(WNNTOP)/jd
+     WNNJLIBSRC = $(WNNTOP)/jlib
+   WNNJLIBV3SRC = $(WNNTOP)/jlib.V3
+  WNNJSERVERSRC = $(WNNTOP)/jserver
+    WNNJUTILSRC = $(WNNTOP)/jutil
+       WNNLDSRC = $(WNNTOP)/ld
+WNNPUBDICPLUSSRC = $(WNNTOP)/pubdicplus
+WNNWNNCONSSRC = $(WNNTOP)/wnncons
+WNNWNNCONSDICSRC = $(WNNWNNCONSSRC)/dic
+   WNNROMKANSRC = $(WNNTOP)/romkan
+      WNNUUMSRC = $(WNNTOP)/uum
+  WNNCNVFILEDIR = $(WNNJDSRC)/@CNVFILE_SUBDIR@
+    WNNINCLUDES = -I$(WNNINCLUDESRC) -I$(WNNROMKANMSRC)
+     WNNDEFINES = -DLIBDIR=\"$(WNNWNNDIR)\"
+        WNNJLIB = @WNNJLIB@
+ WNNJLIBVERSION = 0:0
+     WNNCONVLIB = $(WNNCONVSRC)/libconvkey.a
+
+        CWNNTOP = $(IMTOP)/cWnn
+       CWNNLANG = zh_CN
+     CWNNWNNDIR = $(WNNWNNDIR)/$(CWNNLANG)
+     CWNNINCDIR = $(WNNINCDIR)/cwnn
+     CWNNBINDIR = $(WNNBINDIR)/cWnn4
+     CWNNDICDIR = $(CWNNWNNDIR)/dic
+  CWNNSYSDICDIR = $(CWNNDICDIR)/sys
+      CWNNCDSRC = $(CWNNTOP)/cd
+    CWNNCDICSRC = $(CWNNTOP)/cdic
+    CWNNCONVSRC = $(CWNNTOP)/conv
+     CWNNETCSRC = $(CWNNTOP)/etc
+ CWNNINCLUDESRC = $(CWNNTOP)/include
+    CWNNJLIBSRC = $(CWNNTOP)/jlib
+ CWNNJSERVERSRC = $(CWNNTOP)/jserver
+   CWNNJUTILSRC = $(CWNNTOP)/jutil
+  CWNNROMKANSRC = $(CWNNTOP)/romkan
+     CWNNUUMSRC = $(CWNNTOP)/uum
+   CWNNINCLUDES = -I$(CWNNINCLUDESRC) -I$(CWNNROMKANMSRC)
+    CWNNDEFINES = -DLIBDIR=\"$(WNNWNNDIR)\"
+       CWNNJLIB = @CWNNJLIB@
+CWNNJLIBVERSION = 0:0
+    CWNNCONVLIB = $(CWNNCONVSRC)/libconvkey.a
+
+        KWNNTOP = $(IMTOP)/kWnn
+       KWNNLANG = ko_KR
+     KWNNWNNDIR = $(WNNWNNDIR)/$(KWNNLANG)
+     KWNNINCDIR = $(WNNINCDIR)/kwnn
+     KWNNBINDIR = $(WNNBINDIR)/kWnn4
+     KWNNDICDIR = $(KWNNWNNDIR)/dic
+  KWNNSYSDICDIR = $(KWNNDICDIR)/sys
+      KWNNKDSRC = $(KWNNTOP)/kd
+    KWNNKDICSRC = $(KWNNTOP)/kdic
+    KWNNCONVSRC = $(KWNNTOP)/conv
+     KWNNETCSRC = $(KWNNTOP)/etc
+ KWNNINCLUDESRC = $(KWNNTOP)/include
+    KWNNJLIBSRC = $(KWNNTOP)/jlib
+ KWNNJSERVERSRC = $(KWNNTOP)/jserver
+   KWNNJUTILSRC = $(KWNNTOP)/jutil
+  KWNNROMKANSRC = $(KWNNTOP)/romkan
+     KWNNUUMSRC = $(KWNNTOP)/uum
+   KWNNINCLUDES = -I$(KWNNINCLUDESRC) -I$(KWNNROMKANMSRC)
+    KWNNDEFINES = -DLIBDIR=\"$(WNNWNNDIR)\"
+       KWNNJLIB = @KWNNJLIB@
+KWNNJLIBVERSION = 0:0
+    KWNNCONVLIB = $(KWNNCONVSRC)/libconvkey.a
+
+       TWNNLANG = zh_TW
+     TWNNWNNDIR = $(WNNWNNDIR)/$(TWNNLANG)
+     TWNNDICDIR = $(TWNNWNNDIR)/dic
+  TWNNSYSDICDIR = $(TWNNDICDIR)/sys
+      TWNNTDSRC = $(CWNNTOP)/td
+    TWNNTDICSRC = $(CWNNTOP)/tdic
+
+       LWNNLANG = lt_LN
+     LWNNWNNDIR = $(WNNWNNDIR)/$(LWNNLANG)
+
+     WNNLANGDEF = -DJAPANESE
+    CWNNLANGDEF = -DCHINESE
+    TWNNLANGDEF = -DTAIWANESE
+    KWNNLANGDEF = -DKOREAN
+    LWNNLANGDEF = -DLATIN
+     ALLLANGDEF = $(WNNLANGDEF) $(CWNNLANGDEF) $(KWNNLANGDEF) $(LWNNLANGDEF)
+
+       XWNMOTOP = $(IMTOP)/Xwnmo
+       XWNMOSRC = $(XWNMOTOP)/xwnmo
+      XJUTILSRC = $(XWNMOTOP)/xjutil
+ XWNMOROMKANSRC = $(XWNMOTOP)/romkan
+   XWNMOJLIBSRC = $(XWNMOTOP)/jlib
+     XWNMOJDSRC = $(XWNMOTOP)/jd
+XWNMOROMKANMSRC = $(XWNMOTOP)/romkan_m
+
+  XWNMOXLIBINC  = -I$(XWNMOTOP)/X11R6/include
+
+  XWNMOINCLUDES = -I$(XWNMOROMKANMSRC) -I$(WNNINCLUDESRC) $(XWNMOXLIBINC)
+      XWNMOJLIB = $(XWNMOJLIBSRC)/libwnn_m.a
+ XWNMOLIBRARIES = $(XWNMOJLIB)
+
+       XWNMODEF = -DBC_X11R5
+
+
+
+
+# ----------------------------------------------------------------------
+
+all::
+	@cont=0; \
+	for flag in ${MAKEFLAGS} ''; do \
+	case "$$flag" in *=*) ;; *[ik]*) cont=1;; esac; done; \
+	SUBDIRS="$(SUBDIRS)" ;\
+	for i in $$SUBDIRS ;\
+	do \
+	echo "making" all "in $(CURRENT_DIR)/$$i..."; \
+	(cd $$i && $(MAKE) $(MFLAGS) $(PARALLELMFLAGS) all) \
+	|| if [ $$cont -eq 0 ]; then exit 1; fi; \
+	done
+
+includes::
+	@cont=0; \
+	for flag in ${MAKEFLAGS} ''; do \
+	case "$$flag" in *=*) ;; *[ik]*) cont=1;; esac; done; \
+	SUBDIRS="$(ALL_SUBDIRS)" ;\
+	for i in $$SUBDIRS ;\
+	do \
+	echo "making" all "in $(CURRENT_DIR)/$$i..."; \
+	(cd $$i && $(MAKE) $(MFLAGS) $(PARALLELMFLAGS) includes) \
+	|| if [ $$cont -eq 0 ]; then exit 1; fi; \
+	done
+
+install::
+	@cont=0; \
+	for flag in ${MAKEFLAGS} ''; do \
+	case "$$flag" in *=*) ;; *[ik]*) cont=1;; esac; done; \
+	SUBDIRS="$(SUBDIRS)" ;\
+	for i in $$SUBDIRS ;\
+	do \
+	echo "installing" all "in $(CURRENT_DIR)/$$i..."; \
+	(cd $$i && $(MAKE) $(MFLAGS) $(PARALLELMFLAGS) install) \
+	|| if [ $$cont -eq 0 ]; then exit 1; fi; \
+	done
+
+install.man::
+	@cont=0; \
+	for flag in ${MAKEFLAGS} ''; do \
+	case "$$flag" in *=*) ;; *[ik]*) cont=1;; esac; done; \
+	SUBDIRS="$(SUBDIRS)" ;\
+	for i in $$SUBDIRS ;\
+	do \
+	echo "installing man pages" "in $(CURRENT_DIR)/$$i..."; \
+	(cd $$i && $(MAKE) $(MFLAGS) $(PARALLELMFLAGS) install.man) \
+	|| if [ $$cont -eq 0 ]; then exit 1; fi; \
+	done
+
+depend::
+	@cont=0; \
+	@for flag in ${MAKEFLAGS} ''; do \
+	case "$$flag" in *=*) ;; *[ik]*) cont=1;; esac; done; \
+	SUBDIRS="$(SUBDIRS)" ;\
+	for i in $$SUBDIRS ;\
+	do \
+	echo "depending" "in $(CURRENT_DIR)/$$i..."; \
+	(cd $$i && $(MAKE) $(MFLAGS) $(PARALLELMFLAGS) \
+	 depend) \
+	|| if [ $$cont -eq 0 ]; then exit 1; fi; \
+	done
+
+clean::
+	SUBDIRS="$(SUBDIRS)" ;\
+	for i in $$SUBDIRS ;\
+	do \
+	echo "cleaning" "in $(CURRENT_DIR)/$$i..."; \
+	(cd $$i && $(MAKE) $(MFLAGS) $(PARALLELMFLAGS) \
+	 clean) \
+	done
+
+depend:: .depend
+
+.depend::
+	$(RM) $@
+	$(DEPEND) -f- -- $(ALLDEFINES) $(DEPEND_DEFINES) -- $(SRCS) > $@
+
+# ----------------------------------------------------------------------
+# common rules for all Makefiles - do not edit
+
+
+emptyrule::
+
+clean::
+	$(RM) *.CKP *.ln *.BAK *.bak *.o core errs ,* *~ *.a .emacs_* tags TAGS make.log MakeOut *.core "#"*
+
+
+tags::
+	$(TAGS) -w *.[ch]
+	$(TAGS) -xw *.[ch] > TAGS
+
+man_keywords::
+
+# ----------------------------------------------------------------------
+# empty rules for directories that do not have SUBDIRS - do not edit
+
+install::
+	@echo "install in $(CURRENT_DIR) done"
+
+install.man::
+	@echo "install.man in $(CURRENT_DIR) done"
+
+install.linkkit::
+	@echo "install.linkkit in $(CURRENT_DIR) done"
+
+Makefiles::
+
+depend::
+
+# ----------------------------------------------------------------------
+# dependencies generated by makedepend
+
+# dependencies are in .depend
+

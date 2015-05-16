@@ -1,0 +1,139 @@
+.\"
+.\"   $Id: uum.man,v 1.3 2001/06/14 18:08:34 ura Exp $
+.\"
+.\"
+.\" FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+.\" This file is part of FreeWnn.
+.\" 
+.\" Copyright Kyoto University Research Institute for Mathematical Sciences
+.\"                 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+.\" Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright FreeWnn Project 1999, 2000
+.\" 
+.\" Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+.\" 
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\" 
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\" 
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software
+.\" Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+.\"
+.TH UUM \  "28 January 1992" 
+.SH 名称
+.sv 1
+.nf
+.ta 0.1i 2i
+uum	かな漢字変換フロントエンドプロセッサ
+.fi
+.SH 形式
+.sv 1
+.nf
+.ta 0.1i 3i 
+/usr/local/bin/Wnn4/uum [-J|U|S] [-j|u|s] [-h|H] [-x|X]
+        [-k uumkey-file] [-c convert-key-file] [-r romkan-mode-file]
+        [-D サーバマシン名] [-n ユーザ名]
+        [-l 変換行数]
+
+.fi
+.SH 機能
+.HP 0
+.IP
+uum は、日本語入出力環境を提供するコマンドである。
+uum は起動後、初期化ファイルを次の順にサーチする。
+
+  1. 環境変数 UUMRC のファイル名
+  2. $HOME/.uumrc
+  3. /usr/local/lib/wnn/uumrc (デフォルト)
+
+uum は、インターネットにより別のマシン上のかな漢字変換サーバ jserver(1)と
+接続することが可能で、負荷の分散を図ることができる。
+仮にサーバと接続できなくても uum は起動できる。これにより、かな漢字変換サーバ
+との通信を必要としないオペレーションの使用が可能である。
+また、変換キーが押された時 jserver と接続できていなければ、自動的に接続を確立
+しようとする。
+
+以下のオプションにより動作を指定する。
+.TP 8
+-H
+変換 on の状態で立ち上げる。(デフォルト)
+.TP 8
+-h
+変換 off の状態で立ち上げる。
+.TP 8
+-U
+pty 側をＵＪＩＳコードとする。(デフォルト)
+.TP 8
+-J
+pty 側をＪＩＳコードとする。
+.TP 8
+-S
+pty 側をシフトＪＩＳコードとする。
+.TP 8
+-u
+tty 側をＵＪＩＳコードとする。(デフォルト)
+.TP 8
+-j
+tty 側をＪＩＳコードとする。
+.TP 8
+-s
+tty 側をシフトＪＩＳコードとする。
+.TP 8
+-X
+tty のフローコントロールを on にして立ち上げる。(デフォルト)
+.TP 8
+-x
+tty のフローコントロールを off にして立ち上げる。
+.TP 8
+-k uumkey-file
+キーバインド定義ファイルの指定。
+省略時は、次の順にサーチする。
+  1. 初期化ファイル uumrc の setuumkey エントリのファイル名
+  2. ファイル名 /usr/local/lib/wnn/uumkey
+.TP 8
+-c convert-key-file
+キーコード変換表ファイルの指定。
+省略時は、次の順にサーチする。
+1. 初期化ファイル uumrc の setconvkey エントリのファイル名
+2. ファイル名 /usr/local/lib/wnn/cvt_key_tbl
+.TP 8
+-r romkan-mode-file
+ローマ字仮名変換 (オートマトン(3J_T) のモード定義表ファイルの指定。
+ディレクトリ名の場合、その下の mode ファイルが対象になる。
+省略時は、次の順にサーチする。
+  1. 初期化ファイル uumrc の setrkfile エントリのファイル名
+  2. ファイル名 /usr/local/lib/wnn/rk/mode
+.TP 8
+-l 変換行数
+仮名漢字変換に使用する行数(0 < 変換行数 < 画面行数 - 1)を指定する。
+省略字は、1。
+.TP 8
+-D ホスト名
+仮名漢字変換サーバ(jserver(1_JT))をホスト名で指定する。
+省略時は、環境変数 JSERVER を見る。それも無ければ、
+/etc/hosts の jserver のalias を探す。それもなければ、
+UNIX-Domain が指定される。
+.TP 8
+-n 環境名
+辞書管理のための環境名を指定する。
+省略時は、環境変数 WNNUSER を見る。それも無ければ uum プロセスの実
+UID のオーナー名を取る。
+.SH 使用上の注意事項
+.HP 0
+.IP
+uum は、pty を１つ獲得するので、pty が獲得できない場合は、起動できない。
+また、初期化ファイル, キーバインド定義ファイル, ローマ字仮名変換のモード定義表
+ファイルが見つからない場合も起動できない。
+辞書管理は、環境名で行われる。
+.SH 関連項目
+.sv 1
+.nf
+jserver(1), uumrc(4), uumkey(4), cvt_key_tbl(4), オートマトン(3)

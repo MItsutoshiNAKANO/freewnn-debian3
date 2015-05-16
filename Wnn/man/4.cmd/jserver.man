@@ -1,0 +1,118 @@
+.\"
+.\"   $Id: jserver.man,v 1.7 2002/06/22 17:58:56 aono Exp $
+.\"
+.\"
+.\" FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+.\" This file is part of FreeWnn.
+.\" 
+.\" Copyright Kyoto University Research Institute for Mathematical Sciences
+.\"                 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+.\" Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright FreeWnn Project 1999, 2000
+.\" 
+.\" Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+.\" 
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\" 
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\" 
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software
+.\" Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+.\"
+.TH JSERVER \  "23 June 2001" 
+.SH 名称
+.sv 1
+.nf
+.ta 0.1i 2i
+jserver	日本語マルチクライアントサーバ（インターネット対応版）
+.fi
+.SH 形式
+.sv 1
+.nf
+.ta 0.1i 3i 
+/usr/local/bin/Wnn4/jserver [-f file] [-s file] [-h file] [-N #]
+                            [-p port] [-u46]
+.br
+/usr/local/bin/Wnn4/jserver -v
+.fi
+.SH 機能
+.HP 0
+.IP
+日本語入力における仮名漢字変換を、複数のユーザに提供する。
+日本語入出力環境は、uum(1)によって提供されるが、その際の日本語文法解析を
+受け持つ。
+通常システム立ち上げ時に、(/etc/rc コマンドで) 起動される。
+jserver は、起動時に /usr/local/lib/wnn/ja_JP/jserverrc(4)
+に設定された辞書を読み込む。
+jserver は、全ユーザの頻度、登録可能辞書を一括して管理する。
+それらの管理のためのディレクトリは jserverrc 中の jserver_dir というエントリ
+で指定される。
+.SH 起動形式
+.HP 0
+.IP
+通常、システム立ち上げ時に起動される (/etc/rc) が、もし、マニュアルで
+立ち上げる必要のある場合は、以下のとおり。
+
+  /usr/local/bin/Wnn4/jserver
+
+以下のオプションによって、動作を指定する。
+.TP 8
+-f file
+デフォルトの jserverrc の代わりに、file を初期化ファイル
+として読み込む
+.TP 8
+-s file
+jserver のログファイルを取る。file が、"-" の時には、
+標準エラー出力に出力される。
+.TP 8
+-h file
+品詞ファイル名を指定する。
+.TP 8
+-N 数字
+serverNO を指定した数字に設定する。serverNO は、jserver を複数立ち上げ
+た時に、それぞれを区別する番号である。jserver を一つしか動かさない場合
+は serverNO の指定は不要で、デフォルト値として 0 が使われる。2つめ以降
+の jserver を起動する時は -N 1, -N 2, -N 3 というように一つづつ 
+serverNO を増やして立ち上げなければならない。
+.TP 8
+-p 数字
+ポート番号の基準値を指定した数字に設定する。serverNO を指定していない
+場合(つまり jserver を一つしか動かしていない場合)は、この値がそのまま
+ポート番号として使われる。複数の jserver を動かしている場合は、実際の
+ポート番号はこの値に serverNO を足した値となる。このオプションを省略し
+た場合はデフォルト値として getservbyname で取得された値が使われる。
+getservbyname で取得できない場合はヘッダファイル jd_sock.h で定義され
+ている WNN_PORT_IN の値が使われる。
+.TP 8
+-u
+unix domain socket を使用する。
+.TP 8
+-4
+inet socket を使用する。
+.TP 8
+-6
+inet6 socket を使用する。
+.PP
+-u, -4, -6 のいずれも指定しない場合は、全てのプロトコルが使用される。
+.TP 8
+-v
+jserverのバージョン(とヘルプ)を表示する。(サーバとしては起動しない)
+.SH ファイル
+ /tmp/jd_sockV4
+.HP 0
+.IP
+.SH 関連項目
+.sv 1
+.nf
+jserverrc(4)
+.SH バグ
+現在の jlib の実装は unix domain, inet, inet6 の全ての port で接続可能
+であることを要求しているため -u,-4,-6 の各オプションは現在は役に立たない。

@@ -1,0 +1,82 @@
+/*
+ * $Id: README.sun,v 1.1.2.2 1999/02/08 02:09:57 yamasita Exp $
+ */
+
+/*
+ * FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+ * This file is part of FreeWnn.
+ * 
+ * Copyright Kyoto University Research Institute for Mathematical Sciences
+ *                 1987, 1988, 1989, 1990, 1991, 1992
+ * Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+ * Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+ *
+ * Author: OMRON SOFTWARE Co., Ltd. <freewnn@rd.kyoto.omronsoft.co.jp>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with GNU Emacs; see the file COPYING.  If not, write to the
+ * Free Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ * Commentary:
+ *
+ * Change log:
+ *
+ * Last modified date: 8,Feb.1999
+ *
+ */
+
+If you want to complie on SunOS 4.1.1.
+Before building contrib/im/Xsi, contrib/Xaw, ..,
+See X11R5 RELNOTES.TXT section 3.4.1 and build Xlib with 
+     -DX_WCHAR -DX_LOCALE
+
+
+(Because SunOS 4.1.1 is using wchar_t with 16bits,
+ but xwnmo is using wchar_t with 32bits.
+ And SunOS 4.1.1's setlocale() works only 'C' locale.
+ One more recommendation is,
+ if you cannot set enviornmant valiable "LANG", you can
+ use resource XnlLanguage instead of "LANG"
+)
+
+
+1. Change /usr/inclde/sys/stdtypes.h
+
+*** /usr/include/sys/stdtypes.h.org	Thu Oct 11 15:34:07 1990
+--- /usr/include/sys/stdtypes.h	Wed Sep 25 13:21:59 1991
+***************
+*** 27,32 ****
+--- 27,34 ----
+  typedef	int		size_t;		/* ??? */
+  typedef int		ptrdiff_t;	/* result of subtracting two pointers */
+  
++ #ifndef X_WCHAR
+  typedef	unsigned short	wchar_t;	/* big enough for biggest char set */
++ #endif
+  
+  #endif	/* !__sys_stdtypes_h */
+
+2. Change config/sun.cf
+*** sun.cf.SV	Mon Sep 16 19:39:58 1991
+--- config/sun.cf	Wed Sep 25 13:33:35 1991
+***************
+*** 9,14 ****
+--- 9,16 ----
+  /* We do not guarantee this will work */
+  #define BootstrapCFlags   -DNOSTDHDRS
+  #define StandardDefines   -DNOSTDHDRS
++ #else
++ #define StandardDefines   -DNOSTDHDRS -DX_WCHAR -DX_LOCALE
+  #endif
+  
+  #define HasSaberC	  YES

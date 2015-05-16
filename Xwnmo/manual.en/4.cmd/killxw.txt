@@ -1,0 +1,132 @@
+
+
+
+KILLXWNMO(1)        UNIX Programmer's Manual         KILLXWNMO(1)
+
+
+
+NNAAMMEE
+     killxwnmo - kill the input manager xwnmo(1X).
+
+SSYYNNOOPPSSIISS
+     kkiillllxxwwnnmmoo [-9]
+
+DDEESSCCRRIIPPTTIIOONN
+     The _k_i_l_l_x_w_n_m_o requires termination of the input manager
+     _x_w_n_m_o.  If the owner of _k_i_l_l_x_w_n_m_o process is not same as
+     that of _x_w_n_m_o process, that requirement will fail.  And if
+     more than zero client(s) is(are) connecting to _x_w_n_m_o, that
+     requirement will fail.  But with -9 option, that requirement
+     will success even if more than zero client(s) is(are) con-
+     necting to _x_w_n_m_o.  "SEE ALSO" xwnmo(1X)
+
+CCOOPPYYRRIIGGHHTT
+     Copyright 1992 by OMRON Corporation
+     Copyright 1992 by Massachusetts Institute of Technology
+
+AAUUTTHHOORR
+     Seiji Kuwari (OMRON Corporation)
+
+
+
+Printed 12/1/92             Release 5                           1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

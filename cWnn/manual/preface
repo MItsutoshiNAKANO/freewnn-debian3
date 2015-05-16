@@ -1,0 +1,55 @@
+                        ©³©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©·
+                         ©³©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©·
+                         ©§         £Ð£Ò£Å£Æ£Á£Ã£Å         ©§
+                         ©»©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¿
+                        ©»©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¿
+    
+
+	cWnn is an  integrated Chinese input system  running on Unix  workstation.  It
+supports a wide range of input methods, satisfying the needs of the Chinese users from
+all over the world, including  P.R.China  and Taiwan.  cWnn is capable of carrying out 
+Hanzi conversion  from  an arbitrary  Pinyin or Zhuyin  sequence,  hence improving the 
+speed of Pinyin/Zhuyin input.  
+	cWnn is developed on  Omron LUNA workstation and has been ported to other Unix
+workstations.  It has been released together with X11R5 by X-consortium, MIT. 
+
+	This manual gives a  detailed explanation on how cWnn functions and how it can 
+be used.
+
+	Chapter 1  ©¤ 	INTRODUCTION
+			Brief summary on the system structure, features, the hardware/
+			software configurations,  as well as  some terms  used in this
+			manual.
+
+	Chapter 2  ©¤	GETTING STARTED
+			Basic operations such as the startup/termination of cWnn.
+
+	Chapter 3  ©¤	INPUT METHODS
+			Various methods of inputing Chinese characters in cWnn. 
+
+	Chapter 4  ©¤	PINYIN-HANZI CONVERSION AND ENVIRONMENT OPERATIONS
+			Explanation  on the  different conversion methods  such as the 
+			Pinyin-Hanzi conversion, Zhuyin-Hanzi  conversion  and how the 
+			system can be used effectively.
+
+	Chapter 5  ©¤	ENVIRONMENT SETUP
+			Explanation on the different environment setup and system 
+			definitions.
+
+	Chapter 6  ©¤	COMMANDS
+			Explanation on the different commands and their functions.
+
+	Chapter 7  ©¤	INPUT AUTOMATON
+			Explanation on the preprocessor in cWnn.
+
+	Chapter 8  ©¤	CWNN FILE MANAGEMENT
+			Explanation on the various files of cWnn and their management.
+
+
+	Appendix   ©¤   The definition tables for Pinyin and Zhuyin, and the input key
+			allocations for Erpin and Zhuyin are given.
+			In  addition, all  the functions  of  cWnn  function keys  are
+			summarized here. 
+			
+
+

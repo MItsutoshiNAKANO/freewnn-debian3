@@ -1,0 +1,57 @@
+;
+;   $Id: ./2B_ch_yo_zi $
+;
+
+;
+; FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+; This file is part of FreeWnn.
+; 
+; Copyright Kyoto University Research Institute for Mathematical Sciences
+;                 1987, 1988, 1989, 1990, 1991, 1992
+; Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+; Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+; Copyright FreeWnn Project 1999, 2000
+; 
+; Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+; 
+; This program is free software; you can redistribute it and/or modify
+; it under the terms of the GNU General Public License as published by
+; the Free Software Foundation; either version 2 of the License, or
+; (at your option) any later version.
+; 
+; This program is distributed in the hope that it will be useful,
+; but WITHOUT ANY WARRANTY; without even the implied warranty of
+; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+; GNU General Public License for more details.
+; 
+; You should have received a copy of the GNU General Public License
+; along with this program; if not, write to the Free Software
+; Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+;
+
+a	中'\x9f'
+b	国'\x9f'
+c	人'\x9f'
+d	大'\x9f'
+e	的'\x9f'
+f	小'\x9f'
+g	生'\x9f'
+h	不'\x9f'
+i	好'\x9f'
+j	本'\x9f'
+k	学'\x9f'
+l	自'\x9f'
+m	有'\x9f'
+n	文'\x9f'
+o	来'\x9f'
+p	去'\x9f'
+q	做'\x9f'
+r	作'\x9f'
+s	由'\x9f'
+t	点'\x9f'
+u	多'\x9f'
+v	少'\x9f'
+w	前'\x9f'
+x	后'\x9f'
+y	里'\x9f'
+z	外'\x9f'

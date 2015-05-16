@@ -1,0 +1,184 @@
+.\"
+.\"   $Id: 2b_romkan.man,v 1.4 2010/01/04 16:59:40 aonoto Exp $
+.\"
+.\"
+.\" FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+.\" This file is part of FreeWnn.
+.\" 
+.\" Copyright Kyoto University Research Institute for Mathematical Sciences
+.\"                 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+.\" Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright FreeWnn Project 1999, 2000, 2010
+.\" 
+.\" Maintainer:  FreeWnn Project
+.\" 
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\" 
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\" 
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software
+.\" Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+.\"
+.TH 2B_ROMKANA \  "28 January 1992" 
+.SH 名称
+.sv 1
+.nf
+.ta 0.1i 2i
+2B_ROMKANA		ローマ字かな変換定義表
+.fi
+.SH 形式
+.sv 1
+.nf
+.ta 0.1i 3i 
+/usr/local/lib/wnn/ja_JP/rk/2B_ROMKANA
+.fi
+.SH 機能
+.HP 0
+.IP
+uum(1) 起動時に解釈され、ローマ字変換用の設定を行う。
+.SH 設定例
+.HP 0
+.IP
+ M(q1)   ん (q1)           M の次に B M P のいずれかがきた
+ (defvar q1 (list B M P))  場合、M を「ん」に確定することを
+                           定義している。
+
+ (aa)(aa) っ (aa)
+ (defvar aa (list K S T H Y R W G Z D B P C F J V))
+                           「K S T H Y R W G Z D B P C F J
+                           V」の何れかが連続して入力された
+                           場合、１文字目の入力を「っ」に確
+                           定することを定義している。
+ 
+ TCH     っ CH             TCH と入力された場合、T を「っ」
+                           に確定することを定義している。
+
+ A       あ                A と入力された場合、「あ」に確定
+                           することを定義している。
+ I       い                         :
+ U       う                         :
+ E       え                         :
+ O       お                         :
+    :
+    :
+    :
+    :
+ -       ー
+ ,       、
+ .       。
+ 
+ (alpha) (error)
+ (defvar alpha (between A Z))
+     A から Z までの文字が単独で現れた場合、エラーとする。
+
+ ローマ字変換デフォルト設定
+ (括弧内のものは、カタカナモードの時に限り適用される変換を示す。)
+ 
+.nf
+ A       あ      KA      か      SA      さ      TA    た
+ I       い      KI      き      SI      し      TI    ち
+ U       う      KU      く      SU      す      TU    つ
+ E       え      KE      け      SE      せ      TE    て
+ O       お      KO      こ      SO      そ      TO    と
+ 
+ NA      な      HA      は      MA      ま      YA    や
+ NI      に      HI      ひ      MI      み      YI    い
+ NU      ぬ      HU      ふ      MU      む      YU    ゆ
+ NE      ね      HE      へ      ME      め      YE    いぇ
+ NO      の      HO      ほ      MO      も      YO    よ
+
+ RA      ら      WA      わ      GA      が      ZA    ざ
+ RI      り      WI      ゐ      GI      ぎ      ZI    じ
+ RU      る      WU      う      GU      ぐ      ZU    ず
+ RE      れ      WE      ゑ      GE      げ      ZE    ぜ
+ RO      ろ      WO      を      GO      ご      ZO    ぞ
+ 
+ DA      だ      BA      ば      PA      ぱ      GYA   ぎゃ
+ DI      ぢ      BI      び      PI      ぴ
+ DU      づ      BU      ぶ      PU      ぷ      GYU   ぎゅ
+ DE      で      BE      べ      PE      ぺ      GYE   ぎぇ
+ DO      ど      BO      ぼ      PO      ぽ      GYO   ぎょ
+
+ ZYA     じゃ    JA      じゃ    DYA     ぢゃ    BYA   びゃ
+                 JI      じ      DYI     でぃ
+ ZYU     じゅ    JU      じゅ    DYU     ぢゅ    BYU   びゅ
+ ZYE     じぇ    JE      じぇ    DYE     ぢぇ    BYE   びぇ
+ ZYO     じょ    JO      じょ    DYO     ぢょ    BYO   びょ
+ 
+ PYA     ぴゃ    VA      ぶぁ ( ヴぁ )           KYA   きゃ
+                 VI      ぶぃ ( ヴぃ )
+ PYU     ぴゅ    VU      ぶ   ( ヴ   )           KYU   きゅ
+ PYE     ぴぇ    VE      ぶぇ ( ヴぇ )           KYE   きぇ
+ PYO     ぴょ    VO      ぶぉ ( ヴぉ )           KYO   きょ
+ 
+ SYA     しゃ    SHA     しゃ    TYA     ちゃ
+                 SHI     し      TYI     てぃ
+ SYU     しゅ    SHU     しゅ    TYU     ちゅ
+ SYE     しぇ    SHE     しぇ    TYE     ちぇ
+ SYO     しょ    SHO     しょ    TYO     ちょ
+ 
+ CHA     ちゃ    NYA     にゃ    HYA     ひゃ    FA    ふぁ
+ CHI     ち                                      FI    ふぃ
+ CHU     ちゅ    NYU     にゅ    HYU     ひゅ    FU    ふ
+ CHE     ちぇ    NYE     にぇ    HYE     ひぇ    FE    ふぇ
+ CHO     ちょ    NYO     にょ    HYO     ひょ    FO    ふぉ
+ 
+ MYA     みゃ    LA      ら      RYA     りゃ    LYA   りゃ
+                 LI      り
+ MYU     みゅ    LU      る      RYU     りゅ    LYU   りゅ
+ MYE     みぇ    LE      れ      RYE     りぇ    LYE   りぇ
+ MYO     みょ    LO      ろ      RYO     りょ    LYO   りょ
+ 
+ KWA     くゎ    GWA     ぐゎ    TSA     つぁ    QA    くぁ
+ KWI     くぃ    GWI     ぐぃ    TSI     つぃ    QI    くぃ
+ KWU     く      GWU     ぐ      TSU     つ      QU    く
+ KWE     くぇ    GWE     ぐぇ    TSE     つぇ    QE    くぇ
+ KWO     くぉ    GWO     ぐぉ    TSO     つぉ    QO    くぉ
+ 
+ N       ん
+ N'      ん
+ 
+ XA      ぁ      \eA      ぁ      XYA     ゃ      \eYA   ゃ
+ XI      ぃ      \eI      ぃ
+ XU      ぅ      \eU      ぅ      XYU     ゅ      \eYU   ゅ
+ XE      ぇ      \eE      ぇ
+ XO      ぉ      \eO      ぉ      XYO     ょ      \eYO   ょ
+
+ XTU     っ      \eTU     っ      XTI     てぃ    XWI   うぃ
+ XTSU    っ      \eTSU    っ      XDI     でぃ    XWE   うぇ
+ XWA     ゎ      \eWA     ゎ      XDU     どぅ    XWO   うぉ
+ XKA   ( ヵ )    \eKA   ( ヵ )    XDE     でぇ
+ XKE   ( ヶ )    \eKE   ( ヶ )    XDO     どぉ
+ 
+ -       ー      /       ・      Z.      …
+ ,       、      [       「      Z-      〜
+ .       。      ]       」
+.fi
+ 
+ 母音の次に長音がきた場合、次のように確定する。
+.nf
+ A^      ああ    A~      ああ
+ I^      いい    I~      いい
+ U^      うう    U~      うう
+ E^      えい    E~      えい
+ O^      おう    O~      おう
+.fi
+ 
+ M の次に B M P のいずれかがきた場合、M を"ん"に確定する。
+
+ K S T H Y R W G Z D B P C F J V の内いずれかが、連続して入力さ
+れた場合、初めの文字を、"っ"に確定する。
+.SH 関連項目
+.sv 1
+.nf
+uum(1), mode(4), オートマトン(3)
+
+

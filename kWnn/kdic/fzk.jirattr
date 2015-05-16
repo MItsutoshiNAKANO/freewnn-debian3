@@ -1,0 +1,48 @@
+;;; $Id: fzk.jirattr,v 1.1.2.1 1999/04/16 07:53:03 nakanisi Exp $
+;;;
+;;; FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+;;; This file is part of FreeWnn.
+;;; 
+;;; Copyright Wnn Consortium. 1993
+;;;
+;;; Author: OMRON SOFTWARE Co., Ltd. <freewnn@rd.kyoto.omronsoft.co.jp>
+;;;
+;;; This program is free software; you can redistribute it and/or modify
+;;; it under the terms of the GNU General Public License as published by
+;;; the Free Software Foundation; either version 2, or (at your option)
+;;; any later version.
+;;;
+;;; This program is distributed in the hope that it will be useful,
+;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;;; GNU General Public License for more details.
+;;;
+;;; You should have received a copy of the GNU General Public License
+;;; along with GNU Emacs; see the file COPYING.  If not, write to the
+;;; Free Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+;;;
+;;; Commentary:
+;;;
+;;; Change log:
+;;;
+;;; Last modified date: 8,Feb.1999
+;;;
+;;; 
+;;;
+;;;	(¿⁄∏≥æÓ¿« º”º∫ ¡§¿«)
+;;;	(Ìªÿ°Âﬁ¿« ·’‡ı Ô“Î˘)
+;;;
+
+\jiritugo-attr
+
+‚¶ÌÆ@‚¶,Ÿ£
+Á»‚¶@Ÿ£
+—¿˚‹@Ÿ£
+
+Ÿ£ﬁÚ@Ÿ£
+Õ≥ÍÛŸ£ﬁÚ@Ÿ£
+
+‚¶ﬁÚ@‚¶,Ÿ£
+
+Ï—Ÿ£@Ÿ£
+Ú¢Ÿ£@Ÿ£

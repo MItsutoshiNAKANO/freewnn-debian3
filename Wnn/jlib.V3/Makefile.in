@@ -1,0 +1,126 @@
+#
+#   $Id: Makefile.in,v 1.11 2009/02/01 17:52:18 aonoto Exp $
+#
+
+#
+# FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+# This file is part of FreeWnn.
+# 
+# Copyright Kyoto University Research Institute for Mathematical Sciences
+#                 1987, 1988, 1989, 1990, 1991, 1992
+# Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+# Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+# Copyright FreeWnn Project 1999, 2000, 2001, 2003, 2009
+# 
+# Maintainer:  FreeWnn Project
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+include @top_builddir@/makerule.mk
+  top_srcdir = @top_srcdir@
+top_builddir = @top_builddir@
+      srcdir = @srcdir@
+       VPATH = @srcdir@
+  WNNJLIBOBJ = $(top_builddir)/Wnn/jlib
+WNNROMKANOBJ = $(top_builddir)/Wnn/romkan
+
+INSTALL      = @INSTALL@ $(INSTALLFLAGS)
+
+       INCLUDES = -I$(WNNINCLUDESRC) -I$(top_builddir)
+        DEFINES = $(WNNDEFINES) $(WNNLANGDEF)
+       LINTLIBS =
+
+SRC1= jlv3.c
+OBJ1= jlv3.o
+SRC2= $(WNNETCSRC)/gethinsi.c
+OBJ2= gethinsi.o
+SRC3= $(WNNETCSRC)/sstrings.c
+OBJ3= sstrings.o
+SRC4= $(WNNETCSRC)/xutoj.c
+OBJ4= xutoj.o
+LOCAL_RKSRCS= $(WNNROMKANSRC)/rk_bltinfn.c 	$(WNNROMKANSRC)/rk_main.c 	$(WNNROMKANSRC)/rk_modread.c 	$(WNNROMKANSRC)/rk_read.c 	$(WNNROMKANSRC)/rk_vars.c
+
+LOCAL_RKOBJS= $(WNNROMKANOBJ)/rk_bltinfn.o 	$(WNNROMKANOBJ)/rk_main.o 	$(WNNROMKANOBJ)/rk_modread.o 	$(WNNROMKANOBJ)/rk_read.o 	$(WNNROMKANOBJ)/rk_vars.o
+
+LOCAL_ETCSRCS= $(WNNETCSRC)/msg.c $(WNNETCSRC)/yincoding.c $(WNNETCSRC)/py_table.c $(WNNETCSRC)/zy_table.c $(WNNETCSRC)/strings.c $(WNNETCSRC)/bcopy.c $(WNNETCSRC)/mkdir.c
+
+LOCAL_ETCOBJS= $(WNNJLIBOBJ)/msg.o $(WNNJLIBOBJ)/yincoding.o $(WNNJLIBOBJ)/py_table.o $(WNNJLIBOBJ)/zy_table.o $(WNNJLIBOBJ)/strings.o $(WNNJLIBOBJ)/bcopy.o $(WNNJLIBOBJ)/mkdir.o
+
+LOCAL_JLIBSRCS= $(WNNJLIBSRC)/js.c $(WNNJLIBSRC)/wnnerrmsg.c $(WNNJLIBSRC)/jl.c
+
+LOCAL_JLIBOBJS= $(WNNJLIBOBJ)/js.o $(WNNJLIBOBJ)/wnnerrmsg.o $(WNNJLIBOBJ)/jl.o
+
+SRCS= $(SRC1) $(SRC2) $(SRC3) $(SRC4)
+OBJS= $(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4) $(LOCAL_ETCOBJS) $(LOCAL_RKOBJS) $(LOCAL_JLIBOBJS)
+
+clean::
+	$(RM) -r .libs
+	$(RM) *.lo *.la
+
+all::
+
+includes::
+
+.c.o:
+	$(RM) $@
+	$(LT_CC) -c $(CFLAGS) $(_NOOP_) $<
+
+all:: libjd.la
+
+libjd.la: $(OBJS) $(EXTRALIBRARYDEPS)
+	$(LT_LD) -o $@ $(OBJS:.o=.lo) -rpath $(WNNLIBDIR) -version-info $(WNNJLIBVERSION) @LIBS@
+
+lintlib:: llib-ljd.ln
+
+llib-ljd.ln: $(SRCS) $(EXTRALIBRARYDEPS)
+	$(RM) $@
+	$(LINT) $(LINTLIBFLAG)jd $(LINTFLAGS) $(SRCS)
+
+install:: libjd.la
+	@if [ -d $(DESTDIR)$(WNNLIBDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(WNNLIBDIR)); fi
+	$(LT_INSTALL) $(INSTLIBFLAGS) libjd.la $(DESTDIR)$(WNNLIBDIR)
+
+install:: jlib.h
+	@if [ -d $(DESTDIR)$(JWNNINCDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(JWNNINCDIR)); fi
+	$(INSTALL) $(INSTDATFLAGS) $(srcdir)/jlib.h $(DESTDIR)$(JWNNINCDIR)/jlib.h
+
+lint:
+	$(LINT) $(LINTFLAGS) $(SRCS) $(LINTLIBS)
+lint1:
+	$(LINT) $(LINTFLAGS) $(FILE) $(LINTLIBS)
+
+$(WNNJLIB)::
+	@for flag in ${MAKEFLAGS} ''; do \
+	case "$$flag" in *=*) ;; *[ik]*) set +e;; esac; done; \
+	for i in $(WNNJLIBSRC) ;\
+	do \
+	echo "making" $(WNNJLIB) "in $(CURRENT_DIR)/$$i..."; \
+	(cd $$i && $(MAKE) $(MFLAGS) $(PARALLELMFLAGS) all); \
+	done
+
+$(OBJ2) : $(SRC2)
+	$(LT_CC) -c $(CFLAGS)  $(WNNETCSRC)/`basename $@ .o`.c
+
+$(OBJ3) : $(SRC3)
+	$(LT_CC) -c $(CFLAGS)  $(WNNETCSRC)/`basename $@ .o`.c
+
+$(OBJ4) : $(SRC4)
+	$(LT_CC) -c $(CFLAGS)  $(WNNETCSRC)/`basename $@ .o`.c
+
+depend:: .depend
+

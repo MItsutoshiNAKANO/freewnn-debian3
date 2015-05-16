@@ -1,0 +1,58 @@
+\comment
+\comment FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+\comment This file is part of FreeWnn.
+\comment 
+\comment Copyright Wnn Consortium. 1993
+\comment
+\comment Author: OMRON SOFTWARE Co., Ltd. <freewnn@rd.kyoto.omronsoft.co.jp>
+\comment
+\comment This program is free software; you can redistribute it and/or modify
+\comment it under the terms of the GNU General Public License as published by
+\comment the Free Software Foundation; either version 2, or (at your option)
+\comment any later version.
+\comment
+\comment This program is distributed in the hope that it will be useful,
+\comment but WITHOUT ANY WARRANTY; without even the implied warranty of
+\comment MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+\comment GNU General Public License for more details.
+\comment
+\comment You should have received a copy of the GNU General Public License
+\comment along with GNU Emacs; see the file COPYING.  If not, write to the
+\comment Free Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+\comment
+\comment Commentary:
+\comment
+\comment Change log:
+\comment
+\comment Last modified date: 8,Feb.1999
+\comment
+\comment 
+\comment        特殊語彙(pubdic)
+\total	311447
+
+ー			ー			接尾語		131
+い			い			カ行(行く)	1187
+い			行			カ行(行く)	586
+い			逝			カ行(行く)	1
+いらっしゃ		いらっしゃ		ラ行(下さい)	29
+お			お			接頭語(お)	370
+お			御			接頭語(お)	4
+おっしゃ		おっしゃ		ラ行(下さい)	13
+おっしゃ		仰			ラ行(下さい)	1
+かく			各			接頭語(各)	487
+き			き			来(き)		3
+き			来			来(き)		357
+く			く			来(く)		4
+く			来			来(く)		115
+くださ			くださ			ラ行(下さい)	57
+くださ			下さ			ラ行(下さい)	1212
+こ			こ			来(こ)		1
+こ			来			来(こ)		108
+ござ			ござ			ラ行(下さい)	184
+ござ			御座			ラ行(下さい)	10
+し			し			為(し)		101
+す			す			為(す)		101
+せ			せ			為(せ)		0
+なさ			なさ			ラ行(下さい)	94
+みにい			見に行			カ行(行く)	4
+らっしゃ		らっしゃ		ラ行(下さい)	1

@@ -1,0 +1,829 @@
+dnl
+dnl   $Id: configure.in,v 1.50 2010/02/22 17:06:54 aonoto Exp $
+dnl
+
+dnl
+dnl FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+dnl This file is part of FreeWnn.
+dnl 
+dnl Copyright Kyoto University Research Institute for Mathematical Sciences
+dnl                 1987, 1988, 1989, 1990, 1991, 1992
+dnl Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+dnl Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+dnl Copyright FreeWnn Project
+dnl                 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007,
+dnl                 2010
+dnl 
+dnl Maintainer:  FreeWnn Project
+dnl 
+dnl This program is free software; you can redistribute it and/or modify
+dnl it under the terms of the GNU General Public License as published by
+dnl the Free Software Foundation; either version 2 of the License, or
+dnl (at your option) any later version.
+dnl 
+dnl This program is distributed in the hope that it will be useful,
+dnl but WITHOUT ANY WARRANTY; without even the implied warranty of
+dnl MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+dnl GNU General Public License for more details.
+dnl 
+dnl You should have received a copy of the GNU General Public License
+dnl along with this program; if not, write to the Free Software
+dnl Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+dnl
+
+dnl
+dnl Process this file with autoconf to produce a configure script.
+dnl
+AC_INIT(FreeWnn, [1.1.1-cvs-a022], [freewnn-users-owner@lists.sourceforge.jp], FreeWnn)
+AC_CONFIG_SRCDIR(Wnn/conv/cvt_head.h)
+dnl old-style AC_INIT ...
+dnl AC_INIT(Wnn/conv/cvt_head.h)
+AC_CONFIG_HEADER(config.h)
+
+dnl ====================================================================
+dnl Check optional features
+dnl ====================================================================
+
+# Quick and Dirty workaround for Autoconf-2.53 and Libtools-1.5.* pair ...
+# not to use additional tagged configuration. (default: CXX F77)
+# NOTICE: Please remove next line if situation changes. (aono)
+tagnames=
+
+AC_CANONICAL_HOST
+
+dnl build and install libraries, server or client
+
+AC_ARG_ENABLE(debug,
+[  --enable-debug          enable debug options [[default=no]]],
+[case "${enableval}" in
+   yes) debug=true ;;
+   no)  debug=false ;;
+   *)   AC_MSG_ERROR(bad value for --enable-debug)
+esac], debug=false)
+
+AC_ARG_ENABLE(libraries,
+[  --enable-libraries      build and install libraries [[default=yes]]],
+[case "${enableval}" in
+   yes) libraries=true ;;
+   no)  libraries=false ;;
+   *)   AC_MSG_ERROR(bad value for --enable-libraries) ;;
+esac], libraries=true)
+
+AC_ARG_ENABLE(server,
+[  --enable-server         build and install server [[default=yes]]],
+[case "${enableval}" in
+   yes) server=true ;;
+   no)  server=false ;;
+   *)   AC_MSG_ERROR(bad value for --enable-server) ;;
+esac], server=true)
+
+AC_ARG_ENABLE(client,
+[  --enable-client         build and install clients [[default=no]]],
+[case "${enableval}" in
+   yes) client=true ;;
+   no)  client=false ;;
+   *)   AC_MSG_ERROR(bad value for --enable-client) ;;
+esac], client=false)
+
+AC_ARG_ENABLE(client-utmp,
+[  --enable-client-utmp    write utmp with client [[default=yes if not modern BSD]]],
+[case "${enableval}" in
+   yes) client_utmp=true ;;
+   no)  client_utmp=false ;;
+   *)   AC_MSG_ERROR(bad value for --enable-client-utmp) ;;
+esac],
+client_utmp=auto
+)
+
+dnl If you set set-[ug]id user/group to (ex.) 'yes', 
+dnl you can configure this with setting UUMOWNER / UUMGROUP .
+AC_ARG_ENABLE(client-setuid,
+[  --enable-client-setuid[[=user]] Install client with setuid and specified user [[default=guess if your system need this]]],
+[case "${enableval}" in
+    yes) client_setuid=true; UUMOWNER=${UUMOWNER:-root} ;;
+    no)  client_setuid=false ;;
+    *)   client_setuid=true; UUMOWNER=${enableval} ;;
+esac],
+[client_setuid=auto	# guess later ...
+ UUMOWNER=root]
+)
+
+AC_ARG_ENABLE(client-setgid,
+[  --enable-client-setgid=group Install client with setgid and specified group [[default=guess if your system need this]]],
+[case "${enableval}" in
+    yes)
+	if test "x$UUMGROUP" = "x"; then 
+	    AC_ERROR([You must set group name with --enable-client-setgid.])
+	else
+	    client_setgid=true;	# we already defined UUMGROUP ...
+	fi
+	;;
+    no)  client_setgid=false ;;
+    *)   client_setgid=true; UUMGROUP=${enableval} ;;
+esac],
+[client_setgid=auto	# guess later ...
+UUMGROUP=]
+)
+
+if test $libraries = true; then
+	SUBDIRS="\$(LIB_SUBDIRS)"
+	WNNMANDIR="\$(LIB_WNNMANDIR)"
+fi
+if test $server = true; then
+	SUBDIRS="$SUBDIRS \$(SERVER_SUBDIRS)"
+	WNNMANDIR="$WNNMANDIR \$(SERVER_WNNMANDIR)"
+fi
+if test $client = true; then
+	SUBDIRS="$SUBDIRS \$(CLIENT_SUBDIRS)"
+dnl currently client is only uum and its man is in SERVER_WNNMANDIR
+dnl	WNNMANDIR=$WNNMANDIR \$(CLIENT_WNNMANDIR)"
+fi
+
+AC_SUBST(SUBDIRS)
+AC_SUBST(WNNMANDIR)
+
+dnl For Severs
+
+AC_ARG_ENABLE(Wnn,
+[  --enable-Wnn            build and install Wnn [[default=yes]]],
+[case "${enableval}" in
+   yes) Wnn="Wnn";;
+   no)  Wnn="" ;;
+   *)   AC_MSG_ERROR(bad value for --enable-Wnn) ;;
+esac], Wnn="Wnn")
+AC_SUBST(Wnn)
+
+if test "$server" = true -a "$Wnn" = Wnn; then
+#	JSERVER_SUBDIRS1="\$(JSERVER_SUBDIRS1)"
+	JSERVER_SUBDIRS2="\$(JSERVER_SUBDIRS2)"
+else
+#	JSERVER_SUBDIRS1=""
+	JSERVER_SUBDIRS2=""
+fi
+dnl AC_SUBST(JSERVER_SUBDIRS1)
+AC_SUBST(JSERVER_SUBDIRS2)
+
+AC_ARG_ENABLE(cWnn,
+[  --enable-cWnn           build and install cWnn [[default=yes]]],
+[case "${enableval}" in
+   yes) cWnn="cWnn" ;;
+   no)  cWnn="" ;;
+   *)   AC_MSG_ERROR(bad value for --enable-cWnn) ;;
+esac], cWnn="cWnn")
+AC_SUBST(cWnn)
+
+AC_ARG_ENABLE(kWnn,
+[  --enable-kWnn           build and install kWnn [[default=yes]]],
+[case "${enableval}" in
+   yes) kWnn="kWnn" ;;
+   no)  kWnn="" ;;
+   *)   AC_MSG_ERROR(bad value for --enable-kWnn) ;;
+esac], kWnn="kWnn")
+AC_SUBST(kWnn)
+
+dnl For a library libwnn
+
+dnl AC_ARG_WITH(libwnn,
+dnl [  --with-libwnn               use installed Wnn library [default=no]],
+dnl [case "${withval}" in
+dnl    yes|no) with_libwnn=${withval};;
+dnl    *)   AC_MSG_ERROR(invalid argument to --with-libwnn) ;;
+dnl esac], with_libwnn=no)
+dnl 
+
+AC_ARG_WITH(libwnn,
+[  --with-libwnn             use installed Wnn library [[default=no]]],
+[  with_libwnn="${withval}"
+AC_ARG_WITH(wnn-includes,
+[  --with-wnn-includes=DIR   WNN include files are in DIR],
+[wnnincludedir="-I${withval}"], [wnnincludedir=''])
+AC_ARG_WITH(wnn-libraries,
+[  --with-wnn-libraries=DIR  Search for WNN libraries in DIR [[default=/usr/local/lib]]],
+[wnnlibdir="${withval}"], [wnnlibdir='/usr/local/lib'])
+	if test "X${with_libwnn}" = X-lwnn; then
+		WNNJLIB="-L${wnnlibdir} -lwnn"
+	elif test X"`echo ${with_libwnn} | grep '^/.*'`" != X ; then
+		WNNJLIB="${with_libwnn}"
+	else
+		WNNJLIB="${wnnlibdir}/libwnn.a"
+	fi
+	DEPWNNJLIB=""
+	HINSI_DATA="\$(JWNNWNNDIR)/hinsi.data"
+],
+[	WNNJLIB="\$(top_builddir)/Wnn/jlib/libwnn.la"
+	DEPWNNJLIB="\$(WNNJLIB)"
+	HINSI_DATA="\$(top_builddir)/Wnn/jd/hinsi.data"
+])
+AC_SUBST(WNNJLIB)
+AC_SUBST(DEPWNNJLIB)
+AC_SUBST(HINSI_DATA)
+
+AC_ARG_WITH(libcwnn,
+[  --with-libcwnn            use installed cWnn library [[default=no]]],
+[
+AC_ARG_WITH(cwnn-includes,
+[  --with-cwnn-includes=DIR  CWNN include files are in DIR],
+[cwnnincludedir="-I${withval}"], [cwnnincludedir=''])
+AC_ARG_WITH(cwnn-libraries,
+[  --with-cwnn-libraries=DIR Search for CWNN libraries in DIR [[default=/usr/local/lib]]],
+[cwnnlibdir="${withval}"], [cwnnlibdir='/usr/local/lib'])
+	if test "X${with_libcwnn}" = X-lcwnn; then
+		CWNNJLIB="-L${cwnnlibdir} -lcwnn"
+	elif test X"`echo ${with_libcwnn} | grep '^/.*'`" != X ; then
+		CWNNJLIB="${with_libcwnn}"
+	else
+		CWNNJLIB="${cwnnlibdir}/libcwnn.a"
+	fi
+	DEPCWNNJLIB=""
+	CHINSI_DATA="\$(CWNNWNNDIR)/cixing.data"
+	THINSI_DATA="\$(TWNNTDSRC)/cixing.data"
+],
+[	CWNNJLIB="\$(top_builddir)/cWnn/jlib/libcwnn.la"
+	DEPCWNNJLIB="\$(CWNNJLIB)"
+	CHINSI_DATA="\$(CWNNCDSRC)/cixing.data"
+	THINSI_DATA="\$(TWNNTDSRC)/cixing.data"
+])
+AC_SUBST(CWNNJLIB)
+AC_SUBST(DEPCWNNJLIB)
+AC_SUBST(CHINSI_DATA)
+AC_SUBST(THINSI_DATA)
+
+AC_ARG_WITH(libkwnn,
+[  --with-libkwnn            use installed kWnn library [[default=no]]],
+[
+AC_ARG_WITH(kwnn-includes,
+[  --with-kwnn-includes=DIR  KWNN include files are in DIR],
+[kwnnincludedir="-I${withval}"], [kwnnincludedir=''])
+AC_ARG_WITH(kwnn-libraries,
+[  --with-kwnn-libraries=DIR Search for KWNN libraries in DIR [[default=/usr/local/lib]]],
+[kwnnlibdir="${withval}"], [kwnnlibdir='/usr/local/lib'])
+	if test "X${with_libkwnn}" = X-lkwnn; then
+		KWNNJLIB="-L${kwnnlibdir} -lkwnn"
+	elif test X"`echo ${with_libkwnn} | grep '^/.*'`" != X ; then
+		KWNNJLIB="${with_libkwnn}"
+	else
+		KWNNJLIB="${kwnnlibdir}/libkwnn.a"
+	fi
+	DEPKWNNJLIB=""
+	KHINSI_DATA="\$(KWNNWNNDIR)/hinsi.data"
+],
+[	KWNNJLIB="\$(top_builddir)/kWnn/jlib/libkwnn.la"
+	DEPKWNNJLIB="\$(KWNNJLIB)"
+	KHINSI_DATA="\$(KWNNKDSRC)/hinsi.data"
+])
+AC_SUBST(KWNNJLIB)
+AC_SUBST(DEPKWNNJLIB)
+AC_SUBST(KHINSI_DATA)
+
+dnl
+dnl Build Options
+dnl
+
+AC_ARG_ENABLE(ipv6,
+[  --enable-ipv6           build and install IPv6 [[default=no]]],
+[case "${enableval}" in
+   yes) ipv6="-DINET6";;
+   no)  ipv6="" ;;
+   *)   AC_MSG_ERROR(bad value for --enable-ipv6) ;;
+esac], ipv6="")
+AC_SUBST(ipv6)
+
+AC_ARG_ENABLE(unsafe-path,
+[  --enable-unsafe-path    allow creating files in an arbitrary path [[default=no]]],
+[case "${enableval}" in
+   yes) unsafe_path=true;;
+   no)  unsafe_path=false;;
+   *)   AC_MSG_ERROR(bad value for --enable-unsafe-path) ;;
+esac], unsafe_path=false)
+AC_SUBST(unsafe_path)
+
+if test ${unsafe_path} = true; then
+	AC_DEFINE(WNN_ALLOW_UNSAFE_PATH, 1,
+		[Define to allow writing to other than JSERVERDIR.])
+fi
+
+dnl
+dnl Checks for cc and cpp.
+dnl
+AC_PROG_CC
+
+dnl System specific options
+dnl Now that we are using autoconf, CCOPTIONS should be nuked...
+dnl But please report if your system needs specific settings (CCOPTIONS etc.)
+case $host in
+*-*-linux*)
+    CCOPTIONS="-Dlinux -D_GNU_SOURCE -D_POSIX_SOURCE -D_BSD_SOURCE"
+    ;;
+*-*-sunos*)
+      if test $GCC = yes; then
+	CCOPTIONS="-Dsun -Dsparc"
+      else
+        CCOPTIONS=""
+      fi
+      ;;
+*-*-solaris2.*)
+    # Will 'solaris*' be OK?
+      if test $GCC = yes; then
+        CCOPTIONS="-Dsun -D`uname -p` -DSVR4 -DSYSV"
+      else
+        # TODO: need change for sparcv9 / x64 architecture ...
+        CCOPTIONS="-Xc -xF -xcg92 -Dsun -D`uname -p` -DSVR4 -DSYSV"
+      fi
+    ;;
+*-*-hpux*)
+    if test $GCC = yes; then
+        CCOPTIONS="-Dhpux -DSYSV"
+    else
+        CCOPTIONS="-Ae -Dhpux -DSYSV"
+    fi
+      ;;
+i[[34567]]86-pc-beos*)
+	CCOPTIONS="-DBEOS -D_POSIX_SOURCE -D_BSD_SOURCE"
+	;;
+powerpc-*-beos*)
+	CCOPTIONS="-DBEOS -D_POSIX_SOURCE -D_BSD_SOURCE"
+	;;
+*-*-aix*)
+    CCOPTIONS="-DSYSV"
+    ;;
+esac
+
+dnl Checking if we use gcc or not
+if test $debug = true; then
+    if test $GCC = yes; then
+      # FIXME: gcc -fstack-check doesn't work well on Linux/i386 ...
+      CDEBUGFLAGS=${CDEBUGFLAGS:-"-g2 -O2 -Wall"}
+    else
+      CDEBUGFLAGS=${CDEBUGFLAGS:-""}
+    fi
+    INSTPGMFLAGS=
+else
+    CDEBUGFLAGS=${CDEBUGFLAGS:-""}
+    INSTPGMFLAGS="-s"
+fi
+AC_SUBST(CCOPTIONS)
+AC_SUBST(CDEBUGFLAGS)
+AC_SUBST(INSTPGMFLAGS)
+
+echo "Set CDEBUGFLAGS and CCOPTIONS to following:"
+echo '  CDEBUGFLAGS="'"$CDEBUGFLAGS"'"'
+echo '    CCOPTIONS="'"$CCOPTIONS"'"'
+
+dnl 自動認識で決定されたくない場合はconfigure時に環境変数CPPを設定せよ。
+dnl この位置ならばまだシステム固有部分でCPPをオーバライドできるが、
+dnl 「CPP=${CPP:-"/usr/ccs/lib/cpp"}」のごとくユーザの意志を尊重した方が
+dnl よいと思われる。
+AC_PROG_CPP
+
+dnl Define cpp for text processing.
+AC_MSG_CHECKING([cpp for text processing])
+if test "$GCC" = "yes" -a "$CPP" = "$CC -E"; then
+  # Need checking your gcc accepts '-traditional-cpp' option?
+  FZK_PP=${FZK_PP:-"$CPP -traditional-cpp"}
+else
+  FZK_PP=${FZK_PP:-"$CPP"}
+fi
+AC_MSG_RESULT($FZK_PP)
+AC_SUBST(FZK_PP)
+
+dnl
+dnl Checks for programs.
+dnl
+dnl ### AC_PROG_YACC
+dnl ### AC_PROG_LEX
+AC_PROG_INSTALL
+AC_PROG_LN_S
+AC_PROG_MAKE_SET
+AC_PROG_LIBTOOL
+AC_SUBST(LIBTOOL_DEPS)
+
+dnl Checks for libraries.
+dnl ### dnl Replace `main' with a function in -lX11:
+dnl ### AC_CHECK_LIB(X11, main)
+dnl ### dnl Replace `main' with a function in -lcurses:
+dnl ### AC_CHECK_LIB(curses, main)
+
+AC_SEARCH_LIBS(crypt, crypt)
+AC_CHECK_LIB(socket, connect)
+AC_CHECK_LIB(bind, getservbyname)
+AC_SEARCH_LIBS(gethostbyname, nsl)
+dnl libutil only needed by uum w/openpty...
+dnl FIXME: deals with Linux that have both ptsname & openpty
+AC_CHECK_LIB(util, openpty)
+
+dnl
+dnl Checks for header files.
+dnl
+AC_PATH_X
+AC_HEADER_STDC
+AC_HEADER_SYS_WAIT
+AC_HEADER_TIME
+AC_CHECK_HEADERS(fcntl.h syslog.h unistd.h utmp.h utmpx.h \
+	sys/file.h sys/ioctl.h sys/time.h sys/types.h sys/param.h \
+	malloc.h strings.h memory.h \
+	curses.h ncurses.h sgtty.h term.h termio.h termios.h \
+	termcap.h sys/termio.h libutil.h\
+)
+
+dnl
+dnl Terminal library selection.
+dnl ported from vim6.1 via canuum (Canna 3.6p3) for uum.
+dnl FIXME: cross compilation
+dnl
+olibs="$LIBS"
+CNVFILE_SUBDIR=bsd
+AC_MSG_CHECKING(--with-term-libs argument)
+AC_ARG_WITH(tlib,
+[  --with-term-libs=-lLIB  terminal library to be used ],)
+if test -n "$with_term_libs"; then
+  AC_MSG_RESULT($with_term_libs)
+dnl  LIBS="$LIBS $with_term_libs"
+  TERMLIB=$with_term_libs
+else
+  AC_MSG_RESULT([automatic terminal library selection])
+  dnl  On HP-UX 10.10 termcap or termlib should be used instead of
+  dnl  curses, because curses is much slower.
+  dnl  Newer versions of ncurses are preferred over anything.
+  dnl  Older versions of ncurses have bugs, get a new one!
+  dnl  Digital Unix (OSF1) should use curses (Ronald Schild).
+  case "`uname -s 2>/dev/null`" in
+	OSF1)	tlibs="ncurses curses termlib termcap";;
+	*)	tlibs="ncurses termlib termcap curses";;
+  esac
+ for libname in $tlibs; do
+    AC_CHECK_LIB(${libname}, tgetent, [
+      dnl It's possible that a library is found but it doesn't work
+      dnl e.g., shared library that cannot be found.
+      dnl compile and run a test program to be sure
+      LIBS="${LIBS} -l${libname}"
+      AC_TRY_RUN([
+#ifdef HAVE_TERMCAP_H
+# include <termcap.h>
+#endif
+main() {char *s; s=(char *)tgoto("%p1%d", 0, 1); exit(0); }],
+	res="OK", res="FAIL", res="FAIL")
+      if test "$res" = "OK"; then
+	TERMLIB="${TERMLIB} -l${libname}"
+	dnl lname=`echo ${libname} | sed 'y/termcaplibnus/TERMCAPLIBNUS/'`
+	dnl AC_DEFINE_UNQUOTED(HAVE_${lname}, 1, [use ${libname} for terminal control])
+	dnl We need to define AH_TEMPLATE (if we really need this)
+	dnl ex. AH_TEMPLATE(HAVE_NCURSES, [use ncurses for terminal control])
+	break
+      fi
+      AC_MSG_RESULT($libname library is not usable)
+      ],)
+    LIBS=${olibs}
+  done
+fi
+if test "x$TERMLIB" != "x"; then
+  LIBS="${LIBS} ${TERMLIB}"
+  AC_MSG_CHECKING(whether we talk terminfo)
+  AC_TRY_RUN([
+#ifdef HAVE_TERMCAP_H
+# include <termcap.h>
+#endif
+main()
+{char *s; s=(char *)tgoto("%p1%d", 0, 1); exit(!strcmp(s==0 ? "" : s, "1")); }],
+	[ AC_MSG_RESULT([no -- we are in termcap land])
+	  CNVFILE_SUBDIR=bsd ],
+	[ AC_DEFINE(HAVE_TERMINFO, 1, [terminfo spoken here])
+	  AC_MSG_RESULT([yes -- terminfo spoken here])
+	  CNVFILE_SUBDIR=sysV ],
+	AC_MSG_ERROR(failed to compile test program.))
+else
+  AC_MSG_RESULT(none found)
+fi
+LIBS=${olibs}
+AC_SUBST(TERMLIB)
+AC_SUBST(CNVFILE_SUBDIR)
+
+dnl Checks for typedefs, structures, and compiler characteristics.
+dnl
+AC_TYPE_MODE_T
+AC_HEADER_TIME
+
+dnl AC_CHECK_TYPES(time_t,,
+dnl	AC_DEFINE(time_t, long, [Define missing time_t.]),
+dnl		[INCLUDES = time.h])
+AC_CHECK_TYPES(socklen_t,,
+		AC_DEFINE(socklen_t, int, [Define missing socklen_t.]), [
+#if HAVE_SYS_TYPES_H
+# include <sys/types.h>
+#endif
+#include <sys/socket.h>])
+
+AC_CHECK_MEMBERS([struct utmp.ut_user, struct utmp.ut_name, struct utmp.ut_id],,,[
+#include <sys/types.h>
+#if HAVE_UTMPX_H
+#  include <utmpx.h>
+#endif
+#if HAVE_UTMP_H
+#  include <utmp.h>
+#endif])
+
+dnl
+dnl Checks for symbol
+dnl
+
+dnl
+dnl Checks for library functions.
+dnl
+AC_PROG_GCC_TRADITIONAL
+
+dnl idea borrowed from EB Library http://www.sra.co.jp/people/m-kasahr/eb/
+AC_TYPE_SIGNAL
+if test "$ac_cv_type_signal" = void; then
+  AC_DEFINE(RETSIGTYPE_VOID, 1, [Define if the signal function returns void.])
+fi
+
+AC_FUNC_MEMCMP
+AC_CHECK_FUNCS(getpgid getpgrp setpgrp wait3)
+AC_FUNC_GETPGRP
+AC_FUNC_SETPGRP
+dnl FreeWnn do not use the 3rd parameter of wait3().
+dnl AC_FUNC_WAIT3
+
+dnl NOTE: FD_SET is defined as macro on many systems. But this check
+dnl	  will be done in Wnn/include/wnn_os.h , so don't care...
+AC_CHECK_FUNCS(random drand48 fchmod getopt killpg \
+	FD_SET \
+	gethostname select socket closesocket setsockopt send recv \
+	getdtablesize getrlimit syslog vsyslog setenv snprintf \
+	ptsname posix_openpt openpty pututxline pututline setsid)
+dnl for bcopy/index -> memcpy/strchr conversion (preparation):
+AC_CHECK_FUNCS(bcopy bzero bcmp index rindex \
+	memcpy memmove memset strchr strrchr)
+
+dnl Check fallback functions for jserver (should use AC_REPLACE_FUNCS?)
+JS_SUPPORTOBJS=
+AC_CHECK_FUNCS(mkdir vasprintf, ,
+[JS_SUPPORTOBJS="${JS_SUPPORTOBJS} ${ac_func}.o"])
+AC_SUBST(JS_SUPPORTOBJS)
+
+dnl delayed check for --enable-client-utmp
+if test $client = true; then
+  if test $client_utmp = auto; then
+    AC_EGREP_CPP(yes, [
+#if HAVE_SYS_PARAM_H
+# include <sys/param.h>
+#endif
+#if defined(BSD) && (BSD >= 199306) && !defined(HAVE_PUTUTXLINE) && !defined(HAVE_PUTUTLINE)
+   yes
+#endif
+    ], client_utmp=false, client_utmp=true)
+  fi
+
+  dnl for Debug
+  AC_MSG_CHECKING([whether we're using utmp with uum])
+  if test $client_utmp = true; then
+    dnl We need to look again if we introduce libspt check 
+    AC_DEFINE(USE_UTMP, 1, [Define to 1 if uum writes utmp entry])
+    AC_MSG_RESULT(yes)
+  else
+    AC_MSG_RESULT(no)
+  fi
+fi
+
+dnl delayed check for --enable-client-set[ug]id
+if test $client = true; then
+  guess_setuid=
+  guess_setgid=false
+  dnl Note: (HAVE_OPENPTY && defined(TIOCPTMGET)): for recent OpenBSD 
+  if test $client_utmp = true; then
+    AC_EGREP_CPP(yes, [
+#if HAVE_SYS_IOCTL_H
+# include <sys/ioctl.h>
+#endif
+#if HAVE_PTSNAME || (HAVE_OPENPTY && defined(TIOCPTMGET))
+# if HAVE_PUTUTLINE || HAVE_PUTUTXLINE
+  yes
+# endif
+#endif
+    ], [
+    case $host_os in
+    linux*)
+      # On recent Linux, it has both ptsname() and putut*line().
+      # But putut*line() will take effect only if prog is installed
+      # with set-gid to group utmp.
+      guess_setgid=true
+      UUMGROUP=${UUMGROUP:-utmp}
+      ;;
+    esac
+    guess_setuid=false
+    ], guess_setuid=true)
+  else
+    # $client_utmp != true
+    AC_EGREP_CPP(yes, [
+#if HAVE_SYS_IOCTL_H
+# include <sys/ioctl.h>
+#endif
+#if HAVE_PTSNAME || (HAVE_OPENPTY && defined(TIOCPTMGET))
+  yes
+#endif
+    ], guess_setuid=false, guess_setuid=true)
+  fi
+  # $client_utmp != true
+
+  if test $client_setuid = auto; then
+    client_setuid=$guess_setuid
+    # UUMOWNER is already set ...
+  fi
+  if test $client_setgid = auto; then
+    client_setgid=$guess_setgid
+    # UUMGROUP is already set (if it needs)
+  fi
+
+  dnl set install flag (at last)
+  if test $client_setuid = true; then
+    INSTUUMFLAGS="-o \$(UUMOWNER)"
+    if test $client_setgid = true; then
+      INSTUUMFLAGS="-m 6711 $INSTUUMFLAGS -g \$(UUMGROUP)"
+    else
+    # client_setuid && !client_setgid
+      INSTUUMFLAGS="-m 4711 $INSTUUMFLAGS"
+    fi
+  else
+    if test $client_setgid = true; then
+    # !client_setuid && client_setgid
+      INSTUUMFLAGS="-m 2711 -g \$(UUMGROUP)"
+    else
+    # !client_setuid && !client_setgid
+      INSTUUMFLAGS="-m 0711"
+    fi
+  fi
+
+  dnl for Debug
+  AC_MSG_CHECKING([whether we need to install uum as setuid program])
+  if test $client_setuid = true; then
+    AC_MSG_RESULT([yes, $UUMOWNER])
+  else
+    AC_MSG_RESULT(no)
+  fi
+  AC_MSG_CHECKING([whether we need to install uum as setgid program])
+  if test $client_setgid = true; then
+    AC_MSG_RESULT([yes, $UUMGROUP])
+  else
+    AC_MSG_RESULT(no)
+  fi
+else
+# $client != true
+  INSTUUMFLAGS="-m 4711 -o \$(UUMOWNER)"
+fi
+# $client = true
+
+AC_SUBST(INSTUUMFLAGS)
+AC_SUBST(UUMOWNER)
+AC_SUBST(UUMGROUP)
+
+dnl
+
+dnl
+dnl File Existence
+dnl Checking file at compile time may bring false result when cross-
+dnl compiling. So, one have to check generated config.h and edit it
+dnl if necessary after running configure.
+dnl
+dnl AC_CHECK_FILE(/dev/ptmx, AC_DEFINE(HAVE_DEV_PTMX, 1, [/dev/ptmx found]),)
+AC_CHECK_FILES(/dev/ptmx,,)
+
+
+dnl
+dnl FIXME: libspt support
+dnl for example:
+dnl
+dnl --with-libspt[=/path/to/libspt-config]
+dnl
+dnl LIBSPT_CFLAGS=`/path/to/libspt-config --cflags`
+dnl LIBSPT_LIBS=`/path/to/libspt-config --libs`
+dnl AC_SUBST(LIBSPT_CFLAGS)
+dnl AC_SUBST(LIBSPT_LIBS)
+dnl AC_DEFINE(HAVE_LIBSPT, 1, [Define if you have libspt support.])
+
+dnl
+dnl TCP Wrapper.
+dnl
+WRAPLIB=
+AC_MSG_CHECKING(whether to use libwrap)
+AC_ARG_WITH(libwrap,
+	[  --with-libwrap[[=DIR]]    Compile in libwrap (tcp_wrappers) support [[default=try to find libwrap]]],
+	[ case "$withval" in
+	  no)
+	    AC_MSG_RESULT(no)
+	    WRAP_TRY=no
+	    ;;
+	  yes)
+	    AC_MSG_RESULT(yes)
+	    WRAP_TRY=yes
+	    ;;
+	  *)
+	    AC_MSG_RESULT(yes)
+	    WRAP_TRY=yes
+	    if test -d "$withval"; then
+	      WRAPINCLUDES="-I$withval"
+	      if test -d $withval/include; then
+		WRAPINCLUDES="-I$withval/include $WRAPINCLUDES"
+	      fi
+	      WRAPLIB="-L$withval -lwrap"
+	      if test -d $withval/lib; then
+		WRAPLIB="-L$withval/lib $WRAPLIB"
+	      fi
+	    else
+	      WRAPINCLUDES="$withval"
+	    fi
+	    ;;
+	esac],
+	[AC_MSG_RESULT([try to find])
+	 WRAP_TRY=auto]
+)
+# Link test for libwrap
+if test "$WRAP_TRY" = yes -o "$WRAP_TRY" = auto; then
+    OLDCFLAGS="$CFLAGS"
+    CFLAGS="$WRAPINCLUDES $CFLAGS"
+    OLDLIBS="$LIBS"
+    WRAPLIB=${WRAPLIB:-"-lwrap"}
+    LIBS="$WRAPLIB $OLDLIBS"
+    AC_MSG_CHECKING([libwrap is working])
+    AC_TRY_LINK([ int allow_severity; int deny_severity; ],
+		[ hosts_access(); ],
+		[ AC_MSG_RESULT(yes)
+		  AC_DEFINE(HAVE_LIBWRAP, 1,
+		           [Define if you have libwrap (TCP wrapper) support.])
+		  AC_SUBST(WRAPLIB)],
+		[ AC_MSG_RESULT(no)
+		  if test "$WRAP_TRY" = yes; then
+		    AC_MSG_ERROR([Could not find libwrap. Please check config.log.])
+		  else
+		    # recover old flag / clear needless WRAPLIB and continue
+		    CFLAGS=$OLDCFLAGS
+		    WRAPLIB=
+		  fi] )
+    # only jserver needs libwrap, recover LIBS also
+    LIBS=$OLDLIBS
+fi
+
+
+dnl
+dnl Creating Makefiles.
+dnl
+# mkdir -p Contrib/dic/gerodic in case builddir != srcdir
+dir=Contrib/dic/gerodic
+if test ! -d $dir; then
+  echo "creating $dir ..."
+  $ac_install_sh -d $dir
+fi
+
+dnl
+dnl Generate Makefiles
+dnl
+
+dnl Generic
+
+makefiles_generic="makerule.mk Makefile"
+
+dnl Japanese
+
+if test "x${Wnn}" = "xWnn"; then
+  makefiles_wnn="Wnn/Makefile Wnn/conv/Makefile Wnn/include/Makefile \
+	Wnn/jd/Makefile Wnn/jd/rk/Makefile Wnn/jd/rk.vi/Makefile \
+	Wnn/jlib/Makefile Wnn/jlib.V3/Makefile Wnn/jserver/Makefile \
+	Wnn/jutil/Makefile Wnn/ld/Makefile Wnn/ld/rk/Makefile \
+	Wnn/romkan/Makefile Wnn/uum/Makefile \
+	Wnn/man/Makefile Wnn/man/2.env/Makefile Wnn/man/3.libwnn/Makefile \
+	Wnn/man/4.cmd/Makefile Wnn/man/6.jutil/Makefile \
+	Wnn/man/2.env/dic/Makefile Wnn/man/2.env/wnn/Makefile \
+	Wnn/man/3.libwnn/jl_lib/Makefile Wnn/man/3.libwnn/js_lib/Makefile \
+	Wnn/man/3.libwnn/misc_lib/Makefile Wnn/man/3.libwnn/rk_lib/Makefile"
+  makefiles_wnn_dic="Contrib/dic/gerodic/Makefile Wnn/pubdicplus/Makefile \
+	Wnn/wnncons/Makefile Wnn/wnncons/dic/Makefile"
+fi
+
+dnl Chinese and Taiwanese
+
+if test "x$cWnn" = "xcWnn"; then
+  makefiles_cwnn="cWnn/Makefile cWnn/conv/Makefile cWnn/etc/Makefile \
+	cWnn/cd/Makefile cWnn/cd/rk/Makefile \
+	cWnn/cd/rk_p/Makefile cWnn/cd/rk_z/Makefile \
+	cWnn/td/Makefile cWnn/td/rk/Makefile \
+	cWnn/td/rk_z/Makefile cWnn/td/rk_p/Makefile \
+	cWnn/include/Makefile cWnn/jlib/Makefile \
+	cWnn/jserver/Makefile cWnn/jutil/Makefile \
+	cWnn/man/Makefile cWnn/man/1.intro/Makefile cWnn/man/2.env/Makefile \
+	cWnn/man/4.cmd/Makefile cWnn/man/6.jutil/Makefile \
+	cWnn/romkan/Makefile cWnn/uum/Makefile"
+  makefiles_cwnn_dic="cWnn/cdic/Makefile cWnn/tdic/Makefile"
+fi
+
+dnl Korean
+
+if test "x$kWnn" = "xkWnn"; then
+  makefiles_kwnn="kWnn/Makefile kWnn/conv/Makefile kWnn/etc/Makefile \
+	kWnn/include/Makefile kWnn/jlib/Makefile kWnn/jutil/Makefile \
+	kWnn/jserver/Makefile kWnn/kd/Makefile kWnn/kd/rk/Makefile \
+	kWnn/romkan/Makefile kWnn/uum/Makefile"
+  makefiles_kwnn_dic="kWnn/kdic/Makefile"
+fi
+
+AC_OUTPUT(${makefiles_generic} \
+	${makefiles_wnn} ${makefiles_wnn_dic} \
+	${makefiles_cwnn} ${makefiles_cwnn_dic} \
+	${makefiles_kwnn} ${makefiles_kwnn_dic})

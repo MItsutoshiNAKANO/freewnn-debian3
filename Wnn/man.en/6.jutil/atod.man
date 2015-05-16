@@ -1,0 +1,117 @@
+.\"
+.\"   $Id: atod.man,v 1.1 2001/06/18 09:09:49 ura Exp $
+.\"
+.\"
+.\" FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+.\" This file is part of FreeWnn.
+.\" 
+.\" Copyright Kyoto University Research Institute for Mathematical Sciences
+.\"                 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+.\" Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright FreeWnn Project 1999, 2000, 2001
+.\" 
+.\" Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+.\" 
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\" 
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\" 
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software
+.\" Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+.\"
+.TH ATOD \  "30 April 2001" 
+.SH NAME
+.sv 1
+.nf
+.ta 0.1i 2i
+atod	EUC Text to Binary Dictionary Converter
+.fi
+.SH SYNOPSIS
+.sv 1
+.nf
+.ta 0.1i 3i 
+   atod [-s \fInumber_of_word_entries\fR] [-R] [-S] [-U] [-r] [-N] [-n]
+        [-P \fIpassword_file\fR] [-p \fIfrequency_password_file\fR]
+        <\fIbinary_dictionary\fR>
+.fi
+.SH DESCRIPTION
+.HP 0
+.IP
+atod converts an appropriately formatted euc-encoded dictionary text
+from standard input to the binary dictionary format used by wnn.  The
+default EUC encoding is UJIS.  To use other euc encodings, you must
+set the environment variable CSWIDTH, as described below:
+
+.br
+.br
+CSWIDTH=b1[:c1][,b2[:c2][,b3[:c3]]]
+.br
+.br
+"b1-b3" are the number of bytes of the code-sets (except SS2 and SS3).
+.br
+"c1-c3" are the number of columns of the code-sets.
+.br
+"b1" and "c1"  are for code-set 1.
+.br
+"b2" and "c2"  are for code-set 2.
+.br
+"b3" and "c3"  are for code-set 3.
+.br
+
+The value of CSWIDTH for UJIS is 2,1,2.
+
+"\fB\-s\fR" specifies the amount of memory to be allocated.  This only
+needs to be set if atod exits with an error-message saying that it
+does not have enough memory.   In that case rerun it with  more
+memory.
+
+atod accepts the following options:
+.TP 8
+\fB\-s\fR \fIno_of_entries\fR
+This should be a number slightly larger than the number of entries in
+the dictionary.  The default is 70000.
+.TP 8
+\fB\-R\fR
+Convert the dictionary into a reversible format. (default)
+.TP 8
+\fB\-S\fR
+Convert the dictionary into a fixed format.
+.TP 8
+\fB\-U\fR
+Convert the dictionary into an updatable format.
+.TP 8
+\fB\-r\fR
+Reverse the pronunciation and kanji in the EUC dictionary.
+.TP 8
+\fB\-P\fR  \fIpassword_fileq \fR 
+Specify the password file for the dictionary.
+.TP 8
+\fB\-p\fR \fIfrequency_password_file\fR
+Specify the password file for the frequency file.
+.TP 8
+\fB\-N\fR
+Set the password of the dictionary to "*".
+.TP 8
+\fB\-n\fR
+Set the password of the frequency file to "*".
+.SH FILES
+.HP 0
+.IP
+atod is not normally installed into /usr/local/bin or /usr/bin.
+Instead it can be found at:
+.br
+.PD 0
+.B	/usr/local/bin/Wnn4/atod (default)
+.PD
+.SH "SEE ALSO"
+.sv 1\fR
+.nf
+jserverrc(4)

@@ -1,0 +1,108 @@
+.\"
+.\"   $Id: param_get.man,v 1.3 2001/06/14 18:08:34 ura Exp $
+.\"
+.\"
+.\" FreeWnn is a network-extensible Kana-to-Kanji conversion system.
+.\" This file is part of FreeWnn.
+.\" 
+.\" Copyright Kyoto University Research Institute for Mathematical Sciences
+.\"                 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
+.\" Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
+.\" Copyright FreeWnn Project 1999, 2000
+.\" 
+.\" Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+.\" 
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\" 
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\" 
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software
+.\" Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+.\"
+.TH JS_PARAM_GET \  "30 September 1991"
+.SH 名称
+.sv 1
+.nf
+.ta 0.1i 2i
+js_param_get()		変換パラメータを取り出す。
+js_param_set()		変換パラメータを設定する。
+.fi
+.SH 形式
+.sv 1
+.nf
+.ta 0.1i 3i
+#include "jslib.h"
+
+int
+js_param_get(env,para)
+struct wnn_env *env;	/* 環境 */
+struct wnn_param *para;	/* パラメータ */
+
+int
+js_param_set(env,para)
+struct wnn_env *env;	/* 環境 */
+struct wnn_param *para;	/* パラメータ */
+
+struct wnn_param {
+.ta 0.3i 0.8i 1.3i
+		int     n;      /* Ｎ(大)文節解析のＮ */
+		int     nsho;   /* 大文節中の小文節の最大数 */
+		int     p1;     /* 幹語の頻度のパラメータ */
+		int     p2;     /* 小文節長のパラメータ */
+		int     p3;     /* 幹語長のパラメータ */
+		int     p4;     /* 今使ったよビットのパラメータ */
+		int     p5;     /* 辞書のパラメータ */
+		int     p6;     /* 小文節の評価値のパラメータ */
+		int     p7;     /* 大文節長のパラメータ */
+		int     p8;     /* 小文節数のパラメータ */
+		int     p9;     /* 疑似品詞 数字の頻度 */
+		int     p10;    /* 疑似品詞 カナの頻度 */
+		int     p11;    /*疑似品詞 英数の頻度*/
+ 		int     p12;    /*疑似品詞 記号の頻度*/
+ 		int     p13;    /*疑似品詞 閉括弧の頻度*/
+ 		int     p14;    /*疑似品詞 付属語の頻度*/	
+ 		int     p15;    /*疑似品詞 開括弧の頻度*/
+};
+.fi
+.SH 機能
+.HP 0
+.IP
+js_param_get は、env で示される環境の変換パラメータを取り出す。
+
+js_param_set は、env で示される環境の変換パラメータ para に設定する。
+
+.nf
+.ta 0.1i 1.7i
+	<小文節の評価値> = 	p1 * <頻度> +
+			   	p2 * <小文節長> +
+			   	p3 * <自立語長さ> +
+			   	p4 * <今使ったよBIT> +
+			   	p5 * <辞書プライオリティ>
+
+	<大文節の評価値> = 	p6 * <小文節の評価値の合計> / <小文節数> +
+			   	p7 * <大文節長> +
+			   	p8 * <小文節数> +
+
+	で評価値を求め、変換候補の順位を決定する。
+
+	n, nsho は 1 以上の整数でなければならない。
+	p1, p2, p3, p4, p5, p6, p7, p8, p9,...,p15 は任意の整数である。
+.fi
+.SH リターンバリュー
+.sv 1
+.nf
+正常終了時には 0 を返す。
+異常終了時には、-1 を返す。
+.fi
+
+
+
+

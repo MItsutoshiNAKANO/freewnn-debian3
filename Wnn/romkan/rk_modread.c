@@ -1,5 +1,5 @@
 /*
- *  $Id: rk_modread.c,v 1.9 2005/04/10 15:26:38 aonoto Exp $
+ *  $Id: rk_modread.c,v 1.10 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -60,20 +60,42 @@
  /* マクロLIBDIRの定義（のためだけ）。コンパイル時は、ヘッダファイルの
     サーチパスに、Wnnのインクルードファイルのありかを設定しておくこと。 */
 #endif
+#include "jslib.h"
 
 #define Terminator 0            /* intの列（naibu[]）の終止コード */
 
-extern char *chrcat (), *strend (), *ename ();
+extern char *chrcat FRWNN_PARAMS((char*,char)),
+  *strend FRWNN_PARAMS((char*)),
+  *ename FRWNN_PARAMS((char*));
 extern void romkan_clear ();
 char *modhyopath;
 
-static void cond_evl (), mystrcpy (), rd_bcksla (), rd_ctrl (), hyouse (), look_choose ();
+static void cond_evl FRWNN_PARAMS((char*)),
+  mystrcpy FRWNN_PARAMS((char*,char*)),
+  rd_bcksla FRWNN_PARAMS((register FILE*,char**)),
+  rd_ctrl FRWNN_PARAMS((register FILE*,char**)),
+  hyouse FRWNN_PARAMS((int)),
+  look_choose FRWNN_PARAMS((int**,int));
 void choosehyo ();
-static int mystrcmp (), read1tm (), mod_evl (), fnmsrc_tourk (), dspnamsrc_tourk (),
-scan1tm (), modsrc_tourk (), chk_get_int (), pathsrc_tourk (), modnamchk (), ctov (), look_cond (), evlcond (), chkchar_getc ();
-static char codeeval ();
-extern void ERRMOD (), ERMOPN (), BUGreport ();
-extern int filnamchk ();
+static int mystrcmp FRWNN_PARAMS((char*,char*)),
+  read1tm FRWNN_PARAMS((char**,int)),
+  mod_evl FRWNN_PARAMS((char*)),
+  fnmsrc_tourk FRWNN_PARAMS((char*)),
+  dspnamsrc_tourk FRWNN_PARAMS((char*)),
+  scan1tm FRWNN_PARAMS((char**,char*,int)),
+  modsrc_tourk FRWNN_PARAMS((char*,int)),
+  chk_get_int FRWNN_PARAMS((char*,unsigned int*,modetyp)),
+  pathsrc_tourk FRWNN_PARAMS((char*)),
+  modnamchk FRWNN_PARAMS((char*)),
+  ctov FRWNN_PARAMS((char)),
+  look_cond FRWNN_PARAMS((int**,int)),
+  evlcond FRWNN_PARAMS((int**)),
+  chkchar_getc FRWNN_PARAMS((FILE*));
+static char codeeval FRWNN_PARAMS((register char**));
+extern void ERRMOD FRWNN_PARAMS((unsigned int)),
+  ERMOPN FRWNN_PARAMS((unsigned int)),
+  BUGreport FRWNN_PARAMS((int));
+extern int filnamchk FRWNN_PARAMS((char*));
 
 struct kwdpair
 {
@@ -122,6 +144,7 @@ kwdsrc (hyo, wd)
       return (i);
   ERRMOD (9);
  /*NOTREACHED*/
+  return 0;
 }
 
  /** モード表の読み込み */

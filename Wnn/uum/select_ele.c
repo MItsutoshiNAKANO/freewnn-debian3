@@ -1,5 +1,5 @@
 /*
- *  $Id: select_ele.c,v 1.5 2012/06/12 19:18:33 aonoto Exp $
+ *  $Id: select_ele.c,v 1.6 2013/09/02 11:01:40 itisango Exp $
  */
 
 /*
@@ -80,10 +80,10 @@ static int state;               /* choose whether to number all or not */
                                 /* 1: all */
 static int kosuu;               /* kosuu of elements */
 
-static void display_all (), display ();
-static void reverse ();
-static void clear_it ();
-static int find_cc (), set_kouho (), change_decimal (), findcp ();
+static void display_all (int, int), display (int, int);
+static void reverse (int, int);
+static void clear_it (int, int);
+static int find_cc (int), set_kouho (void), change_decimal (int), findcp (int, int);
 
 int
 select_one_element (c, kosuu1, init, msg1, msg_len1, state1, key_tbl)
@@ -113,7 +113,7 @@ select_one_element (c, kosuu1, init, msg1, msg_len1, state1, key_tbl)
   msg_len = msg_len1;
   state = state1;
 
-  dd_size = set_kouho (kosuu);
+  dd_size = set_kouho ();  /* dd_size = set_kouho (kosuu);  */
   cc = find_cc (init);
 
   mm = init;

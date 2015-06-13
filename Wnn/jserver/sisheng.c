@@ -1,5 +1,5 @@
 /*
- *  $Id: sisheng.c,v 1.4 2002/07/14 04:26:57 hiroo Exp $
+ *  $Id: sisheng.c,v 1.5 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -49,9 +49,9 @@
 #include "cplib.h"
 #include "de_header.h"
 
-#define isfuyuanyin(c)  ((c=='m')||(c=='n')||(c=='g'))
+#define isfuyuanyin(c)  (((c)=='m')||((c)=='n')||((c)=='g'))
 #define isyuanyin(c)  \
-        ((c=='a')||(c=='e')||(c=='i')||(c=='o')||(c=='u')||(c=='v'))
+        (((c)=='a')||((c)=='e')||((c)=='i')||((c)=='o')||((c)=='u')||((c)=='v'))
 
 /* yincod_flt_sisheng(): filter sisheng of Yincode strings */
 

@@ -1,5 +1,5 @@
 /*
- *  $Id: dic_atojis.c,v 1.4 2002/07/14 04:26:57 hiroo Exp $
+ *  $Id: dic_atojis.c,v 1.5 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -46,6 +46,8 @@
 #include "jdata.h"
 #include "wnn_os.h"
 #include "wnn_string.h"
+
+#include "etc.h"
 
 static int keta_4;
 
@@ -417,8 +419,6 @@ Get_kanji (kptr, oy, oyl, kanji, yomi, comment)
      w_char *kanji, *comment, *yomi, *oy;
      int oyl;
 {
-  extern void get_kanji_str ();
-
   get_kanji_str (kptr, kanji, yomi, comment);
   if (kanji)
     {

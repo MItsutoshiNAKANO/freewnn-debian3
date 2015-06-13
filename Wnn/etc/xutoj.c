@@ -1,5 +1,5 @@
 /*
- *  $Id: xutoj.c,v 1.7 2002/03/24 01:25:13 hiroo Exp $
+ *  $Id: xutoj.c,v 1.8 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -42,9 +42,15 @@
 #  include <strings.h>
 #endif /* STDC_HEADERS */
 
+#if !STDC_HEADERS
+extern char *getenv (const char *);
+#endif	/* !STDC_HEADERS */
+
 #include "commonhd.h"
 #include "wnn_config.h"
 #include "wnn_os.h"
+
+#include "etc.h"
 
 #define ECNS_IS_UCNS 1          /* The trust CNS is CNS11643 based on ISO2022,
                                    but the CNS is binded on EUC */
@@ -472,11 +478,10 @@ static cswidth_name_struct cs_width_name[] = {
 
 char *
 get_cswidth_name (lang)
-     register char *lang;
+     const char *lang;
 {
   register cswidth_name_struct *p;
   register char *name;
-  extern char *getenv ();
 
   if (!lang || !*lang)
     {
@@ -852,7 +857,7 @@ jis_change_mode (mode, new_mode)
 #ifdef  JIS7
 /*      内部 U-jis を 7bit jis コードに変換します
         文字列の長さを返します                  */
-extern int
+int
 iujis_to_jis (jis, iujis, iusiz)
      unsigned char *jis;        /*      jisコードになったものをおくbuf  */
      w_char *iujis;             /*      iujisコードのものをおいてくるbuf */
@@ -894,7 +899,7 @@ iujis_to_jis (jis, iujis, iusiz)
 
 /*      内部 U-jis を 8bit jis コードに変換します
         文字列の長さを返します                  */
-extern int
+int
 iujis_to_jis8 (jis, iujis, iusiz)
      unsigned char *jis;        /*      jisコードになったものをおくbuf  */
      w_char *iujis;             /*      iujisコードのものをおいてくるbuf */
@@ -1126,7 +1131,7 @@ jis_to_eujis (eujis, jis, jsiz)
 
 /*      外部 U-jis を S-jis コードに変換します
         文字列の長さを返します                  */
-extern int
+int
 eujis_to_sjis (sjis, eujis, eusiz)
      unsigned char *sjis;       /*      sjisコードになったものをおくbuf */
      unsigned char *eujis;      /*      eujisコードのものをおいてくるbuf */
@@ -2220,7 +2225,6 @@ putks (x)
 }
 
 static int oks_mode = ASCII;    /* 出力時のKSCコードのモード */
-extern int euksc_to_iuksc ();
 
 static void
 ksc_change_mode (mode, new_mode)
@@ -2283,7 +2287,7 @@ iuksc_to_ksc (ksc, iuksc, iusiz)
 
 
 /*      外部 U-ksc を ksc コードに変換します    */
-extern int
+int
 euksc_to_ksc (ksc, euksc, eusiz)
      unsigned char *ksc, *euksc;
      int eusiz;
@@ -2341,7 +2345,7 @@ euksc_to_ksc (ksc, euksc, eusiz)
 }
 
 /*      内部 U-ksc を 外部 U-ksc コードに変換します     */
-extern int
+int
 iuksc_to_euksc (euksc, iuksc, iusiz)
      unsigned char *euksc;
      w_char *iuksc;

@@ -1,5 +1,5 @@
 /*
- *  $Id: atof.c,v 1.7 2002/07/14 04:26:57 hiroo Exp $
+ *  $Id: atof.c,v 1.8 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -36,7 +36,7 @@
   */
 
 #ifndef lint
-static char *rcs_id = "$Id: atof.c,v 1.7 2002/07/14 04:26:57 hiroo Exp $";
+static char *rcs_id = "$Id: atof.c,v 1.8 2013/09/02 11:01:39 itisango Exp $";
 #endif /* lint */
 
 /*
@@ -130,6 +130,9 @@ static char *rcs_id = "$Id: atof.c,v 1.7 2002/07/14 04:26:57 hiroo Exp $";
 #include "jslib.h"
 #include "wnn_os.h"
 #include "wnn_string.h"
+
+#include "etc.h"
+
 
 #define FUZOKUGO_LEN 8
 #define OUT_INT_KOSUU 20
@@ -249,18 +252,44 @@ struct vector syuutanv[SYUUTANV_KOSUU];
 #define SIZE 1024
 char buf[SIZE];
 
-static int find_id (), bsch (), tcp (),
+static int tcp FRWNN_PARAMS((char *));
+static int find_id FRWNN_PARAMS((char *));
+static int bsch FRWNN_PARAMS((char *, int, int));
+static int find_id_name FRWNN_PARAMS((int));
+static int search_attr FRWNN_PARAMS((char *));
+static int is_same_jiritugov FRWNN_PARAMS((int));
+
 #ifndef NO_FZK
-  count_yomi (), count_fz_num (), count_same_yomi (),
+static int count_yomi FRWNN_PARAMS((void));
+static int count_fz_num FRWNN_PARAMS((void));
+static int count_same_yomi FRWNN_PARAMS((int));
+static void sort FRWNN_PARAMS((void));
+static void check_fuzokugo FRWNN_PARAMS((void));
+static void make_fuzokugo_table FRWNN_PARAMS((void));
 #endif
-  find_id_name (), search_attr (), is_same_jiritugov ();
-static void init (), read_attr (), read_id (), read_jiritugov (),
-#ifndef NO_FZK
-  make_fuzokugo_table (), check_fuzokugo (), sort (),
-#endif
-  read_syuutanv (), set_tc_from_name (), manipulate_tc (),
-print_out (), set_heap (), get_id_part (), check_attrs (), read_a_vector (), set_attribute (), bit_or (), set_id (), pre_clear_jiritugo_v (), usage (), sort_id ();
-extern int wnn_find_hinsi_by_name (), wnn_loadhinsi (), create_file_header ();
+
+static void set_heap FRWNN_PARAMS((char **, char *));
+static void set_tc_from_name FRWNN_PARAMS((void));
+static void get_id_part FRWNN_PARAMS((char *, char *));
+static void sort_id FRWNN_PARAMS((void));
+static void usage FRWNN_PARAMS((void));
+static void read_attr FRWNN_PARAMS((void));
+static void read_id FRWNN_PARAMS((void));
+static void read_jiritugov FRWNN_PARAMS((void));
+static void read_syuutanv FRWNN_PARAMS((void));
+static void set_tc_from_name FRWNN_PARAMS((void));
+static void print_out FRWNN_PARAMS((void));
+static void manipulate_tc FRWNN_PARAMS((void));
+static void manipulate_tc_vector FRWNN_PARAMS((struct vector *));
+static void check_attrs FRWNN_PARAMS((int, char *));
+static void read_a_vector FRWNN_PARAMS((struct vector *));
+static void set_attribute FRWNN_PARAMS((char *c, struct vector *));
+static void bit_or FRWNN_PARAMS((int [], int []));
+static void set_id FRWNN_PARAMS((int, int));
+static void pre_clear_jiritugo_v FRWNN_PARAMS((int));
+static void init FRWNN_PARAMS((int, char **));
+
+extern int wnn_loadhinsi (), create_file_header ();
 
 static void
 error_format (s, d1, d2, d3, d4, d5)

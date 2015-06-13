@@ -1,5 +1,5 @@
 /*
- *  $Id: prologue.c,v 1.6 2002/05/12 22:51:17 hiroo Exp $
+ *  $Id: prologue.c,v 1.7 2013/09/02 11:01:40 itisango Exp $
  */
 
 /*
@@ -63,6 +63,8 @@
 #include "sheader.h"
 #include "wnn_os.h"
 
+#include "romkan.h"
+#include "conv.h"
 
 /** romkan のイニシャライズ */
 int
@@ -222,32 +224,35 @@ init_uum ()
   return (0);
 }
 
-static void
+static int
 puts1 (s)
-     char *s;
+     const char *s;
 {
-  printf ("%s\n", s);
+  int ans = printf ("%s\n", s);
   flush ();
+  return ans;
 }
 
-static void
+static int
 puts2 (s)
-     char *s;
+     const char *s;
 {
+  int ans;
   throw_c (0);
   clr_line ();
-  printf ("%s", s);
+  ans = printf ("%s", s);
   flush ();
+  return ans;
 }
 
 static int
 yes_or_no_init (s)
-     char *s;
+     const char *s;
 {
   for (;;)
     {
       char x[256];
-      printf (s);
+      printf ("%s", s);
       flush ();
       if (fgets (x, 256, stdin) == NULL)
         {
@@ -269,8 +274,8 @@ connect_jserver (first)
   char environment[PATHNAMELEN];
   WnnEnv *p;
   WnnEnv *save_cur_normal_env = NULL, *save_cur_reverse_env = NULL;
-  int (*yes_no_func) ();
-  void (*puts_func) ();
+  int (*yes_no_func) (const char *);
+  int (*puts_func) (const char *);
 
   if (first == 0)
     {

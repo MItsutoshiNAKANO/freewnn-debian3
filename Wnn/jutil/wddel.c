@@ -1,5 +1,5 @@
 /*
- *  $Id: wddel.c,v 1.9 2012/06/12 19:18:32 aonoto Exp $
+ *  $Id: wddel.c,v 1.10 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -34,7 +34,7 @@
  */
 
 #ifndef lint
-static char *rcs_id = "$Id: wddel.c,v 1.9 2012/06/12 19:18:32 aonoto Exp $";
+static char *rcs_id = "$Id: wddel.c,v 1.10 2013/09/02 11:01:39 itisango Exp $";
 #endif /* lint */
 
 #ifdef HAVE_CONFIG_H
@@ -48,10 +48,12 @@ static char *rcs_id = "$Id: wddel.c,v 1.9 2012/06/12 19:18:32 aonoto Exp $";
 #  if HAVE_MALLOC_H
 #    include <malloc.h>
 #  endif
+extern char *getenv ();
 #endif /* STDC_HEADERS */
+
 #if HAVE_UNISTD_H
 #  include <unistd.h>
-#endif
+#endif	/* HAVE_UNISTD_H  */
 
 #include "commonhd.h"
 #include "wnn_config.h"
@@ -59,6 +61,8 @@ static char *rcs_id = "$Id: wddel.c,v 1.9 2012/06/12 19:18:32 aonoto Exp $";
 #include "jslib.h"
 #include "wnn_string.h"
 #include "wnn_os.h"
+
+#include "etc.h"
 
 #define WORD_DELETE 1
 #define COMMENT_SET 2
@@ -105,9 +109,6 @@ main (argc, argv)
      int argc;
      char **argv;
 {
-  extern char *getenv ();
-  extern int optind;
-  extern char *optarg;
   struct wnn_dic_info *info;
   int c;
   int k;
@@ -115,8 +116,6 @@ main (argc, argv)
   int sno;
   char s[LINE_SIZE];
   char *cswidth_name;
-  extern char *get_cswidth_name ();
-  extern void set_cswidth ();
 
   if (getenv (WNN_DEF_SERVER_ENV))
     {
@@ -128,8 +127,10 @@ main (argc, argv)
     }
   server_n = def_server;
 
-  if (cswidth_name = get_cswidth_name (WNN_DEFAULT_LANG))
-    set_cswidth (create_cswidth (cswidth_name));
+  if ((cswidth_name = get_cswidth_name (WNN_DEFAULT_LANG)) != NULL)
+    {
+      set_cswidth (create_cswidth (cswidth_name));
+    }
   while ((c = getopt (argc, argv, "D:n:d:CHEL")) != EOF)
     {
       switch (c)

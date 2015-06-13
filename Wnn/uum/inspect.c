@@ -1,5 +1,5 @@
 /*
- *  $Id: inspect.c,v 1.7 2012/06/16 10:02:04 aonoto Exp $
+ *  $Id: inspect.c,v 1.8 2013/09/02 11:01:40 itisango Exp $
  */
 
 /*
@@ -181,7 +181,7 @@ make_string_for_ke (bun_no, buf, buf_size)
   return (0);
 }
 
-static void sakujo_kouho1 ();
+static void sakujo_kouho1 (int);
 
 int
 sakujo_kouho ()

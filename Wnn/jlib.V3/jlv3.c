@@ -1,5 +1,5 @@
 /*
- *  $Id: jlv3.c,v 1.9 2002/07/14 04:26:57 hiroo Exp $
+ *  $Id: jlv3.c,v 1.11 2015/05/10 01:39:28 itisango Exp $
  */
 
 /*
@@ -10,7 +10,7 @@
  *                 1987, 1988, 1989, 1990, 1991, 1992
  * Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
  * Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
- * Copyright FreeWnn Project 1999, 2000, 2002
+ * Copyright FreeWnn Project 1999, 2000, 2002, 2015
  *
  * Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
  *
@@ -152,8 +152,8 @@ jd_close (void)
   return (0);
 }
 
-int jd_begin ();
-static int henkan_rcv ();
+int jd_begin FRWNN_PARAMS((w_char *, int));
+static int henkan_rcv FRWNN_PARAMS((int, w_char *, int));
 
 /**     jd_reconv       **/
 int
@@ -457,7 +457,7 @@ jd_wdel (ser_no, yomi)
   JD_WNN_DEAD return (jl_word_delete (buf, current_ud, ser_no));
 }
 
-static int oldh_to_newh ();
+static int oldh_to_newh FRWNN_PARAMS((int, unsigned short **));
 
 /**     jd_wreg         **/
 int
@@ -487,7 +487,7 @@ jd_wreg (kanji, yomi, bunpo)
 #endif
 }
 
-static int newh_to_oldh ();
+static int newh_to_oldh FRWNN_PARAMS((unsigned short));
 
 /**     jd_wsch         **/
 int

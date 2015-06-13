@@ -1,5 +1,5 @@
 /*
- *  $Id: cvt_key.c,v 1.4 2002/05/12 22:47:03 hiroo Exp $
+ *  $Id: cvt_key.c,v 1.5 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -215,7 +215,7 @@ convert_key (inkey, conv_tbl, tbl_cnt, matching_flg, in_buf)
  /** コード変換を伴うキー入力関数 */
 int
 keyin1 (get_ch, in_buf)
-     int (*get_ch) ();          /* getchar() と同様の関数 */
+     int (*get_ch) (void);          /* getchar() と同様の関数 */
      char *in_buf;
 {
   int ret;

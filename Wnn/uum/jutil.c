@@ -1,5 +1,5 @@
 /*
- *  $Id: jutil.c,v 1.4 2002/03/30 01:45:41 hiroo Exp $
+ *  $Id: jutil.c,v 1.5 2013/09/02 11:01:40 itisango Exp $
  */
 
 /*
@@ -371,16 +371,18 @@ select_one_dict1 (tbl)
   return (select_line_element (buf_ptr, dic_list_size, 0, "", 0, 0, main_table[tbl]));
 }
 
-void
+int
 print_msg1 (X)
      char *X;
 {
+  int ans;
   push_cursor ();
   throw_c (0);
   clr_line ();
-  printf (X);
+  ans = printf ("%s", X);
   flush ();
   pop_cursor ();
+  return ans;
 }
 
 void
@@ -544,12 +546,12 @@ sh_fname (s, n, d)              /* fileÌ¾ s¤¬Ä¹¤¤»þ¤Ë¡¢¤½¤ÎºÇ¸å¤ÎÊý¤ò¼è¤Ã¤Æ nÊ¸»
 
 int
 yes_or_no (string)
-     char *string;
+     const char *string;
 {
   int x;
   throw_c (0);
   clr_line ();
-  printf (string);
+  printf ("%s", string);
   flush ();
   for (;;)
     {

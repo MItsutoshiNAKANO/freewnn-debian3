@@ -1,5 +1,5 @@
 /*
- *  $Id: atorev.c,v 1.7 2004/07/19 18:24:26 hiroo Exp $
+ *  $Id: atorev.c,v 1.8 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -53,12 +53,19 @@
 #include "jdata.h"
 #include "wnn_string.h"
 
+#include "jutil.h"
+
 extern int kanjicount;
 extern struct JT jt;
 
-static void r_alloc (), make_ri2 (), make_ri1 (), set_rpter1 ();
+static void set_rpter1 ();
+static void r_alloc FRWNN_PARAMS((void));
+static void make_ri2 FRWNN_PARAMS((void));
+static void make_ri1 FRWNN_PARAMS((int));
+static void set_rpter1 FRWNN_PARAMS((int));
+
 extern int sort_func_je ();
-extern void sort_if_not_sorted (), uniq_je (), output_dic_data (), sort_kanji (), upd_kanjicount ();
+extern void sort_kanji ();
 
 struct je **ptmp;
 

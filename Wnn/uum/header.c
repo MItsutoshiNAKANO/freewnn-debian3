@@ -1,5 +1,5 @@
 /*
- *  $Id: header.c,v 1.6 2006/03/04 19:01:46 aonoto Exp $
+ *  $Id: header.c,v 1.7 2013/09/02 11:01:40 itisango Exp $
  */
 
 /*
@@ -37,6 +37,8 @@
 #include "sdefine.h"
 #include "sheader.h"
 #include "buffer.h"
+
+#include "etc.h"
 
 int not_redraw;
 w_char *input_buffer;

@@ -1,5 +1,5 @@
 /*
- *  $Id: gethinsi.c,v 1.6 2002/03/24 01:25:13 hiroo Exp $
+ *  $Id: gethinsi.c,v 1.7 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -48,6 +48,7 @@
 #include "hinsi_file.h"
 #include "wnn_os.h"
 #include "wnn_string.h"
+#include "etc.h"
 
     /*
        wnn_loadhinsi(NULL)                       品詞の情報を読み込む 
@@ -89,8 +90,7 @@
 extern int wnn_errorno;
 
 #ifdef JSERVER
-/* must be #include "de_header.h" ? */
-extern void log_debug ();
+#include "de_header.h"
 #define error1 log_debug
 #endif
 
@@ -298,7 +298,6 @@ wnn_loadhinsi (fname)
   int h;
   unsigned short *c;
   char tmp[256];
-  extern int wnn_find_hinsi_by_name ();
 
   if (fname == NULL)
     {

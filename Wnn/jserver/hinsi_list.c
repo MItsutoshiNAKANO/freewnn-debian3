@@ -1,5 +1,5 @@
 /*
- *  $Id: hinsi_list.c,v 1.5 2002/05/12 22:51:16 hiroo Exp $
+ *  $Id: hinsi_list.c,v 1.6 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -49,7 +49,8 @@
 #include "hinsi_file.h"
 #include "jdata.h"
 
-static int Strtime (), get_a_word ();
+static int Strtime (w_char *, int, w_char);
+static int get_a_word (w_char *, w_char **, int *);
 
 void
 make_hinsi_list (jtl)
@@ -181,8 +182,10 @@ has_dict (n, m, w)
       if (Strcmp (n[m].name, w) == 0)
         for (j = n[m].kosuu; j; j--)
           {
-            if (Strcmp (n[m].son[j], w) == 0)
-              return (1);
+            if (Strcmp (n[m].son + j, w) == 0) /* changed 2013-08-15!  */
+	      {
+		return (1);
+	      }
           }
     }
   return (0);

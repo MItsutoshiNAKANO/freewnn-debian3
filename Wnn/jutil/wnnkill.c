@@ -1,5 +1,5 @@
 /*
- *  $Id: wnnkill.c,v 1.10 2005/01/30 17:14:20 aonoto Exp $
+ *  $Id: wnnkill.c,v 1.12 2015/05/09 23:42:04 itisango Exp $
  */
 
 /*
@@ -10,7 +10,7 @@
  *                 1987, 1988, 1989, 1990, 1991, 1992
  * Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
  * Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
- * Copyright FreeWnn Project 1999, 2000, 2002, 2004, 2005
+ * Copyright FreeWnn Project 1999, 2000, 2002, 2004, 2005, 2015
  *
  * Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
  *
@@ -30,7 +30,7 @@
  */
 
 #ifndef lint
-static char *rcs_id = "$Id: wnnkill.c,v 1.10 2005/01/30 17:14:20 aonoto Exp $";
+static char *rcs_id = "$Id: wnnkill.c,v 1.12 2015/05/09 23:42:04 itisango Exp $";
 #endif /* lint */
 
 #ifdef HAVE_CONFIG_H
@@ -54,6 +54,9 @@ static char *rcs_id = "$Id: wnnkill.c,v 1.10 2005/01/30 17:14:20 aonoto Exp $";
 #include "commonhd.h"
 #include "wnn_config.h"
 #include "wnn_os.h"
+
+#include "jlib_private.h"
+#include "etc.h"
 
 WNN_JSERVER_ID *js;
 struct wnn_ret_buf rb = { 0, NULL };

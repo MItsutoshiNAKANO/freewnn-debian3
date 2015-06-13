@@ -1,5 +1,5 @@
 /*
- *  $Id: daibn_kai.c,v 1.4 2002/05/12 22:51:16 hiroo Exp $
+ *  $Id: daibn_kai.c,v 1.5 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -258,7 +258,7 @@ get_status (kangovect, beginvect, fzkchar, status)
         {
           if (
 #ifndef NO_FZK
-               (fzkchar == NULL || *fzkchar == NULL) &&
+               (fzkchar == NULL || *fzkchar == 0) &&
 #endif /* NO_FZK */
                beginvect == sentou_no)
             {
@@ -324,7 +324,7 @@ zentan_able (v, hinsi, fzkchar)
 #ifndef NO_FZK
   else
     {
-      if (fzkchar == NULL || *fzkchar == NULL)
+      if (fzkchar == NULL || *fzkchar == 0)
         {
           if ((ll = wnn_get_fukugou_component_body (hinsi, &buf)) == 0)
             {

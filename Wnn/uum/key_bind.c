@@ -1,5 +1,5 @@
 /*
- *  $Id: key_bind.c,v 1.5 2002/03/30 01:45:41 hiroo Exp $
+ *  $Id: key_bind.c,v 1.6 2013/09/02 11:01:40 itisango Exp $
  */
 
 /*
@@ -248,7 +248,7 @@ int kansuu_hyo_entry_suu = sizeof (kansuu_hyo) / sizeof (struct kansuu);
 
 static char key_binded[sizeof (kansuu_hyo) / sizeof (struct kansuu) + 1];
 
-int key_binding ();
+int key_binding (char [64]);
 
 int
 init_key_table ()

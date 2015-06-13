@@ -1,5 +1,5 @@
 /*
- *  $Id: wnnstat.c,v 1.10 2002/05/12 22:51:17 hiroo Exp $
+ *  $Id: wnnstat.c,v 1.12 2015/05/09 23:42:04 itisango Exp $
  */
 
 /*
@@ -10,7 +10,7 @@
  *                 1987, 1988, 1989, 1990, 1991, 1992
  * Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
  * Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
- * Copyright FreeWnn Project 1999, 2000, 2002
+ * Copyright FreeWnn Project 1999, 2000, 2002, 2015
  *
  * Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
  *
@@ -30,7 +30,7 @@
  */
 
 #ifndef lint
-static char *rcs_id = "$Id: wnnstat.c,v 1.10 2002/05/12 22:51:17 hiroo Exp $";
+static char *rcs_id = "$Id: wnnstat.c,v 1.12 2015/05/09 23:42:04 itisango Exp $";
 #endif /* lint */
 
 #ifdef HAVE_CONFIG_H
@@ -52,6 +52,7 @@ static char *rcs_id = "$Id: wnnstat.c,v 1.10 2002/05/12 22:51:17 hiroo Exp $";
 #if HAVE_UNISTD_H
 #  include <unistd.h>
 #endif
+#include <stdarg.h>
 
 #include "jslib.h"
 #include "jllib.h"
@@ -60,6 +61,9 @@ static char *rcs_id = "$Id: wnnstat.c,v 1.10 2002/05/12 22:51:17 hiroo Exp $";
 #include "wnn_config.h"
 #include "wnn_os.h"
 #include "msg.h"
+
+#include "jlib_private.h"
+#include "etc.h"
 
 WNN_JSERVER_ID *js;
 struct wnn_ret_buf rb = { 0, NULL };
@@ -73,13 +77,24 @@ struct wnn_ret_buf rb = { 0, NULL };
 #define W_DIC_ALL 5
 #define W_VERSION 6
 
+extern int optind;
+extern char *optarg;
+extern char *getenv ();
+
 #ifdef JAPANESE
 extern int eujis_to_jis8 (), eujis_to_sjis ();
 #endif
 #ifdef CHINESE
 extern int ecns_to_big5 ();
 #endif
-static void printall (), printpat (), err (), usage (), who (), dic (), dic_all (), file_all (), wsttost (), out ();
+static void  err (), usage (), dic (), dic_all (), file_all ();
+static void printall FRWNN_PARAMS((WNN_ENV_INFO *, int));
+static void printpat FRWNN_PARAMS((WNN_ENV_INFO *, int));
+static void wsttost FRWNN_PARAMS((char *, w_char *));
+
+static void who FRWNN_PARAMS((char *lang));
+static void  out FRWNN_PARAMS((const char *, ...));
+
 
 #ifdef  CHINESE
 #ifdef  TAIWANESE
@@ -108,16 +123,13 @@ main (argc, argv)
   int c, i, j;
   WNN_ENV_INFO *w;
   static char lang[64] = { 0 };
-  extern int optind;
-  extern char *optarg;
-  extern char *getenv ();
   char nlspath[64];
 /*
     char *p;
 */
   char *server_env = NULL;
   char *prog = argv[0];
-  extern char *_wnn_get_machine_of_serv_defs (), *get_server_env ();
+  extern char *get_server_env ();
 
 /*
     if ((p = getenv("LANG")) != NULL) {
@@ -246,8 +258,8 @@ main (argc, argv)
     {
       out ("%s:", prog);
       if (serv && *serv)
-        out (serv);
-      out (wnn_perror_lang (lang));
+        out ("%s", serv);
+      out ("%s", wnn_perror_lang (lang));
       putchar ('\n');
 /*      out(" jserver と接続出来ません。\n"); */
       exit (-1);
@@ -519,13 +531,20 @@ wsttost (c, w)
 }
 
 static void
-out (a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13)
-     char *a1, *a2, *a3, *a4, *a5, *a6, *a7, *a8, *a9, *a10, *a11, *a12, *a13;
+out (const char * format, ...)
 {
   int len;
   char buf[1024];
   char jbuf[1024];
-  sprintf (buf, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13);
+  va_list ap;
+
+  va_start (ap, format);
+#ifdef HAVE_SNPRINTF	/* Should also have vsnprintf */
+  vsnprintf (buf, sizeof buf, format, ap);
+#else
+  vsprintf (buf, format, ap);	/* Dangerous */
+#endif /* HAVE_SNPRINTF */
+  va_end (ap);
 
   len = strlen (buf);
   switch (ocode)

@@ -1,5 +1,5 @@
 /*
- *  $Id: ujisf.c,v 1.8 2010/12/23 17:17:43 aonoto Exp $
+ *  $Id: ujisf.c,v 1.9 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -57,30 +57,31 @@
 #include "wnn_os.h"
 #include "wnn_string.h"
 
+#include "etc.h"
+#include "jutil.h"
+
 #ifdef CHINESE
 #include "cplib.h"
 int pzy_flag = CWNN_PINYIN;     /* Pinyin or Zhuyin */
-static void sisheng_num (), read_kanji_str_w ();
+static void sisheng_num (register char *, register int *);
+static void read_kanji_str_w (register w_char *, register w_char *);
 #endif
 
 #ifndef min
-#define min(a, b) ((a > b)? b:a)
-#define max(a, b) ((a < b)? b:a)
+#define min(a, b) (((a) > (b))? (b) : (a))
+#define max(a, b) (((a) < (b))? (b) : (a))
 #endif
 
 extern unsigned char kanjiaddr (unsigned char *d0, w_char* kanji, w_char* yomi, w_char* comment);
 extern void Print_entry (w_char* yomi, w_char* kstr, w_char* cstr,
 		int hindo, int ima, int hinsi, int serial,
 		FILE* ofpter, int esc_exp);
-extern int wnn_find_hinsi_by_name ();
-#ifdef CHINESE
-extern void cwnn_zy_str_analysis (), cwnn_py_str_analysis ();
-#endif
-int sort_func (), Sorted (), w_stradd ();
-static void Kanjistradd (), bunpou_num (), read_kanji_str (), toesc ();
-void exit1 ();
+extern int  w_stradd ();
 
-extern struct JT jt;
+static void Kanjistradd FRWNN_PARAMS((w_char *, w_char *, w_char *, register UCHAR **));
+static void bunpou_num FRWNN_PARAMS((register char *, register int *));
+static void read_kanji_str FRWNN_PARAMS((register char *, register char *));
+static void toesc FRWNN_PARAMS((char *, char *));
 
 /* extern variables */
 
@@ -547,7 +548,7 @@ reverse_yomi ()
     }
 }
 
-extern char *wnn_get_hinsi_name ();
+/* extern char *wnn_get_hinsi_name ();  */
 
 void
 print_je (jep, opter, serial_out, esc_exp)

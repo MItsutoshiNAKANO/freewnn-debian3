@@ -1,5 +1,5 @@
 /*
- *  $Id: mknode1.c,v 1.4 2002/05/12 22:51:17 hiroo Exp $
+ *  $Id: mknode1.c,v 1.5 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -44,7 +44,7 @@
 #include "de_header.h"
 #include "kaiseki.h"
 
-static void lnk_sbn ();
+static void lnk_sbn (struct free_list *);
 
 static struct SYO_BNSETSU *free_sbn_top = NULL;
 static struct free_list *free_list_sbn = NULL;

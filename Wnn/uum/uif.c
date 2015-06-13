@@ -1,5 +1,5 @@
 /*
- *  $Id: uif.c,v 1.9 2003/05/11 18:27:42 hiroo Exp $
+ *  $Id: uif.c,v 1.10 2013/09/02 11:01:40 itisango Exp $
  */
 
 /*
@@ -169,7 +169,7 @@ push_char_return (c, romkan)
      int c, romkan;
 {
   push_unget_buf (romkan);
-  kakutei (c);
+  kakutei ();			/* kakutei (c);*/
   return (1);
 }
 
@@ -670,7 +670,7 @@ int
 delete_c (c, romkan)
      int c, romkan;
 {
-  t_delete_char (c, romkan);
+  t_delete_char (); /*  t_delete_char (c, romkan);  */
   if ((c_b->maxlen == 0) && is_HON (romkan))
     {
       change_to_empty_mode ();
@@ -1136,7 +1136,7 @@ reconnect_jserver_body ()
   /*
      char *message = " 接続ホスト名 > ";
    */
-  w_char *kana_buf[1024];
+  w_char *kana_buf[1024];  /* w_char kana_buf[1024]; ?  */
   char hostname[128];
 
   Sstrcpy (kana_buf, servername);

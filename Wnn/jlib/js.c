@@ -1,5 +1,5 @@
 /*
- *  $Id: js.c,v 1.16 2005/04/10 15:26:37 aonoto Exp $
+ *  $Id: js.c,v 1.18 2015/05/09 23:42:04 itisango Exp $
  */
 
 /*
@@ -10,7 +10,7 @@
  *                 1987, 1988, 1989, 1990, 1991, 1992
  * Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
  * Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
- * Copyright FreeWnn Project 1999, 2000, 2001, 2002, 2003
+ * Copyright FreeWnn Project 1999, 2000, 2001, 2002, 2003, 2015
  *
  * Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
  *
@@ -88,6 +88,9 @@ extern  Variables
 
 #include "wnnerror.h"
 #include "jslib.h"
+
+#include "jlib_private.h"
+
 #include "jh.h"
 
 #include "msg.h"
@@ -128,12 +131,13 @@ static int rbc = -1;                    /** 受信バッファーポインター **/
 #endif /* defined(EAGAIN) */
 
 static void connect_timeout ();
-static int _get_server_name ();
-static int writen ();
-static char *get_unixdomain_of_serv_defs (), *get_service_of_serv_defs ();
-static int get_port_num_of_serv_defs ();
+static int _get_server_name FRWNN_PARAMS((const char *, char *));
+static int writen FRWNN_PARAMS((int));
+static char *get_unixdomain_of_serv_defs FRWNN_PARAMS((const char *lang));
+static char *get_service_of_serv_defs FRWNN_PARAMS((const char *));
+static int get_port_num_of_serv_defs FRWNN_PARAMS((const char *));
 #if DEBUG
-void xerror ();
+void xerror FRWNN_PARAMS((const char *));
 #endif
 
 /*********      V4      *****************/
@@ -398,7 +402,7 @@ connect_timeout ()
 /* get server name and return serverNo */
 static int
 _get_server_name (server, pserver)
-     char *server;
+     const char *server;
      char *pserver;
 {
   register char *p;
@@ -431,7 +435,7 @@ _get_server_name (server, pserver)
 }
 
 /*      Packet SND/RCV subroutines      */
-static void put4com ();
+static void put4com FRWNN_PARAMS((int));
 
 /**     パケットのヘッダーを送る        **/
 static void
@@ -560,7 +564,7 @@ putwscom (p)
 /**     サーバへ文字列を送る    **/
 static void
 putscom (p)
-     register char *p;
+     const register char *p;
 {
   if (p == NULL)
     {
@@ -690,7 +694,7 @@ Strcpy (s1, s2)
 #if DEBUG
 void
 xerror (s)
-     char *s;
+     const char *s;
 {
   fprintf (stderr, "%s\n", s);
 }
@@ -742,7 +746,7 @@ getlogname ()
 /**       jserver と接続する。jserver_id を返す。       **/
 WNN_JSERVER_ID *
 js_open_lang (server, lang, timeout)
-     register char *server, *lang;
+     const register char *server, *lang;
      register int timeout;
 {
   char *new_js;
@@ -863,9 +867,9 @@ js_close (server)
 
 struct wnn_env *
 js_connect_lang (server, env_name, lang)
-     register char *env_name;
+     const register char *env_name;
      WNN_JSERVER_ID *server;
-     char *lang;
+     const char *lang;
 {
   register int e_id;
   register struct wnn_env *env;
@@ -925,7 +929,7 @@ js_get_lang (env)
 
 int
 js_env_exist (server, env_name)
-     register char *env_name;
+     const register char *env_name;
      register WNN_JSERVER_ID *server;
 {
   set_current_js (server);
@@ -979,7 +983,7 @@ js_disconnect (env)
      free((char *)env);
    */
   set_current_js (env->js_id);
-  handler_of_jserver_dead (NULL);
+  handler_of_jserver_dead (-1);
   snd_env_head (&tmp_env, JS_DISCONNECT);
   snd_flush ();
   x = get4com ();
@@ -1137,7 +1141,7 @@ js_access (env, path, amode)
 }
 
 /**     js_file_list_all        **/
-static int rcv_file_list ();
+static int rcv_file_list FRWNN_PARAMS((struct wnn_ret_buf *));
 
 int
 js_file_list_all (server, ret)
@@ -1167,7 +1171,7 @@ js_file_list (env, ret)
   return rcv_file_list (ret);
 }
 
-static void re_alloc ();
+static void re_alloc FRWNN_PARAMS((register struct wnn_ret_buf *, int));
 
 static int
 rcv_file_list (ret)
@@ -1257,8 +1261,8 @@ js_file_loaded (server, path)
 }
 
 /**     js_file_loaded_local    **/
-static int check_local_file ();
-static int file_loaded_local ();
+static int check_local_file FRWNN_PARAMS((char *));
+static int file_loaded_local FRWNN_PARAMS((char *));
 
 int
 js_file_loaded_local (server, path)
@@ -1485,7 +1489,7 @@ js_file_write (env, fid, fn)
 
 /**     js_file_receive **/
 static int xget1com ();
-static void xput1com ();
+static void xput1com FRWNN_PARAMS((int));
 
 int
 js_file_receive (env, fid, fn)
@@ -1853,8 +1857,8 @@ js_fuzokugo_get (env)
 }
 
 /**     js_dic_list_all **/
-static int rcv_dic_list ();
-static void get_dic_info ();
+ static int rcv_dic_list FRWNN_PARAMS((struct wnn_ret_buf *ret));
+ static void get_dic_info FRWNN_PARAMS((register WNN_DIC_INFO *dic));
 
 int
 js_dic_list_all (server, ret)
@@ -1980,7 +1984,7 @@ js_word_delete (env, dic_no, entry)
 
 
 /**     js_word_search          **/
-static int rcv_word_data ();
+static int rcv_word_data FRWNN_PARAMS((struct wnn_ret_buf *, w_char *));
 
 int
 js_word_search (env, dic_no, yomi, ret)
@@ -2282,10 +2286,9 @@ put_fzk_vec (hinsi, fzk, vec, vec1)
 /**
         kanren
 **/
-static int rcv_dai ();
-static void rcv_sho_x ();
-static void rcv_sho_kanji ();
-
+static int rcv_dai FRWNN_PARAMS((struct wnn_ret_buf *ret));
+static void rcv_sho_x FRWNN_PARAMS((register struct wnn_sho_bunsetsu *, int));
+static void rcv_sho_kanji FRWNN_PARAMS((struct wnn_sho_bunsetsu *, int, w_char **));
 int
 js_kanren (env, yomi, hinsi, fzk, vec, vec1, vec2, rb)
      struct wnn_env *env;
@@ -2946,7 +2949,7 @@ js_hinsi_table_set (env, dic_no, hinsi_table)
 
 static char *
 get_serv_defs (lang, cnt)
-     char *lang;
+     const char *lang;
      int cnt;
 {
   FILE *fp;
@@ -2989,28 +2992,28 @@ get_serv_defs (lang, cnt)
 
 char *
 _wnn_get_machine_of_serv_defs (lang)
-     char *lang;
+     const char *lang;
 {
   return (get_serv_defs (lang, MACHINE_NAME));
 }
 
 static char *
 get_unixdomain_of_serv_defs (lang)
-     char *lang;
+     const char *lang;
 {
   return (get_serv_defs (lang, UNIXDOMAIN_NAME));
 }
 
 static char *
 get_service_of_serv_defs (lang)
-     char *lang;
+  const char *lang;
 {
   return (get_serv_defs (lang, SERVICE_NAME));
 }
 
 static int
 get_port_num_of_serv_defs (lang)
-     char *lang;
+  const char *lang;
 {
   char *port_char;
 

@@ -21,10 +21,11 @@
  */
 
 #ifndef lint
-static char rcsid[] = "$Id: ctopd.c,v 1.2 2001/06/14 18:15:54 ura Exp $";
+static char rcsid[] = "$Id: ctopd.c,v 1.3 2013/09/02 11:01:39 itisango Exp $";
 #endif
 
 #include <stdio.h>
+#include <string.h>
 
 static char *program;
 

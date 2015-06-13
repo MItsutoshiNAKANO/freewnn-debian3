@@ -1,5 +1,5 @@
 /*
- *  $Id: do_hindo_s.c,v 1.8 2002/06/22 13:25:45 hiroo Exp $
+ *  $Id: do_hindo_s.c,v 1.9 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -43,7 +43,7 @@
 #include "jdata.h"
 #include "de_header.h"
 
-static int hindo_set ();
+static int hindo_set (int, int, int, int);
 
 void
 js_hindo_set ()

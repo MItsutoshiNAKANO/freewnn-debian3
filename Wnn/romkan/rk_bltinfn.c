@@ -1,5 +1,5 @@
 /*
- *  $Id: rk_bltinfn.c,v 1.6 2005/04/10 15:26:38 aonoto Exp $
+ *  $Id: rk_bltinfn.c,v 1.7 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -52,6 +52,9 @@
 #include "commonhd.h"
 #include "wnn_config.h"
 #include "rk_header.h"
+#include "jslib.h"
+
+#include "romkan.h"
 
  /* 半角文字のコードのdefine */
 #define HKCHOU  (HNKAK1 * 0x100 + 0xB0) /* ｰ */
@@ -72,6 +75,10 @@
 #define TJIKAG  (0xA1D7)        /* 」 */
 #define TOUTEN  (0xA1A2)        /* 、 */
 #define NKPOTU  (0xA1A6)        /* ・ */
+
+/* This is bad code .  It should be declared in the header . 
+ * But where should it be declared ?  */
+extern letter vtol FRWNN_PARAMS((letter));
 
 static char _lang[6];
 
@@ -371,7 +378,7 @@ void
 to_digit (in, base, outp)
      letter in, base, **outp;
 {
-  letter c, vtol ();
+  letter c;
 
   if (c = in, c /= base)
     to_digit (c, base, outp);

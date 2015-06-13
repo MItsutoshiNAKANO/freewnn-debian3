@@ -1,5 +1,5 @@
 #
-#   $Id: Makefile.in,v 1.13 2009/02/01 17:52:18 aonoto Exp $
+#   $Id: Makefile.in,v 1.14 2013/06/06 18:24:39 aonoto Exp $
 #
 
 #
@@ -10,7 +10,7 @@
 #                 1987, 1988, 1989, 1990, 1991, 1992
 # Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
 # Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
-# Copyright FreeWnn Project 1999, 2000, 2001, 2003, 2009
+# Copyright FreeWnn Project 1999, 2000, 2001, 2003, 2009, 2013
 # 
 # Maintainer:  FreeWnn Project
 # 
@@ -128,7 +128,7 @@ lint:
 all:: libkwnn.la
 
 libkwnn.la: $(OBJS) $(EXTRALIBRARYDEPS)
-	$(LT_LD) -o $@ $(OBJS:.o=.lo) -rpath $(WNNLIBDIR) -version-info $(KWNNJLIBVERSION) @LIBS@
+	$(LT_LD) $(LDFLAGS) -o $@ $(OBJS:.o=.lo) -rpath $(WNNLIBDIR) -version-info $(KWNNJLIBVERSION) @LIBS@
 
 lintlib:: llib-lkwnn.ln
 

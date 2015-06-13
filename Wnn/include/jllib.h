@@ -1,5 +1,5 @@
 /*
- *  $Id: jllib.h,v 1.6 2008/10/26 10:27:53 aonoto Exp $
+ *  $Id: jllib.h,v 1.8 2015/05/10 01:39:27 itisango Exp $
  */
 
 /*
@@ -10,7 +10,7 @@
  *                 1987, 1988, 1989, 1990, 1991, 1992
  * Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
  * Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
- * Copyright FreeWnn Project 1999, 2000, 2008
+ * Copyright FreeWnn Project 1999, 2000, 2008, 2015
  *
  * Maintainer:  FreeWnn Project
  *
@@ -122,8 +122,8 @@ struct wnn_buf
 #define WNN_UNIQ 1
 #define WNN_NO_UNIQ  0
 
-#define WNN_NO_CREATE 0
-#define WNN_CREATE (-1)
+#define WNN_NO_CREATE ((int (*)(const char *)) 0)
+#define WNN_CREATE ((int (*)(const char *)) -1)
 
 #define WNN_DIC_PRIO_DEFAULT 5
 
@@ -253,8 +253,8 @@ struct wnn_buf
 /* extern function defines */
 /* Note: FRWNN_PARAMS is defined in jslib.h . */
 
-extern struct wnn_buf *jl_open_lang    FRWNN_PARAMS((char *env_n, char *server_n, char *lang, char *wnnrc_n, int (*error_handler) (), int (*message_handler) (), int timeout));
-extern struct wnn_env *jl_connect_lang FRWNN_PARAMS((register char *env_n, register char *server_n, register char *lang, register char *wnnrc_n,  int (*error_handler) (), int (*message_handler) (), int timeout));
+extern struct wnn_buf *jl_open_lang FRWNN_PARAMS((const char *, const char *, const char *, const char *, int (*) (const char *), int (*) (const char *), int));
+extern struct wnn_env *jl_connect_lang FRWNN_PARAMS((const register char *, const register char *, const register char *, const register char *,  int (*) (const char *), int (*) (const char *), int timeout));
 extern struct wnn_env *jl_env_get      FRWNN_PARAMS((register struct wnn_buf *buf));
 extern struct wnn_jdata *jl_word_info_e FRWNN_PARAMS((register struct wnn_env *env, int dic_no, int entry));
 extern w_char *jl_hinsi_name_e FRWNN_PARAMS((register struct wnn_env *env, register int no));
@@ -284,8 +284,8 @@ extern int jl_nobi_conv_e2 FRWNN_PARAMS((register struct wnn_buf *buf, struct wn
 extern int jl_param_get_e FRWNN_PARAMS((struct wnn_env *env, struct wnn_param *para));
 extern int jl_param_set_e FRWNN_PARAMS((register struct wnn_env *env, struct wnn_param *para));
 extern int jl_ren_conv FRWNN_PARAMS((register struct wnn_buf *buf, register w_char *yomi, int bun_no, int bun_no2, int use_maep));
-extern int jl_set_env_wnnrc  FRWNN_PARAMS((register struct wnn_env *env, char *wnnrc_n, int (*error_handler) (), int (*message_handler) () ));
-extern int jl_set_env_wnnrc1 FRWNN_PARAMS((register struct wnn_env *env, char *wnnrc_n, int (*error_handler) (), int (*message_handler) (), int level));
+extern int jl_set_env_wnnrc FRWNN_PARAMS((register struct wnn_env *, const char *, int (*) (const char *), int (*) (const char *)));
+extern int jl_set_env_wnnrc1 FRWNN_PARAMS((register struct wnn_env *, const char *, int (*) (const char *), int (*) (const char *), int));
 extern int jl_set_jikouho     FRWNN_PARAMS((register struct wnn_buf *buf, register int offset));
 extern int jl_set_jikouho_dai FRWNN_PARAMS((register struct wnn_buf *buf, int offset));
 extern int jl_tan_conv FRWNN_PARAMS((register struct wnn_buf *buf, w_char *yomi, register int bun_no, register int bun_no2, int use_maep, int ich_shop));

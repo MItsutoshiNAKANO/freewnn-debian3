@@ -1,5 +1,5 @@
 /*
- *  $Id: cvt_read.c,v 1.8 2006/03/04 19:01:45 aonoto Exp $
+ *  $Id: cvt_read.c,v 1.9 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -137,6 +137,8 @@
 
 #include "wnn_os.h"
 #include "cvt_head.h"
+
+#include "conv.h"
 
 #define ENTRY_LEN 10            /* コンバート表のエントリ名の最大長 */
 

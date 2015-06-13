@@ -1,5 +1,5 @@
 /*
- *  $Id: basic_op.c,v 1.5 2006/02/10 18:29:38 aonoto Exp $
+ *  $Id: basic_op.c,v 1.6 2013/09/02 11:01:40 itisango Exp $
  */
 
 /*
@@ -189,10 +189,6 @@ buffer_in ()
   int in;
   unsigned int *output;
 
-  extern int kakutei ();
-  extern int send_string ();
-  extern int return_it ();
-
   not_redraw = 0;
   while (1)
     {
@@ -287,7 +283,8 @@ buffer_in ()
             {
               if (tmp_send)
                 {
-                  ret = return_it (c, romkan);
+                  /* ret = return_it (c, romkan);  */
+                  ret = return_it (c);
                   tmp_send = 0;
                 }
               else
@@ -401,7 +398,7 @@ jis ()
 
 int
 input_a_char_from_function (fun)
-     int (*fun) ();
+     int (*fun) (void);
 {
   int c;
   int ret = 0;

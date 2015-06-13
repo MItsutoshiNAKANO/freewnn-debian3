@@ -1,5 +1,5 @@
 /*
- *  $Id: revdic.c,v 1.5 2004/05/21 16:39:32 aono Exp $
+ *  $Id: revdic.c,v 1.6 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -35,10 +35,18 @@
 #include "jh.h"
 #include "jdata.h"
 
+#include "etc.h"
+
+void rev_w_char (w_char *, int);
+int rev_ud (struct JT *, int);
+int rev_rd (struct JT *, int);
+int rev_sd (struct JT *, int);
+void rev_common (struct JT *, int);
+
 
 #ifndef min
-#define min(a, b) ((a > b)? b:a)
-#define max(a, b) ((a < b)? b:a)
+#define min(a, b) (((a) > (b))? (b) : (a))
+#define max(a, b) (((a) < (b))? (b) : (a))
 #endif
 
 
@@ -150,8 +158,8 @@ rev_hinsi (hinsi, maxserial, match)
 
 #define match_machine(x) (*(unsigned short *)(x) & 0xff)
 
-void travel_next_nodes ();
-void rev_sd_node ();
+void travel_next_nodes (UCHAR *, UCHAR *, int);
+void rev_sd_node (UCHAR *, UCHAR *, int);
 
 void
 rev_sd_hontai0 (hopter, hostart, match)
@@ -321,8 +329,6 @@ rev_rd_rind2 (ri2, maxri2, match)
     }
 }
 
-void rev_w_char ();
-
 void
 rev_kanji (kpter, maxk, match)
      UCHAR *kpter;
@@ -361,7 +367,6 @@ revdic (jtl, match)
      struct JT *jtl;
      int match;
 {
-  extern int rev_ud (), rev_rd (), rev_sd ();
   int syurui = jtl->syurui;
 
   syurui = jtl->syurui & 0xff;
@@ -383,8 +388,6 @@ revdic (jtl, match)
     }
   return (0);
 }
-
-void rev_common ();
 
 int
 rev_ud (jtl, match)

@@ -1,5 +1,5 @@
 /*
- *  $Id: termio.c,v 1.7 2006/09/04 17:21:29 aonoto Exp $
+ *  $Id: termio.c,v 1.8 2013/09/02 11:01:40 itisango Exp $
  */
 
 /*
@@ -119,7 +119,7 @@ openTermData ()
       return (-1);
     }
 #endif /* defined(uniosu) */
-  if (save_cursor == (char *) NULL || *save_cursor == NULL || restore_cursor == (char *) NULL || *restore_cursor == NULL || change_scroll_region == (char *) NULL || *change_scroll_region == NULL)
+  if (save_cursor == (char *) NULL || *save_cursor == '\0' || restore_cursor == (char *) NULL || *restore_cursor == '\0' || change_scroll_region == (char *) NULL || *change_scroll_region == '\0')
     {
       fprintf (stderr, "Your terminal is not strong enough. Goodbye !\n");
       return (-1);

@@ -1,5 +1,5 @@
 /*
- *  $Id: ttyfdslot.c,v 1.4 2002/06/22 13:26:21 hiroo Exp $
+ *  $Id: ttyfdslot.c,v 1.5 2013/09/02 11:01:40 itisango Exp $
  */
 
 /*
@@ -68,7 +68,7 @@ ttyfdslot (int fd)
   register int slotnum;
 
   if ((fullnamp = ttyname (fd)) == NULL)
-    return NULL;
+    return 0;
   if ((ttynamp = rindex (fullnamp, '/')) == NULL)
     {
       ttynamp = fullnamp;
@@ -78,7 +78,7 @@ ttyfdslot (int fd)
       ttynamp++;
     }
   if ((ttysfp = fopen ("/etc/ttys", "r")) == NULL)
-    return NULL;
+    return 0;
   for (slotnum = 0; fgets (eachslot, SLOTSIZ, ttysfp);)
     {
       p = eachslot + strlen (eachslot) - 1;
@@ -92,7 +92,7 @@ ttyfdslot (int fd)
         }
     }
   fclose (ttysfp);
-  return NULL;
+  return 0;
 }
 #endif /* defined(BSD42) && (! defined(BSD43)) || defined(linux) */
 

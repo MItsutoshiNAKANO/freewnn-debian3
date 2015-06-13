@@ -1,5 +1,5 @@
 /*
- *  $Id: commonhd.h,v 1.13 2006/03/04 19:01:45 aonoto Exp $
+ *  $Id: commonhd.h,v 1.14 2013/08/24 14:24:31 aonoto Exp $
  */
 
 /*
@@ -10,7 +10,7 @@
  *                 1987, 1988, 1989, 1990, 1991, 1992
  * Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
  * Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
- * Copyright FreeWnn Project 1999, 2000, 2001, 2002, 2005, 2006
+ * Copyright FreeWnn Project 1999, 2000, 2001, 2002, 2005, 2006, 2013
  *
  * Maintainer:  FreeWnn Project
  *
@@ -39,7 +39,8 @@
 #include <stdio.h>
 
 #define JSERVER_VERSION 0x4200  /* minor version */
-#define _SERVER_VERSION "FreeWnn 1.1.0 pl22"
+/* _SERVER_VERSION replaced with PACKAGE_STRING ... */
+/* #define _SERVER_VERSION "FreeWnn 1.1.0 plXX" */
 
 #include "wnnerror.h"
 

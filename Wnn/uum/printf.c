@@ -1,5 +1,5 @@
 /*
- *  $Id: printf.c,v 1.4 2006/02/11 09:51:44 aonoto Exp $
+ *  $Id: printf.c,v 1.5 2013/09/02 11:01:40 itisango Exp $
  */
 
 /*
@@ -55,7 +55,7 @@ char_q_len (x)
 {
   return ((*char_q_len_func) (x));
 }
-
+/*
 void
 fprintf (file, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13)
      FILE *file;
@@ -68,6 +68,7 @@ fprintf (file, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13)
 
   puteustring (buf2, file);
 }
+*/
 
 void
 puteustring (buf2, file)
@@ -85,6 +86,7 @@ puteustring (buf2, file)
     }
 }
 
+/*
 void
 printf (format, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13)
      char *format;
@@ -93,6 +95,7 @@ printf (format, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13)
   fprintf (stdout, format, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13);
 
 }
+*/
 
 #define W_BUFLEN 32
 static w_char w_buf[W_BUFLEN];
@@ -185,8 +188,8 @@ errorkeyin ()
   push_cursor ();
   throw_c (0);
   clr_line ();
-  printf (wnn_perror ());
-  printf (MSG_GET (8));
+  printf ("%s", wnn_perror ());
+  printf ("%s", MSG_GET (8));
   /*
      printf(" (Ç¡²¿)");
    */

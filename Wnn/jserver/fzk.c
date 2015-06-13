@@ -1,5 +1,5 @@
 /*
- *  $Id: fzk.c,v 1.7 2003/05/11 19:01:06 hiroo Exp $
+ *  $Id: fzk.c,v 1.8 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -29,7 +29,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-static char rcs_id[] = "$Id: fzk.c,v 1.7 2003/05/11 19:01:06 hiroo Exp $";
+static char rcs_id[] = "$Id: fzk.c,v 1.8 2013/09/02 11:01:39 itisango Exp $";
 
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
@@ -627,7 +627,7 @@ fzk_ken (w_char *start, w_char *end, word_vector *wv, struct fzkken *fzkptr)
   for (yomicnt = 0; (yomicnt < YOMI_L) && (start < end); key[yomicnt++] = *start++)
     ;
   key[yomicnt] = 0;
-  for (; yomicnt > 0; key[--yomicnt] = NULL)
+  for (; yomicnt > 0; key[--yomicnt] = 0)
     {
       search_ptr = (struct fzkentry *) bsrch (key);
       if (search_ptr != NULL)

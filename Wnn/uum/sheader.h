@@ -1,5 +1,5 @@
 /*
- *  $Id: sheader.h,v 1.16 2009/05/31 16:35:06 aonoto Exp $
+ *  $Id: sheader.h,v 1.17 2013/09/02 11:01:40 itisango Exp $
  */
 
 /*
@@ -29,12 +29,18 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#ifndef FRWNN_SHEADER_H
+#define FRWNN_SHEADER_H 1
+
+
 /**************************
  * header of standard i/o 
  **************************/
 
 #include "jslib.h"
 #include "wnn_os.h"
+
+#include "etc.h"
 
 typedef struct _WnnEnv
 {
@@ -237,7 +243,7 @@ extern void clr_end_screen ();
 extern void clr_line ();
 extern void clr_line_all ();
 extern int connect_jserver (int);
-extern int convert_getterm ();
+/* extern int convert_getterm (char *, int);  */ /* moved to include/conv.h  */
 extern int convert_key_setup ();
 extern int cur_ichi (int, int);
 extern void cursor_invisible_raw (void);
@@ -262,16 +268,16 @@ extern int find_entry (char *);
 extern void flushw_buf (void);
 extern int forward_char (void);
 extern int backward_char (void);
-extern void get_end_of_history ();
-extern void getfname ();
+extern void get_end_of_history (register w_char *);
+extern void getfname (char *, char *);
 extern void h_r_off ();
 extern void h_r_off_raw ();
 extern void h_r_on ();
 extern void h_r_on_raw ();
 extern int henkan_gop ();
-extern void henkan_if_maru ();
+extern void henkan_if_maru (w_char);
 extern int henkan_off ();
-extern int hextodec ();
+extern int hextodec (char);
 extern int hinsi_in ();
 extern int init_history ();
 extern int init_key_table ();
@@ -279,143 +285,140 @@ extern void init_screen ();
 extern int init_uum ();
 extern int initial_message_out ();
 extern void initialize_vars ();
-extern int input_a_char_from_function ();
-extern int insert_char ();
-extern int insert_char_and_change_to_insert_mode ();
+extern int input_a_char_from_function (int (*) (void));
+extern int insert_char (w_char);
+extern int insert_char_and_change_to_insert_mode (int);
 extern int insert_modep ();
 extern int j_term_init ();
-extern int flush_designate ();
+/* extern int flush_designate (w_char *);  */ /* move to include/etc.h  */
 extern int jtosj ();
 extern int jutil ();
-extern int kakutei ();
-extern int kana_in ();
-extern int kana_in_w_char_msg ();
-extern int keyin1 ();
+extern int kana_in (char *, int, w_char *, int);
+extern int kana_in_w_char_msg (w_char *, int, w_char *, int);
+extern int keyin1 (int (*) (void), char *);
 extern int kk ();
 extern void kk_cursor_invisible ();
 extern void kk_cursor_normal ();
 extern void kk_restore_cursor ();
 extern void kk_save_cursor ();
-extern int make_history ();
-extern int make_info_out ();
-extern int make_jikouho_retu ();
-extern void make_kanji_buffer ();
-extern int make_string_for_ke ();
-extern int next_history1 ();
+extern int make_history (register w_char *, register int);
+extern int make_info_out (char [], int, WNN_DIC_INFO [], int);
+extern int make_jikouho_retu (char *, int, char *[], int);
+extern void make_kanji_buffer (int);
+extern int make_string_for_ke (int, char *, int);
+extern int next_history1 (register w_char *);
 extern int nobasi_tijimi_mode ();
-extern int nobi_conv ();
+extern int nobi_conv (int, struct wnn_env *);
 extern void pop_cursor ();
 extern void pop_hrus ();
-extern int previous_history1 ();
-extern void print_buf_msg ();
+extern int previous_history1 (register w_char *);
+extern void print_buf_msg (char *);
 extern void reset_cursor ();
 extern void push_cursor ();
 extern void push_hrus ();
-extern void putchar1 ();
-extern void putchar_norm ();
-extern void puteustring ();
+extern void putchar1 (int);
+extern void putchar_norm (int);
+extern void puteustring (char *, FILE *);
 extern int reconnect_jserver_body ();
 extern int redraw_line ();
 extern int redraw_nisemono ();
-extern void remove_key_bind ();
+extern void remove_key_bind (int);
 extern int isconect_jserver ();
 extern int ren_henkan0 ();
-extern void reset_bold ();
+extern void reset_bold (int);
 extern void reset_cursor_status ();
 extern void restore_cursor_raw ();
 extern void ring_bell ();
 extern void save_cursor_raw ();
 extern void scroll_up ();
-extern int select_jikouho1 ();
-extern int select_line_element ();
-extern int select_one_dict1 ();
-extern int select_one_element ();
+extern int select_jikouho1 (int);
+extern int select_line_element (char **, int, int, char *, int, int, int (**) ());
+extern int select_one_dict1 (int);
+extern int select_one_element (char **, int, int, char *, int, int, int (**) ());
 extern int set_TERMCAP ();
-extern void set_bold ();
+extern void set_bold (int);
 extern void set_cursor_status ();
-extern void set_escape_code ();
-extern void set_hanten_ul ();
-extern void set_lc_offset ();
+extern void set_escape_code (char *);
+extern void set_hanten_ul (int, int);
+extern void set_lc_offset (int);
 extern void set_screen_vars_default ();
 extern void set_keypad_on ();
 extern void set_keypad_off ();
-extern void set_scroll_region ();
-extern int st_colum ();
+extern void set_scroll_region (int, int);
+extern int st_colum (int);
 extern void t_cont_line_note_delete ();
-extern int t_delete_char ();
+extern int t_delete_char (void);
 extern int t_kill ();
-extern int t_move ();
+extern int t_move (int);
 extern int t_print_l ();
-extern void t_print_line ();
-extern int t_redraw_move ();
-extern int t_rubout ();
+extern void t_print_line (int, int, int);
+extern int t_redraw_move (int, int, int, int);
+extern int t_rubout (int, int);
 extern void t_throw ();
 extern int t_yank ();
-extern int tan_conv ();
-extern int tan_henkan1 ();
-extern void throw_col ();
-extern void throw_cur_raw ();
+extern int tan_conv (int);
+extern int tan_henkan1 (int, struct wnn_env *);
+extern void throw_col (int);
+extern void throw_cur_raw (int, int);
 extern void touroku ();
 extern void u_s_off ();
 extern void u_s_off_raw ();
 extern void u_s_on ();
 extern void u_s_on_raw ();
-extern int update_dic_list ();
+extern int update_dic_list (struct wnn_buf *);
 extern int uumrc_get_entries ();
-extern void w_printf ();
-extern int w_putchar ();
+extern void w_printf (w_char *, int);
+extern int w_putchar (w_char);
 extern void w_sttost ();
-extern int wchartochar ();
-extern int yes_or_no ();
-extern int yes_or_no_or_newline ();
+extern int wchartochar (w_char *, UCHAR *);
+extern int yes_or_no (const char *);
+extern int yes_or_no_or_newline (char *);
 extern int zenkouho_dai_c ();
-extern void find_yomi_for_kanji ();
+extern void find_yomi_for_kanji (w_char *, w_char *);
 extern int check_vst ();
 extern void t_redraw_one_line ();
-extern void throw ();
+extern void throw (int);
 extern int keyin ();
-extern int push_unget_buf ();
+extern int push_unget_buf (int);
 extern unsigned int *get_unget_buf ();
 extern int if_unget_buf ();
 
-extern int set_cur_env ();
+extern int set_cur_env (char);
 extern char env_state ();
-extern void get_new_env ();
+extern void get_new_env (int);
 
 extern int call_t_redraw_move_normal ();
-extern int call_t_redraw_move ();
+extern int call_t_redraw_move (int, int, int, int, int);
 extern int call_t_redraw_move_1_normal ();
-extern int call_t_redraw_move_1 ();
+extern int call_t_redraw_move_1 (int, int, int, int, int, int, int);
 extern int call_t_redraw_move_2_normal ();
-extern int call_t_redraw_move_2 ();
-extern int call_t_print_l_normal ();
-extern int call_t_print_l ();
-extern int c_top_normal ();
-extern int c_end_normal ();
+extern int call_t_redraw_move_2 (int, int, int, int, int, int, int);
+extern int call_t_print_l_normal (int, int);
+extern int call_t_print_l (int, int);
+extern int c_top_normal (void);
+extern int c_end_normal (void);
 extern int c_end_nobi_normal ();
 extern int char_q_len_normal ();
 extern int char_len_normal ();
-extern int t_redraw_move_normal ();
+extern int t_redraw_move_normal (int, int, int, int);
 extern int t_print_l_normal ();
 extern int call_redraw_line_normal ();
-extern int call_redraw_line ();
+extern int call_redraw_line (int, int);
 extern int hani_settei_normal ();
 extern void call_errorkeyin ();
 extern int call_jl_yomi_len ();
-extern int through ();
-extern int sStrcpy ();
-extern int Sstrcpy ();
+/* extern int through (char *, char *, int);  */
+extern int sStrcpy (UCHAR *, w_char *);
+extern int Sstrcpy (register w_char *, register UCHAR *);
 extern char *sStrncpy ();
-extern w_char *Strcat ();
-extern w_char *Strncat ();
-extern int Strncmp ();
-extern w_char *Strcpy ();
-extern w_char *Strncpy ();
-extern int Strlen ();
-extern void conv_ltr_to_ieuc ();
-extern int get_cswidth_by_char ();
-extern int eeuc_to_ieuc ();
-extern int conv_keyin ();
+extern w_char *Strcat (register w_char *, register w_char *);
+extern w_char *Strncat (register w_char *, register w_char *, register int);
+extern int Strncmp (register w_char *, register w_char *, register int);
+extern w_char *Strcpy (register w_char *, register w_char *);
+extern w_char *Strncpy (register w_char *, register w_char *, int);
+extern int Strlen (register w_char *);
+extern void conv_ltr_to_ieuc (register unsigned int *);
+extern int conv_keyin (char *);
 
 #ifdef  JAPANESE
 extern int eujis_to_iujis ();
@@ -457,7 +460,7 @@ extern int call_redraw_line_yincod ();
 extern int hani_settei_yincod ();
 extern void errorkeyin_q ();
 extern int not_call_jl_yomi_len ();
-extern int cwnn_pzy_yincod ();
+/* extern int cwnn_pzy_yincod ();  */ /* move to include/etc.h  */
 extern int cwnn_yincod_pzy_str ();
 
 extern int icns_to_ecns ();
@@ -485,4 +488,10 @@ extern int do_u_opt ();
 extern int do_U_opt ();
 #endif /* KOREAN */
 
-extern void romkan_set_lang ();
+/* uif.c  */
+extern int return_it (int);
+extern int send_string (int);
+extern int kakutei (void);
+
+
+#endif	/* FRWNN_SHEADER_H  */

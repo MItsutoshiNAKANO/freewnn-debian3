@@ -1,5 +1,5 @@
 /*
- *  $Id: do_henkan1.c,v 1.7 2003/05/11 18:41:49 hiroo Exp $
+ *  $Id: do_henkan1.c,v 1.8 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -53,7 +53,7 @@
 #undef  putwchar
 #endif
 
-static int make_buns_par ();
+static int make_buns_par (register w_char, register int);
 
 static int bun_pter_;
 
@@ -118,7 +118,7 @@ do_question (daip, zenp)
 {
   int b_suu_;
 
-  b_suu_ = jishobiki_b (1, bun_pter_, 0);
+  b_suu_ = jishobiki_b (1, bun_pter_); /* jishobiki_b (1, bun_pter_, 0);  */
   if (b_suu_ < 0)
     {
       error_ret ();             /* ERROR */

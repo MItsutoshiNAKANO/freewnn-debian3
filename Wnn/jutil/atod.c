@@ -1,5 +1,5 @@
 /*
- *  $Id: atod.c,v 1.13 2004/08/12 09:03:19 aono Exp $
+ *  $Id: atod.c,v 1.14 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -34,7 +34,7 @@ UJIS 形式を、辞書登録可能形式, 及び固定形式辞書に変換するプログラム。
 */
 
 #ifndef lint
-static char *rcs_id = "$Id: atod.c,v 1.13 2004/08/12 09:03:19 aono Exp $";
+static char *rcs_id = "$Id: atod.c,v 1.14 2013/09/02 11:01:39 itisango Exp $";
 #endif /* lint */
 
 #ifdef HAVE_CONFIG_H
@@ -70,26 +70,57 @@ static char *rcs_id = "$Id: atod.c,v 1.13 2004/08/12 09:03:19 aono Exp $";
 #include "wnn_string.h"
 #include "wnn_os.h"
 
-extern int wnn_loadhinsi (), init_heap (), little_endian (), Sorted (), asshuku (), revdic ();
-extern void ujis_header (), read_ujis (), reverse_yomi (), create_rev_dict (),
-uniq_je (), sort_if_not_sorted (), output_header (), udytoS (), output_ri (), exit1 (), new_pwd (), rev_short_fun (), rev_w_char ();
-extern
-#ifdef BDIC_WRITE_CHECK
-  int
+#include "jutil.h"
+#include "etc.h"
+
+extern int wnn_loadhinsi FRWNN_PARAMS((unsigned char*)),
+  init_heap FRWNN_PARAMS((int,int,int,int,FILE*)),
+  little_endian FRWNN_PARAMS(()),
+  Sorted FRWNN_PARAMS((register char*,register int,int,int (*sort_fun)(char*,char*))),
+  asshuku FRWNN_PARAMS((int)),
+  revdic FRWNN_PARAMS((struct JT *,int));
+#ifdef CHINESE
+extern void ujis_header FRWNN_PARAMS((int*));
 #else
-  void
+extern void ujis_header FRWNN_PARAMS((void));
 #endif
-  put_n_EU_str ();
-static void ujistoud (), output_dic_index (), usage (), sdic_sort (),
-ujistosd (), not_enough_area (), get_pwd (), output_hindo (), output_hinsi (), output_kanji (), rev_dic_data (), set_pter1 (), output_comment (), output_hinsi_list ();
-void upd_kanjicount (), output_dic_data ();
+extern void read_ujis FRWNN_PARAMS((int,int,int)),
+  reverse_yomi FRWNN_PARAMS((void)),
+  create_rev_dict FRWNN_PARAMS((void)),
+  uniq_je FRWNN_PARAMS((int(*func)(char*,char*))),
+  sort_if_not_sorted FRWNN_PARAMS((void)),
+  output_header FRWNN_PARAMS((FILE*,struct JT*,struct wnn_file_head*)),
+  udytoS FRWNN_PARAMS((w_char*,int,char*,struct uind1*)),
+  output_ri FRWNN_PARAMS((FILE*)),
+  exit1 FRWNN_PARAMS((void)),
+  new_pwd FRWNN_PARAMS((char*,char*)),
+  rev_short_fun FRWNN_PARAMS((w_char*)),
+  rev_w_char FRWNN_PARAMS((w_char*,int));
+
+extern int sort_func_sdic FRWNN_PARAMS((char*,char*));
+extern int sort_func_je FRWNN_PARAMS((char*,char*));
+extern void set_cswidth FRWNN_PARAMS((register unsigned int));
+
+static void ujistoud FRWNN_PARAMS((void)),
+  output_dic_index FRWNN_PARAMS((void)),
+  usage FRWNN_PARAMS((void)),
+  sdic_sort FRWNN_PARAMS((void)),
+  ujistosd FRWNN_PARAMS((int,int)),
+  not_enough_area FRWNN_PARAMS((void)),
+  get_pwd FRWNN_PARAMS((char*,char*)),
+  output_hindo FRWNN_PARAMS((FILE*)),
+  output_hinsi FRWNN_PARAMS((FILE*)),
+  output_kanji FRWNN_PARAMS((FILE*)),
+  rev_dic_data FRWNN_PARAMS((void)),
+  set_pter1 FRWNN_PARAMS((void)),
+  output_comment FRWNN_PARAMS((FILE*)),
+  output_hinsi_list FRWNN_PARAMS((FILE*));
 
 /* Switcher variable between UD and SD */
 
 int which_dict = WNN_REV_DICT;
 #ifdef CHINESE
-extern int pzy_flag;
-static void output_sisheng ();
+static void output_sisheng FRWNN_PARAMS((FILE *));
 #endif
 
 /* Variables both for UD and SD */
@@ -115,8 +146,7 @@ struct uind1 *tary;             /* index 1 */
 int tnum = 0;
 struct uind2 *uhopter;
 
-char *hinsi_file_name = NULL;
-
+unsigned char *hinsi_file_name = NULL;
 
 void
 init (int argc, char **argv)
@@ -221,22 +251,20 @@ alloc_area (void)
     }
 }
 
-extern int sort_func_sdic ();
-extern int sort_func_je ();
 FILE *ofpter;
 
 int
 main (int argc, char** argv)
 {
   char *cswidth_name;
-  extern char *get_cswidth_name ();
-  extern void set_cswidth ();
 
   com_name = argv[0];
   init (argc, argv);
 
-  if (cswidth_name = get_cswidth_name (WNN_DEFAULT_LANG))
-    set_cswidth (create_cswidth (cswidth_name));
+  if ((cswidth_name = get_cswidth_name (WNN_DEFAULT_LANG)) != NULL)
+    {
+      set_cswidth (create_cswidth (cswidth_name));
+    }
 
 #ifdef CHINESE
   ujis_header (&which_dict);    /* read header of UJIS dic  */
@@ -442,7 +470,7 @@ output_dic_index (void)
 {
   if (which_dict == WNN_UD_DICT)
     {
-      fprintf (stderr, " tnum = %d\n ind2= %d\n kanji = %d\n", tnum, (char *) uhopter - (char *) hostart, kanjicount);
+      fprintf (stderr, " tnum = %d\n ind2= %d\n kanji = %d\n", tnum, (int)((char *) uhopter - (char *) hostart), kanjicount);
       jt.maxtable = tnum;
       jt.maxhontai = (char *) uhopter - (char *) hostart;
       jt.maxri2 = jt.maxri1[D_YOMI] = jt.maxri1[D_KANJI] = 0;
@@ -470,7 +498,7 @@ output_dic_index (void)
     }
   else
     {
-      fprintf (stderr, "node_count = %d  ind= %d\n kanji = %d\n", node_count, (char *) hopter - (char *) hostart, kanjicount);
+      fprintf (stderr, "node_count = %d  ind= %d\n kanji = %d\n", node_count, (int)((char *) hopter - (char *) hostart), kanjicount);
       jt.maxtable = 0;
       jt.maxhontai = (char *) hopter - (char *) hostart;
       jt.maxri2 = jt.maxri1[D_YOMI] = jt.maxri1[D_KANJI] = 0;
@@ -873,7 +901,6 @@ rev_dic_data (void)
 }
 
 #ifdef  CONVERT_with_SiSheng
-extern void put_short ();
 
 static void
 output_sisheng (FILE* ofpter)

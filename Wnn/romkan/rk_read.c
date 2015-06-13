@@ -1,5 +1,5 @@
 /*
- *  $Id: rk_read.c,v 1.6 2005/04/10 15:26:38 aonoto Exp $
+ *  $Id: rk_read.c,v 1.7 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -50,17 +50,48 @@
 #include <sys/types.h>
 #include "rk_header.h"
 #include "rk_extvars.h"
+#include "jslib.h"
 
-letter onescan (), *rangekettei ();
-char *ename ();
+letter onescan FRWNN_PARAMS((letter**,letter*)),
+  *rangekettei FRWNN_PARAMS((int,letter*));
+char *ename FRWNN_PARAMS((char*));
 
-extern letter *ltrgrow (), *ltrend (), letterpick (), *ltr1cut ();
-extern char *chrcat (), *strend ();
+extern letter *ltrgrow FRWNN_PARAMS((letter*,letter*)),
+  *ltrend FRWNN_PARAMS((letter*)),
+  letterpick FRWNN_PARAMS((uns_chr**)),
+  *ltr1cut FRWNN_PARAMS((letter*));
+extern char *chrcat FRWNN_PARAMS((char*,char)),
+  *strend FRWNN_PARAMS((char*));
 
-static int termsscan (), evalandcpy (), eval1cpy (), partscan (), evlis (), atermscan (), serfun (), hensrc_tourk (), blankpass (), modsrcL (), chkL_get_int ();
-static void ERRLIN (), ERHOPN (), readhyo (), ltr1tostr (), ERRHYO (), vchk (), rangeset (), de_bcksla (), listscan (), singleqscan (), doubleqscan ();
-extern void BUGreport (), choosehyo (), readmode ();
-extern int ltrcmp (), ltrstrcmp (), readfnm (), fixednamep ();
+static int termsscan FRWNN_PARAMS((register letter**,letter*,int)),
+  evalandcpy FRWNN_PARAMS((register letter**,int)),
+  eval1cpy FRWNN_PARAMS((letter**,int,int)),
+  partscan FRWNN_PARAMS((register letter**,register letter*)),
+  evlis FRWNN_PARAMS((int,letter**,int)),
+  atermscan FRWNN_PARAMS((register letter**,register letter*,int)),
+  serfun FRWNN_PARAMS((register letter*)),
+  hensrc_tourk FRWNN_PARAMS((letter*,int)),
+  blankpass FRWNN_PARAMS((register letter**,int)),
+  modsrcL FRWNN_PARAMS((letter*)),
+  chkL_get_int FRWNN_PARAMS((letter*,modetyp*,modetyp));
+static void ERRLIN FRWNN_PARAMS((unsigned int)),
+  ERHOPN FRWNN_PARAMS((unsigned int)),
+  readhyo FRWNN_PARAMS((int)),
+  ltr1tostr FRWNN_PARAMS((letter,char**)),
+  ERRHYO FRWNN_PARAMS((unsigned int)),
+  vchk FRWNN_PARAMS((letter*)),
+  rangeset FRWNN_PARAMS((int,letter*)),
+  de_bcksla FRWNN_PARAMS((char*,char*)),
+  listscan FRWNN_PARAMS((register letter**,register letter*)),
+  singleqscan FRWNN_PARAMS((letter**,letter*)),
+  doubleqscan FRWNN_PARAMS((letter**,letter*));
+extern void BUGreport FRWNN_PARAMS((int)),
+  choosehyo FRWNN_PARAMS((void)),
+  readmode FRWNN_PARAMS((char*));
+extern int ltrcmp FRWNN_PARAMS((letter*,letter*)),
+  ltrstrcmp FRWNN_PARAMS((register letter*,register char*)),
+  readfnm FRWNN_PARAMS((int (*readchar_func) (void),int (*unreadc_func) (int),int (*readstr_func) (char**,int),char**,int*)),
+  fixednamep FRWNN_PARAMS((char*));
 
 #define IHENSU (1 << 24)        /* 内部表現の上位１バイトで、変数を表す */
 #define IKANSU (2 << 24)        /*           〃              関数を表す */

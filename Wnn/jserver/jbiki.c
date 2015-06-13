@@ -1,5 +1,5 @@
 /*
- *  $Id: jbiki.c,v 1.4 2003/06/07 02:22:23 hiroo Exp $
+ *  $Id: jbiki.c,v 1.5 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -61,9 +61,9 @@ static char pan_tmp[256];
 #endif /* CONVERT_with_SiSheng */
 
 static int ud_biki (struct JT *, w_char *);
-static int sd_biki ();
-static int sd_biki_one ();
-static int sdbinary ();
+static int sd_biki (struct JT *, w_char *);
+static int sd_biki_one (char *, int, w_char *);
+static int sdbinary (register w_char, register w_char *, int tsize);
 
 int
 jishobiki (w_char *yomi,	/* 読みの先頭へのポインタ */

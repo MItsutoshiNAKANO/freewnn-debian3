@@ -1,5 +1,5 @@
 /*
- *  $Id: dtoa.c,v 1.9 2005/06/12 17:14:23 aonoto Exp $
+ *  $Id: dtoa.c,v 1.10 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -34,7 +34,7 @@
   */
 
 #ifndef lint
-static char *rcs_id = "$Id: dtoa.c,v 1.9 2005/06/12 17:14:23 aonoto Exp $";
+static char *rcs_id = "$Id: dtoa.c,v 1.10 2013/09/02 11:01:39 itisango Exp $";
 #endif /* lint */
 
 #ifdef HAVE_CONFIG_H
@@ -55,7 +55,11 @@ static char *rcs_id = "$Id: dtoa.c,v 1.9 2005/06/12 17:14:23 aonoto Exp $";
 #endif /* STDC_HEADERS */
 #if HAVE_UNISTD_H
 #  include <unistd.h>
-#endif
+#else				/* HAVE_UNISTD_H  */
+extern int optind;
+extern char *optarg;
+#endif				/* HAVE_UNISTD_H  */
+
 
 #include "commonhd.h"
 #include "wnn_config.h"
@@ -70,12 +74,31 @@ static char *rcs_id = "$Id: dtoa.c,v 1.9 2005/06/12 17:14:23 aonoto Exp $";
 extern int pzy_flag;            /* Pinyin or Zhuyin */
 #endif
 
-extern void parse_options (), usage (), input_dic (), udtoujis (), kset (), sdtoujis (), ghindo (), sort (), output_ujis (), exit1 (), init_jeary (), get_kanji_str ();
-extern int input_header (), input_comment (), input_hinsi_list (), little_endian (), revdic (), wnn_loadhinsi (), init_heap (), w_stradd (), input_hindo_header (), motoni2 ();
+#include "etc.h"
+#include "jutil.h"
+
+void parse_options FRWNN_PARAMS((int *, char ***));
+void usage FRWNN_PARAMS((void));
+void udtoujis FRWNN_PARAMS((void));
+void  kset FRWNN_PARAMS((void));
+void sdtoujis FRWNN_PARAMS((char *hopter, register int level));
+void ghindo FRWNN_PARAMS((int, char **));
+int input_comment FRWNN_PARAMS((register FILE *));
+int input_hinsi_list FRWNN_PARAMS((register FILE *));
+void input_dic FRWNN_PARAMS((FILE *));
+
+extern void sort (), output_ujis (), exit1 (), init_jeary (), get_kanji_str ();
+extern int input_header (), little_endian (), revdic (), wnn_loadhinsi (), init_heap (), w_stradd (), input_hindo_header (), motoni2 ();
+
 #ifdef CONVERT_with_SiSheng
-extern int cwnn_yincod_pzy_str (), input_sisheng ();
-#endif
-static int rdtoujis (), set_hinsi (), input_hindo (), add_hindo ();
+int input_sisheng FRWNN_PARAMS((register FILE *ifpter));
+#endif	/* CONVERT_with_SiSheng  */
+
+static int rdtoujis FRWNN_PARAMS((void));
+static int add_hindo FRWNN_PARAMS((register FILE *, int));
+static int input_hindo FRWNN_PARAMS((register FILE *));
+static int set_hinsi FRWNN_PARAMS((void));
+
 /* Moved from Wnn/etc/bdic.c */
 int get_n_EU_str (FILE* ifpter, int n, w_char* st);
 int get_short (short* sp, FILE* ifpter);
@@ -100,13 +123,13 @@ main (argc, argv)
 {
   FILE *ifpter;
   char *cswidth_name;
-  extern char *get_cswidth_name ();
-  extern void set_cswidth ();
 
   com_name = argv[0];
 
-  if (cswidth_name = get_cswidth_name (WNN_DEFAULT_LANG))
-    set_cswidth (create_cswidth (cswidth_name));
+  if ((cswidth_name = get_cswidth_name (WNN_DEFAULT_LANG)) != NULL)
+    {
+      set_cswidth (create_cswidth (cswidth_name));
+    }
   parse_options (&argc, &argv);
 
   if ((ifpter = fopen (infile, "r")) == NULL)
@@ -161,8 +184,6 @@ parse_options (argc, argv)
      char ***argv;
 {
   int c;
-  extern int optind;
-  extern char *optarg;
 
 #ifdef CONVERT_with_SiSheng
 #  define OPTSTRING "nseEzh:"

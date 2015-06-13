@@ -1,5 +1,5 @@
 /*
- *  $Id: jishoop.c,v 1.6 2003/06/07 02:23:58 hiroo Exp $
+ *  $Id: jishoop.c,v 1.7 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -43,12 +43,20 @@
 #include "de_header.h"
 #include "jdata.h"
 
-static void make_space ();
-static int word_add1 (), word_delete1 (), word_comment_set1 ();
+#if __STDC__
+#define FRWNN_PARAMS(paramlist)	paramlist
+#else
+#define FRWNN_PARAMS(paramlist)	()
+#endif	/* __STDC__ */
+
+static void make_space FRWNN_PARAMS((register struct uind1 *, register int, register struct JT *));
+static int word_add1 FRWNN_PARAMS((struct JT *, w_char *, int, w_char *, w_char *));
+static int word_delete1 FRWNN_PARAMS((struct JT *, struct HJT *, w_char *, int));
+static int word_comment_set1 FRWNN_PARAMS((struct JT *, w_char *, int, w_char *));
 
 #ifndef min
-#define min(a, b) ((a > b)? b:a)
-#define max(a, b) ((a < b)? b:a)
+#define min(a, b) (((a) > (b))? (b) : (a))
+#define max(a, b) (((a) < (b))? (b) : (a))
 #endif
 
 int
@@ -304,22 +312,22 @@ word_add1 (jtl, pyomi, hinsi, kanji, comment)
   Sreverse (yomi, pyomi);
 
   if ((jtl->bufsize_hontai <= jtl->maxhontai + sizeof (struct uind2) + Strlen (yomi))
-      && (ud_realloc_hontai (jtl) == NULL))
+      && (ud_realloc_hontai (jtl) == 0))
     {
       return (-1);
     }
   if ((jtl->bufsize_kanji <= jtl->maxkanji + (Strlen (kanji) + Strlen (comment) + Strlen (yomi) + 3) * sizeof (w_char) + 1)
-      && (ud_realloc_kanji (jtl) == NULL))
+      && (ud_realloc_kanji (jtl) == 0))
     {
       return (-1);
     }
   if (jtl->bufsize_serial <= jtl->maxserial + 4
-     && ud_realloc_serial (jtl) == NULL)
+     && ud_realloc_serial (jtl) == 0)
     {
       return (-1);
     }
   if (jtl->bufsize_table <= jtl->maxtable + sizeof (struct uind1)
-     && ud_realloc_table (jtl) == NULL)
+     && ud_realloc_table (jtl) == 0)
     {
       return (-1);
     }
@@ -556,7 +564,7 @@ found_it:
       if (jtl->bufsize_hontai <= jtl->maxhontai + sizeof (struct uind2) + Strlen (yomi))
         {
           tmp = (char *) p - (char *) jtl->hontai;
-          if (ud_realloc_hontai (jtl) == NULL)
+          if (ud_realloc_hontai (jtl) == 0)
             {
               return (-1);
             }
@@ -647,7 +655,7 @@ found_it:
     {
       if (jtl->bufsize_kanji <= jtl->maxkanji + (Strlen (kanji) + Strlen (comment) + Strlen (yomi1) + 4) * 2)
         {
-          if (ud_realloc_kanji (jtl) == NULL)
+          if (ud_realloc_kanji (jtl) == 0)
             {
               return (-1);
             }
@@ -667,7 +675,7 @@ found_it:
           /* We need to spend one serial_no to ensure that the entry
              before this and after this are not connected */
           if (jtl->bufsize_serial <= jtl->maxserial + 4
-	     && ud_realloc_serial (jtl) == NULL)
+	     && ud_realloc_serial (jtl) == 0)
             {
               return (-1);
             }
@@ -762,7 +770,7 @@ hindo_file_size_justify (wfp, whfp)
         {
           while (hjtp->bufsize_serial <= jtp->maxserial)
             {
-              if (hindo_file_realloc (hjtp) == NULL)
+              if (hindo_file_realloc (hjtp) == 0)
                 return (-1);
             }
           error1 ("Dic file size is bigger than that of Hindo file!");

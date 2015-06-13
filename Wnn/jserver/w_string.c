@@ -1,5 +1,5 @@
 /*
- *  $Id: w_string.c,v 1.4 2003/05/11 18:43:16 hiroo Exp $
+ *  $Id: w_string.c,v 1.5 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -32,6 +32,8 @@
 #include <stdio.h>
 #include "commonhd.h"
 #include "wnn_string.h"
+
+#include "de_header.h"
 
 void
 Sreverse (w1, w2)

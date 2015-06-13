@@ -1,5 +1,5 @@
 /*
- *  $Id: jishosub.c,v 1.3 2001/06/14 18:16:02 ura Exp $
+ *  $Id: jishosub.c,v 1.4 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -34,7 +34,15 @@
 #include "de_header.h"
 #include "jdata.h"
 
-static int inspect_sd (), get_fst_serial (), inspect_ud ();
+#if __STDC__
+#define FRWNN_PARAMS(paramlist)	paramlist
+#else
+#define FRWNN_PARAMS(paramlist)	()
+#endif	/* __STDC__ */
+
+static int inspect_sd FRWNN_PARAMS((int, int, w_char *, struct jdata *));
+static int get_fst_serial FRWNN_PARAMS((char *, UCHAR *));
+static int inspect_ud FRWNN_PARAMS((int, int, w_char *, struct jdata *));
 
 int
 inspect (dic_no, serial, yomi, jd)

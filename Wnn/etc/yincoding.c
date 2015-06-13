@@ -1,5 +1,5 @@
 /*
- *  $Id: yincoding.c,v 1.7 2005/04/10 15:26:37 aonoto Exp $
+ *  $Id: yincoding.c,v 1.8 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -49,6 +49,8 @@
 #include  "rk_spclval.h"
 #include  "jh.h"
 #include  "wnn_string.h"
+
+#include "etc.h"
 
 extern char *py_table[];
 extern char *zy_table[];

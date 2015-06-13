@@ -1,5 +1,5 @@
 /*
- *  $Id: touroku.c,v 1.4 2006/02/11 09:51:44 aonoto Exp $
+ *  $Id: touroku.c,v 1.5 2013/09/02 11:01:40 itisango Exp $
  */
 
 /*
@@ -66,7 +66,7 @@ static char *msg_st = "  読み:";
 
 int touroku_mark = -1;
 
-static int hani_settei ();
+static int hani_settei (w_char *, int);
 
 /* 登録のための外部関数*/
 void
@@ -473,7 +473,7 @@ find_yomi_for_kanji (kanji_string, yomi_buf)
             {
               kana_end += jl_jiri_len (bun_data_, e_bun) + e_offset - klen;
             }
-          Strcpy (yomi_buf, yomi_buf + kana_start, kana_end - kana_start);
+          Strncpy (yomi_buf, yomi_buf + kana_start, kana_end - kana_start);
           yomi_buf[kana_end - kana_start] = 0;
         }
     }

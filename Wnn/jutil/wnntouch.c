@@ -1,5 +1,5 @@
 /*
- *  $Id: wnntouch.c,v 1.8 2004/07/19 18:24:26 hiroo Exp $
+ *  $Id: wnntouch.c,v 1.9 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -34,7 +34,7 @@
  */
 
 #ifndef lint
-static char *rcs_id = "$Id: wnntouch.c,v 1.8 2004/07/19 18:24:26 hiroo Exp $";
+static char *rcs_id = "$Id: wnntouch.c,v 1.9 2013/09/02 11:01:39 itisango Exp $";
 #endif /* lint */
 
 #ifdef HAVE_CONFIG_H
@@ -51,6 +51,8 @@ static char *rcs_id = "$Id: wnntouch.c,v 1.8 2004/07/19 18:24:26 hiroo Exp $";
 #include "jslib.h"
 #include "commonhd.h"
 #include "getopt.h"	/* GNU getopt in the stock */
+
+#include "etc.h"
 
 extern int input_file_header (), check_inode (), change_file_uniq ();
 static void usage (void);

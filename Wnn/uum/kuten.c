@@ -1,5 +1,5 @@
 /*
- *  $Id: kuten.c,v 1.3 2001/06/14 18:16:07 ura Exp $
+ *  $Id: kuten.c,v 1.4 2013/09/02 11:01:40 itisango Exp $
  */
 
 /*
@@ -41,7 +41,7 @@
 
 #define MAX_TEN_LENGTH  94
 
-static int get_ichiran ();
+static int get_ichiran (int);
 
 int
 in_kuten ()                     /*  returns code for a moji  */

@@ -1,5 +1,5 @@
 /*
- *  $Id: jslib.h,v 1.6 2008/10/26 10:27:53 aonoto Exp $
+ *  $Id: jslib.h,v 1.7 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -136,6 +136,18 @@ extern "C" {
 
 /*      js_who  */
 #define WNN_MAX_ENV_OF_A_CLIENT 32
+
+#ifndef FRWNN_PARAMS
+/*
+ * I currently think ANSI-C is not sufficient on building your clients
+ * linked with libwnn. (aonoto)
+ */
+#if __STDC__		/* Sufficient? */
+#define FRWNN_PARAMS(paramlist)	paramlist
+#else
+#define FRWNN_PARAMS(paramlist)	()
+#endif
+#endif
 
 struct wnn_jwho
 {
@@ -403,22 +415,11 @@ struct wnn_file_head
 #define js_open(server, timeout)        js_open_lang(server, "ja_JP", timeout)
 #define js_connect(server,env_name)     js_connect_lang(server, env_name, "ja_JP")
 
-#ifndef FRWNN_PARAMS
-/*
- * I currently think ANSI-C is not sufficiant on building your clients
- * linked with libwnn. (aonoto)
- */
-#if __STDC__		/* Sufficient? */
-#define FRWNN_PARAMS(paramlist)	paramlist
-#else
-#define FRWNN_PARAMS(paramlist)	()
-#endif
-#endif
 
-extern WNN_JSERVER_ID *js_open_lang FRWNN_PARAMS((register char *server, register char *lang, register int timeout));
+extern WNN_JSERVER_ID *js_open_lang FRWNN_PARAMS((const register char *server, const register char *lang, register int timeout));
 extern int js_close      FRWNN_PARAMS((WNN_JSERVER_ID *server));
 /* extern WNN_JSERVER_ID *js_change_current_jserver (); */ /* Not exist? */
-extern struct wnn_env *js_connect_lang FRWNN_PARAMS((WNN_JSERVER_ID *server, register char *env_name, char *lang));
+extern struct wnn_env *js_connect_lang FRWNN_PARAMS((WNN_JSERVER_ID *server, const register char *env_name, const char *lang));
 extern int js_disconnect FRWNN_PARAMS((register struct wnn_env *env));
 extern int js_env_list   FRWNN_PARAMS((WNN_JSERVER_ID *server, struct wnn_ret_buf *ret));
 extern int js_param_set  FRWNN_PARAMS((struct wnn_env *env, register struct wnn_param *para));
@@ -434,7 +435,7 @@ extern int js_dic_info     FRWNN_PARAMS((struct wnn_env *env, int dic_no, regist
 extern int js_dic_list     FRWNN_PARAMS((struct wnn_env *env, struct wnn_ret_buf *ret));
 extern int js_dic_list_all FRWNN_PARAMS((WNN_JSERVER_ID *server, struct wnn_ret_buf *ret));
 extern int js_dic_use      FRWNN_PARAMS((struct wnn_env *env, int dic_no, int flag));
-extern int js_env_exist     FRWNN_PARAMS((register WNN_JSERVER_ID *server, register char *env_name));
+extern int js_env_exist     FRWNN_PARAMS((register WNN_JSERVER_ID *server, const register char *env_name));
 extern int js_env_sticky    FRWNN_PARAMS((register struct wnn_env *env));
 extern int js_env_un_sticky FRWNN_PARAMS((register struct wnn_env *env));
 extern int js_file_comment_set FRWNN_PARAMS((struct wnn_env *env, int fid, w_char *comment));

@@ -1,5 +1,5 @@
 /*
- *  $Id: rk_main.c,v 1.4 2005/04/10 15:26:38 aonoto Exp $
+ *  $Id: rk_main.c,v 1.5 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -42,6 +42,7 @@
 #include "rk_header.h"
 #include "rk_extvars.h"
 #include "rk_fundecl.h"
+#include "jslib.h"
 
 struct matchpair                /*    現在マッチされている変数の番号と、マッチした文字の
                                    組を保持。 */
@@ -91,23 +92,48 @@ char ebf_sw = 0;
 letter saishu_out[OUTSIZ];
 letter delchr, delchr2 = EOLTTR, nisedl;        /* DELのキャラクタは二個まで持てる */
 
-modetyp chgmod (), incmod (), decmod ();
-
+modetyp chgmod FRWNN_PARAMS((int,modetyp)),
+  incmod FRWNN_PARAMS((int,modetyp)),
+  decmod FRWNN_PARAMS((int,modetyp));
 
 /* letterを返す関数の定義及び宣言（一部にはcharのものも混じっている） */
 
-static letter mchedsrc ();
-letter romkan_next (), romkan_unnext ();
-letter romkan_getc (), romkan_ungetc (), *romkan_henkan ();
-letter to_zenalpha (), to_zenhira (), to_zenkata ();
+static letter mchedsrc FRWNN_PARAMS((int));
+letter romkan_next FRWNN_PARAMS((void)),
+  romkan_unnext FRWNN_PARAMS((letter));
+letter romkan_getc FRWNN_PARAMS((void)),
+  romkan_ungetc FRWNN_PARAMS((letter)),
+  *romkan_henkan FRWNN_PARAMS((letter));
+letter to_zenalpha FRWNN_PARAMS((letter)),
+  to_zenhira FRWNN_PARAMS((letter)),
+  to_zenkata FRWNN_PARAMS((letter));
  /* to_zenhira;kata は濁点を持つ文字を一まとめにしない。 */
 
-void BUGreport ();
-static void maeato_henkan (), add_at_eof (), rk_delete (), set_rubout (), mchevl (), codeout_chg (), ltrevlcpy ();
-int match ();
-static int p_eq (), hen_ikisrc (), henkan_ok (), rk_rst (), head_bytecount ();
-extern void readdata (), romkan_reset (), hank_setup (), to_hankata (), to_digit (), dakuadd (), handakuadd (), allchgmod ();
-extern int ltov ();
+void BUGreport FRWNN_PARAMS((int));
+static void maeato_henkan FRWNN_PARAMS((letter,letter*,int*)),
+  add_at_eof FRWNN_PARAMS((void)),
+  rk_delete FRWNN_PARAMS((letter)),
+  set_rubout FRWNN_PARAMS((letter*,int,letter)),
+  mchevl FRWNN_PARAMS((letter**,letter*)),
+  codeout_chg FRWNN_PARAMS((void)),
+  ltrevlcpy FRWNN_PARAMS((letter*,letter*));
+int match FRWNN_PARAMS((void));
+static int p_eq FRWNN_PARAMS((register letter**,register letter**)),
+  hen_ikisrc FRWNN_PARAMS((int,letter)),
+  henkan_ok FRWNN_PARAMS((void)),
+  rk_rst FRWNN_PARAMS((void)),
+  head_bytecount FRWNN_PARAMS((uns_chr*));
+extern void readdata FRWNN_PARAMS((letter*,struct dat*,letter**,char*)),
+  romkan_reset FRWNN_PARAMS((void)),
+  hank_setup FRWNN_PARAMS((void)),
+  to_hankata FRWNN_PARAMS((letter,letter**)),
+  to_digit FRWNN_PARAMS((letter,letter,letter**)),
+  dakuadd FRWNN_PARAMS((letter,letter**)),
+  handakuadd FRWNN_PARAMS((letter,letter**)),
+  allchgmod FRWNN_PARAMS((modetyp));
+extern int ltov FRWNN_PARAMS((letter));
+int romkan_init2 FRWNN_PARAMS((char*,letter,char,letter(*keyinfn)(),int(*bytcntfn)(),char,char,char));
+int romkan_init3 FRWNN_PARAMS((char*,letter,letter,letter,letter(*keyinfn)(),int(*bytcntfn)(),int(*kbytcntfn)(),char,int));
 
 static letter *
 ltrcpy (lp1, lp2)

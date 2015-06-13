@@ -1,5 +1,5 @@
 /*
- *  $Id: pwd.c,v 1.6 2004/07/12 17:53:02 hiroo Exp $
+ *  $Id: pwd.c,v 1.7 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -46,6 +46,8 @@
 #if HAVE_UNISTD_H
 #  include <unistd.h>
 #endif
+#include <time.h>
+
 #include "commonhd.h"
 #include "jslib.h"
 #include "wnn_os.h"
@@ -75,7 +77,7 @@ new_pwd (char* src, char* encd)
       bzero (encd, WNN_PASSWD_LEN);
       return;
     }
-  x = time (NULL);
+  x = time ((time_t *) NULL);
   xx[0] = x & 0x3f;
   xx[1] = (x & 0x3f00) >> 8;
   xx[2] = '\0';                 /* for MD5 (that requires terminator) */

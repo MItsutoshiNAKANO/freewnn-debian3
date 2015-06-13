@@ -1,5 +1,5 @@
 /*
- *  $Id: get_kaiarea.c,v 1.7 2003/06/07 02:22:23 hiroo Exp $
+ *  $Id: get_kaiarea.c,v 1.8 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -51,7 +51,7 @@
 
 /*
  * get_kaiseki_area: take memory areas for analysing.
- * return value: fail = NULL, success != NULL
+ * return value: fail = 0, success != 0
  */
 int
 get_kaiseki_area (size_t kana_len)
@@ -60,28 +60,28 @@ get_kaiseki_area (size_t kana_len)
     {
       wnn_errorno = WNN_MALLOC_INITIALIZE;
       log_debug ("malloc failed in maxj.");
-      return (NULL);
+      return (0);
     }
 
   if (NULL == (jmtp = (struct jdata ***) calloc (kana_len, sizeof (struct jdata **))))
     {
       wnn_errorno = WNN_MALLOC_INITIALIZE;
       log_debug ("malloc failed in jmtp.");
-      return (NULL);
+      return (0);
     }
 
   if (NULL == (jmt_ = (struct jdata **) calloc (SIZE_JISHOTABLE, sizeof (struct jdata *))))
     {
       wnn_errorno = WNN_MALLOC_INITIALIZE;
       log_debug ("malloc failed in jmt_.");
-      return (NULL);
+      return (0);
     }
 
   if (NULL == (jmtw_ = (struct jdata *) calloc (SIZE_JISHOHEAP, sizeof (struct jdata))))
     {
       wnn_errorno = WNN_MALLOC_INITIALIZE;
       log_debug ("malloc failed in jmtw_.");
-      return (NULL);
+      return (0);
     }
 
   jmt_end = jmt_ + SIZE_JISHOTABLE;
@@ -92,7 +92,7 @@ get_kaiseki_area (size_t kana_len)
     {
       wnn_errorno = WNN_MALLOC_INITIALIZE;
       log_debug ("malloc failed in bun.");
-      return (NULL);
+      return (0);
     }
 
   maxchg = kana_len;

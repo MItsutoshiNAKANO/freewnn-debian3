@@ -1,7 +1,6 @@
 /*
- *  $Id: dic_head.c,v 1.6 2013/09/02 11:01:39 itisango Exp $
+ * $Id: conv.h,v 1.2 2014/08/01 22:04:26 itisango Exp $
  */
-
 /*
  * FreeWnn is a network-extensible Kana-to-Kanji conversion system.
  * This file is part of FreeWnn.
@@ -10,9 +9,9 @@
  *                 1987, 1988, 1989, 1990, 1991, 1992
  * Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
  * Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
- * Copyright FreeWnn Project 1999, 2000, 2004
+ * Copyright FreeWnn Project 1999, 2000, 2002, 2006, 2013
  *
- * Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
+ * Maintainer:  FreeWnn Project
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,43 +28,19 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <stdio.h>
-#include "commonhd.h"
-#include "jslib.h"
-#include "jh.h"
-#include "jdata.h"
 
-#include "jutil.h"
-#include "etc.h"
+#ifndef FRWNN_CONV_H
+#define FRWNN_CONV_H 1
 
-/* extern int create_file_header (), output_header_jt (), input_file_header (), input_header_jt (), input_header_hjt ();  */
+#if __STDC__
+#define FRWNN_PARAMS(paramlist)	paramlist
+#else
+#define FRWNN_PARAMS(paramlist)	()
+#endif	/* __STDC__ */
 
-int
-output_header (FILE* ofpter, struct JT* jtp, struct wnn_file_head* fhp)
-{
-  create_file_header (ofpter, WNN_FT_DICT_FILE, fhp->file_passwd);
-  output_header_jt (ofpter, jtp);
-  return (0);
-}
+extern int convert_key_setup FRWNN_PARAMS((char *, int));
+#ifdef TERMCAP
+extern int convert_getterm FRWNN_PARAMS((char *termname, int flg));
+#endif	/* TERMCAP  */
 
-int
-input_header (FILE* ifpter, struct JT* jtp, struct wnn_file_head* fhp)
-{
-
-  if (input_file_header (ifpter, fhp) == -1 || input_header_jt (ifpter, jtp) == -1)
-    {
-      fprintf (stderr, "Not a Wnn file\n");
-      return (-1);
-    }
-  return (0);
-}
-
-int
-input_hindo_header (FILE* ifpter, struct HJT* hjtp, struct wnn_file_head* fhp)
-{
-  if (input_file_header (ifpter, fhp) == -1 || input_header_hjt (ifpter, hjtp) == -1)
-    {
-      return (-1);
-    }
-  return (0);
-}
+#endif /* FRWNN_CONV_H  */

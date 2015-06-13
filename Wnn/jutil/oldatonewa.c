@@ -1,5 +1,5 @@
 /*
- *  $Id: oldatonewa.c,v 1.6 2004/07/19 18:24:26 hiroo Exp $
+ *  $Id: oldatonewa.c,v 1.7 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -30,7 +30,7 @@
  */
 
 #ifndef lint
-static char *rcs_id = "$Id: oldatonewa.c,v 1.6 2004/07/19 18:24:26 hiroo Exp $";
+static char *rcs_id = "$Id: oldatonewa.c,v 1.7 2013/09/02 11:01:39 itisango Exp $";
 #endif /* lint */
 
 #ifdef HAVE_CONFIG_H
@@ -48,6 +48,8 @@ static char *rcs_id = "$Id: oldatonewa.c,v 1.6 2004/07/19 18:24:26 hiroo Exp $";
 #include "commonhd.h"
 #include "wnn_os.h"
 #include "wnn_string.h"
+
+#include "etc.h"
 
 static char *ohinsi[] = {
   "カ行五段",
@@ -86,7 +88,6 @@ static char *ohinsi[] = {
 
 #define LINE_SIZE 1024
 
-extern int motoni2 ();
 static int get_line1 (char* buffer);
 static char* get_string (char* str, char* buf);
 

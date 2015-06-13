@@ -1,5 +1,5 @@
 /*
- *  $Id: jl.c,v 1.14 2005/04/10 15:26:37 aonoto Exp $
+ *  $Id: jl.c,v 1.17 2015/05/10 01:39:27 itisango Exp $
  */
 
 /*
@@ -10,7 +10,7 @@
  *                 1987, 1988, 1989, 1990, 1991, 1992
  * Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
  * Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
- * Copyright FreeWnn Project 1999, 2000, 2002, 2003
+ * Copyright FreeWnn Project 1999, 2000, 2002, 2003, 2015
  *
  * Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
  *
@@ -52,6 +52,7 @@
 #    include <malloc.h>
 #  endif
 #endif /* STDC_HEADERS */
+#include <stdarg.h>
 #include <sys/types.h>
 #include <sys/file.h>
 #include <sys/stat.h>
@@ -66,6 +67,9 @@
 #include "jd_sock.h"
 #include "jslib.h"
 #include "jllib.h"
+
+#include "jlib_private.h"
+
 #include "msg.h"
 #include "wnn_string.h"
 #include "wnn_os.h"
@@ -129,42 +133,43 @@ static int syuutanv1;
 
 int confirm_state;
 
-static void add_down_bnst ();
-static int alloc_heap ();
-static int call_error_handler ();
-static int change_ascii_to_int ();
-static int create_file ();
-static int dai_end ();
-static int expand_expr ();
-static int expand_expr_all ();
-static int file_discard ();
-static int file_exist ();
-static int file_read ();
-static int file_remove ();
-static int find_same_kouho ();
-static int find_same_kouho_dai ();
-static void free_bun ();
-static void free_down ();
-static void free_sho ();
-static void free_zenkouho ();
-static int get_c_jikouho ();
-static int get_c_jikouho_dai ();
-static int get_c_jikouho_from_zenkouho ();
-static int get_c_jikouho_from_zenkouho_dai ();
-static int get_pwd ();
-static int insert_dai ();
-static int insert_sho ();
-static int make_dir1 ();
-static int make_dir_rec1 ();
-static void make_space_for ();
-static void make_space_for_bun ();
-static void make_space_for_zenkouho ();
-static void message_out ();
-static int ren_conv1 ();
-static void set_dai ();
-static void set_sho ();
-static int tan_conv1 ();
+static void add_down_bnst FRWNN_PARAMS((register struct wnn_buf *, register int, register WNN_BUN *));
+static int alloc_heap FRWNN_PARAMS((struct wnn_buf *, register int));
+static int call_error_handler FRWNN_PARAMS((int (*) (const char *), const char *));
+static int change_ascii_to_int FRWNN_PARAMS((register char *, int *));
+static int create_file FRWNN_PARAMS((register struct wnn_env *, char *, int, int, char *, char *,  int (*) (const char *), int (*) (const char *)));
+static int dai_end FRWNN_PARAMS((register struct wnn_buf *, register int));
+static int expand_expr FRWNN_PARAMS((register char *, struct wnn_env *));
+static int expand_expr_all FRWNN_PARAMS((register char *, struct wnn_env *));
+static int file_discard FRWNN_PARAMS((register struct wnn_env *, register int));
+static int file_exist FRWNN_PARAMS((struct wnn_env *, char *));
+static int file_read FRWNN_PARAMS((struct wnn_env *, char *));
+static int file_remove FRWNN_PARAMS((register WNN_JSERVER_ID *, char *, char *));
+static int find_same_kouho FRWNN_PARAMS((struct wnn_sho_bunsetsu *, register WNN_BUN **, register WNN_BUN **, int level));
+static int find_same_kouho_dai FRWNN_PARAMS((struct wnn_dai_bunsetsu *, struct wnn_buf *, int, int));
+static void free_bun FRWNN_PARAMS((struct wnn_buf *, register int, register int));
+static void free_down FRWNN_PARAMS((struct wnn_buf *, int, int));
+static void free_sho FRWNN_PARAMS((register struct wnn_buf *, WNN_BUN **));
+static void free_zenkouho FRWNN_PARAMS((register struct wnn_buf *));
+static int get_c_jikouho FRWNN_PARAMS((struct wnn_sho_bunsetsu *, int, WNN_BUN *));
+static int get_c_jikouho_dai FRWNN_PARAMS((struct wnn_dai_bunsetsu *, int, WNN_BUN **, int));
+static int get_c_jikouho_from_zenkouho FRWNN_PARAMS((struct wnn_buf *, WNN_BUN *));
+static int get_c_jikouho_from_zenkouho_dai FRWNN_PARAMS((struct wnn_buf *, WNN_BUN *));
+static int get_pwd FRWNN_PARAMS((register char *, register char *));
+static int insert_dai FRWNN_PARAMS((struct wnn_buf *buf, int zenp, int bun_no, int bunno2, struct wnn_dai_bunsetsu *dp, int dcnt, int uniq_level));
+static int insert_sho FRWNN_PARAMS((struct wnn_buf *, int, int, int, register struct wnn_sho_bunsetsu *, int, int));
 
+static int make_dir1 FRWNN_PARAMS((register struct wnn_env *, register char *, int (*) (const char *), int (*) (const char *)));
+
+static int make_dir_rec1 FRWNN_PARAMS((struct wnn_env *, register char *, int (*) (const char *), int (*) (const char *)));
+static void make_space_for FRWNN_PARAMS((register struct wnn_buf *, int , int , int, int));
+static void make_space_for_bun FRWNN_PARAMS((register struct wnn_buf *, int, int, int));
+static void make_space_for_zenkouho FRWNN_PARAMS((struct wnn_buf *, int, int, register int));
+static void message_out FRWNN_PARAMS((int (*) (const char *), const char *, ...));
+static int ren_conv1 FRWNN_PARAMS((register struct wnn_buf *, w_char *, register int, register int, int));
+static void set_dai FRWNN_PARAMS((register WNN_BUN **, register WNN_BUN **, register int));
+static void set_sho FRWNN_PARAMS((register WNN_BUN *b, register WNN_BUN **p));
+static int tan_conv1 FRWNN_PARAMS((register struct wnn_buf *, w_char *, register int, register int, int, int));
 /*
  * Sub-routines to handle files, enviroments and connections.
  */
@@ -275,7 +280,7 @@ delete_server_from_id (js)
 static struct wnn_env *
 find_same_env (js, env_n, lang)
      register WNN_JSERVER_ID *js;
-     register char *env_n;
+     register const char *env_n;
      char *lang;
 {
   register int k;
@@ -314,7 +319,7 @@ static void
 add_new_env (js, env, env_n, server_n, lang)
      register WNN_JSERVER_ID *js;
      register struct wnn_env *env;
-     char *env_n, *server_n, *lang;
+     const char *env_n, *server_n, *lang;
 {
   register int k;
 
@@ -435,17 +440,16 @@ delete_file_from_env (env, id)
 
 struct wnn_env *
 jl_connect_lang (env_n, server_n, lang, wnnrc_n, error_handler, message_handler, timeout)
-     register char *env_n, *server_n, *wnnrc_n, *lang;
-     int (*error_handler) (), (*message_handler) ();
+     const register char *env_n, *server_n, *wnnrc_n, *lang;
+     int (*error_handler) (const char *), (*message_handler) (const char *);
      int timeout;
 {
   register WNN_JSERVER_ID *js = NULL;
   struct wnn_env *env;
   int env_exist;
   char p_lang[16];
-  register char *p, *l;
-  extern char *getenv ();
-  extern char *_wnn_get_machine_of_serv_defs ();
+  register char *p;
+  const char *l;
 
   wnn_errorno = 0;
   /* if lang not specified use $LANG */
@@ -576,8 +580,8 @@ jl_disconnect_if_server_dead (env)
 
 struct wnn_buf *
 jl_open_lang (env_n, server_n, lang, wnnrc_n, error_handler, message_handler, timeout)
-     char *env_n, *server_n, *wnnrc_n, *lang;
-     int (*error_handler) (), (*message_handler) ();
+     const char *env_n, *server_n, *wnnrc_n, *lang;
+     int (*error_handler) (const char *), (*message_handler) (const char *);
      int timeout;
 {
   register int k, dmy;
@@ -1504,7 +1508,7 @@ jl_dic_add_e (env, dic_name, hindo_name, rev, prio, rw, hrw, pwd_dic, pwd_hindo,
      int prio;
      int rw, hrw, rev;
      char *pwd_dic, *pwd_hindo;
-     int (*error_handler) (), (*message_handler) ();
+     int (*error_handler) (const char *), (*message_handler) (const char *);
 {
   char tmp[256];
   char pwd[WNN_PASSWD_LEN], hpwd[WNN_PASSWD_LEN];
@@ -1519,7 +1523,7 @@ jl_dic_add_e (env, dic_name, hindo_name, rev, prio, rw, hrw, pwd_dic, pwd_hindo,
           jl_disconnect (env);
           return (-1);
         }
-      if ((int) error_handler == WNN_NO_CREATE || (rw == WNN_DIC_RDONLY))
+      if (error_handler == WNN_NO_CREATE || (rw == WNN_DIC_RDONLY))
         {
           sprintf (tmp, "%s \"%s\" %s", msg_get (wnn_msg_cat, 200, NULL, env->lang), dic_name, msg_get (wnn_msg_cat, 201, NULL, env->lang));
           /*
@@ -1533,7 +1537,7 @@ jl_dic_add_e (env, dic_name, hindo_name, rev, prio, rw, hrw, pwd_dic, pwd_hindo,
       /*
          "辞書ファイル \"%s\" が無いよ。作る?(Y/N)",
        */
-      if ((int) error_handler == WNN_CREATE || call_error_handler (error_handler, tmp))
+      if (error_handler == WNN_CREATE || call_error_handler (error_handler, tmp))
         {
           if (create_file (env, dic_name, JISHO, -1,    /* -1 is dummy */
                            pwd_dic, (hindo_name && *hindo_name) ? "" : pwd_hindo, error_handler, message_handler) == -1)
@@ -1558,7 +1562,7 @@ jl_dic_add_e (env, dic_name, hindo_name, rev, prio, rw, hrw, pwd_dic, pwd_hindo,
               jl_disconnect (env);
               return (-1);
             }
-          if ((int) error_handler == WNN_NO_CREATE || (hrw == WNN_DIC_RDONLY))
+          if (error_handler == WNN_NO_CREATE || (hrw == WNN_DIC_RDONLY))
             {
               sprintf (tmp, "%s \"%s\" %s", msg_get (wnn_msg_cat, 203, NULL, env->lang), hindo_name, msg_get (wnn_msg_cat, 201, NULL, env->lang));
               /*
@@ -1572,7 +1576,7 @@ jl_dic_add_e (env, dic_name, hindo_name, rev, prio, rw, hrw, pwd_dic, pwd_hindo,
           /*
              "頻度ファイル \"%s\" が無いよ。作る?(Y/N)",
            */
-          if ((int) error_handler == WNN_CREATE || call_error_handler (error_handler, tmp))
+          if (error_handler == WNN_CREATE || call_error_handler (error_handler, tmp))
             {
               if (create_file (env, hindo_name, HINDO, fid, "", pwd_hindo, error_handler, message_handler) == -1)
                 return (-1);
@@ -1601,7 +1605,7 @@ jl_dic_add_e (env, dic_name, hindo_name, rev, prio, rw, hrw, pwd_dic, pwd_hindo,
         }
       else if (wnn_errorno == WNN_HINDO_NO_MATCH)
         {
-          if ((int) error_handler == WNN_NO_CREATE)
+          if (error_handler == WNN_NO_CREATE)
             {
               return (-1);
             }
@@ -1609,7 +1613,7 @@ jl_dic_add_e (env, dic_name, hindo_name, rev, prio, rw, hrw, pwd_dic, pwd_hindo,
           /*
              "辞書と頻度 \"%s\" の整合性が無いよ。作り直す?(Y/N)",
            */
-          if (!((int) error_handler == WNN_CREATE || call_error_handler (error_handler, tmp)))
+          if (!(error_handler == WNN_CREATE || call_error_handler (error_handler, tmp)))
             {
               return (-1);
             }
@@ -1685,7 +1689,7 @@ static int
 create_pwd_file (env, pwd_file, error_handler, message_handler)
      register struct wnn_env *env;
      char *pwd_file;
-     int (*error_handler) (), (*message_handler) ();
+     int (*error_handler) (const char *), (*message_handler) (const char *);
 {
   FILE *fp;
   char gomi[256];
@@ -2749,17 +2753,17 @@ print_jdata (jd)
 int
 jl_set_env_wnnrc (env, wnnrc_n, error_handler, message_handler)
      register struct wnn_env *env;
-     char *wnnrc_n;
-     int (*error_handler) (), (*message_handler) ();
+     const char *wnnrc_n;
+     int (*error_handler) (const char *), (*message_handler) (const char *);
 {
   int level = 0;
   int x;
   wnn_errorno = 0;
-  if ((int) error_handler == WNN_CREATE)
+  if (error_handler == WNN_CREATE)
     {
       confirm_state = CREATE_WITHOUT_CONFIRM;
     }
-  else if ((int) error_handler == WNN_NO_CREATE)
+  else if (error_handler == WNN_NO_CREATE)
     {
       confirm_state = NO_CREATE;
     }
@@ -2775,9 +2779,8 @@ jl_set_env_wnnrc (env, wnnrc_n, error_handler, message_handler)
 int
 jl_set_env_wnnrc1 (env, wnnrc_n, error_handler, message_handler, level)
      register struct wnn_env *env;
-     char *wnnrc_n;
-     int (*error_handler) (), (*message_handler) ();
-     int level;
+     const char *wnnrc_n;
+     int (*error_handler) (const char *), (*message_handler) (const char *);     int level;
 {
   register int num;
   char s[20][EXPAND_PATH_LENGTH];
@@ -2829,7 +2832,7 @@ jl_set_env_wnnrc1 (env, wnnrc_n, error_handler, message_handler, level)
         {
           /* dic_add */
           int prio, rdonly, hrdonly, rev;
-          int (*error_handler1) () = (int (*)()) 0;
+          int (*error_handler1) (const char *) = NULL;
           expand_expr_all (s[0], env);
           if (num < 3 || !REAL_PARAM (s[1]))
             {
@@ -2855,11 +2858,11 @@ jl_set_env_wnnrc1 (env, wnnrc_n, error_handler, message_handler, level)
           else if (confirm_state == CREATE_WITHOUT_CONFIRM)
             {
 
-              error_handler1 = (int (*)()) WNN_CREATE;
+              error_handler1 = WNN_CREATE;
             }
           else if (confirm_state == NO_CREATE)
             {
-              error_handler1 = (int (*)()) WNN_NO_CREATE;
+              error_handler1 = WNN_NO_CREATE;
             }
           if (jl_dic_add_e (env, s[0], s[1], rev, prio, rdonly, hrdonly, s[5], s[6], error_handler1, message_handler) == -1 && wnn_errorno != 0)
             {
@@ -2990,7 +2993,7 @@ expand_expr (s, env)
 
   if (*s != '~' && *s != '@')
     return (0);
-  if ((int) strlen (s) >= EXPAND_PATH_LENGTH)
+  if (strlen (s) >= EXPAND_PATH_LENGTH)
     return (-1);
 
   s1 = s;
@@ -3008,12 +3011,12 @@ expand_expr (s, env)
     {
       if (*s1)
         {
-          noerr = expandsuc = (NULL != (u = getpwnam (s1)) && (int) strlen (p = u->pw_dir) + (int) strlen (tmp) < EXPAND_PATH_LENGTH);
+          noerr = expandsuc = (NULL != (u = getpwnam (s1)) && strlen (p = u->pw_dir) + strlen (tmp) < EXPAND_PATH_LENGTH);
 
         }
       else
         {
-          noerr = expandsuc = (NULL != (p = getenv ("HOME")) && (int) strlen (p) + (int) strlen (tmp) < EXPAND_PATH_LENGTH);
+          noerr = expandsuc = (NULL != (p = getenv ("HOME")) && strlen (p) + strlen (tmp) < EXPAND_PATH_LENGTH);
         }
 
     }
@@ -3021,13 +3024,13 @@ expand_expr (s, env)
     {                           /* then, *s must be '@' */
       if (!strcmp (s1, "HOME"))
         {
-          noerr = expandsuc = (NULL != (p = getenv ("HOME")) && (int) strlen (p) + (int) strlen (tmp) < EXPAND_PATH_LENGTH);
+          noerr = expandsuc = (NULL != (p = getenv ("HOME")) && strlen (p) + strlen (tmp) < EXPAND_PATH_LENGTH);
         }
       else if (!strcmp (s1, "WNN_DIC_DIR"))
         {
           char buf[EXPAND_PATH_LENGTH];
           expandsuc = 1;
-          noerr = (NULL != (p = getenv ("HOME")) && (int) strlen (p) + (int) strlen (tmp) < EXPAND_PATH_LENGTH);
+          noerr = (NULL != (p = getenv ("HOME")) && strlen (p) + strlen (tmp) < EXPAND_PATH_LENGTH);
           strcpy (buf, p);
           strcat (buf, "/");
 
@@ -3044,15 +3047,15 @@ expand_expr (s, env)
         }
       else if (!strcmp (s1, "LIBDIR"))
         {
-          noerr = expandsuc = ((int) strlen (p = LIBDIR) + (int) strlen (tmp) < EXPAND_PATH_LENGTH);
+          noerr = expandsuc = (strlen (p = LIBDIR) + strlen (tmp) < EXPAND_PATH_LENGTH);
         }
       else if (!strcmp (s1, "ENV"))
         {                       /* Added */
-          noerr = expandsuc = (NULL != (p = env_name (env)) && (int) strlen (p) + (int) strlen (tmp) < EXPAND_PATH_LENGTH);
+          noerr = expandsuc = (NULL != (p = env_name (env)) && strlen (p) + strlen (tmp) < EXPAND_PATH_LENGTH);
         }
       else if (!strcmp (s1, "USR"))
         {
-          noerr = expandsuc = (NULL != (p = getlogname ()) && (int) strlen (p) + (int) strlen (tmp) < EXPAND_PATH_LENGTH);
+          noerr = expandsuc = (NULL != (p = getlogname ()) && strlen (p) + strlen (tmp) < EXPAND_PATH_LENGTH);
         }
       else
         {                       /* @HOME, @LIBDIR @ENV igai ha kaenai */
@@ -3076,7 +3079,7 @@ change_ascii_to_int (st, dp)
 
   total = 0;
   flag = 0;
-  while (*st != NULL)
+  while (*st != 0)
     {
       if (isdigit (*st))
         {
@@ -3135,7 +3138,7 @@ create_file (env, n, d, fid, pwd_dic, pwd_hindo, error_handler, message_handler)
      int d;
      int fid;
      char *pwd_dic, *pwd_hindo;
-     int (*error_handler) (), (*message_handler) ();
+     int (*error_handler) (const char *), (*message_handler) (const char *);
 {
   char pwd[WNN_PASSWD_LEN], hpwd[WNN_PASSWD_LEN];
   int rev_dict_type;
@@ -3243,7 +3246,7 @@ static int
 make_dir_rec1 (env, path, error_handler, message_handler)
      struct wnn_env *env;
      register char *path;
-     int (*error_handler) (), (*message_handler) ();
+     int (*error_handler) (const char *), (*message_handler) (const char *);
 {
   char gomi[128];
   register char *c;
@@ -3266,7 +3269,7 @@ static int
 make_dir1 (env, dirname, error_handler, message_handler)
      register struct wnn_env *env;
      register char *dirname;
-     int (*error_handler) (), (*message_handler) ();
+     int (*error_handler) (const char *), (*message_handler) (const char *);
 {
   char gomi[128];
   if (dirname[0] == C_LOCAL)
@@ -3287,7 +3290,7 @@ make_dir1 (env, dirname, error_handler, message_handler)
           return (0);           /* dir already exists */
         }
     }
-  if ((int) error_handler != WNN_CREATE)
+  if (error_handler != WNN_CREATE)
     {
       sprintf (gomi, "%s \"%s\" %s%s", msg_get (wnn_msg_cat, 210, NULL, env->lang), dirname, msg_get (wnn_msg_cat, 201, NULL, env->lang), msg_get (wnn_msg_cat, 202, NULL, env->lang));
       /*
@@ -3324,8 +3327,8 @@ make_dir1 (env, dirname, error_handler, message_handler)
 
 static int
 call_error_handler (error_handler, c)
-     int (*error_handler) ();
-     char *c;
+     int (*error_handler) (const char *);
+     const char *c;
 {
   register int x;
   x = error_handler (c);
@@ -3340,16 +3343,16 @@ call_error_handler (error_handler, c)
 }
 
 static void
-message_out (message_handler, format, s1, s2, s3, s4, s5, s6, s7, s8)
-     int (*message_handler) ();
-     char *format;
-     int s1, s2, s3, s4, s5, s6, s7, s8;
+message_out (int (*message_handler) (const char *), const char *format, ...)
 {
   char buf[256];
+  va_list args;
 
   if (message_handler)
     {
-      sprintf (buf, format, s1, s2, s3, s4, s5, s6, s7, s8);
+      va_start (args, format);
+      vsprintf (buf, format, args);
+      va_end (args);
       (*message_handler) (buf);
     }
 }

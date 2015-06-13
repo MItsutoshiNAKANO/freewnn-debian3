@@ -1,5 +1,5 @@
 /*
- *  $Id: mknode2.c,v 1.4 2002/05/12 22:51:17 hiroo Exp $
+ *  $Id: mknode2.c,v 1.5 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -36,7 +36,10 @@
 #include "de_header.h"
 #include "kaiseki.h"
 
-static void lnk_jkdbn (), lnk_jksbn (), lnk_jksone (), freejktsone ();
+static void lnk_jkdbn (struct free_list *);
+static void lnk_jksbn (struct free_list *);
+static void lnk_jksone (struct free_list *);
+static void freejktsone (register struct JKT_SONE *);
 
 static struct JKT_DBN *free_jkdbn_top = NULL;
 static struct free_list *free_list_jkdbn = NULL;

@@ -1,5 +1,5 @@
 /*
- *  $Id: rk_fundecl.h,v 1.4 2005/04/10 15:26:38 aonoto Exp $
+ *  $Id: rk_fundecl.h,v 1.5 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -39,12 +39,21 @@
 ***********************************************************************/
 /*      Version 3.0
  */
-extern letter *ltrncpy ();
-extern int ltrcmp (), ltrncmp ();
 
-extern int romkan_init (), romkan_init2 (), romkan_init3 ();
-extern letter romkan_getc (), *romkan_henkan (), romkan_next ();
-extern letter romkan_ungetc (), romkan_unnext ();
-extern void romkan_clear ();
-extern char *romkan_dispmode ();
+#include "jslib.h"
+
+extern letter *ltrncpy FRWNN_PARAMS((letter*,letter*,int));
+extern int ltrcmp FRWNN_PARAMS((letter*,letter*)),
+  ltrncmp FRWNN_PARAMS((letter*,letter*,int));
+
+extern int romkan_init FRWNN_PARAMS((char*,letter,char,letter(*keyinfn)(),int(*bytcntfn)())),
+  romkan_init2 FRWNN_PARAMS((char*,letter,char,letter(*keyinfn)(),int(*bytcntfn)(),char,char,char)),
+  romkan_init3 FRWNN_PARAMS((char*,letter,letter,letter,letter(*keyinfn)(),int(*bytcntfn)(),int(*kbytcntfn)(),char,int));
+extern letter romkan_getc FRWNN_PARAMS((void)),
+  *romkan_henkan FRWNN_PARAMS((letter)),
+  romkan_next FRWNN_PARAMS((void));
+extern letter romkan_ungetc FRWNN_PARAMS((letter)),
+  romkan_unnext FRWNN_PARAMS((letter));
+extern void romkan_clear FRWNN_PARAMS((void));
+extern char *romkan_dispmode FRWNN_PARAMS((void));
 extern char rk_errstat;         /* これは関数ではなく変数 */

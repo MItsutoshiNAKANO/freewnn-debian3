@@ -1,5 +1,5 @@
 /*
- *  $Id: bdic.c,v 1.13 2005/06/12 17:14:22 aonoto Exp $
+ *  $Id: bdic.c,v 1.14 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -69,6 +69,8 @@
 #include "wnn_os.h"
 #include "wnn_string.h"
 
+#include "etc.h"
+
 #ifdef JSERVER
 # ifndef BDIC_WRITE_CHECK
 #  define vputc(X, pt) ((pt)? putc((X), (pt)):xputc_cur(X))
@@ -88,8 +90,8 @@ extern int xgetc_cur ();
 #endif /* !JSERVER */
 
 #ifndef min
-# define min(a, b) ((a > b)? b:a)
-# define max(a, b) ((a < b)? b:a)
+# define min(a, b) (((a) > (b))? (b) : (a))
+# define max(a, b) (((a) < (b))? (b) : (a))
 #endif
 
 /* XXX: function prototypes to be moved to some header file. */
@@ -142,7 +144,7 @@ int  put_yomi_str (w_char* yomi, FILE* ofpter);
 
 #ifndef JS
 void Get_knj2 (UCHAR* kptr, int kanji2, w_char* kouho, w_char* yomi, w_char* comment);
-void get_kanji_str (UCHAR* kptr, w_char* kanji, w_char* yomi, w_char* comment);
+
 void Get_kanji_str_r (UCHAR* kptr, w_char** tmpk, w_char** tmpy, w_char** tmpc);
 UCHAR kanjiaddr (UCHAR* d0, w_char* kanji, w_char* yomi, w_char* comment);
 #endif /* !JS */

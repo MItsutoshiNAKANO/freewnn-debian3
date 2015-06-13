@@ -1,5 +1,5 @@
 /*
- *  $Id: de_header.h,v 1.22 2011/04/10 16:51:16 aonoto Exp $
+ *  $Id: de_header.h,v 1.24 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -11,7 +11,7 @@
  * Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
  * Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
  * Copyright FreeWnn Project
- *                 1999, 2000, 2001, 2002, 2003, 2004, 2010, 2011
+ *                 1999, 2000, 2001, 2002, 2003, 2004, 2010, 2011, 2013
  *
  * Maintainer:  FreeWnn Project
  *
@@ -58,6 +58,10 @@
 #include "jdata.h"
 #include "ddefine.h"
 #include "wnn_os.h"
+
+#include "fzk.h"
+#include "etc.h"
+#include "kaiseki.h"
 
 #define FILENAME 128
 #define SUCCESS 1
@@ -181,7 +185,7 @@ struct wnn_file
 /*
         external variables of daemon
 */
-GLOBAL char SER_VERSION[] GLOBAL_VAL(_SERVER_VERSION);
+GLOBAL char SER_VERSION[] GLOBAL_VAL(PACKAGE_STRING);
 
 GLOBAL CLIENT *client;
 GLOBAL int max_client GLOBAL_VAL(CL_MAX);
@@ -210,8 +214,8 @@ GLOBAL char *hinsi_file_name GLOBAL_VAL(NULL);
 GLOBAL char lang_dir[MAXPATHLEN];
 
 /* atojis.c */
-extern w_char *get_giji_knj ();
-extern void giji_hindoup ();
+extern w_char *get_giji_knj (int, int, int, w_char *);
+extern void giji_hindoup (int);
 /* b_index.c */
 #ifdef CONVERT_by_STROKE
 extern int create_b_index (struct JT *jt);
@@ -227,18 +231,33 @@ extern int getgiji_f (int,  struct SYO_BNSETSU *);
 extern int check_bar_katakana (int, int);
 extern int kan_ckvt (unsigned short, int);
 /* daibn_kai.c */
-extern int dbn_kai ();
-extern int get_status ();
-extern int zentan_able ();
+extern int dbn_kai (int, register int, int,
 #ifndef NO_FZK
-extern w_char *rev_fzk ();
-#endif
-extern struct SYO_BNSETSU *que_reorder ();
-extern int sbjunjo ();
-extern int set_daibnsetu ();
-extern int sum_hyouka ();
-extern int ave_hyouka ();
-extern int cmp_hyouka ();
+		    w_char *,
+#endif /* NO_FZK */
+		    int, int, register int, struct BZD **);
+extern int get_status (register int, int,
+#ifndef NO_FZK
+		       w_char *,
+#endif /* NO_FZK */
+		       register short *);
+
+extern int zentan_able (int, register int
+#ifndef NO_FZK
+			, w_char *
+#endif /* NO_FZK */
+			);
+
+#ifndef NO_FZK
+extern w_char *rev_fzk (register w_char *, int);
+#endif	/* NO_FZK  */
+extern struct SYO_BNSETSU *que_reorder (register struct SYO_BNSETSU *, register struct SYO_BNSETSU *);
+extern int sbjunjo (register struct SYO_BNSETSU *, register struct SYO_BNSETSU *);
+extern int set_daibnsetu (struct BZD **, register struct BZD **, register struct SYO_BNSETSU *, int *, int);
+extern int sum_hyouka (register struct SYO_BNSETSU *);
+extern int ave_hyouka (register struct SYO_BNSETSU *);
+extern int cmp_hyouka (register struct SYO_BNSETSU *, register struct SYO_BNSETSU *);
+
 /* de.c */
 extern void del_client (void);
 extern void daemon_fin (void);
@@ -264,19 +283,19 @@ extern char *expand_file_name (char*, size_t);
 extern void error_ret ();
 /* do_dic_env.c */
 extern void js_dic_add ();
-extern int add_dic_to_env ();
-extern int chk_dic ();
-extern int chk_hindo ();
+extern int add_dic_to_env (int, int);
+extern int chk_dic (int, int);
+extern int chk_hindo (int, int);
 extern int get_new_dic ();
-extern int find_dic_in_env ();
+extern int find_dic_in_env (int, int);
 extern void js_dic_delete ();
-extern void del_all_dic_in_env ();
+extern void del_all_dic_in_env (int);
 extern void js_dic_list_all ();
 extern void js_dic_list ();
 extern void js_dic_use ();
 extern void js_fuzokugo_set ();
 extern void js_fuzokugo_get ();
-extern void used_dic_fuzoku_delete ();
+extern void used_dic_fuzoku_delete (int, int);
 /* do_dic_no.c */
 extern void dic_init ();
 extern void js_dic_info ();
@@ -333,24 +352,24 @@ extern int find_fid_in_env (int, int);
 extern void js_file_remove (void);
 extern void js_file_password_set (void);
 /* do_henkan.c */
-extern void ret_dai ();
-extern void ret_sho ();
+extern void ret_dai (struct DSD_DBN *, int);
+extern void ret_sho (register struct DSD_SBN *, register int cnt);
 #ifdef CONVERT_by_STROKE
-extern void ret_B ();
-extern void ret_daiB ();
+extern void ret_B (int, int, register int, int);
+extern void ret_daiB (int, int, register int, int);
 #endif
 #ifdef DEBUG
-extern void print_dlist ();
-extern void print_dlist1 ();
+extern void print_dlist (struct DSD_DBN *, int);
+extern void print_dlist1 (struct DSD_SBN *, int);
 #endif
 /* do_henkan1.c */
-extern void do_kanren ();
-extern void do_kantan_dai ();
-extern void do_kantan_sho ();
-extern void do_kanzen_dai ();
-extern void do_kanzen_sho ();
-extern void Get_knj ();
-extern void get_knj_com ();
+extern void do_kanren (void);
+extern void do_kantan_dai (void);
+extern void do_kantan_sho (void);
+extern void do_kanzen_dai (void);
+extern void do_kanzen_sho (void);
+extern void Get_knj (register struct jdata *, int, w_char *, w_char *, int);
+extern void get_knj_com (register struct jdata *, int, w_char *, w_char *);
 /* do_hinsi_s.c */
 extern void js_hindo_set ();
 /* error.c */
@@ -373,95 +392,113 @@ extern void putwchar ();
 extern void wsputs ();
 #endif
 /* fzk.c */
-extern struct FT *fzk_read ();
-extern struct FT *fzk_ld ();
-extern void fzk_discard ();
-extern int fzk_kai ();
-extern int fzk_ckvt ();
+extern struct FT *fzk_read (FILE *fp);
+extern struct FT *fzk_ld (FILE *fp);
+extern void fzk_discard (struct FT *fzk_tbl);
+extern int fzk_kai (w_char *, w_char *,	int, int, struct ICHBNP **);
+extern int fzk_ckvt (int);
 /* get_kaiarea.c */
 extern int get_kaiseki_area (size_t);
 extern void init_work_areas (void);
 /* hinsi_list.c */
-extern void make_hinsi_list ();
-extern int hinsi_table_set ();
+extern void make_hinsi_list (struct JT *);
+extern int hinsi_table_set (struct JT *, w_char *);
 /* initjserv.c */
 extern int read_default (void);
 extern int read_default_files (void);
 /* jbiki.c */
-extern int jishobiki ();
-extern int binary1 ();
-extern int binary ();
-extern int Strcmpud ();
-extern int Substrud ();
-extern int Substrstud ();
-extern int Substrudud ();
-extern int word_search ();
-extern int rd_biki ();
-extern int rd_binary1 ();
-extern int rd_binary ();
-extern int rd_binary_same ();
+extern int jishobiki (w_char *, struct jdata **);
+extern int binary1 (register struct uind1 *, register w_char *, register int end, struct JT *);
+extern int binary (register struct uind1 *, register w_char *, int, struct JT *);
+extern int Strcmpud (struct uind1 *ui1p, w_char *yomi, struct JT *);
+extern int Substrud (struct uind1 *, w_char *, int, struct JT *);
+extern int Substrstud (w_char *, struct uind1 *, struct JT *);
+extern int Substrudud (register struct uind1 *, register struct uind1 *, register struct JT *);
+extern int word_search (int, w_char *, struct jdata **);
+extern int rd_biki (struct JT *, w_char *, register int);
+extern int rd_binary1 (register struct rind1 *, register w_char *, register int, struct rind2 *, UCHAR *, int);
+extern int rd_binary (register struct rind1 *, register w_char *, register int end, struct rind2 *, UCHAR *, int which);
+extern int rd_binary_same (register struct rind1 *, register w_char *, register int, struct rind2 *, UCHAR *kanji, int);
 #ifdef CONVERT_by_STROKE
 /* jbiki_b.c */
 extern int is_bwnn_rev_dict ();
-extern int jishobiki_b ();
+extern int jishobiki_b (int, int);
 #endif
 /* jikouho.c */
-extern int jkt_sbn_one ();
+extern int jkt_sbn_one (int, int, struct JKT_SBN **, int, struct JKT_SBN *, struct ICHBNP *, register int);
 #ifndef NO_KATA
-extern struct JKT_SBN *get_kata_kouho ();
+extern struct JKT_SBN *get_kata_kouho (struct JKT_SBN **, int, int, int, int *, int *, int);
 #endif
-extern struct JKT_SBN *get_hira_kouho ();
-extern int jkt_get_syo ();
-extern int get_zen_giji ();
+extern struct JKT_SBN *get_hira_kouho (struct JKT_SBN **, int, int);
+extern int jkt_get_syo (int, int, int,
+#ifndef NO_FZK
+			w_char *,
+#endif /* NO_FZK */
+			int, int, struct DSD_SBN **);
+extern int get_zen_giji (struct SYO_BNSETSU *, struct JKT_SBN **);
+
 /* jikouho_d.c */
-extern int jkt_get_dai ();
-extern int get_jkt_status ();
-extern struct DSD_DBN *get_dsd_dbn ();
-extern struct DSD_DBN *get_dsd_dbn ();
-extern struct DSD_SBN *get_dsd_sbn ();
-extern int dbn_set ();
-extern int cnt_sone ();
+extern int jkt_get_dai (int, int, int,
+#ifndef NO_FZK
+			w_char *,
+#endif /* NO_FZK */
+			int, int, int, struct DSD_DBN **);
+extern int get_jkt_status (int, int,
+#ifndef NO_FZK
+			   w_char *,
+#endif /* NO_FZK */
+			   short *);
+extern struct DSD_DBN *get_dsd_dbn (register int);
+extern struct DSD_SBN *get_dsd_sbn (register int);
+extern int dbn_set (struct DSD_DBN **, register struct JKT_DBN *);
+extern int cnt_sone (register struct JKT_SONE *);
+
 /* jishoop.c */
-extern int word_add ();
-extern int word_comment_set ();
-extern int word_delete ();
-extern void kanjiadd ();
-extern int dic_in_envp ();
-extern int hindo_file_size_justify ();
+extern int word_add  (int, int, w_char *, w_char *, int, int, w_char *);
+extern int word_comment_set (int, int, int, w_char *);
+extern int word_delete (int, int, int);
+extern void kanjiadd (struct JT *, w_char *, w_char *,  w_char *);
+extern int dic_in_envp (int, int);
+extern int hindo_file_size_justify (struct wnn_file *, struct wnn_file *);
 /* jishosub.c */
-extern int inspect ();
-extern int get_yomi_from_serial ();
-extern int get_yomi_from_serial ();
+extern int inspect (int, int, w_char *, struct jdata *);
+extern int get_yomi_from_serial (int, int, w_char *);
 /* jmt0.c */
 extern void init_jmt (void);
 extern int jmt_set (int);
 /* mknode0.c */
 extern int init_bzd (void);
-extern int init_ichbnp ();
-extern void clr_node ();
-extern void freebzd ();
-extern void freeibsp ();
-extern struct BZD *getbzdsp ();
-extern struct ICHBNP *getibsp ();
-extern struct fzkkouho *getfzkoh_body ();
-extern struct fzkkouho *getfzkoh1_body ();
-extern int mknode ();
+extern int init_ichbnp (void);
+extern void clr_node (register struct BZD *);
+extern void freebzd (register struct BZD *);
+extern void freeibsp (struct ICHBNP *);
+extern struct BZD *getbzdsp (void);
+extern struct ICHBNP *getibsp (void);
+extern struct fzkkouho *getfzkoh_body (register struct ICHBNP *, int);
+extern struct fzkkouho *getfzkoh1_body (register struct ICHBNP *, register int);
+extern int mknode (struct BZD *, int, int,
+#ifndef NO_FZK
+		   w_char *,
+#endif /* NO_FZK */
+		   int, int);
+extern void freebzd (register struct BZD *);
+
 /* mknode1.c */
 extern int init_sbn ();
-extern int get_area ();
-extern void free_area ();
-extern void freesbn ();
-extern void clr_sbn_node ();
+extern int get_area (register int, register int, struct free_list **);
+extern void free_area (register struct free_list *);
+extern void freesbn (register struct SYO_BNSETSU *);
+extern void clr_sbn_node (register struct SYO_BNSETSU *);
 extern struct SYO_BNSETSU *getsbnsp ();
 /* mknode2.c */
-extern int init_jktdbn ();
-extern int init_jktsbn ();
-extern int init_jktsone ();
-extern void freejktdbn ();
-extern void freejktsbn ();
-extern struct JKT_DBN *getjktdbn ();
-extern struct JKT_SBN *getjktsbn ();
-extern struct JKT_SONE *getjktsone ();
+extern int init_jktdbn (void);
+extern int init_jktsbn (void);
+extern int init_jktsone (void);
+extern void freejktdbn (register struct JKT_DBN *);
+extern void freejktsbn (struct JKT_SBN *);
+extern struct JKT_DBN *getjktdbn (void);
+extern struct JKT_SBN *getjktsbn (void);
+extern struct JKT_SONE *getjktsone (void);
 /* rd_jishoop.c */
 extern int rd_word_add1 (struct JT *, w_char *, int, w_char *, w_char *);
 extern int rd_word_delete1 (struct JT *, struct HJT *, int);
@@ -503,37 +540,28 @@ extern int tan_syo (int, int, int, w_char*, int, int, struct DSD_SBN **);
 extern int tan_syo (int, int, int, int, int, struct DSD_SBN **);
 #endif /* NO_FZK */
 /* sisheng.c */
-extern int get_sisheng ();
-extern w_char *biki_sisheng ();
-extern unsigned int diff_sisheng ();
+extern int get_sisheng (w_char *, char *, w_char *);
+extern w_char *biki_sisheng (w_char *, char *, w_char *);
+extern unsigned int diff_sisheng (int, int);
 /* snd_rcv.c */
-extern int fopen_read_cur ();
-extern int fopen_write_cur ();
-extern int fread_cur ();
+extern int fopen_read_cur (char *);
+extern int fopen_write_cur (char *);
+extern int fread_cur (char *, register int, register int);
 extern int xgetc_cur ();
-extern void xungetc_cur ();
-extern void fwrite_cur ();
+extern void xungetc_cur (int);
+extern void fwrite_cur (unsigned char *, int, int);
 extern void xputc_cur (unsigned char);
 extern void fclose_cur ();
 /* w_string.c */
-extern void Sreverse ();
-extern int Sstrcpy ();
-extern int Strcmp ();
-extern int Substr ();
-extern int Strncmp ();
-extern w_char *Strcpy ();
-extern w_char *Strncpy ();
-extern int Strlen ();
-/* gethinsi.c */
-extern int wnn_loadhinsi ();
-extern w_char *wnn_hinsi_name ();
-extern int wnn_hinsi_number ();
-extern int wnn_hinsi_list ();
-extern int wnn_has_hinsi ();
-extern int wnn_find_hinsi_by_name ();
-extern char *wnn_get_hinsi_name ();
-extern int wnn_get_fukugou_component_body ();
-extern int wnn_get_fukugou_component ();
+extern void Sreverse (register w_char *, register w_char *);
+extern int Sstrcpy (register w_char *, register unsigned char *);
+extern int Strcmp (register w_char *, register w_char *);
+extern int Substr (register w_char *, register w_char *);
+extern int Strncmp (register w_char *w1, register w_char *, register int n);
+extern w_char *Strcpy (register w_char *, register w_char *);
+extern w_char *Strncpy (register w_char *w1, register w_char *, register int n);
+extern int Strlen (register w_char *w);
+
 /* bdic.c */
 extern void check_backup (char*);
 extern void delete_tmp_file (char*);
@@ -556,15 +584,8 @@ extern int input_header_jt  (FILE*, struct JT*);
 extern int output_header_jt (FILE*, struct JT*);
 extern int input_header_hjt  (FILE*, struct HJT*);
 extern int output_header_hjt (FILE*, struct HJT*);
-/* dic_atojis.c */
-extern void Get_kanji ();
-extern void Get_knj1 ();
-/* revdic.c */
-extern int little_endian ();
-extern int revdic ();
-/* hindo.c */
-extern int asshuku ();
-extern int motoni2 ();
+
+
 /* pwd.c */
 extern void new_pwd  (char*, char*);
 extern int check_pwd (char*, char*);

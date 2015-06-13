@@ -1,5 +1,5 @@
 /*
- *  $Id: do_filecom.c,v 1.13 2003/06/07 02:23:58 hiroo Exp $
+ *  $Id: do_filecom.c,v 1.14 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -85,7 +85,7 @@ file_init (void)
   if ( files == NULL )
     {
       log_err ("file_init: malloc faild.");
-      return (NULL);
+      return (0);
     }
   for (i = 0; i < MAX_FILES; i++)
     {
@@ -518,7 +518,7 @@ js_file_comment_set (void)
       wnn_errorno = WNN_RDONLY;
       goto ERR_RET;
     }
-  if (file_comment_set (&files[fid], comment) == NULL)
+  if (file_comment_set (&files[fid], comment) == 0)
     {
       goto ERR_RET;
     }

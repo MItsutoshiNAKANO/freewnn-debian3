@@ -1,5 +1,5 @@
 /*
- *  $Id: jikouho.c,v 1.6 2002/05/12 22:51:16 hiroo Exp $
+ *  $Id: jikouho.c,v 1.7 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -48,8 +48,12 @@
 #include        "fzk.h"
 #include        "kaiseki.h"
 
-static struct JKT_SBN *find_jktsbn ();
-static int cmp_dsd_sbn (), cnt_jkt_sbn (), get_suuji_kouho (), get_eisuu_kouho (), get_kigou_kouho ();
+static struct JKT_SBN *find_jktsbn (struct JKT_SBN **, struct JKT_SONE *, int, int j_c);
+static int cmp_dsd_sbn (struct DSD_SBN *, struct DSD_SBN *);
+static int cnt_jkt_sbn (register struct JKT_SBN *sbn);
+static int get_suuji_kouho (register struct JKT_SBN *);
+static int get_eisuu_kouho (struct JKT_SBN *);
+static int get_kigou_kouho (struct JKT_SBN *jktsbn);
 
 static int
 jkt_sbn (yomi_sno, yomi_eno, endvect, endvect1, tjktsbn, bnst_num, parent)

@@ -28,7 +28,7 @@
 /*
         Jserver         (Nihongo Daemon)
 */
-static char rcs_id[] = "$Id: de.c,v 1.36 2004/06/18 16:32:41 hiroo Exp $";
+static char rcs_id[] = "$Id: de.c,v 1.37 2013/09/02 11:01:39 itisango Exp $";
 
 #if defined(HAVE_CONFIG_H)
 #  include <config.h>
@@ -84,6 +84,8 @@ static char rcs_id[] = "$Id: de.c,v 1.36 2004/06/18 16:32:41 hiroo Exp $";
 #include "de_header.h"
 #undef  GLOBAL_VALUE_DEFINE
 #include "msg.h"
+
+#include "etc.h"
 
 #ifdef SOLARIS
 #ifdef SO_DONTLINGER
@@ -212,14 +214,25 @@ int deny_severity;
 #  include <tcpd.h>
 #endif /* HAVE_LIBWRAP */
 
+#ifndef NOTFORK
+static void father_sighandler (const int sig)
+{
+  if (signal(sig, SIG_DFL) == SIG_ERR)
+    _exit (2);
+
+  if (sig == SIGTERM)
+    _exit(0);
+  else
+    _exit(255);
+}
+#endif
+
 /* No arguments are used. Only options. */
 int
 main (int argc, char *argv[])
 {
   int tmpttyfd;
   char *cswidth_name;
-  extern char *get_cswidth_name ();
-  extern void set_cswidth ();
 
   char nlspath[64];
 
@@ -233,8 +246,11 @@ main (int argc, char *argv[])
     {
       log_err ("cannot open message file libwnn.msg.");
     }
-  if (cswidth_name = get_cswidth_name (LANG_NAME))
-    set_cswidth (create_cswidth (cswidth_name));
+
+  if ((cswidth_name = get_cswidth_name (LANG_NAME)) != NULL)
+    {
+      set_cswidth (create_cswidth (cswidth_name));
+    }
 
   port = -1;
   /* option default */
@@ -248,14 +264,14 @@ main (int argc, char *argv[])
     {
       if (fork ())
 	{
-	  signal (SIGCHLD, _exit);
+	  signal (SIGCHLD, father_sighandler);
 	  signal (SIGHUP, SIG_IGN);
 	  signal (SIGINT, SIG_IGN);
 	  signal (SIGQUIT, SIG_IGN);
 #ifdef  SIGTSTP
 	  signal (SIGTSTP, SIG_IGN);
 #endif
-	  signal (SIGTERM, _exit);
+	  signal (SIGTERM, father_sighandler);
 	  pause ();
 	}
     }
@@ -280,12 +296,12 @@ main (int argc, char *argv[])
   daemon_init ();
 
   env_init ();
-  if (file_init () == NULL)
+  if (file_init () == 0)
     {
       exit (1);
     }
   dic_init ();
-  if (NULL == get_kaiseki_area (LENGTHCONV + 1))    /* 変換可能文字数 */
+  if (0 == get_kaiseki_area (LENGTHCONV + 1))    /* 変換可能文字数 */
     {
       log_err ("get_kaiseki_area failed.");
       exit (1);
@@ -359,7 +375,8 @@ daemon_main (void)
               del_client ();
               continue;
             }
-          do_command (c_c);
+          /* do_command (c_c);  */
+          do_command ();
         }
     }
 }

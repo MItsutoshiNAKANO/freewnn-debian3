@@ -1,5 +1,5 @@
 #
-#   $Id: Makefile.in,v 1.15 2011/04/17 16:29:50 aonoto Exp $
+#   $Id: Makefile.in,v 1.16 2013/08/01 18:43:07 aonoto Exp $
 #
 
 #
@@ -10,7 +10,8 @@
 #                 1987, 1988, 1989, 1990, 1991, 1992
 # Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
 # Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
-# Copyright FreeWnn Project 1999, 2000, 2001, 2005, 2006, 2007, 2010, 2011
+# Copyright FreeWnn Project
+#		  1999, 2000, 2001, 2005, 2006, 2007, 2010, 2011, 2013
 # 
 # Maintainer:  FreeWnn Project
 # 
@@ -65,7 +66,7 @@ all:: $(HDRS) $(SRC1) kuum
 
 kuum: $(OBJS) @DEPKWNNJLIB@ $(KWNNCONVLIB)
 	$(RM) $@
-	$(LT_LD) -o $@ $(LDOPTIONS) $(OBJS) $(LOCAL_LIBRARIES) $(LIBSPT_LIBS) @TERMLIB@
+	$(LT_LD) -o $@ $(LDOPTIONS) $(OBJS) $(LOCAL_LIBRARIES) $(LIBSPT_LIBS) @TERMLIB@ @UUM_LIBS@
 
 clean::
 	$(RM) -r .libs

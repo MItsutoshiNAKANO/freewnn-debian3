@@ -1,3 +1,258 @@
+Mon, 18 May 2015 02:25:00  Tomoki AONO <aonoto at users.osdn.me>
+
+	* ChangeLog, ChangeLog.en, configure, configure.in:
+
+	- Update ChangeLog entry and version string. Added 1.1.1-a023 tag.
+
+	- Changed domain of bug-report address in AC_INIT.
+
+Sun, 17 May 2015 01:10:08  Tomoki AONO <aonoto at users.osdn.me>
+
+	* ChangeLog, ChangeLog.en:
+
+	Document changes by aonoto.
+
+Sun, 10 May 2015 09:05:43 Mitsutoshi NAKANO  <ItSANgo@gmail.com>
+
+	* ChangeLog, ChangeLog.en: added this messages.
+
+	* Wnn/include/jllib.h (WNN_NO_CREATE): redefined 0 -> pointer.
+	* Wnn/include/jllib.h (WNN_CREATE): redefined -1 -> pointer.
+	See:
+	https://sourceforge.jp/projects/freewnn/lists/archive/users/2015-May/000278.html
+	* Wnn/jlib/jl.c (jl_dic_add_e):
+	(jl_set_env_wnnrc):
+	* Wnn/jlib.V3/jlv3.c (jd_dicadd):
+
+Sun, 10 May 2015 06:23:38 Mitsutoshi NAKANO  <ItSANgo@gmail.com>
+
+	* ChangeLog, ChangeLog.en: added this messages.
+
+	* Wnn/include/jlib_private.h: renamed from
+	Wnn/include/jlib_hide.h
+	See:
+	https://sourceforge.jp/projects/freewnn/lists/archive/users/2015-May/000278.html
+	* Wnn/jutil/wnnstat.c:
+	* Wnn/jutil/wnnkill.c:
+	* Wnn/jlib/jl.c:
+	* Wnn/jlib/js.c:
+	* cWnn/include/Makefile.in (LINKS3):
+	(jlib_private.h):
+	* kWnn/include/Makefile.in (LINKS3):
+	(jlib_private.h):
+
+Fri, 22 Nov 2013 19:53:01  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* Wnn/pubdicplus/Makefile.in:
+
+	Revert contents of FZK_SRC not to install fzk.master-.c .
+
+Sat,  9 Nov 2013 03:54:44  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* Wnn/pubdicplus/Makefile.in:
+
+	- Add another dependency (*.fsrc) to *.fzk file.
+	  It may remove bottleneck (full.fzk) in parallel build
+	  (ex. Debian Bug #724058).
+
+	- Remove redundant (auto-generated) dependency in includes / clean target.
+
+Tue,  3 Sep 2013 11:40:33 Mitsutoshi NAKANO <bkbin005@rinku.zaq.ne.jp>
+
+	* ChangeLog.en ChangeLog: 
+	Added this message for test of CVS commit .
+
+Mon,  2 Sep 2013 19:18:00 Mitsutoshi NAKANO <bkbin005@rinku.zaq.ne.jp>
+
+	* ChangeLog.en ChangeLog: 
+	Added this message .
+
+	* Branched 1.1.1-a022I001 by <bkbin005@rinku.zaq.ne.jp@>
+
+	* Merged many patches from openSUSE:
+
+	Please see also:
+	http://sourceforge.jp/projects/freewnn/lists/archive/users/2013-September/000183.html
+	https://build.opensuse.org/package/show/M17N/fwnn
+
+	- modified: Wnn/jutil/wdreg.c
+	I found type missmatches in main() .
+	Old code gave "" to js_dic_file_create(),
+	but js_dic_file_create()'s argument has a w_char * type .
+	So added w_char W_CHAR_NUL_STR[] = { 0 };
+	and gave it to js_dic_file_create() .
+
+	- modified: cWnn/include/Makefile.in cWnn/jserver/Makefile.in
+    	kWnn/include/Makefile.in
+
+	Added header files .
+	So changed Makefile.in .
+
+	- new file: Wnn/include/conv.h Wnn/include/etc.h
+	Wnn/include/jlib_hide.h Wnn/include/jutil.h Wnn/include/romkan.h
+	- modified: Wnn/conv/cvt_key.c Wnn/conv/cvt_read.c Wnn/etc/bdic.c
+    	Wnn/etc/dic_atojis.c Wnn/etc/gethinsi.c Wnn/etc/hindo.c Wnn/etc/msg.c
+    	Wnn/etc/pwd.c Wnn/etc/revdic.c Wnn/etc/sstrings.c Wnn/etc/xutoj.c
+    	Wnn/etc/yincoding.c Wnn/include/jdata.h Wnn/include/jllib.h
+	Wnn/include/jslib.h Wnn/include/msg.h Wnn/jlib.V3/jlv3.c Wnn/jlib/jl.c
+    	Wnn/jlib/js.c Wnn/jserver/daibn_kai.c Wnn/jserver/de.c
+	Wnn/jserver/de_header.h Wnn/jserver/do_dic_env.c
+	Wnn/jserver/do_filecom.c Wnn/jserver/do_henkan.c
+	Wnn/jserver/do_henkan1.c Wnn/jserver/do_hindo_s.c Wnn/jserver/fzk.c
+    	Wnn/jserver/get_kaiarea.c Wnn/jserver/hinsi_list.c Wnn/jserver/jbiki.c
+    	Wnn/jserver/jbiki_b.c Wnn/jserver/jikouho.c Wnn/jserver/jikouho_d.c
+    	Wnn/jserver/jishoop.c Wnn/jserver/jishosub.c Wnn/jserver/mknode0.c
+    	Wnn/jserver/mknode1.c Wnn/jserver/mknode2.c Wnn/jserver/rd_jishoop.c
+    	Wnn/jserver/readfile.c Wnn/jserver/sisheng.c Wnn/jserver/w_string.c
+    	Wnn/jutil/atod.c Wnn/jutil/atof.c Wnn/jutil/atorev.c
+	Wnn/jutil/dic_head.c Wnn/jutil/dtoa.c Wnn/jutil/oldatonewa.c
+    	Wnn/jutil/ujisf.c Wnn/jutil/wddel.c Wnn/jutil/wdreg.c
+	Wnn/jutil/wnnkill.c Wnn/jutil/wnnstat.c Wnn/jutil/wnntouch.c
+	Wnn/romkan/rk_bltinfn.c Wnn/uum/basic_op.c Wnn/uum/header.c
+	Wnn/uum/history.c Wnn/uum/inspect.c Wnn/uum/jhlp.c Wnn/uum/jikouho.c
+    	Wnn/uum/jis_in.c Wnn/uum/jutil.c Wnn/uum/key_bind.c Wnn/uum/kuten.c
+    	Wnn/uum/printf.c Wnn/uum/prologue.c Wnn/uum/screen.c Wnn/uum/sdefine.h
+    	Wnn/uum/select_ele.c Wnn/uum/sheader.h Wnn/uum/termio.c
+	Wnn/uum/touroku.c Wnn/uum/ttyfdslot.c Wnn/uum/uif.c Wnn/uum/wnnrc_op.c
+	Prototype declarations for reducing compilation warnings .
+	- modified: Wnn/jserver/hinsi_list.c
+	I found a bug in make_hinsi_list(), then fixed it .
+	Please see also:
+	http://lists.opensuse.org/opensuse-ja/2013-08/msg00035.html
+
+	- modified: Wnn/include/msg.h
+	Bugfix: In openSUSE 13.1 Milestone 3,
+	uum could not get error messages .
+	This issue's cause is that we forgot prototype declaration
+	of msg_get() in Wnn/include/msg.h .
+	http://lists.opensuse.org/opensuse-ja/2013-08/msg00014.html
+	http://sourceforge.jp/projects/freewnn/lists/archive/users/2013-August/000140.html
+
+	- modified: Wnn/include/jllib.h Wnn/include/jslib.h
+	Wnn/include/wnn_string.h Wnn/jlib/jl.c Wnn/jserver/error.c
+	Wnn/jutil/atod.c Wnn/romkan/rk_bltinfn.c Wnn/romkan/rk_fundecl.h
+	Wnn/romkan/rk_main.c Wnn/romkan/rk_modread.c Wnn/romkan/rk_read.c
+	Xwnmo/xwnmo/do_socket.c
+    	Added many prototype declarations .
+
+	- modified: PubdicPlus/ctopd.c PubdicPlus/wtopd.c
+	Added #include <string.h> and <unistd.h> .
+
+	- modified: Wnn/jlib.V3/jlv3.c
+	Fixed casts in jd_dicadd() .
+
+	- modified: Wnn/jserver/error.c Xwnmo/xwnmo/do_socket.c
+	Changed some types of variables .
+
+    	- modified: Wnn/jlib/jl.c Wnn/jlib/js.c
+	Modified definication of message_out() .
+	Modified argument's types:
+	jl_connect_lang(), jl_open_lang(), create_pwd_file(),
+	jl_set_env_wnnrc(), jl_set_env_wnnrc1(), create_file(),
+	make_dir_rec1(), make_dir1(), call_error_handler(), message_out() ...
+	Fixed casts .
+
+	- modified:   Wnn/jserver/de.c
+	Added signal handler .
+	Server's exit status changed .
+
+Sat, 24 Aug 2013 23:24:31  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* configure, configure.in, Wnn/include/commonhd.h,
+	  Wnn/jserver/de_header.h:
+
+	- Update version string.
+
+	- Use PACKAGE_STRING instead of _SERVER_VERSION in jserver.
+
+Mon,  5 Aug 2013 03:45:01  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* ChangeLog, ChangeLog.en, configure, configure.in:
+
+	Update ChangeLog entry and version string. Added 1.1.1-a022 tag.
+
+Mon,  5 Aug 2013 02:34:00  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* ChangeLog, ChangeLog.en, PubdicPlus/pubdic.p:
+
+	ChangeLog, ChangLog.en:
+	- Update ChangeLog entry.
+	- Fixed some typo ('backspace' to 'backslash') in
+	  Tue,  5 Jan 2010 01:59:40.
+
+	PubdicPlus/pubdic.p:
+	- Removed strange word (pronounces as 'Hirokazu', transfers to
+	  'Kobayashi'). Spotted by some poster of FreeWnn thread in
+	  2ch.net
+	  (http://toro.2ch.net/test/read.cgi/unix/1084551838/458)
+
+Sun,  4 Aug 2013 00:06:16  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* Wnn/uum/jhlp.c:
+
+	- uum failed to start on traditional systems because opening
+	  tty fails. Fixed open_pty_traditional() to set tty_slave correctly.
+
+	- Changed PTXNAME macro to switch sprintf() to snprintf()
+	  on 4.4BSD (or later).
+
+Sat,  3 Aug 2013 23:56:59  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* configure, configure.in:
+
+	- Improve libutil detection. Systems that have both ptsname() and
+	  openpty() does not need libutil, this change (probably) covers
+	  these systems. Based on patch by 1xx ([freewnn-users 133]).
+
+	- Some cosmetic fixes.
+
+Fri,  2 Aug 2013 03:43:07  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* config.h.in, configure, configure.in, Wnn/uum/Makefile.in,
+	  cWnn/uum/Makefile.in, kWnn/uum/Makefile.in:
+
+	- libutil is (may be) used only in uum, so separate this library
+	  (if exists) from normal LIBS.
+	  Patch by 1xx (itsango at gmail.com) ([freewnn-users 126])
+	  with some modification.
+
+	- Fixed spelling in configure.in .
+
+Fri,  7 Jun 2013 03:24:38  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* makerule.mk.in, Wnn/jlib/Makefile.in, Wnn/jlib.V3/Makefile.in,
+	  cWnn/jlib/Makefile.in, kWnn/jlib/Makefile.in:
+
+	Pass CPPFLAGS and LDFLAGS on configure / make.
+	Original suggestion by Hideki Yamane, but arranged a bit.
+	ToDo: We should separate FLAGS more cleanly.
+
+Sat, 16 Jun 2012 19:02:04  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* Wnn/uum/inspect.c:
+
+	Fix typo in comment.
+
+Wed, 13 Jun 2012 04:18:32  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* Wnn/: jutil/wddel.c, jutil/wdreg.c, uum/inspect.c,
+	  uum/select_ele.c:
+
+	- Quick fix for warning about format-security by gcc.
+	  Based on patch by Hideki Yamane and Makoto Fujiwara
+	  ([Freewnn-users 102]).
+	  Replacing from sprintf() to snprintf() or strncat() would be better.
+	- (Wnn/jutil/wddel.c) Change (fix?) type of Com[] to w_char
+	  in code for 'wddel -C' mode. I think I'm doing right, but not tested.
+	- Strip old mail address (as usual).
+
+Sat, 24 Sep 2011 02:49:35  Tomoki AONO <aonoto at users.sourceforge.jp>
+
+	* ChangeLog, ChangeLog.en:
+
+	Update ChangeLog . Japanese translation (of some commit entry)
+	will come later.
+
 Mon, 16 May 2011 02:03:53  Tomoki AONO <aonoto at users.sourceforge.jp>
 
 	* configure, configure.in, makerule.mk.in:
@@ -142,7 +397,7 @@ Tue,  5 Jan 2010 01:59:40  Tomoki AONO <aonoto at users.sourceforge.jp>
 
 	* Wnn/: man/2.env/wnn/2b_romkan.man, manual/2.env/wnn/2b_romkana:
 
-	- Change '\' to '\e' to correctly format backspace in man file.
+	- Change '\' to '\e' to correctly format backslash in man file.
 	  (Also change formatted text file.) It should reduce Debian lintian
 	  warning.
 
@@ -1368,3 +1623,9 @@ Sat May 19 14:16:00 JST 2001 Hiroo Ono <hiroo at oikumene.gcd.org>
 	  from autoconf-2.13 ([freewnn:00444] by Satoshi Taoka)
         * remove configure from cvs tree.
           it can be generated by autoconf.
+
+/*
+  ChangeLog entries from Mon Jul 19 02:58:12 1999
+  to Tue Mar 21 02:34:45 2000 are not translated yet. See ChangeLog
+  (in Japanese) for details.
+ */

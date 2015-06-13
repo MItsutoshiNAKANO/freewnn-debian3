@@ -1,5 +1,5 @@
 /*
- *  $Id: do_dic_env.c,v 1.5 2001/06/14 18:28:53 ura Exp $
+ *  $Id: do_dic_env.c,v 1.6 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -41,7 +41,7 @@
 #include "jdata.h"
 
 
-static void del_dic_from_env (), dic_delete ();
+static void del_dic_from_env (int, int), dic_delete (int, int, int);
 
 /*
         Dic. OPE for Env

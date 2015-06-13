@@ -1,7 +1,6 @@
 /*
- *  $Id: msg.h,v 1.6 2013/09/02 11:01:39 itisango Exp $
+ * $Id: jlib_private.h,v 1.1 2015/05/09 23:42:04 itisango Exp $
  */
-
 /*
  * FreeWnn is a network-extensible Kana-to-Kanji conversion system.
  * This file is part of FreeWnn.
@@ -10,7 +9,7 @@
  *                 1987, 1988, 1989, 1990, 1991, 1992
  * Copyright OMRON Corporation. 1987, 1988, 1989, 1990, 1991, 1992, 1999
  * Copyright ASTEC, Inc. 1987, 1988, 1989, 1990, 1991, 1992
- * Copyright FreeWnn Project 1999, 2000
+ * Copyright FreeWnn Project 1999, 2000, 2001, 2002, 2003, 2013, 2015
  *
  * Maintainer:  FreeWnn Project   <freewnn@tomo.gr.jp>
  *
@@ -30,48 +29,23 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef WNN_MSG_H
-#define WNN_MSG_H
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
+#ifndef FRWNN_JLIB_PRIVATE_H
+#define FRWNN_JLIB_PRIVATE_H 1
 
-#ifdef HAVE_SYS_PARAM_H
-#include <sys/param.h>
-#endif
+#include "jslib.h"
 
-struct msg_bd
-{
-  int msg_id;
-  char *msg;
-};
+/* defined in jlib/js.c  */
+#if DEBUG
+extern void xerror FRWNN_PARAMS((char *));
+extern void dmp FRWNN_PARAMS((char *, int));
+#endif	/* DEBUG  */
 
-struct msg_cat
-{
-  char lang[32];
-  char name[64];
-  char nlspath[MAXPATHLEN];
-  int msg_cnt;
-  struct msg_cat *nextp;
-  struct msg_bd *msg_bd;
-  /*int encoding; */
-};
 
-#define DEF_MSG "Message not found.\n"
-/*
-#define DEF_LANG "C"
-*/
-#define DEF_LANG "ja_JP"
+#ifdef  nodef
+extern void js_set_lang FRWNN_PARAMS((struct wnn_env *, register char *));
+#endif	/* nodef  */
 
-#if __STDC__
-#define FRWNN_PARAMS(paramlist)	paramlist
-#else
-#define FRWNN_PARAMS(paramlist)	()
-#endif
+extern char *_wnn_get_machine_of_serv_defs FRWNN_PARAMS((const char *));
 
-extern struct msg_cat *msg_open FRWNN_PARAMS((char *, char *, const char *));
-extern char *msg_get FRWNN_PARAMS((struct msg_cat *, int id, char *, register char *lang));
-extern void msg_close FRWNN_PARAMS((register struct msg_cat *));
-
-#endif  /* WNN_MSG_H */
+#endif	/* FRWNN_JLIB_PRIVATE_H  */

@@ -28,7 +28,7 @@
 /*
   (Updatable, Stable) dictionary read routine.
 */
-static char rcs_id[] = "$Id: readfile.c,v 1.9 2003/06/07 02:23:58 hiroo Exp $";
+static char rcs_id[] = "$Id: readfile.c,v 1.10 2013/09/02 11:01:39 itisango Exp $";
 
 #if defined(HAVE_CONFIG_H)
 #include <config.h>
@@ -54,6 +54,8 @@ static char rcs_id[] = "$Id: readfile.c,v 1.9 2003/06/07 02:23:58 hiroo Exp $";
 #include "commonhd.h"
 #include "de_header.h"
 #include "jdata.h"
+
+#include "etc.h"
 
 #ifdef WRITE_CHECK
 static int vfwrite (void*, int, int, FILE *);
@@ -101,7 +103,7 @@ read_file (struct wnn_file *wf)
   struct wnn_file_head fh;
   if (wf->localf == REMOTE)
     {
-      if (fopen_read_cur (wf->name) == NULL)
+      if (fopen_read_cur (wf->name) == 0)
         {
           wnn_errorno = WNN_FILE_READ_ERROR;
           log_err ("read_file:could not open file %s.", wf->name);
@@ -341,7 +343,7 @@ ud_realloc_hontai (struct JT *jt)
     {
       wnn_errorno = WNN_MALLOC_ERR;
       log_err ("could not make the jisho area bigger.");
-      return (NULL);
+      return (0);
     }
   jt->bufsize_hontai = new_bufsize;
   jt->hontai = tp;
@@ -360,7 +362,7 @@ ud_realloc_kanji (struct JT *jt)          /* Also for rd */
     {
       wnn_errorno = WNN_MALLOC_ERR;
       log_err ("could not make the jisho area bigger.");
-      return (NULL);
+      return (0);
     }
   jt->bufsize_kanji = new_bufsize;
   jt->kanji = tp;
@@ -403,7 +405,7 @@ ud_realloc_serial (struct JT *jt)         /* Also for rd */
 
       wnn_errorno = WNN_MALLOC_ERR;
       log_err ("could notmake the jisho area bigger.");
-      return (NULL);
+      return (0);
     }
   jt->bufsize_serial = new_bufsize;
   jt->hindo = tp_hindo;
@@ -425,7 +427,7 @@ ud_realloc_serial (struct JT *jt)         /* Also for rd */
         {
           wnn_errorno = WNN_MALLOC_ERR;
           log_err ("could not make the jisho area bigger.");
-          return (NULL);
+          return (0);
         }
       jt->ri2 = tp_ri2;
     }
@@ -446,7 +448,7 @@ ud_realloc_table (struct JT *jt)
     {
       wnn_errorno = WNN_MALLOC_ERR;
       log_err ("could not make the jisho area bigger.");
-      return (NULL);
+      return (0);
     }
   jt->bufsize_table = new_bufsize;
   jt->table = tp;
@@ -467,7 +469,7 @@ rd_realloc_ri1 (struct JT *jt, int which)
     {
       wnn_errorno = WNN_MALLOC_ERR;
       log_err ("could not make the jisho area bigger.");
-      return (NULL);
+      return (0);
     }
   jt->bufsize_ri1[which] = new_bufsize;
   jt->ri1[which] = tp;
@@ -488,7 +490,7 @@ hindo_file_realloc (struct HJT *hjt)
     {
       wnn_errorno = WNN_MALLOC_ERR;
       log_err ("could not make the hindo file area bigger.");
-      return (NULL);
+      return (0);
     }
   hjt->bufsize_serial = new_bufsize;
   hjt->hindo = tp;
@@ -509,7 +511,7 @@ rd_realloc_bind (struct JT *jt)
     {
       wnn_errorno = WNN_MALLOC_ERR;
       log_err ("could not make the jisho area bigger.");
-      return (NULL);
+      return (0);
     }
   jt->bufsize_bnode = new_bufsize;
   jt->bind = tp;
@@ -613,7 +615,7 @@ rcv_file (struct wnn_file *wf, int mode)
 /*    if(wf->localf == REMOTE){
       }
 */
-  if (fopen_write_cur (wf->name) == NULL)
+  if (fopen_write_cur (wf->name) == 0)
     {
       log_err ("receive_file:No file %s.", wf->name);
       wnn_errorno = WNN_FILE_WRITE_ERROR;
@@ -1051,7 +1053,7 @@ file_comment_set (struct wnn_file *wf, w_char *com)
       new_size = Strlen (com) + 1;
       if ((tp = (w_char *) realloc (jt->comment, jt->maxcomment * sizeof (w_char))) == NULL)
 	{
-	  return (NULL);
+	  return (0);
 	}
       jt->maxcomment = new_size;
       jt->comment = tp;
@@ -1063,7 +1065,7 @@ file_comment_set (struct wnn_file *wf, w_char *com)
       new_size = Strlen (com) + 1;
       if ((tp = (w_char *) realloc (hjt->comment, new_size * sizeof (w_char))) == NULL)
 	{
-	  return (NULL);
+	  return (0);
 	}
       hjt->maxcomment = new_size;
       hjt->comment = tp;
@@ -1072,7 +1074,7 @@ file_comment_set (struct wnn_file *wf, w_char *com)
       break;
     case WNN_FT_FUZOKUGO_FILE:
       wnn_errorno = NOT_SUPPORTED_OPERATION;
-      return (NULL);
+      return (0);
     }
   return (SUCCESS);
 }

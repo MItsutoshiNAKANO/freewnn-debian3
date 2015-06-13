@@ -1,5 +1,5 @@
 /*
- *  $Id: jikouho.c,v 1.4 2006/02/11 09:51:44 aonoto Exp $
+ *  $Id: jikouho.c,v 1.5 2013/09/02 11:01:40 itisango Exp $
  */
 
 /*
@@ -370,6 +370,6 @@ set_escape_code (x)
           buf[m++] = *tmp;
         }
     }
-  buf[m] = NULL;
+  buf[m] = '\0';
   strcpy (x, buf);
 }

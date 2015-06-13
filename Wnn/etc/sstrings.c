@@ -1,5 +1,5 @@
 /*
- *  $Id: sstrings.c,v 1.4 2002/07/14 04:26:57 hiroo Exp $
+ *  $Id: sstrings.c,v 1.5 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -45,8 +45,7 @@
 #include "wnn_os.h"
 #include "wnn_string.h"
 
-extern int eeuc_to_ieuc ();
-extern int ieuc_to_eeuc ();
+#include "etc.h"
 
 int
 wnn_sStrcpy (c, w)

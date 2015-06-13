@@ -1,5 +1,5 @@
 /*
- *  $Id: msg.c,v 1.13 2005/04/10 15:26:37 aonoto Exp $
+ *  $Id: msg.c,v 1.14 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -70,10 +70,10 @@
 
 static char *
 getlang (lang)
-     char *lang;
+     const char *lang;
 {
   static char tmp[32];
-  char *p;
+  const char *p;
   int i;
 
   if (lang == NULL || *lang == '\0')
@@ -258,7 +258,7 @@ struct msg_cat *
 msg_open (name, nlspath, lang)
      char *name;
      char *nlspath;
-     char *lang;
+     const char *lang;
 {
   struct msg_cat *cd;
 

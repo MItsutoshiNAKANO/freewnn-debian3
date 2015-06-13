@@ -1,5 +1,5 @@
 #
-#   $Id: Makefile.in,v 1.19 2010/07/11 10:18:17 aonoto Exp $
+#   $Id: Makefile.in,v 1.20 2013/09/02 11:01:40 itisango Exp $
 #
 
 #
@@ -31,12 +31,13 @@
 
 include @top_builddir@/makerule.mk
   top_srcdir = @top_srcdir@
+      srcdir = @srcdir@
 top_builddir = @top_builddir@
 
 INSTALL      = @INSTALL@ $(INSTALLFLAGS)
 
  JSERVERDEFINES = -DJSERVER -DWRITE_CHECK
-       INCLUDES = -I$(CWNNINCLUDESRC) -I$(top_builddir)
+       INCLUDES = -I$(CWNNINCLUDESRC) -I$(top_builddir) -I$(srcdir)
         DEFINES = $(CWNNDEFINES) $(JSERVERDEFINES) $(WNNTERM) $(CWNNLANGDEF)
 LOCAL_INSTFLAGS = $(INSTUIDFLAGS) -o $(WNNOWNER)
   SERVERINITDEF = -DSERVER_INIT_FILE=\"/$(CWNNLANG)/cserverrc\"

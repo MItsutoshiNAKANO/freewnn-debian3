@@ -1,5 +1,5 @@
 /*
- *  $Id: wnnrc_op.c,v 1.10 2002/06/22 13:26:21 hiroo Exp $
+ *  $Id: wnnrc_op.c,v 1.11 2013/09/02 11:01:40 itisango Exp $
  */
 
 /*
@@ -645,7 +645,7 @@ change_ascii_to_int (st, dp)
 
   total = 0;
   flag = 0;
-  while (*st != NULL)
+  while (*st != '\0')
     {
       if (isdigit (*st))
         {

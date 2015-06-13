@@ -1,5 +1,5 @@
 /*
- *  $Id: do_henkan.c,v 1.5 2001/06/18 09:09:41 ura Exp $
+ *  $Id: do_henkan.c,v 1.6 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -43,8 +43,13 @@
 #include "jdata.h"
 #include "de_header.h"
 
-static void ret_sho_x (), ret_sho_kanji (), ret_kanji ();
-static int count_sho (), count_d_kanji (), count_s_kanji (), count_kanji ();
+static void ret_sho_x (register struct DSD_SBN *, register int);
+static void ret_sho_kanji (register struct DSD_SBN *, register int);
+static void ret_kanji (register struct DSD_SBN *);
+static int count_sho (struct DSD_DBN *, int);
+static int count_d_kanji (struct DSD_DBN *, int);
+static int count_s_kanji (struct DSD_SBN *, int);
+static int count_kanji (struct DSD_SBN *);
 
 /*      DAI BUN */
 void
@@ -457,8 +462,8 @@ ret_daiB (end, start, cnt, zenp)
 #undef  putwchar
 #endif
 
-static void _print_dlist ();
-static void _print_dlist1 ();
+static void _print_dlist (struct DSD_DBN *);
+static void _print_dlist1 (struct DSD_SBN *);
 
 void
 print_dlist (dlist, cnt)

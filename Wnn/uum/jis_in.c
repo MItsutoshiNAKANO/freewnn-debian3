@@ -1,5 +1,5 @@
 /*
- *  $Id: jis_in.c,v 1.3 2001/06/14 18:16:07 ura Exp $
+ *  $Id: jis_in.c,v 1.4 2013/09/02 11:01:40 itisango Exp $
  */
 
 /*
@@ -43,7 +43,7 @@
 #define FROM_JIS        0x21
 #define TO_JIS          0x7E
 
-static int get_jis_ichiran ();
+static int get_jis_ichiran (char *, int);
 
 int
 in_jis ()                       /*  returns code for a moji  */

@@ -1,5 +1,5 @@
 /*
- *  $Id: rd_jishoop.c,v 1.4 2003/06/07 02:23:58 hiroo Exp $
+ *  $Id: rd_jishoop.c,v 1.5 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -86,22 +86,22 @@ rd_word_add1 (struct JT *jtl,
 #endif /* CONVERT_with_SiSheng */
 
   if ((jtl->bufsize_kanji <= jtl->maxkanji + (Strlen (kanji) + Strlen (comment) + Strlen (yomi) + 3) * sizeof (w_char) + 1)
-      && (ud_realloc_kanji (jtl) == NULL))
+      && (ud_realloc_kanji (jtl) == 0))
     {
       return (-1);
     }
   if (jtl->bufsize_ri1[D_YOMI] <= jtl->maxri1[D_YOMI] + 2
-     && rd_realloc_ri1 (jtl, D_YOMI) == NULL)
+     && rd_realloc_ri1 (jtl, D_YOMI) == 0)
     {
       return (-1);
     }
   if (jtl->bufsize_ri1[D_KANJI] <= jtl->maxri1[D_KANJI] + 2
-     && rd_realloc_ri1 (jtl, D_KANJI) == NULL)
+     && rd_realloc_ri1 (jtl, D_KANJI) == 0)
     {
       return (-1);
     }
   if (jtl->bufsize_serial <= jtl->maxserial + 4
-     && ud_realloc_serial (jtl) == NULL)
+     && ud_realloc_serial (jtl) == 0)
     {
       return (-1);
     }

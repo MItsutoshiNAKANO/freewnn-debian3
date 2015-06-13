@@ -1,5 +1,5 @@
 /*
- *  $Id: jdata.h,v 1.5 2005/04/10 15:26:37 aonoto Exp $
+ *  $Id: jdata.h,v 1.6 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -32,6 +32,8 @@
 
 #ifndef WNN_JDATA_H
 #define WNN_JDATA_H
+
+#include "jslib.h"
 
 #ifndef JS
 struct jdata

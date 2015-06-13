@@ -1,5 +1,5 @@
 /*
- *  $Id: jbiki_b.c,v 1.3 2001/06/14 18:16:02 ura Exp $
+ *  $Id: jbiki_b.c,v 1.4 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -52,8 +52,11 @@
 #define MAX_B_KOHO      64
 #define MIN_B_KOHO      5
 
-static void rd_biki_b (), set_kohos (), koho_insert (), b_koho_put ();
-static int set_value ();
+static void rd_biki_b (struct JT *, int, int, int);
+static void set_kohos (struct JT *, int);
+static void koho_insert (register struct b_koho *);
+static void b_koho_put (struct b_koho *);
+static int set_value (struct b_koho *);
 
 static int number;     /** クライアントの辞書番号 */
 static int prior;

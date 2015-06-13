@@ -1,5 +1,5 @@
 /*
- *  $Id: jikouho_d.c,v 1.6 2002/05/12 22:51:16 hiroo Exp $
+ *  $Id: jikouho_d.c,v 1.7 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -53,12 +53,29 @@
 #include        "kaiseki.h"
 
 #ifdef  CONVERT_from_TOP
-static void sbn_set (), sons_set ();
+static void sbn_set (register struct JKT_DBN *, register struct DSD_SBN **, register struct JKT_SONE *, register struct JKT_SBN *);
+static void sons_set (register struct JKT_DBN *, register struct JKT_SONE *, register struct JKT_SBN *, register struct DSD_SBN *, register int, register int);
 #endif /* CONVERT_from_TOP */
 
-static void dsd_hyouka (), cnt_sbn (), cnt_dbn ();
-static int cmp_dsd_dbn (), jkt_dbn (), jkt_sbjunjo (), set_jkt_dai (), zen_sbn (), cnt_par (), cnt_son ();
-static struct JKT_SBN *jkt_que_reorder ();
+static void dsd_hyouka (struct DSD_DBN *);
+static void cnt_sbn (register struct JKT_SBN *, register int *, register int *);
+static void cnt_dbn (register struct JKT_DBN *, register int *dbn_cnt, register int *sbn_cnt);
+static int cmp_dsd_dbn (struct DSD_DBN *, struct DSD_DBN *);
+static int jkt_dbn (int, int, int,
+#ifndef NO_FZK
+		    w_char *,
+#endif /* NO_FZK */
+		    int, int, register int, struct JKT_DBN **);
+static int jkt_sbjunjo (struct JKT_SBN *, struct JKT_SBN *);
+static int set_jkt_dai (struct JKT_DBN **, register struct JKT_DBN **, register struct JKT_SBN *);
+static int zen_sbn (int, int, int, int, struct JKT_SBN **, int, struct JKT_SBN *
+#ifndef NO_KANA
+		    , int *
+#endif	/* NO_KANA */
+		    );
+static int cnt_par (register struct JKT_SBN *sbn);
+static int cnt_son (register struct JKT_SBN *, register struct JKT_SBN *);
+static struct JKT_SBN *jkt_que_reorder (register struct JKT_SBN *, register struct JKT_SBN *);
 
 static int yomi_sno_tmp;
 

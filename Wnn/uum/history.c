@@ -1,5 +1,5 @@
 /*
- *  $Id: history.c,v 1.4 2002/05/12 22:51:17 hiroo Exp $
+ *  $Id: history.c,v 1.5 2013/09/02 11:01:40 itisango Exp $
  */
 
 /*
@@ -104,7 +104,7 @@ make_history (wstr, n)
 {
   if (!history_cunt)
     return (0);
-  if (n <= 0 || n > maxchg || *wstr == NULL)
+  if (n <= 0 || n > maxchg || *wstr == 0)
     return (-1);
 
   if (n == 1 && NORMAL_CHAR (*wstr))

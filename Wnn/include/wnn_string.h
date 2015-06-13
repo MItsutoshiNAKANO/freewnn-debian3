@@ -1,5 +1,5 @@
 /*
- *  $Id: wnn_string.h,v 1.5 2005/04/10 15:26:37 aonoto Exp $
+ *  $Id: wnn_string.h,v 1.6 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -33,26 +33,28 @@
 #ifndef WNN_STRING_H
 #define WNN_STRING_H
 
-extern int wnn_sStrcpy ();
-extern int wnn_Sstrcpy ();
-extern void wnn_Sreverse ();
-extern char *wnn_Stos ();
-extern char *wnn_sStrncpy ();
-extern w_char *wnn_Strcat ();
-extern w_char *wnn_Strncat ();
-extern int wnn_Strcmp ();
-extern int wnn_Substr ();
-extern int wnn_Strncmp ();
-extern w_char *wnn_Strncpy ();
-extern int wnn_Strlen ();
-extern w_char *wnn_Strcpy ();
-extern void wnn_delete_w_ss2 ();
-extern int wnn_byte_count ();
+#include "jslib.h"
+
+extern int wnn_sStrcpy FRWNN_PARAMS((register char*, register w_char*));
+extern int wnn_Sstrcpy FRWNN_PARAMS((w_char*,unsigned char*));
+extern void wnn_Sreverse FRWNN_PARAMS((w_char*,w_char*));
+extern char *wnn_Stos FRWNN_PARAMS((w_char*));
+extern char *wnn_sStrncpy FRWNN_PARAMS((register char*,register w_char*,int));
+extern w_char *wnn_Strcat FRWNN_PARAMS((register w_char*,register w_char*));
+extern w_char *wnn_Strncat FRWNN_PARAMS((register w_char*,register w_char*,int));
+extern int wnn_Strcmp FRWNN_PARAMS((register w_char*,register w_char*));
+extern int wnn_Substr FRWNN_PARAMS((register w_char*,register w_char*));
+extern int wnn_Strncmp FRWNN_PARAMS((register w_char*,register w_char*,int));
+extern w_char *wnn_Strncpy FRWNN_PARAMS((register w_char*,register w_char*,int));
+extern int wnn_Strlen FRWNN_PARAMS((register w_char*));
+extern w_char *wnn_Strcpy FRWNN_PARAMS((register w_char*,register w_char*));
+extern void wnn_delete_w_ss2 FRWNN_PARAMS((register w_char*,int));
+extern int wnn_byte_count FRWNN_PARAMS((register int));
 #ifndef JS
-extern int check_pwd ();
+extern int check_pwd FRWNN_PARAMS((char*,char*));
 #endif
 #ifdef CHINESE
-extern int wnn_Sstrcat ();
+extern int wnn_Sstrcat FRWNN_PARAMS((w_char*,unsigned char*));
 #endif
 
 #endif  /* WNN_STRING_H */

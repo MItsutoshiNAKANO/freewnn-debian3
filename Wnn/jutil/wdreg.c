@@ -1,5 +1,5 @@
 /*
- *  $Id: wdreg.c,v 1.9 2012/06/12 19:18:32 aonoto Exp $
+ *  $Id: wdreg.c,v 1.10 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -34,7 +34,7 @@
  */
 
 #ifndef lint
-static char *rcs_id = "$Id: wdreg.c,v 1.9 2012/06/12 19:18:32 aonoto Exp $";
+static char *rcs_id = "$Id: wdreg.c,v 1.10 2013/09/02 11:01:39 itisango Exp $";
 #endif /* lint */
 
 #ifdef HAVE_CONFIG_H
@@ -48,6 +48,7 @@ static char *rcs_id = "$Id: wdreg.c,v 1.9 2012/06/12 19:18:32 aonoto Exp $";
 #  if HAVE_MALLOC_H
 #    include <malloc.h>
 #  endif
+extern char *getenv ();
 #endif /* STDC_HEADERS */
 #include <sys/types.h>
 #include <sys/file.h>
@@ -63,9 +64,10 @@ static char *rcs_id = "$Id: wdreg.c,v 1.9 2012/06/12 19:18:32 aonoto Exp $";
 #include "jdata.h"
 #include "wnn_os.h"
 
-extern int init_heap ();
-extern void ujis_header (), read_ujis ();
-extern struct je **jeary;
+#include "etc.h"
+#include "jutil.h"
+
+static w_char W_CHAR_NUL_STR[] = { 0 };
 
 char *def_server;
 struct JT jt;
@@ -105,16 +107,11 @@ main (argc, argv)
      int argc;
      char **argv;
 {
-  extern int optind;
-  extern char *optarg;
   struct wnn_dic_info *info;
   int c;
   int k;
   int num;
   char *cswidth_name;
-  extern char *get_cswidth_name ();
-  extern void set_cswidth ();
-  extern char *getenv ();
 
   if (getenv (WNN_DEF_SERVER_ENV))
     {
@@ -126,8 +123,10 @@ main (argc, argv)
     }
   server_n = def_server;
 
-  if (cswidth_name = get_cswidth_name (WNN_DEFAULT_LANG))
-    set_cswidth (create_cswidth (cswidth_name));
+  if ((cswidth_name = get_cswidth_name (WNN_DEFAULT_LANG)) != NULL)
+    {
+      set_cswidth (create_cswidth (cswidth_name));
+    }
   while ((c = getopt (argc, argv, "D:n:d:L")) != EOF)
     {
       switch (c)
@@ -188,7 +187,7 @@ main (argc, argv)
         {
           if (access (fname, F_OK) == -1)
             {
-              if (js_dic_file_create_client (env, fname, WNN_REV_DICT, "", "", "") == -1)
+              if (js_dic_file_create_client (env, fname, WNN_REV_DICT, W_CHAR_NUL_STR, "", "") == -1)
                 {
                   err ();
                 }
@@ -203,7 +202,7 @@ main (argc, argv)
           WNN_FILE_STAT s;
           if (js_file_stat (env, fname, &s) == -1)
             {
-              if (js_dic_file_create (env, fname, WNN_REV_DICT, "", "", "") == -1)
+              if (js_dic_file_create (env, fname, WNN_REV_DICT, W_CHAR_NUL_STR, "", "") == -1)
                 {
                   err ();
                 }

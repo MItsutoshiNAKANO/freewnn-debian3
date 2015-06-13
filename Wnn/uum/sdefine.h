@@ -1,5 +1,5 @@
 /*
- *  $Id: sdefine.h,v 1.4 2006/03/04 19:01:46 aonoto Exp $
+ *  $Id: sdefine.h,v 1.5 2013/09/02 11:01:40 itisango Exp $
  */
 
 /*
@@ -181,8 +181,8 @@ struct kansuu
 #define w_char  unsigned short
 #endif
 
-#define printf        PRINTF
-#define fprintf       FPRINTF
+/* #define printf        PRINTF  */
+/* #define fprintf       FPRINTF  */
 #define remove        REMOVE
 
 #define throw_c(col)  throw_col((col) + disp_mode_length)

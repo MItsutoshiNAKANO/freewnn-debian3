@@ -1,5 +1,5 @@
 /*
- *  $Id: mknode0.c,v 1.4 2002/05/12 22:51:16 hiroo Exp $
+ *  $Id: mknode0.c,v 1.5 2013/09/02 11:01:39 itisango Exp $
  */
 
 /*
@@ -36,10 +36,16 @@
 #include "de_header.h"
 #include "kaiseki.h"
 
-static struct BZD *clrnd_sub ();
-static void lnk_bzd (), lnk_ichbn ();
-static int mknd_sub (), hyoka2 ();
-void freebzd ();
+static struct BZD *clrnd_sub (register struct BZD *);
+static void lnk_bzd (struct free_list *), lnk_ichbn (struct free_list *);
+
+static int mknd_sub (struct BZD *, int, int,
+#ifndef NO_FZK
+		     w_char *,
+#endif	/* NO_FZK */
+		     int, int, int);
+
+static int  hyoka2 (int, int);
 
 static struct BZD *free_bzd_top = NULL;
 static struct free_list *free_list_bzd = NULL;

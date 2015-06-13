@@ -34801,7 +34801,6 @@
 ひろかず 弘一 人名/#JNM/名前: 1 jinmei
 ひろかず 弘和 人名/#JNM/名前: 0 jinmei
 ひろかず 浩一 人名/#JNM/名前: 0 jinmei
-ひろかず 小林 人名/#JNS/苗字: 0 jinmei
 ひろかず 博一 人名/#JNM/名前: 2 jinmei
 ひろかみ 広神 地名/#JCN/地名: 0 chimei
 ひろかわ 広川 人名&地名/#JCN/苗字: 0 chimei

@@ -1,3 +1,11 @@
+freewnn (1.1.1~a021+cvs20130302-5) UNRELEASED; urgency=medium
+
+  * QA upload.
+  * debian/patches/egrep-a.patch: Prevent egrep from reporting "Binary file ...
+    matches" in some locales.  (Closes: #797242)
+
+ -- Andreas Beckmann <anbe@debian.org>  Thu, 10 Sep 2015 00:29:28 +0200
+
 freewnn (1.1.1~a021+cvs20130302-4) unstable; urgency=low
 
   * QA upload.

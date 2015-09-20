@@ -4,3 +4,4 @@ man
 hardening-flags
 hurd_support.patch
 fix-parallel-build.patch
+egrep-a.patch

@@ -8,7 +8,7 @@ Build-Depends: autoconf,
                debhelper (>= 9),
                libncurses5-dev,
                libtool
-Standards-Version: 3.9.4
+Standards-Version: 3.9.6
 Homepage: http://osdn.jp/projects/freewnn/
 
 Package: freewnn-common

@@ -1,7 +1,7 @@
 Source: freewnn
 Section: utils
 Priority: optional
-Maintainer: Debian QA Group <packages@qa.debian.org>
+Maintainer: Mitsutoshi NAKANO <ItSANgo@gmail.com>
 Build-Depends: autoconf,
                automake,
                autotools-dev,
@@ -9,7 +9,7 @@ Build-Depends: autoconf,
                libncurses5-dev,
                libtool
 Standards-Version: 3.9.4
-Homepage: http://sourceforge.jp/projects/freewnn/
+Homepage: http://osdn.jp/projects/freewnn/
 
 Package: freewnn-common
 Architecture: all

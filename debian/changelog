@@ -1,10 +1,16 @@
-freewnn (1.1.1~a021+cvs20130302-5) UNRELEASED; urgency=medium
+freewnn (1.1.1~a021+cvs20130302-5) unstable; urgency=medium
 
+  [ Andreas Beckmann ] <anbe@debian.org>
   * QA upload.
   * debian/patches/egrep-a.patch: Prevent egrep from reporting "Binary file ...
     matches" in some locales.  (Closes: #797242)
+  [ Mitsutoshi NAKANO ]
+  * control (Maintainer): New Maintainer
+    Mitsutoshi NAKANO <ItSANgo@gmail.com>.  (Closes: #714683)
+  * control (Homepage): The osdn.jp has changed the name
+    from sourceforge.jp.
 
- -- Andreas Beckmann <anbe@debian.org>  Thu, 10 Sep 2015 00:29:28 +0200
+ -- Mitsutoshi NAKANO <ItSANgo@gmail.com>  Mon, 21 Sep 2015 10:38:33 +0900
 
 freewnn (1.1.1~a021+cvs20130302-4) unstable; urgency=low
 
